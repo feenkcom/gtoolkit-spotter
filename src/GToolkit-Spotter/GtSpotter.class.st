@@ -38,7 +38,7 @@ GtSpotter class >> dontShowPreview [
 GtSpotter class >> exampleInWindow [
 	<sampleInstance>
 	
-	^ GTSpotterMorph new
+	^ GtSpotterMorph new
 		extent: 400@500;
 		doLayout;
 		spotterModel: self new;
@@ -49,7 +49,7 @@ GtSpotter class >> exampleInWindow [
 GtSpotter class >> exampleMC [
 	"self exampleMC"
 	<sampleInstance>
-	^ GTSpotterMorph new
+	^ GtSpotterMorph new
 		extent: 400@500;
 		doLayout;
 		spotterModel: (self on: MCWorkingCopy allManagers);
@@ -60,7 +60,7 @@ GtSpotter class >> exampleMC [
 GtSpotter class >> exampleSpotterWithoutMorph [
 	<sampleInstance>
 	<gtExample>
-	<label: 'A GTSpotter without UI'>
+	<label: 'A GtSpotter without UI'>
 	
 	^ self new
 ]
@@ -68,7 +68,7 @@ GtSpotter class >> exampleSpotterWithoutMorph [
 { #category : #example }
 GtSpotter class >> exampleWithPreview [
 	<sampleInstance>
-	^ GTSpotterMorph new
+	^ GtSpotterMorph new
 		extent: (World width / 2.5 @ (World height / 1.5)) asIntegerPoint;
 		spotterModel: self new;
 		showPreview;
@@ -78,7 +78,7 @@ GtSpotter class >> exampleWithPreview [
 { #category : #example }
 GtSpotter class >> exampleWorldMenu [
 	<sampleInstance>
-	^ GTSpotterMorph new
+	^ GtSpotterMorph new
 		extent: 400@500;
 		doLayout;
 		spotterModel: (self on: World worldMenu);
@@ -122,7 +122,7 @@ GtSpotter class >> markOpened [
 GtSpotter class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Spotter)
-		action: [ GTSpotterGlobalShortcut openGlobalSpotter ];
+		action: [ GtSpotterGlobalShortcut openGlobalSpotter ];
 		keyText: 'Shift + Enter';
 		order: 50;
 		parent: #Tools;

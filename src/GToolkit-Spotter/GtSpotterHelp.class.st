@@ -11,8 +11,8 @@ GtSpotterHelp class >> basicExamples [
 		contents: 
 'There are many things to search for using Spotter. Here are some basic examples to get started.
 
-Searching for the GTSpotter class:
-	GTSpotterMorph
+Searching for the GtSpotter class:
+	GtSpotterMorph
 	
 Searching for a GT-Spotter package:
 	GT-Spotter
@@ -117,9 +117,9 @@ GtSpotterHelp class >> extensionExamples [
 		contents:
 'Spotter offers a contextual search mechanism. Every search step has an associated object that defines the context, and the concrete search specifications are defined as methods in the class of those objects.
 
-The first instance that Spotter starts with by default is an instance of GTSpotter. For example, the logic of searching for classes throughout the image is defined as:
+The first instance that Spotter starts with by default is an instance of GtSpotter. For example, the logic of searching for classes throughout the image is defined as:
 
-	GTSpotter>>#spotterForClassesFor: aStep
+	GtSpotter>>#spotterForClassesFor: aStep
 		<spotterOrder: 10>
 		aStep listProcessor
 				title: ''Classes'';
@@ -150,7 +150,7 @@ Now, imagine that you want to search methods inside a known class. To achieve th
 				itemName: [ :method | method selector ];
 				filter: GTFilterSubstring
 
-To understand the option of specifying search processors in more details, take a look at the extentions present in the image and at the API of GTSpotterCandidatesListProcessor.'
+To understand the option of specifying search processors in more details, take a look at the extentions present in the image and at the API of GtSpotterCandidatesListProcessor.'
 ]
 
 { #category : #documentation }
@@ -162,7 +162,7 @@ GtSpotterHelp class >> extensions [
 
 The list is computed automatically. You can also browse it by inspecting:
 
-		GTSpotter spotterExtendingMethods
+		GtSpotter spotterExtendingMethods
 
 ', self extensionsString
 ]
@@ -171,7 +171,7 @@ The list is computed automatically. You can also browse it by inspecting:
 GtSpotterHelp class >> extensionsString [
 	| methods title |
 	^ String streamContents: [ :s |
-		((GTSpotter spotterExtendingMethods groupedBy: #methodClass) 
+		((GtSpotter spotterExtendingMethods groupedBy: #methodClass) 
 		associations sorted: [ :a :b | a key name < b key name ]) 
 		do: [ :classMethodsAssociation |
 			s nextPutAll: classMethodsAssociation key name; cr.
@@ -242,6 +242,6 @@ GtSpotterHelp class >> resettingSpotter [
 		contents:
 'If you want to reset the Spotter to its initial state (no history and no preview), you can execute this code:
 
-	GTSpotter cleanUp.
-   GTSpotter dontShowPreview'
+	GtSpotter cleanUp.
+   GtSpotter dontShowPreview'
 ]

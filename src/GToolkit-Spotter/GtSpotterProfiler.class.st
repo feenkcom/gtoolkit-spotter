@@ -18,12 +18,12 @@ GtSpotterProfiler class >> profileOneCycle [
 			onBlock: [
 				|spotterModel done|
 				done := false.
-				GTSpotterGlobalShortcut reset.
-				spotterModel := GTSpotter new.
+				GtSpotterGlobalShortcut reset.
+				spotterModel := GtSpotter new.
 				
-				spotterModel announcer when: GTSpotterSearchFinished do: [ done := true ].
+				spotterModel announcer when: GtSpotterSearchFinished do: [ done := true ].
 					
-				GTSpotterMorph new
+				GtSpotterMorph new
 					extent: (World width / 2.4 @ (World height / 1.6)) asIntegerPoint;
 					spotterModel: spotterModel;
 					openCenteredInWorld.

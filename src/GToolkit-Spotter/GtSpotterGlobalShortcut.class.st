@@ -14,9 +14,9 @@ GtSpotterGlobalShortcut class >> openGlobalSpotter [
 	| spotterModel |
 		
 	self reset.
-	spotterModel := GTSpotter new.
+	spotterModel := GtSpotter new.
 	
-	self class environment at: #GTSpotterEventCollector ifPresent: [ :eventCollector |
+	self class environment at: #GtSpotterEventCollector ifPresent: [ :eventCollector |
 		eventCollector new
 			perform: #occupant: with: spotterModel;
 			perform: #category: with: #spotter;
@@ -24,7 +24,7 @@ GtSpotterGlobalShortcut class >> openGlobalSpotter [
 			perform: #linkToSpotter: with: spotterModel;
 			perform: #recordSpotterOpenEvent ].
 	
-	GTSpotterMorph new
+	GtSpotterMorph new
 		extent: (World width / 2.4 @ (World height / 1.6)) asIntegerPoint;
 		spotterModel: spotterModel;
 		doLayout;
@@ -36,9 +36,9 @@ GtSpotterGlobalShortcut class >> openGlobalSpotter [
 { #category : #accessing }
 GtSpotterGlobalShortcut class >> openGlobalSpotterDebug [
 
-	GTSpotterMorph new
+	GtSpotterMorph new
 		extent: (World width / 2.25 @ (World height / 1.25)) asIntegerPoint;
-		spotterModel: (GTSpotter new
+		spotterModel: (GtSpotter new
 			beDebugging;
 			yourself);
 		openInWindowLabeled: 'Spotter Debug Mode';
@@ -48,7 +48,7 @@ GtSpotterGlobalShortcut class >> openGlobalSpotterDebug [
 { #category : #cleanup }
 GtSpotterGlobalShortcut class >> reset [
 	
-	(World findA: GTSpotterMorph) ifNotNil: [ :aSpotterMorph | aSpotterMorph spotterModel exitDueTo: #reset ]
+	(World findA: GtSpotterMorph) ifNotNil: [ :aSpotterMorph | aSpotterMorph spotterModel exitDueTo: #reset ]
 ]
 
 { #category : #shortcuts }

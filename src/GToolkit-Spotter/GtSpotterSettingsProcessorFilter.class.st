@@ -15,5 +15,5 @@ GtSpotterSettingsProcessorFilter >> configurationBlockForProcessorsCreatedBy: aM
 GtSpotterSettingsProcessorFilter >> shouldEnableProcessorsCreateBy: aMethod [
 	"Enable everything."
 	
-	^ (GTSpotterExtensionSettings shouldSpotterIgnoreProcessorDefinedInMethod: aMethod) not
+	^ (GtSpotterExtensionSettings shouldSpotterIgnoreProcessorDefinedInMethod: aMethod) not
 ]

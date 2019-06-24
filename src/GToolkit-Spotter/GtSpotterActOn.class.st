@@ -11,7 +11,7 @@ Class {
 { #category : #'as yet unclassified' }
 GtSpotterActOn >> asRecorderEvent [
 
-	^ GTSpotterRecorderActOnEvent fromAnnouncement: self
+	^ GtSpotterRecorderActOnEvent fromAnnouncement: self
 ]
 
 { #category : #accessing }

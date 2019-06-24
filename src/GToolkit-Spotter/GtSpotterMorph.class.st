@@ -71,7 +71,7 @@ GtSpotterMorph >> breadcrumbBrick: aBrick [
 	breadcrumbBrick ifNotNil: [self removeBrick: breadcrumbBrick].
 	breadcrumbBrick := aBrick.
 	
-	breadcrumbBrick announcer when: GTSpotterBreadcrumbVisibilityChanged send: #onBreadcrumbVisibilityChanged to: self.
+	breadcrumbBrick announcer when: GtSpotterBreadcrumbVisibilityChanged send: #onBreadcrumbVisibilityChanged to: self.
 	self themer spotterThemer breadcrumbStyleFor: breadcrumbBrick.
 	breadcrumbBrick width: [ self paneBrick contentsBrick width ].
 	breadcrumbBrick layout widthDependency: [ self paneBrick contentsBrick ].
@@ -175,13 +175,13 @@ GtSpotterMorph >> initializeListeners [
 { #category : #'instance creation' }
 GtSpotterMorph >> newBreadcrumbBrick [
 
-	^ GTSpotterStepsBreadcrumb new
+	^ GtSpotterStepsBreadcrumb new
 ]
 
 { #category : #'instance creation' }
 GtSpotterMorph >> newPaneBrick [
 
-	^ GTSpotterPaneBrick new
+	^ GtSpotterPaneBrick new
 ]
 
 { #category : #'events-processing' }
@@ -348,9 +348,9 @@ GtSpotterMorph >> spotterModel: aSpotter [
 
 	spotterModel := aSpotter.
 	
-	spotterModel announcer when: GTSpotterExitAnnouncement send: #closeSpotter to: self.
-	spotterModel announcer when: GTSpotterShowPreview send: #onShowPreview to: self.
-	spotterModel announcer when: GTSpotterHidePreview send: #onHidePreview to: self.
+	spotterModel announcer when: GtSpotterExitAnnouncement send: #closeSpotter to: self.
+	spotterModel announcer when: GtSpotterShowPreview send: #onShowPreview to: self.
+	spotterModel announcer when: GtSpotterHidePreview send: #onHidePreview to: self.
 	
 	self breadcrumbBrick spotterModel: spotterModel.
 	self paneBrick spotterModel: spotterModel.
@@ -376,13 +376,13 @@ GtSpotterMorph >> spotterModelDo: aBlock [
 { #category : #actions }
 GtSpotterMorph >> stepScrollPageDown [
 
-	self spotterModel currentStep announcer announce: (GTSpotterScrollPageDown new)
+	self spotterModel currentStep announcer announce: (GtSpotterScrollPageDown new)
 ]
 
 { #category : #actions }
 GtSpotterMorph >> stepScrollPageUp [
 
-	self spotterModel currentStep announcer announce: (GTSpotterScrollPageUp new)
+	self spotterModel currentStep announcer announce: (GtSpotterScrollPageUp new)
 ]
 
 { #category : #actions }

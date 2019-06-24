@@ -25,7 +25,7 @@ GtSpotterCandidatesList >> addAllCandidates: aCollection in: aProcessor [
 			self updateCycleConnectionFor: candidateLink.
 			allLinks add: candidateLink ].
 	self announcer announce:
-			(GTSpotterAllCandidatesAdded new
+			(GtSpotterAllCandidatesAdded new
 				candidateLinks: allLinks;
 				category: aProcessor;
 				yourself)
@@ -74,7 +74,7 @@ GtSpotterCandidatesList >> announcer [
 { #category : #accessing }
 GtSpotterCandidatesList >> candidates [
 
-	^ candidates ifNil: [ candidates := GTSpotterDoubleLinkedList new ]
+	^ candidates ifNil: [ candidates := GtSpotterDoubleLinkedList new ]
 ]
 
 { #category : #candidates }
@@ -168,13 +168,13 @@ GtSpotterCandidatesList >> nextProcessorLinkOf: aProcessorLink [
 { #category : #notifying }
 GtSpotterCandidatesList >> notifyAllCandidatesRemoved [
 
-	self announcer announce: (GTSpotterAllCandidatesRemoved new)
+	self announcer announce: (GtSpotterAllCandidatesRemoved new)
 ]
 
 { #category : #notifying }
 GtSpotterCandidatesList >> notifyCandidateAdded: aCandidateLink in: aProcessor [
 
-	self announcer announce: (GTSpotterCandidateAdded new candidateLink: aCandidateLink; category: aProcessor; yourself).
+	self announcer announce: (GtSpotterCandidateAdded new candidateLink: aCandidateLink; category: aProcessor; yourself).
 ]
 
 { #category : #'stream handling' }
@@ -184,7 +184,7 @@ GtSpotterCandidatesList >> onAmountChanged: anInteger in: aProcessor [
 	
 	"If amount is not positive there is no need to do anything"
 	anInteger = 0 ifTrue: [ ^ self ].
-	self announcer announce: (GTSpotterCandidatesAmountChanged new amount: anInteger; category: aProcessor; yourself)
+	self announcer announce: (GtSpotterCandidatesAmountChanged new amount: anInteger; category: aProcessor; yourself)
 ]
 
 { #category : #processors }
@@ -285,7 +285,7 @@ GtSpotterCandidatesList >> processorLinksMap [
 { #category : #accessing }
 GtSpotterCandidatesList >> processors [
 
-	^ categories ifNil: [ categories := GTSpotterDoubleLinkedList new ].
+	^ categories ifNil: [ categories := GtSpotterDoubleLinkedList new ].
 ]
 
 { #category : #'adding/removing' }

@@ -138,7 +138,7 @@ GtSpotterStepsBreadcrumb >> newSeparator [
 { #category : #notifying }
 GtSpotterStepsBreadcrumb >> notifyBreadcrumbVisibilityChanged [
 
-	self announcer announce: GTSpotterBreadcrumbVisibilityChanged new
+	self announcer announce: GtSpotterBreadcrumbVisibilityChanged new
 ]
 
 { #category : #'brick-layout-events' }
@@ -154,7 +154,7 @@ GtSpotterStepsBreadcrumb >> onStepAdded: ann [
 	|step origin previousStep selectedCandidate|
 	
 	self spotterModel steps size <= 1 ifTrue: [
-		^ self push: (GTSpotterStepBreadcrumbItem new
+		^ self push: (GtSpotterStepBreadcrumbItem new
 						text: self spotterModel steps first origin gtDisplayString;
 						stepModel: self spotterModel steps first) ].
 	
@@ -163,7 +163,7 @@ GtSpotterStepsBreadcrumb >> onStepAdded: ann [
 	selectedCandidate := previousStep selected candidate.
 	origin := step origin.
 	
-	self push: (GTSpotterStepBreadcrumbItem new
+	self push: (GtSpotterStepBreadcrumbItem new
 		stepModel: step;
 		text: ((selectedCandidate = origin)
 			ifTrue: [ (previousStep selected renderingProcessor render: selectedCandidate) labelBrick text ]
@@ -265,6 +265,6 @@ GtSpotterStepsBreadcrumb >> spotterModel: aSpotterModel [
 	
 	spotterModel := aSpotterModel.
 	
-	spotterModel announcer when: GTSpotterStepAdded send: #onStepAdded: to: self.
-	spotterModel announcer when: GTSpotterStepPopped send: #onStepPopped to: self.
+	spotterModel announcer when: GtSpotterStepAdded send: #onStepAdded: to: self.
+	spotterModel announcer when: GtSpotterStepPopped send: #onStepPopped to: self.
 ]

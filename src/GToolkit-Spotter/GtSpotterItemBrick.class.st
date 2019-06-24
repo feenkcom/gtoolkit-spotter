@@ -168,7 +168,7 @@ GtSpotterItemBrick >> mouseDown: evt [
 { #category : #'instance creation' }
 GtSpotterItemBrick >> newActionbarBrick [
 
-	^ GTSpotterItemActionbarBrick new
+	^ GtSpotterItemActionbarBrick new
 ]
 
 { #category : #'instance creation' }
@@ -189,15 +189,15 @@ GtSpotterItemBrick >> newLabelBrick [
 { #category : #notifying }
 GtSpotterItemBrick >> notifySelected [
 
-	self stepModel spotter announce: (GTSpotterCandidateSelected new itemBrick: self).
-	self stepModel announcer announce: (GTSpotterCandidateSelected new itemBrick: self)
+	self stepModel spotter announce: (GtSpotterCandidateSelected new itemBrick: self).
+	self stepModel announcer announce: (GtSpotterCandidateSelected new itemBrick: self)
 ]
 
 { #category : #'brick-layout-events' }
 GtSpotterItemBrick >> onLayouted [
 	super onLayouted.
 	
-	self isChecked ifTrue: [ self stepModel spotter announce: GTSpotterCandidateSelectedMoved new ]
+	self isChecked ifTrue: [ self stepModel spotter announce: GtSpotterCandidateSelectedMoved new ]
 ]
 
 { #category : #'brick-structure-events' }
@@ -277,8 +277,8 @@ GtSpotterItemBrick >> stepModel: aModel [
 
 	stepModel := aModel.
 	
-	stepModel announcer when: GTSpotterSelectedCandidateChanged send: #onSelectedChanged: to: self.
-	stepModel spotter announcer when: GTSpotterStepPopped send: #onStepPopped to: self.
+	stepModel announcer when: GtSpotterSelectedCandidateChanged send: #onSelectedChanged: to: self.
+	stepModel spotter announcer when: GtSpotterStepPopped send: #onStepPopped to: self.
 	
 	self actionbarBrick stepModel: aModel.
 	

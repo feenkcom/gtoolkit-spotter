@@ -219,12 +219,12 @@ GtSpotter >> announcer [
 
 { #category : #'accessing-convenience' }
 GtSpotter >> beDebugging [
-	self exceptionHandler: GTSpotterDebuggingExceptionHandler new
+	self exceptionHandler: GtSpotterDebuggingExceptionHandler new
 ]
 
 { #category : #'accessing-convenience' }
 GtSpotter >> beDeployment [
-	self exceptionHandler: GTSpotterDeploymentExceptionHandler new
+	self exceptionHandler: GtSpotterDeploymentExceptionHandler new
 ]
 
 { #category : #accessing }
@@ -244,7 +244,7 @@ GtSpotter >> currentStep: aStepModel [
 
 { #category : #'accessing-defaults' }
 GtSpotter >> defaultExceptionHandler [
-	^ GTSpotterDeploymentExceptionHandler new
+	^ GtSpotterDeploymentExceptionHandler new
 ]
 
 { #category : #'accessing-defaults' }
@@ -254,7 +254,7 @@ GtSpotter >> defaultPagerModel [
 
 { #category : #'accessing-defaults' }
 GtSpotter >> defaultStep [
-	^ GTSpotterStep new
+	^ GtSpotterStep new
 ]
 
 { #category : #'actions api' }
@@ -292,7 +292,7 @@ GtSpotter >> exitDueTo: anEventType [
 GtSpotter >> filterByMethods: aCollection [
 	| filter |
 	
-	filter := GTSpotterMethodListProcessorFilter new.
+	filter := GtSpotterMethodListProcessorFilter new.
 	aCollection  do: [ :aMethod |
 		filter allowProcessorsFrom: aMethod ].
 	self processorsFilter: filter
@@ -334,7 +334,7 @@ GtSpotter >> gtDisplaySpotterMorphOn: aComposite [
 				hSpaceFill;
 				vSpaceFill;
 				addMorphBack: 
-					(GTSpotterMorph new
+					(GtSpotterMorph new
 						spotterModel: self);
 				yourself ]
 ]
@@ -402,7 +402,7 @@ GtSpotter >> history: aWeakCollection [
 GtSpotter >> initialize [
 	super initialize.
 	
-	processorsFilter := GTSpotterSettingsProcessorFilter new
+	processorsFilter := GtSpotterSettingsProcessorFilter new
 ]
 
 { #category : #'actions api' }
@@ -449,7 +449,7 @@ GtSpotter >> newStep [
 { #category : #notifying }
 GtSpotter >> notifyActOn: anObject for: anEventType [
 
-	self announce: (GTSpotterActOn new 
+	self announce: (GtSpotterActOn new 
 		element: anObject;
 		eventType: anEventType)
 ]
@@ -457,7 +457,7 @@ GtSpotter >> notifyActOn: anObject for: anEventType [
 { #category : #notifying }
 GtSpotter >> notifyCandidateSelected: anObject for: anEventType [
 
-	self announce: (GTSpotterSelectedCandidateChanged new 
+	self announce: (GtSpotterSelectedCandidateChanged new 
 		select: anObject;
 		eventType: anEventType)
 ]
@@ -465,12 +465,12 @@ GtSpotter >> notifyCandidateSelected: anObject for: anEventType [
 { #category : #notifying }
 GtSpotter >> notifyCategorySelected: aProcessor [
 
-	self announce: (GTSpotterCategorySelected new category: aProcessor)
+	self announce: (GtSpotterCategorySelected new category: aProcessor)
 ]
 
 { #category : #notifying }
 GtSpotter >> notifyContextChangedFrom: aPreviousContext to: aCurrentContext [
-	self announce: (GTSpotterContextChanged new
+	self announce: (GtSpotterContextChanged new
 		previous: aPreviousContext;
 		current: aCurrentContext;
 		yourself)
@@ -479,13 +479,13 @@ GtSpotter >> notifyContextChangedFrom: aPreviousContext to: aCurrentContext [
 { #category : #notifying }
 GtSpotter >> notifyCurrentStepChanged [
 
-	self announce: GTSpotterCurrentStepChanged new
+	self announce: GtSpotterCurrentStepChanged new
 ]
 
 { #category : #notifying }
 GtSpotter >> notifyDiveIn: anObject for: anEventType [
 
-	self announce: (GTSpotterDiveInElement new 
+	self announce: (GtSpotterDiveInElement new 
 		element: anObject;
 		eventType: anEventType )
 ]
@@ -493,7 +493,7 @@ GtSpotter >> notifyDiveIn: anObject for: anEventType [
 { #category : #notifying }
 GtSpotter >> notifyDiveInCategory: aProcessor for: anEventType [
 
-	self announce: (GTSpotterDiveInCategory new 
+	self announce: (GtSpotterDiveInCategory new 
 		category: aProcessor;
 		eventType: anEventType)
 ]
@@ -501,31 +501,31 @@ GtSpotter >> notifyDiveInCategory: aProcessor for: anEventType [
 { #category : #notifying }
 GtSpotter >> notifyDiveOut: anObject [
 
-	self announce: (GTSpotterDiveOut new element: anObject)
+	self announce: (GtSpotterDiveOut new element: anObject)
 ]
 
 { #category : #notifying }
 GtSpotter >> notifyHideHints [
 
-	self announce: GTSpotterHideHints new
+	self announce: GtSpotterHideHints new
 ]
 
 { #category : #notifying }
 GtSpotter >> notifyHidePreview [
 
-	self announce: GTSpotterHidePreview new
+	self announce: GtSpotterHidePreview new
 ]
 
 { #category : #notifying }
 GtSpotter >> notifyRevealHints [
 
-	self announce: GTSpotterRevealHints new
+	self announce: GtSpotterRevealHints new
 ]
 
 { #category : #notifying }
 GtSpotter >> notifySearchFinishedFor: aString processors: aCollectionOfProcessors [
 
-	self announce: (GTSpotterSearchFinished new 
+	self announce: (GtSpotterSearchFinished new 
 								query: aString;
 								processors: aCollectionOfProcessors;
 								yourself)
@@ -534,7 +534,7 @@ GtSpotter >> notifySearchFinishedFor: aString processors: aCollectionOfProcessor
 { #category : #notifying }
 GtSpotter >> notifyShowPreview [
 
-	self announce: GTSpotterShowPreview new
+	self announce: GtSpotterShowPreview new
 
 	
 ]
@@ -542,20 +542,20 @@ GtSpotter >> notifyShowPreview [
 { #category : #notifying }
 GtSpotter >> notifySpotterExitFor: anEventType [
 
-	self announce: (GTSpotterExitAnnouncement new
+	self announce: (GtSpotterExitAnnouncement new
 		eventType: anEventType)
 ]
 
 { #category : #notifying }
 GtSpotter >> notifyStepAdded: aStep [
 
-	self announce: (GTSpotterStepAdded new stepModel: aStep)
+	self announce: (GtSpotterStepAdded new stepModel: aStep)
 ]
 
 { #category : #notifying }
 GtSpotter >> notifyStepPopped [
 
-	self announce: GTSpotterStepPopped new
+	self announce: GtSpotterStepPopped new
 ]
 
 { #category : #'event handling' }

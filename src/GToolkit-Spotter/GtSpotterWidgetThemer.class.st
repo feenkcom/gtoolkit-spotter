@@ -71,7 +71,7 @@ GtSpotterWidgetThemer >> breadcrumbItemTriangleStyleFor: aBrick [
 GtSpotterWidgetThemer >> breadcrumbItemTriangleWidgetStyleFor: aBrick [
 
 	aBrick
-		renderer: (GTSpotterTriangleRenderer new orientation: #bottom).
+		renderer: (GtSpotterTriangleRenderer new orientation: #bottom).
 		
 	aBrick owner isTriangleVisible
 		ifTrue:[ aBrick color: self breadcrumbItemBackgroundColor ]
@@ -105,7 +105,7 @@ GtSpotterWidgetThemer >> breadcrumbSeparatorWidgetStyleFor: aBrick [
 	aBrick
 		color: self breadcrumbItemBackgroundColor;
 		borderColor: self breadcrumbSeparatorColor;
-		renderer: GTSpotterBreadcrumbSeparatorRenderer new
+		renderer: GtSpotterBreadcrumbSeparatorRenderer new
 ]
 
 { #category : #values }
@@ -611,7 +611,7 @@ GtSpotterWidgetThemer >> resultsPaneStyleFor: aBrick [
 	aBrick
 		hSpaceFill: self resultsPaneWidth;
 		vSpaceFill;
-		with: [ :b | b band layout: GTSpotterStackedLayout new ]
+		with: [ :b | b band layout: GtSpotterStackedLayout new ]
 ]
 
 { #category : #values }
@@ -773,7 +773,7 @@ GtSpotterWidgetThemer >> spotterPreviewArrowStyleFor: aBrick [
 
 	aBrick
 		hSpaceFill;
-		renderer: (GTSpotterTriangleRenderer new orientation: #right);
+		renderer: (GtSpotterTriangleRenderer new orientation: #right);
 		height: [ (self previewArrowWidth - self previewArrowGapHack ) * 2 ]
 ]
 
@@ -788,7 +788,7 @@ GtSpotterWidgetThemer >> spotterPreviewArrowWidgetStyleFor: aBrick [
 			aBrick color: Color transparent.
 			aBrick renderer borderColor: Color transparent ].
 	
-	GTSpotter isPreviewVisible
+	GtSpotter isPreviewVisible
 		ifTrue: [ 
 			aBrick selectedColor: self borderColor.
 			aBrick renderer border: 0 ]

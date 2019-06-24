@@ -10,7 +10,7 @@ Class {
 { #category : #'as yet unclassified' }
 GtSpotterExitAnnouncement >> asRecorderEvent [
 
-	^ GTSpotterRecorderExitAnnouncementEvent fromAnnouncement: self
+	^ GtSpotterRecorderExitAnnouncementEvent fromAnnouncement: self
 ]
 
 { #category : #accessing }

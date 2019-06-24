@@ -11,7 +11,7 @@ Class {
 GtSpotterDropDownMorph >> buildPane: aStepModel [
 	|pane|
 	
-	pane := GTSpotterResultsBrick new stepModel: aStepModel.
+	pane := GtSpotterResultsBrick new stepModel: aStepModel.
 	self brickThemer spotterThemer resultsPaneStyleFor: pane.
 	^ pane
 ]
@@ -41,5 +41,5 @@ GtSpotterDropDownMorph >> spotterModel: aModel [
 	
 	spotterModel steps do: [ :each | self pushPane: (self buildPane: each) ].
 	
-	spotterModel announcer when: GTSpotterStepAdded send: #onStepAdded: to: self.
+	spotterModel announcer when: GtSpotterStepAdded send: #onStepAdded: to: self.
 ]

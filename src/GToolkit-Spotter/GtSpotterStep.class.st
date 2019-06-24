@@ -103,10 +103,10 @@ GtSpotterStep >> canDiveInSelectedCandidate [
 GtSpotterStep >> candidates [
 
 	^ candidates ifNil: [
-		candidates := GTSpotterCandidatesList new.
-		candidates announcer subscribe: GTSpotterCandidateAdded send: #onCandidateAdded to: self.
-		candidates announcer subscribe: GTSpotterAllCandidatesAdded send: #onCandidateAdded to: self.
-		candidates announcer subscribe: GTSpotterAllCandidatesRemoved do: [ self deselect ].
+		candidates := GtSpotterCandidatesList new.
+		candidates announcer subscribe: GtSpotterCandidateAdded send: #onCandidateAdded to: self.
+		candidates announcer subscribe: GtSpotterAllCandidatesAdded send: #onCandidateAdded to: self.
+		candidates announcer subscribe: GtSpotterAllCandidatesRemoved do: [ self deselect ].
 		candidates ]
 ]
 
@@ -128,13 +128,13 @@ GtSpotterStep >> context [
 ]
 
 { #category : #accessing }
-GtSpotterStep >> context: aGTSpotterContext [
-	context := aGTSpotterContext
+GtSpotterStep >> context: aGtSpotterContext [
+	context := aGtSpotterContext
 ]
 
 { #category : #'accessing - defaults' }
 GtSpotterStep >> defaultStream [
-	^ GTSpotterUIThreadStream new
+	^ GtSpotterUIThreadStream new
 ]
 
 { #category : #'accessing - defaults' }
@@ -283,14 +283,14 @@ GtSpotterStep >> isSelected: aCandidateLink [
 { #category : #accessing }
 GtSpotterStep >> listProcessor [
 	| processor |
-	processor := GTSpotterCandidatesListProcessor new.
+	processor := GtSpotterCandidatesListProcessor new.
 	self addProcessor: processor.
 	^ processor
 ]
 
 { #category : #processing }
 GtSpotterStep >> newContextForQuery: aString [
-	^ GTSpotterContext new 
+	^ GtSpotterContext new 
 		step: self;
 		stream: self stream;
 		text: aString;
@@ -313,7 +313,7 @@ GtSpotterStep >> notifySelectedCandidateChanged: aCandidateLink for: anEventType
 		description: [ 'aCandidateLink must not be nil' ].
 
 	aCandidate := aCandidateLink candidate.
-	self announcer announce: (GTSpotterSelectedCandidateChanged new select: aCandidate).
+	self announcer announce: (GtSpotterSelectedCandidateChanged new select: aCandidate).
 	self spotter notifyCandidateSelected: aCandidate for: anEventType
 ]
 
@@ -341,7 +341,7 @@ GtSpotterStep >> origin: anObject [
 GtSpotterStep >> previousProcessorFrom: aCollection [
 	aCollection do: [ :each | 
 		each asSpotterCandidateLink processor ifNotNil: [ ^ each processor ] ]. " we assume they are all identical "
-	^ GTSpotterCandidatesListProcessor new
+	^ GtSpotterCandidatesListProcessor new
 		title: 'Items';
 		filter: GTFilterSubstring;
 		yourself
@@ -351,7 +351,7 @@ GtSpotterStep >> previousProcessorFrom: aCollection [
 GtSpotterStep >> previousStep [
 	"Return a spotter step before me which must exist,
 	otherwise behavior is undefined."
-	<return: #GTSpotterStep>
+	<return: #GtSpotterStep>
 	self assert: self hasPreviousStep.
 	
 	^ self spotter steps at: 
@@ -525,7 +525,7 @@ GtSpotterStep >> selected [
 	next and previous candidate. In order to get actual candidate object behind
 	the link send #candidate to it.
 	selected can not be nil (always use hasSelected before using me)"
-	<return: #GTSpotterCandidateLink>
+	<return: #GtSpotterCandidateLink>
 	self
 		assert: [ selected isNotNil ]
 		description: [ 'Selected candidate can not be accessed where there is no one' ].
@@ -548,7 +548,7 @@ GtSpotterStep >> selectedCategory [
 	"Return a category processor that produced a currently selected candidate.
 	Note: Since selected link can not be accessed if there is no selected one,
 	always check #hasSelected before using me"
-	<return: #GTSpotterProcessor>
+	<return: #GtSpotterProcessor>
 	
 	^ self selected processor
 ]

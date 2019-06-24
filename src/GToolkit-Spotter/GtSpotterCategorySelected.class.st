@@ -7,5 +7,5 @@ Class {
 { #category : #'as yet unclassified' }
 GtSpotterCategorySelected >> asRecorderEvent [
 
-	^ GTSpotterRecorderCategorySelectedEvent fromAnnouncement: self
+	^ GtSpotterRecorderCategorySelectedEvent fromAnnouncement: self
 ]

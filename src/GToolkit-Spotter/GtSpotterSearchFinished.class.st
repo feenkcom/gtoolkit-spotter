@@ -11,7 +11,7 @@ Class {
 { #category : #'as yet unclassified' }
 GtSpotterSearchFinished >> asRecorderEvent [
 
-	^ GTSpotterRecorderSearchFinishedEvent fromAnnouncement: self
+	^ GtSpotterRecorderSearchFinishedEvent fromAnnouncement: self
 ]
 
 { #category : #accessing }

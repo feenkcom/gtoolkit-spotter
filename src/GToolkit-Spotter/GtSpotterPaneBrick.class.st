@@ -68,19 +68,19 @@ GtSpotterPaneBrick >> isPreviewShown [
 { #category : #'instance creation' }
 GtSpotterPaneBrick >> newArrowBrick [
 
-	^ GTSpotterPreviewArrowBrick new
+	^ GtSpotterPreviewArrowBrick new
 ]
 
 { #category : #'instance creation' }
 GtSpotterPaneBrick >> newContentsBrick [
 
-	^ GTSpotterContentsBrick new
+	^ GtSpotterContentsBrick new
 ]
 
 { #category : #'instance creation' }
 GtSpotterPaneBrick >> newPreviewBrick [
 
-	^ GTSpotterPreviewBrick new
+	^ GtSpotterPreviewBrick new
 ]
 
 { #category : #accessing }

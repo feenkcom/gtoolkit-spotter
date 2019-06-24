@@ -91,7 +91,7 @@ GtSpotterResultsBrick >> buildCategoryBrick: aProcessor [
 	"Create and initialize new container brick to contain candidates for aProcessor.
 	Also creates a category title brick and assigns it to category brick to be
 	added later to results brick as soon as there is more than one candidate"
-	<return: #GTSpotterCategoryBrick>
+	<return: #GtSpotterCategoryBrick>
 	|titleBrick categoryBrick|
 	
 	"Initialize and style category title"
@@ -130,7 +130,7 @@ GtSpotterResultsBrick >> categoryBrickFor: aProcessor [
 	"Return a container brick that contains candidates for aProcessor.
 	If category brick for aProcessor is requested for the first time
 	it gets created without being added to spotter UI"
-	<return: #GTSpotterCategoryBrick>
+	<return: #GtSpotterCategoryBrick>
 	
 	^ self categories
 		at: aProcessor
@@ -141,7 +141,7 @@ GtSpotterResultsBrick >> categoryBrickFor: aProcessor [
 GtSpotterResultsBrick >> categoryBrickOf: aProcessor [
 	"Return a container brick that contains candidates for aProcessor.
 	If category brick for aProcessor does not exist throw an error"
-	<return: #GTSpotterCategoryBrick>
+	<return: #GtSpotterCategoryBrick>
 	<throws: #Error when: 'Category for aProcessor does not exist'>
 	
 	^ self categories
@@ -153,7 +153,7 @@ GtSpotterResultsBrick >> categoryBrickOf: aProcessor [
 GtSpotterResultsBrick >> categoryBrickOf: aProcessor ifAbsent: aBlock [
 	"Return a container brick that contains candidates for aProcessor.
 	If category brick for aProcessor does not exist evaluate aBlock"
-	<return: #GTSpotterCategoryBrick>
+	<return: #GtSpotterCategoryBrick>
 	
 	^ self categories
 		at: aProcessor
@@ -178,13 +178,13 @@ GtSpotterResultsBrick >> initialize [
 { #category : #'instance creation' }
 GtSpotterResultsBrick >> newCategoryBrick [
 
-	^ GTSpotterCategoryBrick new
+	^ GtSpotterCategoryBrick new
 ]
 
 { #category : #'instance creation' }
 GtSpotterResultsBrick >> newTitleBrick [
 
-	^ GTSpotterCategoryTitleBrick new
+	^ GtSpotterCategoryTitleBrick new
 ]
 
 { #category : #'event handling' }
@@ -247,7 +247,7 @@ GtSpotterResultsBrick >> onRemovedFrom: aBrick [
 { #category : #'event handling' }
 GtSpotterResultsBrick >> onScrolled [
 
-	self stepModel spotter announce: GTSpotterCandidateSelectedMoved new
+	self stepModel spotter announce: GtSpotterCandidateSelectedMoved new
 ]
 
 { #category : #accessing }
@@ -259,13 +259,13 @@ GtSpotterResultsBrick >> stepModel [
 GtSpotterResultsBrick >> stepModel: aModel [
 	stepModel := aModel.
 	
-	stepModel candidates announcer when: GTSpotterCandidateAdded send: #onCandidateAdded: to: self.
-	stepModel candidates announcer when: GTSpotterAllCandidatesRemoved send: #onAllCandidatesRemoved to: self.
-	stepModel candidates announcer when: GTSpotterAllCandidatesAdded send: #onAllCandidatesAdded: to: self.
-	stepModel candidates announcer when: GTSpotterCandidatesAmountChanged send: #onCandidatesAmountChanged: to: self.
-	stepModel announcer when: GTSpotterScrollPageDown send: #scrollPageDown to: self.
-	stepModel announcer when: GTSpotterScrollPageUp send: #scrollPageUp to: self.
-	stepModel announcer when: GTSpotterCandidateSelected send: #onCandidateSelected: to: self
+	stepModel candidates announcer when: GtSpotterCandidateAdded send: #onCandidateAdded: to: self.
+	stepModel candidates announcer when: GtSpotterAllCandidatesRemoved send: #onAllCandidatesRemoved to: self.
+	stepModel candidates announcer when: GtSpotterAllCandidatesAdded send: #onAllCandidatesAdded: to: self.
+	stepModel candidates announcer when: GtSpotterCandidatesAmountChanged send: #onCandidatesAmountChanged: to: self.
+	stepModel announcer when: GtSpotterScrollPageDown send: #scrollPageDown to: self.
+	stepModel announcer when: GtSpotterScrollPageUp send: #scrollPageUp to: self.
+	stepModel announcer when: GtSpotterCandidateSelected send: #onCandidateSelected: to: self
 ]
 
 { #category : #accessing }

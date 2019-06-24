@@ -59,13 +59,13 @@ GtSpotterContentsBrick >> isDropDownPaneVisible [
 { #category : #'instance creation' }
 GtSpotterContentsBrick >> newDropDownMorph [
 
-	^ GTSpotterDropDownMorph new
+	^ GtSpotterDropDownMorph new
 ]
 
 { #category : #'instance creation' }
 GtSpotterContentsBrick >> newHeaderBrick [
 
-	^ GTSpotterHeaderBrick new
+	^ GtSpotterHeaderBrick new
 ]
 
 { #category : #'events-processing' }
@@ -104,5 +104,5 @@ GtSpotterContentsBrick >> spotterModel: aModel [
 	
 	spotterModel steps isEmpty ifFalse: [ spotterModel currentStep hasCandidates ifTrue: [ self showDropDownPane ] ].
 
-	spotterModel announcer when: GTSpotterStepAdded send: #onStepAdded to: self.
+	spotterModel announcer when: GtSpotterStepAdded send: #onStepAdded to: self.
 ]

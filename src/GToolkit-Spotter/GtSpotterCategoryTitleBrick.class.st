@@ -290,9 +290,9 @@ GtSpotterCategoryTitleBrick >> stepModel [
 GtSpotterCategoryTitleBrick >> stepModel: anObject [
 	stepModel := anObject.
 	
-	self stepModel announcer when: GTSpotterSelectedCandidateChanged send: #onCandidateSelected to: self.
-	self stepModel spotter announcer when: GTSpotterRevealHints send: #onRevealHints to: self.
-	self stepModel spotter announcer when: GTSpotterHideHints send: #onHideHints to: self
+	self stepModel announcer when: GtSpotterSelectedCandidateChanged send: #onCandidateSelected to: self.
+	self stepModel spotter announcer when: GtSpotterRevealHints send: #onRevealHints to: self.
+	self stepModel spotter announcer when: GtSpotterHideHints send: #onHideHints to: self
 ]
 
 { #category : #actions }

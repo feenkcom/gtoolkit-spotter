@@ -118,7 +118,7 @@ GtSpotterPreviewArrowBrick >> onShowPreview [
 GtSpotterPreviewArrowBrick >> onStepAdded [
 	
 	self selectedItemBrick: nil.
-	self spotterModel steps last candidates announcer when: GTSpotterAllCandidatesRemoved send: #onAllCandidatesRemoved to: self.
+	self spotterModel steps last candidates announcer when: GtSpotterAllCandidatesRemoved send: #onAllCandidatesRemoved to: self.
 ]
 
 { #category : #'brick-properties-events' }
@@ -162,14 +162,14 @@ GtSpotterPreviewArrowBrick >> spotterModel: aSpotterModel [
 
 	spotterModel := aSpotterModel.
 	
-	self spotterModel announcer when: GTSpotterCandidateSelected send: #onCandidateSelected: to: self.
-	self spotterModel announcer when: GTSpotterCandidateSelectedMoved send: #onCandidateMoved to: self.
-	self spotterModel announcer when: GTSpotterStepAdded send: #onStepAdded to: self.
-	self spotterModel announcer when: GTSpotterShowPreview send: #onShowPreview to: self.
-	self spotterModel announcer when: GTSpotterHidePreview send: #onHidePreview to: self.
+	self spotterModel announcer when: GtSpotterCandidateSelected send: #onCandidateSelected: to: self.
+	self spotterModel announcer when: GtSpotterCandidateSelectedMoved send: #onCandidateMoved to: self.
+	self spotterModel announcer when: GtSpotterStepAdded send: #onStepAdded to: self.
+	self spotterModel announcer when: GtSpotterShowPreview send: #onShowPreview to: self.
+	self spotterModel announcer when: GtSpotterHidePreview send: #onHidePreview to: self.
 	
-	self spotterModel announcer when: GTSpotterRevealHints send: #onRevealHints to: self.
-	self spotterModel announcer when: GTSpotterHideHints send: #onHideHints to: self.
+	self spotterModel announcer when: GtSpotterRevealHints send: #onRevealHints to: self.
+	self spotterModel announcer when: GtSpotterHideHints send: #onHideHints to: self.
 ]
 
 { #category : #accessing }

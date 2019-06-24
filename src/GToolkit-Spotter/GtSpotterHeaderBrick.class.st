@@ -57,7 +57,7 @@ GtSpotterHeaderBrick >> helpButton: aBrick [
 			self spotterModel exitDueTo: #actionButton.
 			tree := HelpBrowser open instVarNamed: #treeMorph.
 			item := tree allItems detect: [:each | 
-				each complexContents item key = GTSpotterHelp key].
+				each complexContents item key = GtSpotterHelp key].
 			tree selection: item ].
 	
 	self addBrickBack: helpButton
@@ -197,8 +197,8 @@ GtSpotterHeaderBrick >> spotterModel: aModel [
 	spotterModel := aModel.
 	self searchField morph on: spotterModel.
 
-	spotterModel announcer when: GTSpotterCurrentStepChanged send: #onCurrentStepChanged to: self.
+	spotterModel announcer when: GtSpotterCurrentStepChanged send: #onCurrentStepChanged to: self.
 	
-	self spotterModel announcer when: GTSpotterRevealHints send: #onRevealHints to: self.
-	self spotterModel announcer when: GTSpotterHideHints send: #onHideHints to: self.
+	self spotterModel announcer when: GtSpotterRevealHints send: #onRevealHints to: self.
+	self spotterModel announcer when: GtSpotterHideHints send: #onHideHints to: self.
 ]

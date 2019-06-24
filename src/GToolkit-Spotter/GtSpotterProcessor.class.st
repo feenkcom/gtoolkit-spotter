@@ -67,7 +67,7 @@ GtSpotterProcessor >> doFilterInContext: aSpotterContext [
 { #category : #'accessing-dynamic' }
 GtSpotterProcessor >> exceptionHandler [
 	self flag: 'Bloc -> overrides doesNotUnderstand discarding the current exception context'.
-	^ GTCurrentSpotterExceptionHandler value ifNil: [ GTSpotterExceptionHandlerNotFound signal ]
+	^ GTCurrentSpotterExceptionHandler value ifNil: [ GtSpotterExceptionHandlerNotFound signal ]
 ]
 
 { #category : #private }
@@ -114,7 +114,7 @@ GtSpotterProcessor >> prepareProcessorInContext: aContext [
 
 { #category : #private }
 GtSpotterProcessor >> render: anObject [
-	^ GTSpotterItemBrick new
+	^ GtSpotterItemBrick new
 		icon: (nil);
 		text: (anObject gtDisplayString)
 ]

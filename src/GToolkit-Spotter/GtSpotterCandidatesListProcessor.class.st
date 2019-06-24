@@ -84,9 +84,9 @@ GtSpotterCandidatesListProcessor >> filter: aGTFilterOrBlockWithOneArgument [
 ]
 
 { #category : #scripting }
-GtSpotterCandidatesListProcessor >> filter: aGTFilter item: aGTSpotterIterator [ 
+GtSpotterCandidatesListProcessor >> filter: aGTFilter item: aGtSpotterIterator [ 
 	self filter: aGTFilter.
-	self items: aGTSpotterIterator gtIterator.
+	self items: aGtSpotterIterator gtIterator.
 	
 ]
 

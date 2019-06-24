@@ -96,7 +96,7 @@ GtSpotterCandidatesProcessor >> prepareProcessorInContext: aContext [
 
 { #category : #private }
 GtSpotterCandidatesProcessor >> render: anObject [
-	^ GTSpotterItemBrick new
+	^ GtSpotterItemBrick new
 		icon: (self itemIconFor: anObject);
 		text: (self itemNameFor: anObject)
 ]

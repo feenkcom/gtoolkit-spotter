@@ -4,105 +4,52 @@ Class {
 	#category : #'GToolkit-Spotter-Examples'
 }
 
-{ #category : #'examples - basic' }
-GtSpotterExamples class >> gtExampleBasic [
+{ #category : #'instance creation examples' }
+GtSpotterExamples >> emptySpotter [
 	<gtExample>
-	<label: 'Basic Spotter object'>
-	^ GTSpotter new
-]
+	| aSpotter |
 
-{ #category : #'examples - filtering' }
-GtSpotterExamples class >> gtExampleCustomImplementorsSearchOn: aSpotter [
-	<gtExample>
-	<label: 'Custom implementors search'>
-	<description: 'A spotter for searching through the implementors of a 
-	method that overrides properties of the search step.'>
-	<dependsOn: #gtExampleOnCompliedMethod>
-	
+	aSpotter := GtSpotter new.
+	self assert: aSpotter steps isEmpty.
+	self assert: aSpotter hasSteps not.
+	self assert: aSpotter foundationOrigin == aSpotter.
+
 	^ aSpotter
-		processorsFilter: (GTSpotterMethodListProcessorFilter new 
-			allowProcessorsFrom: CompiledMethod>>#spotterForImplementorsFor: 
-			configuredWith: [ :aProcessor | aProcessor
-				actLogic: [ :aMethod :step | 
-					step exit.
-					aMethod inform: aMethod name ];
-				candidatesLimit: 50 ])
 ]
 
-{ #category : #'examples - filtering' }
-GtSpotterExamples class >> gtExampleCustomImplementorsSearchWithNavigationOn: aSpotter [
+{ #category : #'instance creation examples' }
+GtSpotterExamples >> spotterWithOneStep [
 	<gtExample>
-	<label: 'Custom implementors search with navigation'>
-	<description: 'A spotter for searching through the implementors of a method that 
-	overrides properties of the search step and enables the Collection 
-	processor for items (to allow dive in).'>
-	<dependsOn: #gtExampleOnCompliedMethod>
+	| aSpotter aStep |
 	
-	^ aSpotter
-		processorsFilter: (GTSpotterMethodListProcessorFilter new 
-			allowProcessorsFrom: Collection>>#spotterItemsFor:;
-			allowProcessorsFrom: CompiledMethod>>#spotterForImplementorsFor: 
-			configuredWith: [ :aProcessor | aProcessor
-				actLogic: [ :aMethod :step | 
-					step exit.
-					aMethod inform: aMethod name ];
-				candidatesLimit: 50 ])
-]
+	aSpotter := self emptySpotter.
+	aSpotter addStep: (aStep := aSpotter newStep).
 
-{ #category : #'examples - filtering' }
-GtSpotterExamples class >> gtExampleHelpSearchOn: aSpotter [
-	<gtExample>
-	<label: 'Help search'>
-	<description: 'A spotter for searching through help pages.'>
-	<dependsOn: #gtExampleBasic>
+	aStep candidates add: (GtSpotterCandidate new item: Object >> #hash; processor: #Implementers).
+	aStep candidates add: (GtSpotterCandidate new item: Object >> #=; processor: #Implementers).
+	aStep candidates add: (GtSpotterCandidate new item: Object >> #at:; processor: #Implementers).
 	
-	^ aSpotter
-		filterByMethods: {
-			GTSpotter>>#spotterForHelpTopicFor:.
-			HelpTopic>>#spotterForHelpTopicFor:}
-]
-
-{ #category : #'examples - filtering' }
-GtSpotterExamples class >> gtExampleImplementorsSearchOn: aSpotter [
-	<gtExample>
-	<label: 'Implementors search on single method'>
-	<description: 'A spotter for searching through the implementors of a method.'>
-	<dependsOn: #gtExampleOnCompliedMethod>
+	aStep candidates add: (GtSpotterCandidate new item: Object; processor: #Classes).
+	aStep candidates add: (GtSpotterCandidate new item: Collection; processor: #Classes).
+	aStep candidates add: (GtSpotterCandidate new item: Number; processor: #Classes).
+	aStep candidates add: (GtSpotterCandidate new item: Boolean; processor: #Classes).
 	
-	^ aSpotter
-		filterByMethods: {
-			CompiledMethod>>#spotterForImplementorsFor:}
-]
+	aStep candidates add: (GtSpotterCandidate new item: nil; processor: #'Pseudo-Variables').
+	aStep candidates add: (GtSpotterCandidate new item: true; processor: #'Pseudo-Variables').
+	aStep candidates add: (GtSpotterCandidate new item: false; processor: #'Pseudo-Variables').
 
-{ #category : #'examples - basic' }
-GtSpotterExamples class >> gtExampleOnCompliedMethod [
-	<gtExample>
-	<label: 'Spotter on compiled method'>
-	^ GTSpotter on: Object>>#copy
-]
-
-{ #category : #'examples - basic' }
-GtSpotterExamples class >> gtExampleWithOneStepFrom: aSpotter [
-	<gtExample>
-	<label: 'Spotter object with one step'>
-	<dependsOn: #gtExampleBasic>
-	| step |
-	step := GTSpotterStep new spotter: aSpotter.
-	aSpotter steps add: step.
-	aSpotter currentStep: step.
 	^ aSpotter
 ]
 
-{ #category : #'examples - filtering' }
-GtSpotterExamples class >> gtExampleWorldMenuSearchOn: aSpotter [
+{ #category : #'instance creation examples' }
+GtSpotterExamples >> spotterWithTwoSteps [
 	<gtExample>
-	<label: 'World menu search'>
-	<description: 'A spotter for searching through the world menu'>
-	<dependsOn: #gtExampleBasic>
+	| aSpotter aStep |
+	
+	aSpotter := self spotterWithOneStep.
+	aSpotter addStep: (aStep := aSpotter newStep).
+	
+	aStep candidates add: (GtSpotterCandidate new item: 'Second'; processor: Collection).
 
 	^ aSpotter
-		filterByMethods: {
-			GTSpotter>>#spotterWorldMenuFor:}
-	
-	
 ]

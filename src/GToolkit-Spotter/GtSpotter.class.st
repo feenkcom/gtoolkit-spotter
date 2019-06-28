@@ -168,7 +168,9 @@ GtSpotter class >> wasOpened [
 { #category : #'actions api' }
 GtSpotter >> addStep: aStepModel [
 
+	aStepModel spotter: self.
 	self steps add: aStepModel.
+
 	self notifyStepAdded: aStepModel
 ]
 
@@ -301,13 +303,14 @@ GtSpotter >> filterByMethods: aCollection [
 
 { #category : #accessing }
 GtSpotter >> foundationOrigin [
-	
-	^ foundationOrigin ifNil: [ foundationOrigin := self ]
+	"Return an object on which this spotter is operating"
+	<return: #Object>
+
+	^ foundationOrigin
 ]
 
 { #category : #accessing }
 GtSpotter >> foundationOrigin: anObject [
-	
 	foundationOrigin := anObject
 ]
 
@@ -339,13 +342,12 @@ GtSpotter >> gtDisplaySpotterMorphOn: aComposite [
 				yourself ]
 ]
 
-{ #category : #inspecting }
-GtSpotter >> gtInspectorStepsIn: composite [
-	<gtInspectorPresentationOrder: 40>
-	composite list
+{ #category : #'gt-extension' }
+GtSpotter >> gtStepsFor: aView [
+	<gtView>
+	^ aView list
 		title: 'Steps';
-		display: [ self steps ];
-		when: [ self steps notEmpty ]
+		items: [ self steps ]
 ]
 
 { #category : #'event handling' }
@@ -402,7 +404,9 @@ GtSpotter >> history: aWeakCollection [
 GtSpotter >> initialize [
 	super initialize.
 	
-	processorsFilter := GtSpotterSettingsProcessorFilter new
+	processorsFilter := GtSpotterSettingsProcessorFilter new.
+	steps := OrderedCollection new.
+	foundationOrigin := self
 ]
 
 { #category : #'actions api' }
@@ -413,12 +417,6 @@ GtSpotter >> inspectIt [
 		exceptionDo: [ :ex | ^ex  ].
 	result inspect.
 	self exitDueTo: #inspectIt 
-]
-
-{ #category : #testing }
-GtSpotter >> isEmpty [
-	self deprecated: 'Use hasSteps instead'.
-	^ self hasSteps not
 ]
 
 { #category : #testing }
@@ -682,8 +680,9 @@ GtSpotter >> showPreview [
 
 { #category : #accessing }
 GtSpotter >> steps [
+	<return: #Collection of: #GtSpotterStep>
 
-	^ steps ifNil: [ steps := OrderedCollection new ]
+	^ steps
 ]
 
 { #category : #'actions api' }

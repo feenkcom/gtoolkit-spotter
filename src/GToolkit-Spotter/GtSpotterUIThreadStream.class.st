@@ -3,6 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'onAddedSelector',
+		'onAddedAllSelector',
 		'onRemoveSelector',
 		'receiver',
 		'timestamp'
@@ -12,16 +13,37 @@ Class {
 
 { #category : #'adding/removing' }
 GtSpotterUIThreadStream >> addObject: firstObject inProcessor: secondObject [
+	| aCandidate |
+	
+	aCandidate := GtSpotterCandidate new
+		item: firstObject;
+		processor: secondObject.
 
-	self performSymbol: self onAddedSelector withArguments: { firstObject. secondObject }.
+	self performSymbol: self onAddedSelector withArguments: { aCandidate }.
 	Processor yield
 ]
 
 { #category : #'adding/removing' }
-GtSpotterUIThreadStream >> addObjects: aCollection inProcessor: aProcessor [
+GtSpotterUIThreadStream >> addObjects: aCollection inProcessor: aProcessor [	
+	| theCandidates |
+	
+	theCandidates := aCollection collect: [ :eachItem |
+		GtSpotterCandidate new
+			item: eachItem;
+			processor: aProcessor ].
 
-	self performSymbol: #addAllCandidates:in: withArguments: { aCollection . aProcessor }.
+	self performSymbol: self onAddedAllSelector withArguments: { theCandidates }.
 	Processor yield
+]
+
+{ #category : #accessing }
+GtSpotterUIThreadStream >> onAddedAllSelector [
+	^ onAddedAllSelector
+]
+
+{ #category : #accessing }
+GtSpotterUIThreadStream >> onAddedAllSelector: anObject [
+	onAddedAllSelector := anObject
 ]
 
 { #category : #accessing }

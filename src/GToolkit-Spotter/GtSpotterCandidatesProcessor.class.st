@@ -1,11 +1,11 @@
 Class {
 	#name : #GtSpotterCandidatesProcessor,
-	#superclass : #GTSpotterProcessor,
+	#superclass : #GtSpotterProcessor,
 	#instVars : [
 		'origin',
 		'allCandidates'
 	],
-	#category : #'GToolkit-Spotter-Processors'
+	#category : #'GToolkit-Spotter-Model - Processors'
 }
 
 { #category : #'instance creation' }

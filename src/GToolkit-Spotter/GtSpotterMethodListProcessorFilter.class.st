@@ -1,6 +1,6 @@
 Class {
 	#name : #GtSpotterMethodListProcessorFilter,
-	#superclass : #GTSpotterProcessorFilter,
+	#superclass : #GtSpotterProcessorFilter,
 	#instVars : [
 		'selectedMethodSignatures',
 		'configurationBlocks'

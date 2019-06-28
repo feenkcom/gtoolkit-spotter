@@ -1,6 +1,6 @@
 Class {
 	#name : #GtSpotterCandidatesListProcessor,
-	#superclass : #GTSpotterCandidatesProcessor,
+	#superclass : #GtSpotterCandidatesProcessor,
 	#instVars : [
 		'allCandidatesBlock',
 		'candidatesLimit',
@@ -15,7 +15,7 @@ Class {
 		'keyBinding',
 		'sortBlock'
 	],
-	#category : #'GToolkit-Spotter-Processors'
+	#category : #'GToolkit-Spotter-Model - Processors'
 }
 
 { #category : #accessing }

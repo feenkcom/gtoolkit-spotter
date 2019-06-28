@@ -5,7 +5,7 @@ Class {
 		'allFilteredCandidates',
 		'order'
 	],
-	#category : #'GToolkit-Spotter-Processors'
+	#category : #'GToolkit-Spotter-Model - Processors'
 }
 
 { #category : #public }

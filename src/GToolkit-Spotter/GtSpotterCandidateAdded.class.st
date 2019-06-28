@@ -1,24 +1,24 @@
 Class {
 	#name : #GtSpotterCandidateAdded,
-	#superclass : #GTSpotterAnnouncement,
+	#superclass : #GtSpotterAnnouncement,
 	#instVars : [
-		'candidateLink'
+		'candidate'
 	],
 	#category : #'GToolkit-Spotter-Announcements'
 }
 
 { #category : #accessing }
 GtSpotterCandidateAdded >> candidate [
-	^ candidateLink value
+	^ candidate value
 ]
 
 { #category : #accessing }
 GtSpotterCandidateAdded >> candidateLink [
 
-	^ candidateLink
+	^ candidate
 ]
 
 { #category : #accessing }
 GtSpotterCandidateAdded >> candidateLink: anObject [
-	candidateLink := anObject
+	candidate := anObject
 ]

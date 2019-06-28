@@ -1,6 +1,6 @@
 Class {
 	#name : #GtSpotterMorph,
-	#superclass : #GLMFoundationBrick,
+	#superclass : #BlElement,
 	#instVars : [
 		'focusedMorph',
 		'breadcrumbBrick',

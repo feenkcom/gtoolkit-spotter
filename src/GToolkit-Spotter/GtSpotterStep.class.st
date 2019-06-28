@@ -50,6 +50,34 @@ GtSpotterStep >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
+{ #category : #converting }
+GtSpotterStep >> asElement [
+	| aTree |
+	
+	aTree := BrColumnedTree new.
+	aTree rowStencil: (BrColumnedTreeRowStencilBuilder new
+		cellSpacing: 2;
+		padding: (BlInsets left: 0)).
+	
+	aTree column
+		title: 'Item';
+		stencil: [ :aNode :index |
+			BrLabel new
+				look: (BrGlamorousLabelLook new);
+				text: aNode value gtDisplayText;
+				padding: (BlInsets all: 6);
+				hMatchParent ].
+
+	aTree items: self candidates children children: #children.
+
+	self candidates announcer
+		subscribe: GtSpotterCandidateAdded do: [ aTree items: self candidates children: #children ];
+		subscribe: GtSpotterAllCandidatesAdded do: [ aTree items: self candidates children: #children ];
+		subscribe: GtSpotterAllCandidatesRemoved do: [ aTree items: self candidates children: #children ].
+		
+	^ aTree
+]
+
 { #category : #accessing }
 GtSpotterStep >> asyncTask [
 
@@ -103,7 +131,7 @@ GtSpotterStep >> canDiveInSelectedCandidate [
 GtSpotterStep >> candidates [
 
 	^ candidates ifNil: [
-		candidates := GtSpotterCandidatesList new.
+		candidates := GtSpotterCandidates new.
 		candidates announcer subscribe: GtSpotterCandidateAdded send: #onCandidateAdded to: self.
 		candidates announcer subscribe: GtSpotterAllCandidatesAdded send: #onCandidateAdded to: self.
 		candidates announcer subscribe: GtSpotterAllCandidatesRemoved do: [ self deselect ].
@@ -208,6 +236,18 @@ GtSpotterStep >> exit [
 	self spotter exit
 ]
 
+{ #category : #'gt-extension' }
+GtSpotterStep >> gtCandidatesFor: aView [
+	<gtView>
+
+	^ self candidates gtCandidatesFor: aView
+]
+
+{ #category : #printing }
+GtSpotterStep >> gtDisplayText [
+	^ self origin gtDisplayText
+]
+
 { #category : #inspecting }
 GtSpotterStep >> gtInspectorProcessorsIn: composite [
 	<gtInspectorPresentationOrder: 40>
@@ -299,20 +339,17 @@ GtSpotterStep >> newContextForQuery: aString [
 ]
 
 { #category : #notifying }
-GtSpotterStep >> notifySelectedCandidateChanged: aDoubleLink [
+GtSpotterStep >> notifySelectedCandidateChanged: aCandidate [
 	
-	self notifySelectedCandidateChanged: aDoubleLink for: #unknown
+	self notifySelectedCandidateChanged: aCandidate for: #unknown
 ]
 
 { #category : #notifying }
-GtSpotterStep >> notifySelectedCandidateChanged: aCandidateLink for: anEventType [
-	| aCandidate |
-	
+GtSpotterStep >> notifySelectedCandidateChanged: aCandidate for: anEventType [	
 	self
-		assert: [ aCandidateLink isNotNil ]
-		description: [ 'aCandidateLink must not be nil' ].
+		assert: [ aCandidate isNotNil ]
+		description: [ 'aCandidate must not be nil' ].
 
-	aCandidate := aCandidateLink candidate.
 	self announcer announce: (GtSpotterSelectedCandidateChanged new select: aCandidate).
 	self spotter notifyCandidateSelected: aCandidate for: anEventType
 ]
@@ -481,7 +518,7 @@ GtSpotterStep >> selectFirst [
 		assert: [ self candidates isNotEmpty ]
 		description: [ 'There must be at least one candidate in order to select the first' ].
 
-	self select: self candidates head
+	self select: self candidates first
 ]
 
 { #category : #selecting }
@@ -570,7 +607,8 @@ GtSpotterStep >> stream [
 	^ stream ifNil: [
 		stream := self defaultStream.
 		stream
-			onAddedSelector: #addCandidate:in:;
+			onAddedSelector: #add:;
+			onAddedAllSelector: #addAll:;
 			onRemoveSelector: #removeAllCandidatesOf:;
 			receiver: self candidates.
 		stream ]

@@ -52,13 +52,13 @@ GtSpotterStep >> announcer [
 
 { #category : #converting }
 GtSpotterStep >> asElement [
-	| aTree |
+	| aTree updateBlock |
 	
 	aTree := BrColumnedTree new.
 	aTree rowStencil: (BrColumnedTreeRowStencilBuilder new
 		cellSpacing: 2;
 		padding: (BlInsets left: 0)).
-	
+
 	aTree column
 		title: 'Item';
 		stencil: [ :aNode :index |
@@ -67,14 +67,18 @@ GtSpotterStep >> asElement [
 				text: aNode value gtDisplayText;
 				padding: (BlInsets all: 6);
 				hMatchParent ].
-
-	aTree items: self candidates children children: #children.
+	
+	updateBlock := [ aTree
+		items: self candidates children children: #children;
+		expandAll ].
 
 	self candidates announcer
-		subscribe: GtSpotterCandidateAdded do: [ aTree items: self candidates children: #children ];
-		subscribe: GtSpotterAllCandidatesAdded do: [ aTree items: self candidates children: #children ];
-		subscribe: GtSpotterAllCandidatesRemoved do: [ aTree items: self candidates children: #children ].
-		
+		subscribe: GtSpotterCandidateAdded do: updateBlock;
+		subscribe: GtSpotterAllCandidatesAdded do: updateBlock;
+		subscribe: GtSpotterAllCandidatesRemoved do: updateBlock.
+
+	updateBlock value.
+
 	^ aTree
 ]
 

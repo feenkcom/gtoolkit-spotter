@@ -11,6 +11,7 @@ Class {
 GtSpotterPager >> initialize [
 	super initialize.
 	
+	self look: BrScrollablePagerLook new + BrLayoutLook linearVertical.
 	self constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ]
@@ -51,8 +52,8 @@ GtSpotterPager >> spotterModel [
 { #category : #accessing }
 GtSpotterPager >> spotterModel: aModel [ 
 	spotterModel := aModel.
-	
+
 	spotterModel steps do: [ :eachStep | self pushStep: eachStep ].
-	
-	spotterModel announcer when: GtSpotterStepAdded send: #onStepAdded: to: self.
+
+	spotterModel announcer when: GtSpotterStepAdded send: #onStepAdded: to: self
 ]

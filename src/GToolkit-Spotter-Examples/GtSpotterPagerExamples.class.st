@@ -8,7 +8,7 @@ Class {
 GtSpotterPagerExamples >> emptyPager [
 	<gtExample>
 	| aPager |
-	
+
 	aPager := GtSpotterPager new.
 	^ aPager
 ]

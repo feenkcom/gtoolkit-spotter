@@ -167,6 +167,7 @@ GtSpotter class >> wasOpened [
 
 { #category : #'actions api' }
 GtSpotter >> addStep: aStepModel [
+	"I add a new step without changing the current step"
 
 	aStepModel spotter: self.
 	self steps add: aStepModel.
@@ -231,10 +232,15 @@ GtSpotter >> beDeployment [
 
 { #category : #accessing }
 GtSpotter >> currentStep [
+	self
+		assert: [ self hasSteps ]
+		description: [ 'Spotter must always have at least one step' ].
+		
+	self
+		assert: [ currentStep isNotNil ]
+		description: [ 'Spotter must always have a current step' ].
+
 	^ currentStep
-		ifNil: [ self hasSteps
-				ifTrue: [ currentStep := self steps last ]
-				ifFalse: [ self newStep origin: self foundationOrigin ] ]
 ]
 
 { #category : #accessing }
@@ -263,7 +269,7 @@ GtSpotter >> defaultStep [
 GtSpotter >> doIt [
 	| result |
 	Smalltalk compiler
-		silentlyDo: [ result := Smalltalk compiler evaluate: text string trimBoth ]
+		silentlyDo: [ result := Smalltalk compiler evaluate: text trimBoth ]
 		exceptionDo: [:ex | ^ex ]. 
 	"self exitDueTo: #doIt"
 ]
@@ -406,14 +412,29 @@ GtSpotter >> initialize [
 	
 	processorsFilter := GtSpotterSettingsProcessorFilter new.
 	steps := OrderedCollection new.
-	foundationOrigin := self
+	
+	self initializeWith: self
+]
+
+{ #category : #initialization }
+GtSpotter >> initializeWith: anFoundationObject [
+	"Initialize Spotter on a given foundation object and create a new first step"
+	| aDefaultStep |
+	
+	foundationOrigin := anFoundationObject.
+
+	aDefaultStep := self newStep origin: self foundationOrigin.
+	self addStep: aDefaultStep.
+
+	currentStep := self steps last.
+	text := ''
 ]
 
 { #category : #'actions api' }
 GtSpotter >> inspectIt [
 	| result |
 	Smalltalk compiler
-		silentlyDo: [ result := Smalltalk compiler evaluate: text string trimBoth ]
+		silentlyDo: [ result := Smalltalk compiler evaluate: text trimBoth ]
 		exceptionDo: [ :ex | ^ex  ].
 	result inspect.
 	self exitDueTo: #inspectIt 
@@ -636,19 +657,18 @@ GtSpotter >> requestNextStepWith: origin for: anEventType [
 ]
 
 { #category : #'model access' }
-GtSpotter >> setText: aText from: aView [
+GtSpotter >> setText: aString [
 	"I am the main entry point for triggering a new search in the current step."
 	
-	self steps isEmpty
-		"by default there are no steps, so we need to create one based on foundation origin"
-		ifTrue: [ self addStep: ( self newStep origin: self foundationOrigin ) ].
+	self
+		assert: [ self hasSteps ]
+		description: [ 'There must be at least one step' ].
 
-	(aText asString isEmpty and: [ self text isEmpty not ])
+	(aString isEmpty and: [ self text isNotEmpty ])
 		ifTrue: [ self currentStep process: nil ]
-		ifFalse: [ self currentStep process: aText asString ].
-	
-	text := aText asString asText.
-	^ true
+		ifFalse: [ self currentStep process: aString ].
+
+	text := aString
 ]
 
 { #category : #'actions api' }
@@ -693,8 +713,9 @@ GtSpotter >> terminateProcessors [
 
 { #category : #accessing }
 GtSpotter >> text [
+	<return: #String>
 
-	^ text ifNil: [ text := '' asText ]
+	^ text ifNil: [ text := '' ]
 ]
 
 { #category : #'actions api' }

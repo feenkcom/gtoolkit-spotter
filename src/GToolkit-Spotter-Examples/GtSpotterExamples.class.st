@@ -5,14 +5,16 @@ Class {
 }
 
 { #category : #'instance creation examples' }
-GtSpotterExamples >> emptySpotter [
+GtSpotterExamples >> defaultSpotter [
 	<gtExample>
 	| aSpotter |
 
 	aSpotter := GtSpotter new.
-	self assert: aSpotter steps isEmpty.
-	self assert: aSpotter hasSteps not.
+	self assert: aSpotter steps isEmpty not.
+	self assert: aSpotter hasSteps.
 	self assert: aSpotter foundationOrigin == aSpotter.
+	self assert: aSpotter currentStep == aSpotter steps first.
+	self assert: aSpotter text = ''.
 
 	^ aSpotter
 ]
@@ -22,7 +24,7 @@ GtSpotterExamples >> spotterWithOneStep [
 	<gtExample>
 	| aSpotter aStep |
 	
-	aSpotter := self emptySpotter.
+	aSpotter := self defaultSpotter.
 	aSpotter addStep: (aStep := aSpotter newStep).
 
 	aStep candidates add: (GtSpotterCandidate new item: Object >> #hash; processor: #Implementers).

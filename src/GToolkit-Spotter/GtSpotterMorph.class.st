@@ -359,7 +359,7 @@ GtSpotterMorph >> spotterModel: aSpotter [
 	
 	"expanding drop down pane"
 	self spotterModelDo: [ 
-		self spotterModel setText: '' from: nil.
+		self spotterModel setText: ''.
 		self spotterModel currentStep process: nil ]
 	
 	

@@ -10,7 +10,7 @@ Class {
 { #category : #initialization }
 GtSpotterPager >> initialize [
 	super initialize.
-	
+
 	self look: BrScrollablePagerLook new + BrLayoutLook linearVertical.
 	self constraintsDo: [ :c |
 		c horizontal matchParent.

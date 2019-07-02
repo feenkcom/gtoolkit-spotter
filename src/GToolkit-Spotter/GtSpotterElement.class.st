@@ -5,7 +5,8 @@ Class {
 		'spotterModel',
 		'searchField',
 		'stepsPager',
-		'closeButton'
+		'closeButton',
+		'breadcrumb'
 	],
 	#category : #'GToolkit-Spotter-UI-Bloc'
 }
@@ -19,6 +20,8 @@ GtSpotterElement >> initialize [
 	self constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
+	
+	breadcrumb := GtSpotterBreadcrumb new.
 
 	searchField := GtSpotterSearchField new.
 	searchField vFitContent; hMatchParent.
@@ -38,7 +41,7 @@ GtSpotterElement >> initialize [
 	
 	stepsPager := GtSpotterPager new.
 	
-	self addChildren: { aTopBar . stepsPager }
+	self addChildren: { breadcrumb . aTopBar . stepsPager }
 ]
 
 { #category : #'event - handling' }
@@ -66,6 +69,7 @@ GtSpotterElement >> spotterModel: aSpotter [
 	
 	searchField spotterModel: aSpotter.
 	stepsPager spotterModel: aSpotter.
+	breadcrumb spotterModel: aSpotter.
 	
 	spotterModel announcer when: GtSpotterExitAnnouncement send: #onCloseSpotter to: self.
 	spotterModel announcer when: GtSpotterShowPreview send: #onShowPreview to: self.

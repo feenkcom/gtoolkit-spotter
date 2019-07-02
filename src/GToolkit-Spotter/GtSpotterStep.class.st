@@ -316,12 +316,12 @@ GtSpotterStep >> isEmpty [
 ]
 
 { #category : #testing }
-GtSpotterStep >> isSelected: aCandidateLink [
-	"Return true if aCandidateLink is currently selected,
+GtSpotterStep >> isSelected: aCandidate [
+	"Return true if aCandidate is currently selected,
 	false otherwise"
 	<return: #Boolean>
 	
-	^ self hasSelected and: [ self selected == aCandidateLink ]
+	^ self hasSelected and: [ self selected == aCandidate ]
 ]
 
 { #category : #accessing }
@@ -477,40 +477,40 @@ GtSpotterStep >> relevantProcessorsProcess: aSpotterContext [
 ]
 
 { #category : #selecting }
-GtSpotterStep >> select: aCandidateLink [
-	"Select a given candidate link due to unknown reason.
+GtSpotterStep >> select: aCandidate [
+	"Select a given candidate due to unknown reason.
 	It is not recommended to use this method, unless you really need to.
 	Note: use #select:dueTo: to allow better usage statistics"
 	
-	self select: aCandidateLink dueTo: #unknown
+	self select: aCandidate dueTo: #unknown
 ]
 
 { #category : #selecting }
-GtSpotterStep >> select: aCandidateLink dueTo: anEventType [
+GtSpotterStep >> select: aCandidate dueTo: anEventType [
 	"Select a given candidate due to provided event type.
 	A selection reason is used for statistical purposes and helps us
 	better understand how users use spotter and as result improve it.
-	aCandidateLink must not be nil.
+	aCandidate must not be nil.
 	anEventType must not be nil"
 
 	self
-		assert: [ aCandidateLink isNotNil ]
+		assert: [ aCandidate isNotNil ]
 		description: [ 'Candidate link must not be nil' ].
 
 	self
-		assert: [ aCandidateLink processor isNotNil ]
+		assert: [ aCandidate processor isNotNil ]
 		description: [ 'Candidate must have assigned category (processor)' ].
 	
 	"A given candidate is already selected, do nothing"
-	(self isSelected: aCandidateLink)
+	(self isSelected: aCandidate)
 		ifTrue: [ ^ self ].
 
 	self spotter
 		after: [
-			selected := aCandidateLink.
-			self notifySelectedCandidateChanged: aCandidateLink for: anEventType ]
+			selected := aCandidate.
+			self notifySelectedCandidateChanged: aCandidate for: anEventType ]
 		do: [ self spotter notifyCategorySelected: self selected processor ]
-		ifTrue: [ (self isCategorySelected: aCandidateLink processor) not ]
+		ifTrue: [ (self isCategorySelected: aCandidate processor) not ]
 ]
 
 { #category : #selecting }
@@ -581,7 +581,7 @@ GtSpotterStep >> selectedCandidate [
 	always check #hasSelected before using me"
 	<return: #Object>
 
-	^ self selected candidate
+	^ self selected item
 ]
 
 { #category : #'accessing - selected' }

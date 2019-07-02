@@ -21,9 +21,10 @@ GtSpotterElementExamples >> elementOnDefaultSpotter [
 GtSpotterElementExamples >> elementOnDefaultSpotterInBorderlessWindow [
 	<script: 'self new elementOnDefaultSpotterInBorderlessWindow'>
 	| aSpotterElement aSpace |
-	
+
 	aSpotterElement := self elementOnDefaultSpotter.
-	
+	aSpotterElement background: Color white.
+
 	aSpace := BlSpace new.
 	aSpace root: aSpotterElement.
 	aSpace borderless: true.
@@ -47,7 +48,7 @@ GtSpotterElementExamples >> elementOnSpotterWithOneStep [
 GtSpotterElementExamples >> elementOnSpotterWithTwoSteps [
 	<gtExample>
 	| aSpotterElement aSpotterModel |
-	
+
 	aSpotterElement := self emptyElement.
 	aSpotterModel := self spotterWithTwoSteps.
 	

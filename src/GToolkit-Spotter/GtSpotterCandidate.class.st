@@ -6,7 +6,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'processor',
-		'item'
+		'item',
+		'renderingProcessor'
 	],
 	#category : #'GToolkit-Spotter-Model - Candidates'
 }
@@ -43,5 +44,17 @@ GtSpotterCandidate >> processor [
 
 { #category : #accessing }
 GtSpotterCandidate >> processor: anObject [
+	processor ifNil: [ self renderingProcessor: anObject ].
 	processor := anObject
+]
+
+{ #category : #accessing }
+GtSpotterCandidate >> renderingProcessor [
+	renderingProcessor ifNil: [ self renderingProcessor: processor ].
+	^ renderingProcessor
+]
+
+{ #category : #accessing }
+GtSpotterCandidate >> renderingProcessor: anObject [
+	renderingProcessor := anObject
 ]

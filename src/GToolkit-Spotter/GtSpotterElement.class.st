@@ -5,11 +5,57 @@ Class {
 		'spotterModel',
 		'searchField',
 		'stepsPager',
-		'closeButton',
 		'breadcrumb'
 	],
 	#category : #'GToolkit-Spotter-UI-Bloc'
 }
+
+{ #category : #initialization }
+GtSpotterElement >> bindingDictionnary [
+	^ {
+	BlKeyCombination escape -> [ self exitDueTo: #keyPressedEscape ].
+	BlKeyCombination primaryW -> [ self exitDueTo: #keyPressedW ].
+	"(BlKeyCombination primaryP -> [ self togglePreview ])."
+
+	"(Character arrowUp -> [ self selectPreviousCandidateDueTo: #keyPressedArrowUp ]).
+	(Character arrowDown -> [ self selectNextCandidateDueTo: #keyPressedArrowDown ]).
+	(Character arrowUp meta -> [ self selectPreviousCandidateDueTo: #keyPressedArrowUp ]).
+	(Character arrowDown meta -> [ self selectNextCandidateDueTo: #keyPressedArrowDown ]).
+	(Character arrowUp shift -> [ self selectPreviousCandidateDueTo: #keyPressedArrowUp ]).
+	(Character arrowDown shift -> [ self selectNextCandidateDueTo: #keyPressedArrowDown ]).
+	(Character arrowUp meta shift -> [ self selectPreviousCategory ]).
+	(Character arrowDown meta shift -> [ self selectNextCategory ])."
+
+	(BlKeyCombination primaryArrowRight -> [ self diveInDueTo: #keyPressed ]).
+	(BlKeyCombination primaryArrowLeft -> [ self diveOut ]).
+
+	"(Character arrowRight meta shift -> [ self diveInCategoryDueTo: #keyPressed ]).
+	(Character arrowLeft meta shift -> [ self diveOut ]).
+	(Character arrowUp alt -> [ self stepScrollPageUp ]).
+	(Character arrowDown alt -> [ self stepScrollPageDown ]).
+	(Character pageUp -> [ self stepScrollPageUp ]).
+	(Character pageDown -> [ self stepScrollPageDown ]).
+	(Character cr asKeyCombination -> [ self actDueTo: #keyPressed ]).
+	($p meta shift -> [ self exportAsPNGSilently ])"}
+]
+
+{ #category : #action }
+GtSpotterElement >> diveInDueTo: anEventType [
+
+	self spotterModelDo: [ :aSpotter |
+		aSpotter hasSelected
+			ifTrue: [ aSpotter currentStep diveInDueTo: anEventType ] ]
+]
+
+{ #category : #action }
+GtSpotterElement >> diveOut [
+	self spotterModelDo: [ :aSpotter | aSpotter popStep ]
+]
+
+{ #category : #action }
+GtSpotterElement >> exitDueTo: anEventType [
+	self spotterModelDo: [ :aSpotter | aSpotter exitDueTo: anEventType ]
+]
 
 { #category : #initialization }
 GtSpotterElement >> initialize [
@@ -26,22 +72,26 @@ GtSpotterElement >> initialize [
 	searchField := GtSpotterSearchField new.
 	searchField vFitContent; hMatchParent.
 	
-	closeButton := BrButton new
-			look: BrGlamorousButtonWithIconLook;
-			icon: BrGlamorousIcons close asElement;
-			action: [ self spotterModelDo: [ :aSpotter | aSpotter exitDueTo: #actionButton ] ].
-	
 	aTopBar := BlElement new.
 	aTopBar layout: BlLinearLayout horizontal.
 	aTopBar constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical fitContent ].
 	
-	aTopBar addChildren: { searchField . closeButton }.
+	aTopBar addChildren: { searchField }.
 	
 	stepsPager := GtSpotterPager new.
 	
-	self addChildren: { breadcrumb . aTopBar . stepsPager }
+	self addChildren: { breadcrumb . aTopBar . stepsPager }.
+	
+	self initializeListeners
+]
+
+{ #category : #initialization }
+GtSpotterElement >> initializeListeners [
+	self bindingDictionnary
+		associationsDo: [ :anAssociation |
+			self addShortcut: (BlShortcut new combination: anAssociation key; action: anAssociation value) ]
 ]
 
 { #category : #'event - handling' }

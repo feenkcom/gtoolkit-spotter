@@ -27,9 +27,8 @@ GtSpotterBreadcrumb >> addStep: aNewStep [
 					ifFalse: [ origin gtDisplayString] ] ].
 
 	self addItem: (BrLabel new
-		look: (BrGlamorousLabelLook new foreground: Color white);
-		alignCenter;
-		background: (Color gray alpha: 0.4);
+		look: (BrGlamorousLabelLook new foreground: Color gray);
+		alignCenterLeft;
 		text: aText).
 ]
 
@@ -37,7 +36,7 @@ GtSpotterBreadcrumb >> addStep: aNewStep [
 GtSpotterBreadcrumb >> initialize [
 	super initialize.
 	
-	self look: (BrBreadcrumbScrollableLook new separator: [
+	self look: (BrBreadcrumbLinearLook new separator: [
 		BrLabel new
 			look: (BrGlamorousLabelLook new thin foreground: Color gray);
 			text: '>';

@@ -58,6 +58,12 @@ GtSpotterStep >> asElement [
 	aTree rowStencil: (BrColumnedTreeRowStencilBuilder new
 		cellSpacing: 2;
 		padding: (BlInsets left: 0)).
+	aTree when: BrSelectionChanged do: [ :anEvent |
+		aTree selectedNodeDo: [ :aTreeNode |
+			aTreeNode value children ifEmpty: [ | aCandidate |
+				aCandidate := aTreeNode value.
+				self select: aCandidate dueTo: #singleClick
+			] ] ].
 
 	aTree column
 		title: 'Item';

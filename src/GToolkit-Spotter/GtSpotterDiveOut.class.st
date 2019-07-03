@@ -9,8 +9,7 @@ Class {
 
 { #category : #'as yet unclassified' }
 GtSpotterDiveOut >> asRecorderEvent [
-
-	^ GtSpotterRecorderDiveOutEvent fromAnnouncement: self
+	^ GTSpotterRecorderDiveOutEvent fromAnnouncement: self
 ]
 
 { #category : #accessing }

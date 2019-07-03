@@ -10,7 +10,7 @@ Class {
 { #category : #'as yet unclassified' }
 GtSpotterDiveInCategory >> asRecorderEvent [
 
-	^ GtSpotterRecorderDiveInCategoryEvent fromAnnouncement: self
+	^ GTSpotterRecorderDiveInCategoryEvent fromAnnouncement: self
 ]
 
 { #category : #accessing }

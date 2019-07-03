@@ -10,6 +10,7 @@ GtSpotterExamples >> defaultSpotter [
 	| aSpotter |
 
 	aSpotter := GtSpotter new.
+	aSpotter beDebugging.
 	self assert: aSpotter steps isEmpty not.
 	self assert: aSpotter hasSteps.
 	self assert: aSpotter foundationOrigin == aSpotter.

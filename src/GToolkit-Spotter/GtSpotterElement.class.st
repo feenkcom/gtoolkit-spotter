@@ -27,7 +27,11 @@ GtSpotterElement >> bindingDictionnary [
 	(Character arrowDown meta shift -> [ self selectNextCategory ])."
 
 	(BlKeyCombination primaryArrowRight -> [ self diveInDueTo: #keyPressed ]).
-	(BlKeyCombination primaryArrowLeft -> [ self diveOut ]).
+	(BlKeyCombination primaryArrowLeft -> [ self diveOutDueTo: #keyPressed ]).
+	(BlKeyCombination arrowLeft -> [ self ]).
+	(BlKeyCombination arrowRight -> [ self ]).
+	(BlKeyCombination arrowUp -> [ self ]).
+	(BlKeyCombination arrowDown -> [ self ]).
 
 	"(Character arrowRight meta shift -> [ self diveInCategoryDueTo: #keyPressed ]).
 	(Character arrowLeft meta shift -> [ self diveOut ]).
@@ -48,8 +52,11 @@ GtSpotterElement >> diveInDueTo: anEventType [
 ]
 
 { #category : #action }
-GtSpotterElement >> diveOut [
-	self spotterModelDo: [ :aSpotter | aSpotter popStep ]
+GtSpotterElement >> diveOutDueTo: anEventType [
+
+	self spotterModelDo: [ :aSpotter |
+		aSpotter hasSelected
+			ifTrue: [ aSpotter currentStep diveOutDueTo: anEventType ] ]
 ]
 
 { #category : #action }
@@ -91,7 +98,8 @@ GtSpotterElement >> initialize [
 GtSpotterElement >> initializeListeners [
 	self bindingDictionnary
 		associationsDo: [ :anAssociation |
-			self addShortcut: (BlShortcut new combination: anAssociation key; action: anAssociation value) ]
+			self addShortcut: (BlShortcut new combination: anAssociation key; action: anAssociation value).
+			searchField removeShortcutsWithCombination: anAssociation key ]
 ]
 
 { #category : #'event - handling' }

@@ -278,7 +278,7 @@ GtSpotterItemBrick >> stepModel: aModel [
 	stepModel := aModel.
 	
 	stepModel announcer when: GtSpotterSelectedCandidateChanged send: #onSelectedChanged: to: self.
-	stepModel spotter announcer when: GtSpotterStepPopped send: #onStepPopped to: self.
+	stepModel spotter announcer when: GtSpotterStepRemoved send: #onStepPopped to: self.
 	
 	self actionbarBrick stepModel: aModel.
 	

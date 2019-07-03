@@ -1,5 +1,5 @@
 Class {
-	#name : #GtSpotterStepAdded,
+	#name : #GtSpotterStepRemoved,
 	#superclass : #Announcement,
 	#instVars : [
 		'stepModel',
@@ -9,21 +9,21 @@ Class {
 }
 
 { #category : #accessing }
-GtSpotterStepAdded >> index [
+GtSpotterStepRemoved >> index [
 	^ index
 ]
 
 { #category : #accessing }
-GtSpotterStepAdded >> index: anObject [
+GtSpotterStepRemoved >> index: anObject [
 	index := anObject
 ]
 
 { #category : #accessing }
-GtSpotterStepAdded >> stepModel [
+GtSpotterStepRemoved >> stepModel [
 	^ stepModel
 ]
 
 { #category : #accessing }
-GtSpotterStepAdded >> stepModel: anObject [
+GtSpotterStepRemoved >> stepModel: anObject [
 	stepModel := anObject
 ]

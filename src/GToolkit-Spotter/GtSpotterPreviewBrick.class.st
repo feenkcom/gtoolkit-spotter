@@ -102,7 +102,7 @@ GtSpotterPreviewBrick >> spotterModel: aSpotter [
 	
 	spotterModel := aSpotter.
 	aSpotter announcer when: GtSpotterSelectedCandidateChanged send: #onCandidateSelected: to: self.
-	aSpotter announcer when: GtSpotterStepPopped send: #onStepPopped to: self.
+	aSpotter announcer when: GtSpotterStepRemoved send: #onStepPopped to: self.
 	aSpotter announcer when: GtSpotterStepAdded send: #onStepAdded to: self.
 	aSpotter announcer when: GtSpotterSearchFinished send: #onSearchFinished to: self.
 	

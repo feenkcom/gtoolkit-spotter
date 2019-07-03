@@ -52,40 +52,7 @@ GtSpotterStep >> announcer [
 
 { #category : #converting }
 GtSpotterStep >> asElement [
-	| aTree updateBlock |
-	
-	aTree := BrColumnedTree new.
-	aTree rowStencil: (BrColumnedTreeRowStencilBuilder new
-		cellSpacing: 2;
-		padding: (BlInsets left: 0)).
-	aTree when: BrSelectionChanged do: [ :anEvent |
-		aTree selectedNodeDo: [ :aTreeNode |
-			aTreeNode value children ifEmpty: [ | aCandidate |
-				aCandidate := aTreeNode value.
-				self select: aCandidate dueTo: #singleClick
-			] ] ].
-
-	aTree column
-		title: 'Item';
-		stencil: [ :aNode :index |
-			BrLabel new
-				look: (BrGlamorousLabelLook new);
-				text: aNode value gtDisplayText;
-				padding: (BlInsets all: 6);
-				hMatchParent ].
-	
-	updateBlock := [ aTree
-		items: self candidates children children: #children;
-		expandAll ].
-
-	self candidates announcer
-		subscribe: GtSpotterCandidateAdded do: updateBlock;
-		subscribe: GtSpotterAllCandidatesAdded do: updateBlock;
-		subscribe: GtSpotterAllCandidatesRemoved do: updateBlock.
-
-	updateBlock value.
-
-	^ aTree
+	^ GtSpotterStepElement new stepModel: self
 ]
 
 { #category : #accessing }
@@ -134,7 +101,7 @@ GtSpotterStep >> canDiveIn: aCandidate [
 { #category : #actions }
 GtSpotterStep >> canDiveInSelectedCandidate [
 
-	^ self canDiveIn: self selected candidate
+	^ self canDiveIn: self selected item
 ]
 
 { #category : #accessing }
@@ -220,8 +187,15 @@ GtSpotterStep >> diveInDueTo: anEventType [
 	self canDiveInSelectedCandidate ifTrue: [ 
 		self spotter
 			historize: self selected;
-			requestNextStepWith: self selected candidate for: #diveIn;
-			notifyDiveIn: self selected candidate for: anEventType ]
+			requestNextStepWith: self selected item for: #diveIn;
+			notifyDiveIn: self selected item for: anEventType ]
+]
+
+{ #category : #actions }
+GtSpotterStep >> diveOutDueTo: anEventType [
+	self spotter
+		requestPreviousStepFor: #diveOut;
+		notifyDiveOut: self selected item
 ]
 
 { #category : #accessing }

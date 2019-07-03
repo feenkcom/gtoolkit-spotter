@@ -1,13 +1,15 @@
 Class {
 	#name : #GtSpotterBreadcrumb,
 	#superclass : #BrBreadcrumb,
+	#traits : 'TBrSelectable',
+	#classTraits : 'TBrSelectable classTrait',
 	#instVars : [
 		'spotterModel'
 	],
 	#category : #'GToolkit-Spotter-UI-Bloc'
 }
 
-{ #category : #'event handling' }
+{ #category : #private }
 GtSpotterBreadcrumb >> addStep: aNewStep [
 	| aText  |
 
@@ -26,16 +28,19 @@ GtSpotterBreadcrumb >> addStep: aNewStep [
 					ifTrue: [ aNewStep processors first title ]
 					ifFalse: [ origin gtDisplayString] ] ].
 
-	self addItem: (BrLabel new
-		look: (BrGlamorousLabelLook new foreground: Color gray);
+	self addItem: (BrButton new
+		look: (BrGlamorousButtonWithLabelLook new);
+		action: [ self spotterModel currentStep: aNewStep ];
 		alignCenterLeft;
-		text: aText).
+		label: aText).
 ]
 
 { #category : #initialization }
 GtSpotterBreadcrumb >> initialize [
 	super initialize.
 	
+	self viewModel add: (selectionModel := BrSelectionModel new).
+
 	self look: (BrBreadcrumbLinearLook new separator: [
 		BrLabel new
 			look: (BrGlamorousLabelLook new thin foreground: Color gray);
@@ -44,7 +49,16 @@ GtSpotterBreadcrumb >> initialize [
 
 	self
 		hMatchParent;
-		vExact: 28
+		vExact: 28.
+
+	self when: BrSelectionChanged do: [ :anEvent |
+		anEvent withIndexDo: [ :anIndex :isSelected |
+			(self itemAt: anIndex) dispatchEvent: (BrSelectedWish selected: isSelected) ] ]
+]
+
+{ #category : #'event handling' }
+GtSpotterBreadcrumb >> onCurrentStepChanged: anAnnouncement [
+	self selectOne: anAnnouncement index
 ]
 
 { #category : #'event handling' }
@@ -53,7 +67,8 @@ GtSpotterBreadcrumb >> onStepAdded: anAnnouncement [
 ]
 
 { #category : #'event handling' }
-GtSpotterBreadcrumb >> onStepPopped: anAnnouncement [
+GtSpotterBreadcrumb >> onStepRemoved: anAnnouncement [
+	self removeItemAt: anAnnouncement index
 ]
 
 { #category : #accessing }
@@ -67,7 +82,10 @@ GtSpotterBreadcrumb >> spotterModel: aSpotterModel [
 	spotterModel := aSpotterModel.
 
 	spotterModel announcer when: GtSpotterStepAdded send: #onStepAdded: to: self.
-	spotterModel announcer when: GtSpotterStepPopped send: #onStepPopped: to: self.
-
-	aSpotterModel steps do: [ :eachStep | self addStep: eachStep ]
+	spotterModel announcer when: GtSpotterStepRemoved send: #onStepRemoved: to: self.
+	spotterModel announcer when: GtSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self.
+	
+	aSpotterModel steps do: [ :eachStep | self addStep: eachStep ].
+	
+	self selectOne: aSpotterModel currentStepIndex
 ]

@@ -19,8 +19,7 @@ GtSpotterUIThreadStream >> addObject: firstObject inProcessor: secondObject [
 		item: firstObject;
 		processor: secondObject.
 
-	self performSymbol: self onAddedSelector withArguments: { aCandidate }.
-	Processor yield
+	self performSymbol: self onAddedSelector withArguments: { aCandidate }
 ]
 
 { #category : #'adding/removing' }
@@ -33,7 +32,6 @@ GtSpotterUIThreadStream >> addObjects: aCollection inProcessor: aProcessor [
 			processor: aProcessor ].
 
 	self performSymbol: self onAddedAllSelector withArguments: { theCandidates }.
-	Processor yield
 ]
 
 { #category : #accessing }
@@ -92,7 +90,6 @@ GtSpotterUIThreadStream >> receiver: anObject [
 GtSpotterUIThreadStream >> removeAllCandidates [
 
 	self performSymbol: #removeAllCandidates withArguments: { }.
-	Processor yield
 ]
 
 { #category : #accessing }

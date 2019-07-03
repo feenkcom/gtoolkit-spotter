@@ -266,5 +266,5 @@ GtSpotterStepsBreadcrumb >> spotterModel: aSpotterModel [
 	spotterModel := aSpotterModel.
 	
 	spotterModel announcer when: GtSpotterStepAdded send: #onStepAdded: to: self.
-	spotterModel announcer when: GtSpotterStepPopped send: #onStepPopped to: self.
+	spotterModel announcer when: GtSpotterStepRemoved send: #onStepPopped to: self.
 ]

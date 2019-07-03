@@ -17,11 +17,23 @@ GtSpotterPager >> initialize [
 		c vertical matchParent ]
 ]
 
-{ #category : #accessing }
+{ #category : #'event handling' }
+GtSpotterPager >> onCurrentStepChanged: anAnnouncement [
+	self smoothScrollTo: anAnnouncement index
+]
+
+{ #category : #'event handling' }
 GtSpotterPager >> onStepAdded: anAnnouncement [
 	"as soon as step added we need to push it"
 	
 	self pushStep: anAnnouncement stepModel
+]
+
+{ #category : #'event handling' }
+GtSpotterPager >> onStepRemoved: anAnnouncement [
+	"as soon as step added we need to push it"
+	
+	self removePageAt: anAnnouncement index
 ]
 
 { #category : #'actions api' }
@@ -55,5 +67,7 @@ GtSpotterPager >> spotterModel: aModel [
 
 	spotterModel steps do: [ :eachStep | self pushStep: eachStep ].
 
-	spotterModel announcer when: GtSpotterStepAdded send: #onStepAdded: to: self
+	spotterModel announcer when: GtSpotterStepAdded send: #onStepAdded: to: self.
+	spotterModel announcer when: GtSpotterStepRemoved send: #onStepRemoved: to: self.
+	spotterModel announcer when: GtSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self
 ]

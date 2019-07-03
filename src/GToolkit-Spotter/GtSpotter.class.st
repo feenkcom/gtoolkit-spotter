@@ -6,7 +6,6 @@ Class {
 		'steps',
 		'announcer',
 		'currentStep',
-		'pagerModel',
 		'text',
 		'isPreviewVisible',
 		'isShiftPressed',
@@ -165,7 +164,7 @@ GtSpotter class >> wasOpened [
 	^ wasOpened ifNil: [ false ]
 ]
 
-{ #category : #'actions api' }
+{ #category : #'api - steps' }
 GtSpotter >> addStep: aStepModel [
 	"I add a new step without changing the current step"
 
@@ -175,7 +174,7 @@ GtSpotter >> addStep: aStepModel [
 	self notifyStepAdded: aStepModel
 ]
 
-{ #category : #'actions api' }
+{ #category : #'api - steps' }
 GtSpotter >> addStep: aSpotterStep during: aBlock [
 	"Adds aSpotterStep without announcements,
 	evaluates aBlock and removes previously added
@@ -230,7 +229,7 @@ GtSpotter >> beDeployment [
 	self exceptionHandler: GtSpotterDeploymentExceptionHandler new
 ]
 
-{ #category : #accessing }
+{ #category : #'api - steps' }
 GtSpotter >> currentStep [
 	self
 		assert: [ self hasSteps ]
@@ -243,11 +242,19 @@ GtSpotter >> currentStep [
 	^ currentStep
 ]
 
-{ #category : #accessing }
+{ #category : #'api - steps' }
 GtSpotter >> currentStep: aStepModel [
+
+	self currentStep == aStepModel
+		ifTrue: [ ^ self ].
 	
 	currentStep := aStepModel.
 	self notifyCurrentStepChanged
+]
+
+{ #category : #'api - steps' }
+GtSpotter >> currentStepIndex [
+	^ self steps indexOf: self currentStep
 ]
 
 { #category : #'accessing-defaults' }
@@ -498,7 +505,9 @@ GtSpotter >> notifyContextChangedFrom: aPreviousContext to: aCurrentContext [
 { #category : #notifying }
 GtSpotter >> notifyCurrentStepChanged [
 
-	self announce: GtSpotterCurrentStepChanged new
+	self announce: (GtSpotterCurrentStepChanged new
+		stepModel: self currentStep;
+		index: (self steps indexOf: self currentStep))
 ]
 
 { #category : #notifying }
@@ -572,9 +581,8 @@ GtSpotter >> notifyStepAdded: aStep [
 ]
 
 { #category : #notifying }
-GtSpotter >> notifyStepPopped [
-
-	self announce: GtSpotterStepPopped new
+GtSpotter >> notifyStepRemoved: aSpotterStep at: anIndex [
+	self announce: (GtSpotterStepRemoved new stepModel: aSpotterStep; index: anIndex)
 ]
 
 { #category : #'event handling' }
@@ -584,36 +592,35 @@ GtSpotter >> onPagePopped [
 		self currentStep: self steps last ]
 ]
 
-{ #category : #accessing }
-GtSpotter >> pagerModel [
-
-	^ pagerModel ifNil: [
-		pagerModel := self defaultPagerModel defaultNumberOfVisiblePages: 1.
-		pagerModel announcer when: GLMPagePoped send: #onPagePopped to: self.
-		pagerModel ]
-]
-
-{ #category : #'actions api' }
+{ #category : #'api - steps' }
 GtSpotter >> popStep [
+	"Removes the last step"
+	| aStepToRemove aStepToRemoveIndex |
 
-	"there always should be minimum one step left"
-	(self steps size > 1)
-		ifTrue: [
-			self
-				after: [ self steps removeLast ]
-				do: [ :o | self notifyDiveOut: o ]
-				with: self currentStep origin.
-			self notifyStepPopped.
-			"perform pane popping only after we scrolled to the penultimate pane, so user doesn't see blinking"
-			self pagerModel
-				scrollToPane: self steps size
-				callback: [ self pagerModel popPane: false ] ]
+	self steps size = 1
+		ifTrue: [ ^ self ].
+
+	aStepToRemove := self steps last.
+	aStepToRemoveIndex := self steps size.
+
+	self steps remove: aStepToRemove.
+
+	self notifyStepRemoved: aStepToRemove at: aStepToRemoveIndex.
+	
+	"after removing a step we need to make sure that the current step is valid"
+	aStepToRemove == self currentStep
+		ifFalse: [ ^ self ].
+
+	self currentStep: self steps last
 ]
 
-{ #category : #'actions api' }
+{ #category : #'api - steps' }
 GtSpotter >> popUntil: aStep [
+	"Remove steps until a given step does not become the last one"
 
-	[ self steps last = aStep ]
+	self currentStep: aStep.
+
+	[ self steps last == aStep ]
 		whileFalse: [ self popStep ]
 ]
 
@@ -630,8 +637,9 @@ GtSpotter >> processorsFilter: aFilter [
 	processorsFilter := aFilter
 ]
 
-{ #category : #'actions api' }
+{ #category : #'api - steps' }
 GtSpotter >> pushStep: stepModel [
+	"Adds a new step and makes it current"
 	
 	self addStep: stepModel.
 	"updating current step"
@@ -648,12 +656,23 @@ GtSpotter >> requestNextCategoryStepWith: aProcessorLink for: anEventType [
 	self requestNextStepWith: collection for: anEventType
 ]
 
-{ #category : #'event handling' }
-GtSpotter >> requestNextStepWith: origin for: anEventType [
+{ #category : #'api - steps' }
+GtSpotter >> requestNextStepWith: anOriginObject for: anEventType [
 
 	text := ''.
-	self pushStep: (self newStep origin: origin; event: anEventType; yourself).
+	
+	self popUntil: self currentStep.
+	
+	self pushStep: (self newStep origin: anOriginObject; event: anEventType; yourself).
 	self steps last process: nil
+]
+
+{ #category : #'api - steps' }
+GtSpotter >> requestPreviousStepFor: anEventType [
+	| aCurrentStepIndex |
+
+	aCurrentStepIndex := self steps indexOf: self currentStep.
+	self currentStep: (self steps at: (aCurrentStepIndex - 1 max: 1))
 ]
 
 { #category : #'model access' }

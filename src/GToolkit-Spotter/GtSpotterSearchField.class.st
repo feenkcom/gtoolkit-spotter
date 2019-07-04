@@ -10,12 +10,8 @@ Class {
 { #category : #initialization }
 GtSpotterSearchField >> initialize [
 	super initialize.
-	
-	self look: BrGlamorousRegularEditorLook new + (BrInteractiveCommonLook new
-		default: [
-			self padding: (BlInsets all: 10).
-			self border: (BlBorder paint: BrGlamorousColors editorBorderColor width: 1) ];
-		focused: [ self border: (BlBorder paint: BrGlamorousColors focusedEditorBorderColor width: 1) ]).
+
+	self look: (BrGlamorousRegularEditorLook new fontSize: 18)
 ]
 
 { #category : #accessing }

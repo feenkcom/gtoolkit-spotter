@@ -29,7 +29,7 @@ GtSpotterBreadcrumb >> addStep: aNewStep [
 					ifFalse: [ origin gtDisplayString] ] ].
 
 	self addItem: (BrButton new
-		look: (BrGlamorousButtonWithLabelLook new);
+		look: (BrGlamorousButtonRectangularLook + (BrGlamorousButtonLabelLook new selectedColor: Color black));
 		action: [ self spotterModel currentStep: aNewStep ];
 		alignCenterLeft;
 		label: aText).
@@ -49,7 +49,8 @@ GtSpotterBreadcrumb >> initialize [
 
 	self
 		hMatchParent;
-		vExact: 28.
+		vExact: 28;
+		alignCenterLeft.
 
 	self when: BrSelectionChanged do: [ :anEvent |
 		anEvent withIndexDo: [ :anIndex :isSelected |

@@ -5,7 +5,8 @@ Class {
 		'spotterModel',
 		'searchField',
 		'stepsPager',
-		'breadcrumb'
+		'breadcrumb',
+		'results'
 	],
 	#category : #'GToolkit-Spotter-UI-Bloc'
 }
@@ -75,21 +76,44 @@ GtSpotterElement >> initialize [
 		c vertical matchParent ].
 	
 	breadcrumb := GtSpotterBreadcrumb new.
+	breadcrumb background: (BrGlamorousColors defaultButtonBorderColor).
 
 	searchField := GtSpotterSearchField new.
 	searchField vFitContent; hMatchParent.
+	searchField padding: (BlInsets all: 15).
 	
 	aTopBar := BlElement new.
-	aTopBar layout: BlLinearLayout horizontal.
+	aTopBar background: Color white.
+	aTopBar layout: BlLinearLayout vertical.
 	aTopBar constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical fitContent ].
 	
-	aTopBar addChildren: { searchField }.
+	aTopBar addChildren: {
+		breadcrumb.
+		searchField.
+		
+		BlElement new
+			constraintsDo: [ :c |
+				c horizontal matchParent.
+				c vertical exact: 3 ];
+			background: BrGlamorousColors defaultButtonBorderColor
+	 }.
 	
+	results := BrPager new.
+	results look: BrProportionalPagerLook new.
+	results hMatchParent; vMatchParent.
+
 	stepsPager := GtSpotterPager new.
+
+	results addPage: (BlElement new
+		viewModel: BrPagerPageModel new;
+		constraintsDo: [ :c |
+			c horizontal matchParent.
+			c vertical matchParent ];
+		addChild: stepsPager).
 	
-	self addChildren: { breadcrumb . aTopBar . stepsPager }.
+	self addChildren: { aTopBar . results }.
 	
 	self initializeListeners
 ]
@@ -103,21 +127,17 @@ GtSpotterElement >> initializeListeners [
 ]
 
 { #category : #'event - handling' }
+GtSpotterElement >> onCandidateSelected: anAnnouncement [
+	self phlow selectObject: anAnnouncement selected item
+]
+
+{ #category : #'event - handling' }
 GtSpotterElement >> onCloseSpotter [
 	"Check if I am opened in a separate window, then close that window otherwise just remove me from the space"
 	(self isAttachedToSceneGraph
 		and: [ self space root == self ])
 			ifTrue: [ self space close ]
 			ifFalse: [ self removeFromParent ]
-]
-
-{ #category : #'event - handling' }
-GtSpotterElement >> onHidePreview [
-]
-
-{ #category : #'event - handling' }
-GtSpotterElement >> onShowPreview [
-	
 ]
 
 { #category : #accessing }
@@ -130,11 +150,7 @@ GtSpotterElement >> spotterModel: aSpotter [
 	breadcrumb spotterModel: aSpotter.
 	
 	spotterModel announcer when: GtSpotterExitAnnouncement send: #onCloseSpotter to: self.
-	spotterModel announcer when: GtSpotterShowPreview send: #onShowPreview to: self.
-	spotterModel announcer when: GtSpotterHidePreview send: #onHidePreview to: self.
-	
-	spotterModel class isPreviewVisible
-		ifTrue: [ spotterModel showPreview ]
+	spotterModel announcer when: GtSpotterSelectedCandidateChanged send: #onCandidateSelected: to: self
 ]
 
 { #category : #accessing }

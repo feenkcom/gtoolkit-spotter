@@ -30,15 +30,7 @@ GtSpotterStepElement >> initialize [
 				look: (BrGlamorousLabelLook new);
 				text: aNode value gtDisplayText;
 				padding: (BlInsets all: 6);
-				hMatchParent ].
-
-	self addShortcut: (BlShortcut new
-		combination: BlKeyCombination primaryArrowRight;
-		action: [ self stepModelDo: [ :aStepModel | aStepModel diveInDueTo: #keyPressed ] ]).
-
-	self addShortcut: (BlShortcut new
-		combination: BlKeyCombination primaryArrowLeft;
-		action: [ self stepModelDo: [ :aStepModel | aStepModel diveOutDueTo: #keyPressed ] ])
+				hMatchParent ]
 ]
 
 { #category : #'event handling' }

@@ -58,6 +58,21 @@ GtSpotterElementExamples >> elementOnSpotterWithTwoSteps [
 ]
 
 { #category : #examples }
+GtSpotterElementExamples >> elementWithPreviewOnDefaultSpotter [
+	<gtExample>
+	| aSpotterElement aSpotterModel |
+
+	aSpotterElement := GtSpotterWithPreview new.
+	aSpotterModel := self defaultSpotter.
+
+	aSpotterElement spotterModel: aSpotterModel.
+	
+	aSpotterModel showPreview.
+
+	^ aSpotterElement
+]
+
+{ #category : #examples }
 GtSpotterElementExamples >> emptyElement [
 	<gtExample>
 	

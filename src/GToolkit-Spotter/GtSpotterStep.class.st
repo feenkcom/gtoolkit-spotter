@@ -550,7 +550,7 @@ GtSpotterStep >> selected [
 	self
 		assert: [ selected isNotNil ]
 		description: [ 'Selected candidate can not be accessed where there is no one' ].
-	
+
 	^ selected
 ]
 

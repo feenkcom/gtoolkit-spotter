@@ -11,7 +11,7 @@ Class {
 { #category : #'as yet unclassified' }
 GtSpotterContextChanged >> asRecorderEvent [
 
-	^ GtSpotterRecorderContextChangedEvent fromAnnouncement: self
+	^ GTSpotterRecorderContextChangedEvent fromAnnouncement: self
 ]
 
 { #category : #compatibility }

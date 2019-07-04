@@ -7,5 +7,5 @@ Class {
 { #category : #'as yet unclassified' }
 GtSpotterHidePreview >> asRecorderEvent [
 
-	^ GtSpotterRecorderHidePreviewEvent fromAnnouncement: self
+	^ GTSpotterRecorderHidePreviewEvent fromAnnouncement: self
 ]

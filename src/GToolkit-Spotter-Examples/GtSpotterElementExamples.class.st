@@ -27,7 +27,6 @@ GtSpotterElementExamples >> elementOnDefaultSpotterInBorderlessWindow [
 
 	aSpace := BlSpace new.
 	aSpace root: aSpotterElement.
-	aSpace borderless: true.
 	aSpace show
 ]
 

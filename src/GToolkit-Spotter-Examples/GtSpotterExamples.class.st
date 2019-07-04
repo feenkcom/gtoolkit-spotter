@@ -13,7 +13,7 @@ GtSpotterExamples >> defaultSpotter [
 	aSpotter beDebugging.
 	self assert: aSpotter steps isEmpty not.
 	self assert: aSpotter hasSteps.
-	self assert: aSpotter foundationOrigin == aSpotter.
+	self assert: aSpotter foundationOrigin class = GTSpotter.
 	self assert: aSpotter currentStep == aSpotter steps first.
 	self assert: aSpotter text = ''.
 

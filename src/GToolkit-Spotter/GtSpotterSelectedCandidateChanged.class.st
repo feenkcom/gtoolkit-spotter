@@ -11,7 +11,7 @@ Class {
 { #category : #'as yet unclassified' }
 GtSpotterSelectedCandidateChanged >> asRecorderEvent [
 
-	^ GtSpotterRecorderSelectedCandidateChangedEvent fromAnnouncement: self
+	^ GTSpotterRecorderSelectedCandidateChangedEvent fromAnnouncement: self
 ]
 
 { #category : #accessing }

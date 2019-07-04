@@ -59,6 +59,8 @@ GtSpotterWithPreview >> onSelectedCandidateChanged: anAnnouncement [
 	(anObject gtViewsFor: GtPhlowView empty)  originalView asElementDo: [ :anElement |
 		aPreviewContainer addChild: anElement ].
 	
+	labelElement text: anObject gtDisplayText.
+	
 	spotterModel class isPreviewVisible
 		ifTrue: [ previewElement visibility: BlVisibility visible. ]
 ]

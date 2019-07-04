@@ -31,7 +31,7 @@ GtSpotterElement >> bindingDictionnary [
 	(BlKeyCombination primaryArrowLeft -> [ self diveOutDueTo: #keyPressed ]).
 	(BlKeyCombination arrowLeft -> [ self ]).
 	(BlKeyCombination arrowRight -> [ self ]).
-	(BlKeyCombination arrowUp -> [ self ]).
+	(BlKeyCombination arrowUp -> [ self selectPreviousCandidateDueTo: #keyPressedArrowUp ]).
 	(BlKeyCombination arrowDown -> [ self selectNextCandidateDueTo: #keyPressedArrowDown ]).
 
 	"(Character arrowRight meta shift -> [ self diveInCategoryDueTo: #keyPressed ]).
@@ -146,6 +146,14 @@ GtSpotterElement >> selectNextCandidateDueTo: anEventType [
 	self spotterModelDo: [ :aSpotter |
 		aSpotter hasSelected
 			ifTrue: [ aSpotter currentStep selectNextDueTo: anEventType ] ]
+]
+
+{ #category : #action }
+GtSpotterElement >> selectPreviousCandidateDueTo: anEventType [
+
+	self spotterModelDo: [ :aSpotter |
+		aSpotter hasSelected
+			ifTrue: [ aSpotter currentStep selectPreviousDueTo: anEventType ] ]
 ]
 
 { #category : #accessing }

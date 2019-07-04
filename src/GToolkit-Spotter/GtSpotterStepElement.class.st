@@ -71,7 +71,7 @@ GtSpotterStepElement >> onCandidateAdded: anAnnouncement [
 ]
 
 { #category : #'event handling' }
-GtSpotterStepElement >> onCandidateSelected: anAnnouncement [
+GtSpotterStepElement >> onCandidateSelected: anAnnouncement [	
 	self updateSelection
 ]
 
@@ -82,7 +82,9 @@ GtSpotterStepElement >> stepModel: aSpotterStepModel [
 	stepModel candidates announcer weak
 		subscribe: GtSpotterCandidateAdded send: #onCandidateAdded: to: self;
 		subscribe: GtSpotterAllCandidatesAdded send: #onAllCandidatesAdded: to: self;
-		subscribe: GtSpotterAllCandidatesRemoved send: #onAllCandidatesRemoved: to: self;
+		subscribe: GtSpotterAllCandidatesRemoved send: #onAllCandidatesRemoved: to: self.
+
+	stepModel announcer weak
 		subscribe: GtSpotterSelectedCandidateChanged send: #onCandidateSelected: to: self.
 
 	self updateCandidates.
@@ -106,7 +108,7 @@ GtSpotterStepElement >> updateCandidates [
 { #category : #private }
 GtSpotterStepElement >> updateSelection [
 
-	self stepModelDo: [ :aSpotterStep |
+	self stepModelDo: [ :aSpotterStep |		
 		aSpotterStep hasSelected
 			ifTrue: [ self selectOne: (aSpotterStep candidates treeIndexOf: aSpotterStep selected) ] ]
 ]

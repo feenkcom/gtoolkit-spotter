@@ -524,7 +524,7 @@ GtSpotterStep >> selectNextDueTo: anEventType [
 	anIndex := self candidates indexOf: self selected.
 	aNextCandidate := self candidates at: (anIndex + 1 min: self candidates size).
 
-	self select:aNextCandidate dueTo: anEventType
+	self select: aNextCandidate dueTo: anEventType
 ]
 
 { #category : #selecting }
@@ -540,8 +540,12 @@ GtSpotterStep >> selectPreviousCategory [
 
 { #category : #selecting }
 GtSpotterStep >> selectPreviousDueTo: anEventType [
+	| anIndex aPreviousCandidate |
 
-	self select: self selected previous dueTo: anEventType
+	anIndex := self candidates indexOf: self selected.
+	aPreviousCandidate := self candidates at: (anIndex - 1 max: 1).
+
+	self select: aPreviousCandidate dueTo: anEventType
 ]
 
 { #category : #'accessing - selected' }

@@ -57,11 +57,18 @@ GtSpotterWithPreview >> onSelectedCandidateChanged: anAnnouncement [
 	aPreviewContainer removeChildren.
 	
 	(anObject gtViewsFor: GtPhlowView empty)  originalView asElementDo: [ :anElement |
-		aPreviewContainer addChild: anElement ]
+		aPreviewContainer addChild: anElement ].
+	
+	spotterModel class isPreviewVisible
+		ifTrue: [ previewElement visibility: BlVisibility visible. ]
 ]
 
 { #category : #'event - handling' }
 GtSpotterWithPreview >> onShowPreview [
+
+	self spotterModelDo: [ :aSpotterModel | aSpotterModel hasSelected
+			ifFalse: [ ^ self ] ].
+
 	previewElement visibility: BlVisibility visible.
 	
 ]

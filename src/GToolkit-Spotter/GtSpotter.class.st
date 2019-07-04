@@ -428,6 +428,7 @@ GtSpotter >> initializeWith: anFoundationObject [
 	"Initialize Spotter on a given foundation object and create a new first step"
 	| aDefaultStep |
 	
+	steps := OrderedCollection new.
 	foundationOrigin := anFoundationObject.
 
 	aDefaultStep := self newStep origin: self foundationOrigin.

@@ -329,7 +329,7 @@ GtSpotterStep >> notifySelectedCandidateChanged: aCandidate [
 ]
 
 { #category : #notifying }
-GtSpotterStep >> notifySelectedCandidateChanged: aCandidate for: anEventType [	
+GtSpotterStep >> notifySelectedCandidateChanged: aCandidate for: anEventType [
 	self
 		assert: [ aCandidate isNotNil ]
 		description: [ 'aCandidate must not be nil' ].
@@ -519,8 +519,12 @@ GtSpotterStep >> selectNextCategory [
 
 { #category : #selecting }
 GtSpotterStep >> selectNextDueTo: anEventType [
-	
-	self select: self selected next dueTo: anEventType
+	| anIndex aNextCandidate |
+
+	anIndex := self candidates indexOf: self selected.
+	aNextCandidate := self candidates at: (anIndex + 1 min: self candidates size).
+
+	self select:aNextCandidate dueTo: anEventType
 ]
 
 { #category : #selecting }

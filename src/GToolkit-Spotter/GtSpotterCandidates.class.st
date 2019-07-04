@@ -32,6 +32,20 @@ GtSpotterCandidates >> announcer [
 ]
 
 { #category : #accessing }
+GtSpotterCandidates >> at: anIndex [
+	| currentIndex |	
+
+	currentIndex := 0.
+
+	self do: [ :eachCandidate |
+		currentIndex := currentIndex + 1.
+		currentIndex = anIndex
+			ifTrue: [ ^ eachCandidate ] ].
+		
+	self error: ('{1} is out of bounds' format: { anIndex })
+]
+
+{ #category : #accessing }
 GtSpotterCandidates >> children [
 	^ processorCandidates values
 ]
@@ -132,4 +146,25 @@ GtSpotterCandidates >> remove: aGtSpotterCandidate ifAbsent: anExceptionBlock [
 GtSpotterCandidates >> removeAllCandidates [
 	processorCandidates := OrderedDictionary new.
 	self notifyAllCandidatesRemoved
+]
+
+{ #category : #accessing }
+GtSpotterCandidates >> size [
+	^ self children inject: 0 into: [ :sum :each | sum + each size ]
+]
+
+{ #category : #accessing }
+GtSpotterCandidates >> treeIndexOf: aCandidate [
+	| anIndex |
+	
+	anIndex := 0.
+
+	self children do: [ :eachProcessorCandidates |
+		anIndex := anIndex + 1.		
+		eachProcessorCandidates do: [ :eachCandidate |
+			anIndex := anIndex + 1.		
+			eachCandidate == aCandidate
+				ifTrue: [ ^ anIndex ] ] ].
+
+	^ 0
 ]

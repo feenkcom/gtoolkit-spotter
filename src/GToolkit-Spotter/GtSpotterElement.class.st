@@ -18,9 +18,9 @@ GtSpotterElement >> bindingDictionnary [
 	BlKeyCombination primaryW -> [ self exitDueTo: #keyPressedW ].
 	"(BlKeyCombination primaryP -> [ self togglePreview ])."
 
-	"(Character arrowUp -> [ self selectPreviousCandidateDueTo: #keyPressedArrowUp ]).
-	(Character arrowDown -> [ self selectNextCandidateDueTo: #keyPressedArrowDown ]).
-	(Character arrowUp meta -> [ self selectPreviousCandidateDueTo: #keyPressedArrowUp ]).
+	"(Character arrowUp -> [ self selectPreviousCandidateDueTo: #keyPressedArrowUp ])."
+	"(Character arrowDown -> [ self selectNextCandidateDueTo: #keyPressedArrowDown ])."
+	"(Character arrowUp meta -> [ self selectPreviousCandidateDueTo: #keyPressedArrowUp ]).
 	(Character arrowDown meta -> [ self selectNextCandidateDueTo: #keyPressedArrowDown ]).
 	(Character arrowUp shift -> [ self selectPreviousCandidateDueTo: #keyPressedArrowUp ]).
 	(Character arrowDown shift -> [ self selectNextCandidateDueTo: #keyPressedArrowDown ]).
@@ -32,7 +32,7 @@ GtSpotterElement >> bindingDictionnary [
 	(BlKeyCombination arrowLeft -> [ self ]).
 	(BlKeyCombination arrowRight -> [ self ]).
 	(BlKeyCombination arrowUp -> [ self ]).
-	(BlKeyCombination arrowDown -> [ self ]).
+	(BlKeyCombination arrowDown -> [ self selectNextCandidateDueTo: #keyPressedArrowDown ]).
 
 	"(Character arrowRight meta shift -> [ self diveInCategoryDueTo: #keyPressed ]).
 	(Character arrowLeft meta shift -> [ self diveOut ]).
@@ -138,6 +138,14 @@ GtSpotterElement >> onCloseSpotter [
 		and: [ self space root == self ])
 			ifTrue: [ self space close ]
 			ifFalse: [ self removeFromParent ]
+]
+
+{ #category : #action }
+GtSpotterElement >> selectNextCandidateDueTo: anEventType [
+
+	self spotterModelDo: [ :aSpotter |
+		aSpotter hasSelected
+			ifTrue: [ aSpotter currentStep selectNextDueTo: anEventType ] ]
 ]
 
 { #category : #accessing }

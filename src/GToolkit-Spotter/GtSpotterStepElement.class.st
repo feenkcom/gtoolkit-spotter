@@ -14,6 +14,7 @@ GtSpotterStepElement >> initialize [
 	self rowStencil: (BrColumnedTreeRowStencilBuilder new
 		cellSpacing: 2;
 		indentation: 0;
+		selectable: [ :aNode | aNode value children isEmpty ];
 		padding: (BlInsets left: 0)).
 
 	self when: BrSelectionChanged do: [ :anEvent |
@@ -48,11 +49,10 @@ GtSpotterStepElement >> initialize [
 						look: (BrGlamorousLabelLook new foreground: Color gray; glamorousRegularSmallSize);
 						text: '#', aCategory processor title;
 						padding: (BlInsets top: 12 left: 6 bottom: 6 right: 6);
-						hMatchParent
-				].
-			
-			
-			 ]
+						hMatchParent ] ].
+				
+	self removeShortcutsWithCombination: BlKeyCombination arrowDown.
+	self removeShortcutsWithCombination: BlKeyCombination arrowUp.
 ]
 
 { #category : #'event handling' }
@@ -70,6 +70,11 @@ GtSpotterStepElement >> onCandidateAdded: anAnnouncement [
 	self updateCandidates
 ]
 
+{ #category : #'event handling' }
+GtSpotterStepElement >> onCandidateSelected: anAnnouncement [
+	self updateSelection
+]
+
 { #category : #accessing }
 GtSpotterStepElement >> stepModel: aSpotterStepModel [
 	stepModel := aSpotterStepModel.
@@ -77,9 +82,11 @@ GtSpotterStepElement >> stepModel: aSpotterStepModel [
 	stepModel candidates announcer weak
 		subscribe: GtSpotterCandidateAdded send: #onCandidateAdded: to: self;
 		subscribe: GtSpotterAllCandidatesAdded send: #onAllCandidatesAdded: to: self;
-		subscribe: GtSpotterAllCandidatesRemoved send: #onAllCandidatesRemoved: to: self.
+		subscribe: GtSpotterAllCandidatesRemoved send: #onAllCandidatesRemoved: to: self;
+		subscribe: GtSpotterSelectedCandidateChanged send: #onCandidateSelected: to: self.
 
-	self updateCandidates
+	self updateCandidates.
+	self updateSelection
 ]
 
 { #category : #accessing }
@@ -94,4 +101,12 @@ GtSpotterStepElement >> updateCandidates [
 		self
 			items: aSpotterStep candidates children children: #children;
 			expandAll ]
+]
+
+{ #category : #private }
+GtSpotterStepElement >> updateSelection [
+
+	self stepModelDo: [ :aSpotterStep |
+		aSpotterStep hasSelected
+			ifTrue: [ self selectOne: (aSpotterStep candidates treeIndexOf: aSpotterStep selected) ] ]
 ]

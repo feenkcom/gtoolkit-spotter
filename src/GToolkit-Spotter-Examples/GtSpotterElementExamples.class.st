@@ -22,11 +22,12 @@ GtSpotterElementExamples >> elementOnDefaultSpotterInBorderlessWindow [
 	<script: 'self new elementOnDefaultSpotterInBorderlessWindow'>
 	| aSpotterElement aSpace |
 
-	aSpotterElement := self elementOnDefaultSpotter.
+	aSpotterElement := self elementWithPreviewOnDefaultSpotter.
 	aSpotterElement background: Color white.
 
 	aSpace := BlSpace new.
 	aSpace root: aSpotterElement.
+	aSpace borderless: true.
 	aSpace show
 ]
 

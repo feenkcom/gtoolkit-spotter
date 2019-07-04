@@ -63,6 +63,18 @@ GtSpotterCandidates >> gtCandidatesFor: aView [
 		children: #children
 ]
 
+{ #category : #accessing }
+GtSpotterCandidates >> indexOf: aCandidate [
+	| anIndex |
+	
+	anIndex := 0.
+	self do: [ :eachCandidate |
+		anIndex := anIndex + 1.
+		eachCandidate == aCandidate
+			ifTrue: [ ^ anIndex ] ].
+	^ 0
+]
+
 { #category : #initialization }
 GtSpotterCandidates >> initialize [
 	super initialize.

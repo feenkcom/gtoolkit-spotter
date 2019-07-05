@@ -1,6 +1,9 @@
 Class {
 	#name : #GtSpotterStart,
 	#superclass : #Object,
+	#instVars : [
+		'spotterModel'
+	],
 	#category : #'GToolkit-Spotter-Model'
 }
 
@@ -181,13 +184,14 @@ GtSpotterStart >> spotterForSendersFor: aStep [
 { #category : #spotter }
 GtSpotterStart >> spotterHistoryFor: aStep [
 	<spotterOrder: 8>
+
 	aStep listProcessor
-			allCandidates: [ self history asArray select: [ :each | each isNotNil and: [ each value isNotNil ] ] ];
+			allCandidates: [ self spotterModel history asArray select: [ :eachCandidate | eachCandidate isNotNil ] ];
 			title: 'History';
-			itemName: [ :item | 
-				item class = GTSpotterProcessorLink 
-					ifTrue: [ item processor itemNameFor: item value ] " HACK: this triggers a recursion ! ... but processor is undefined for aCandidate "
-					ifFalse: [ item gtDisplayString ] ];
+			itemName: [ :eachCandidate | 
+				eachCandidate class = GTSpotterProcessorLink 
+					ifTrue: [ eachCandidate processor itemNameFor: eachCandidate item ] " HACK: this triggers a recursion ! ... but processor is undefined for aCandidate "
+					ifFalse: [ eachCandidate gtDisplayString ] ];
 			filter: GTFilterSubstring
 ]
 
@@ -201,4 +205,18 @@ GtSpotterStart >> spotterImplementorsFor: aStep [
 			SystemNavigation default allBehaviorsDo: [ :class | class localMethods do: filter ] ];
 		keyBinding: $m meta;
 		wantsToDisplayOnEmptyQuery: false
+]
+
+{ #category : #accessing }
+GtSpotterStart >> spotterModel [
+	self
+		assert: [ spotterModel isNotNil ]
+		description: [ 'Spotter must not be nil' ].
+
+	^ spotterModel
+]
+
+{ #category : #accessing }
+GtSpotterStart >> spotterModel: aGtSpotter [
+	spotterModel := aGtSpotter
 ]

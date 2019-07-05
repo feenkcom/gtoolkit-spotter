@@ -24,6 +24,7 @@ GtSpotterElementExamples >> elementOnDefaultSpotterInBorderlessWindow [
 
 	aSpotterElement := self elementWithPreviewOnDefaultSpotter.
 	aSpotterElement background: Color white.
+	aSpotterElement geometry: (BlRectangle cornerRadius: 5).
 
 	aSpace := BlSpace new.
 	aSpace root: aSpotterElement.

@@ -419,7 +419,7 @@ GtSpotter >> initialize [
 	
 	processorsFilter := GtSpotterSettingsProcessorFilter new.
 	steps := OrderedCollection new.
-	self initializeWith: GtSpotterStart new
+	self initializeWith: (GtSpotterStart new spotterModel: self)
 ]
 
 { #category : #initialization }

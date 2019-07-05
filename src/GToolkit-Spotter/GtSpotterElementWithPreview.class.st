@@ -1,5 +1,5 @@
 Class {
-	#name : #GtSpotterWithPreview,
+	#name : #GtSpotterElementWithPreview,
 	#superclass : #GtSpotterElement,
 	#instVars : [
 		'previewElement',
@@ -9,7 +9,7 @@ Class {
 }
 
 { #category : #initialization }
-GtSpotterWithPreview >> initialize [
+GtSpotterElementWithPreview >> initialize [
 	super initialize.
 	
 	previewElement := BlElement new.
@@ -40,7 +40,7 @@ GtSpotterWithPreview >> initialize [
 ]
 
 { #category : #'event - handling' }
-GtSpotterWithPreview >> onCurrentStepChanged: anAnnouncement [
+GtSpotterElementWithPreview >> onCurrentStepChanged: anAnnouncement [
 	| anObject |
 	
 	self spotterModelDo: [ :aSpotter | aSpotter hasSelected
@@ -53,12 +53,12 @@ GtSpotterWithPreview >> onCurrentStepChanged: anAnnouncement [
 ]
 
 { #category : #'event - handling' }
-GtSpotterWithPreview >> onHidePreview [
+GtSpotterElementWithPreview >> onHidePreview [
 	previewElement visibility: BlVisibility gone
 ]
 
 { #category : #'event - handling' }
-GtSpotterWithPreview >> onSelectedCandidateChanged: anAnnouncement [
+GtSpotterElementWithPreview >> onSelectedCandidateChanged: anAnnouncement [
 	| anObject |
 	
 	anObject := anAnnouncement selected item.
@@ -67,7 +67,7 @@ GtSpotterWithPreview >> onSelectedCandidateChanged: anAnnouncement [
 ]
 
 { #category : #'event - handling' }
-GtSpotterWithPreview >> onShowPreview [
+GtSpotterElementWithPreview >> onShowPreview [
 
 	self spotterModelDo: [ :aSpotterModel | aSpotterModel hasSelected
 			ifFalse: [ ^ self ] ].
@@ -77,12 +77,12 @@ GtSpotterWithPreview >> onShowPreview [
 ]
 
 { #category : #accessing }
-GtSpotterWithPreview >> spotterModel [
+GtSpotterElementWithPreview >> spotterModel [
 	^ spotterModel
 ]
 
 { #category : #accessing }
-GtSpotterWithPreview >> spotterModel: aSpotterModel [
+GtSpotterElementWithPreview >> spotterModel: aSpotterModel [
 	super spotterModel: aSpotterModel.
 	
 	self when: GtPhlowObjectToSelect do: [ :anEvent | anEvent consumed: anEvent sourceElement == self ].
@@ -97,7 +97,7 @@ GtSpotterWithPreview >> spotterModel: aSpotterModel [
 ]
 
 { #category : #'event - handling' }
-GtSpotterWithPreview >> updatePreview: anObject [
+GtSpotterElementWithPreview >> updatePreview: anObject [
 	| aPreviewContainer |
 	
 	aPreviewContainer := previewElement

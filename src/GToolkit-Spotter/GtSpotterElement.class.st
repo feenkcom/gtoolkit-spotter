@@ -75,6 +75,9 @@ GtSpotterElement >> initialize [
 		c horizontal matchParent.
 		c vertical matchParent ].
 	
+	self background: Color white.
+	self geometry: (BlRectangle cornerRadius: 5).
+	
 	breadcrumb := GtSpotterBreadcrumb new.
 	breadcrumb background: (BrGlamorousColors defaultButtonBorderColor).
 

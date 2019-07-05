@@ -132,7 +132,7 @@ GtSpotter class >> menuCommandOn: aBuilder [
 { #category : #'instance creation' }
 GtSpotter class >> on: anObject [
 	
-	^ self new foundationOrigin: anObject
+	^ self new initializeWith: anObject
 ]
 
 { #category : #accessing }
@@ -320,11 +320,6 @@ GtSpotter >> foundationOrigin [
 	<return: #Object>
 
 	^ foundationOrigin
-]
-
-{ #category : #accessing }
-GtSpotter >> foundationOrigin: anObject [
-	foundationOrigin := anObject
 ]
 
 { #category : #'model access' }

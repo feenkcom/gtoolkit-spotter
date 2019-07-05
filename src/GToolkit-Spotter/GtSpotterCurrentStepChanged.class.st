@@ -25,7 +25,7 @@ GtSpotterCurrentStepChanged >> index: aNumber [
 
 { #category : #accessing }
 GtSpotterCurrentStepChanged >> stepModel [
-	<return: #GtSpotterStepModel>
+	<return: #GtSpotterStep>
 
 	^ stepModel
 ]

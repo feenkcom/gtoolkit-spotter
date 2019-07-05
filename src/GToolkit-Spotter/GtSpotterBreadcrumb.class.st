@@ -49,7 +49,7 @@ GtSpotterBreadcrumb >> initialize [
 
 	self
 		hMatchParent;
-		vExact: 28;
+		vExact: 40;
 		alignCenterLeft.
 
 	self when: BrSelectionChanged do: [ :anEvent |

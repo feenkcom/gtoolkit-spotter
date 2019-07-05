@@ -96,7 +96,7 @@ GtSpotterElement >> initialize [
 		BlElement new
 			constraintsDo: [ :c |
 				c horizontal matchParent.
-				c vertical exact: 3 ];
+				c vertical exact: 1 ];
 			background: BrGlamorousColors defaultButtonBorderColor
 	 }.
 	

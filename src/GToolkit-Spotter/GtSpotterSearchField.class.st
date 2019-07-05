@@ -14,6 +14,11 @@ GtSpotterSearchField >> initialize [
 	self look: (BrGlamorousRegularEditorLook new fontSize: 18)
 ]
 
+{ #category : #'event handling' }
+GtSpotterSearchField >> onCurrentStepChanged: anAnnouncement [
+	
+]
+
 { #category : #accessing }
 GtSpotterSearchField >> spotterModel [
 	^ spotterModel
@@ -24,5 +29,7 @@ GtSpotterSearchField >> spotterModel: aGtSpotter [
 	spotterModel := aGtSpotter.
 
 	self editor when: BrTextEditorInsertedEvent do: [ :anEvent | self spotterModel setText: anEvent currentTarget text asString ].
-	self editor when: BrTextEditorDeletedEvent do: [ :anEvent | self spotterModel setText: anEvent currentTarget text asString ]
+	self editor when: BrTextEditorDeletedEvent do: [ :anEvent | self spotterModel setText: anEvent currentTarget text asString ].
+	
+	spotterModel announcer weak subscribe: GtSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self
 ]

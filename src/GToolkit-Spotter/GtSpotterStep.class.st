@@ -389,10 +389,10 @@ GtSpotterStep >> process: aString [
 	"no need to search for the same query"
 	(self context matches: aString) ifTrue: [ ^ self ].
 	self context: (self newContextForQuery: aString).
-	
+
 	" updating timestamp in a stream, to prevent candidates from old process being shown "
 	self stream updateTimestamp.
-	
+
 	self asyncTask
 		execute: [ :aCurrentContext |
 			self spotter notifyContextChangedFrom: lastSearchContext to: self context.
@@ -402,6 +402,7 @@ GtSpotterStep >> process: aString [
 			lastSearchContext := self context. 
 			self spotter notifySearchFinishedFor: aString processors: self processors ]
 		"added small delay before actual searching. It makes spotter faster :)"
+		priority: Processor userSchedulingPriority - 10
 		delay: 200
 ]
 

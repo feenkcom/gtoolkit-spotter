@@ -40,29 +40,30 @@ GtSpotterWithPreview >> initialize [
 ]
 
 { #category : #'event - handling' }
+GtSpotterWithPreview >> onCurrentStepChanged: anAnnouncement [
+	| anObject |
+	
+	self spotterModelDo: [ :aSpotter | aSpotter hasSelected
+		ifTrue: [
+			anObject := aSpotter currentStep selected item.
+	
+			self updatePreview: anObject ] ]
+	
+	
+]
+
+{ #category : #'event - handling' }
 GtSpotterWithPreview >> onHidePreview [
 	previewElement visibility: BlVisibility gone
 ]
 
 { #category : #'event - handling' }
 GtSpotterWithPreview >> onSelectedCandidateChanged: anAnnouncement [
-	| anObject aPreviewContainer |
+	| anObject |
 	
 	anObject := anAnnouncement selected item.
 	
-	aPreviewContainer := previewElement
-		childNamed: #previewContent
-		ifFound: #yourself
-		ifNone: [ previewElement ].
-	aPreviewContainer removeChildren.
-	
-	(anObject gtViewsFor: GtPhlowView empty)  originalView asElementDo: [ :anElement |
-		aPreviewContainer addChild: anElement ].
-	
-	labelElement text: anObject gtDisplayText.
-	
-	spotterModel class isPreviewVisible
-		ifTrue: [ previewElement visibility: BlVisibility visible. ]
+	self updatePreview: anObject
 ]
 
 { #category : #'event - handling' }
@@ -89,7 +90,27 @@ GtSpotterWithPreview >> spotterModel: aSpotterModel [
 	spotterModel announcer when: GtSpotterShowPreview send: #onShowPreview to: self.
 	spotterModel announcer when: GtSpotterHidePreview send: #onHidePreview to: self.
 	spotterModel announcer when: GtSpotterSelectedCandidateChanged send: #onSelectedCandidateChanged: to: self.
+	spotterModel announcer when: GtSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self.
 	
 	spotterModel class isPreviewVisible
 		ifTrue: [ spotterModel showPreview ]
+]
+
+{ #category : #'event - handling' }
+GtSpotterWithPreview >> updatePreview: anObject [
+	| aPreviewContainer |
+	
+	aPreviewContainer := previewElement
+		childNamed: #previewContent
+		ifFound: #yourself
+		ifNone: [ previewElement ].
+	aPreviewContainer removeChildren.
+	
+	(anObject gtViewsFor: GtPhlowView empty)  originalView asElementDo: [ :anElement |
+		aPreviewContainer addChild: anElement ].
+	
+	labelElement text: anObject gtDisplayText.
+	
+	spotterModel class isPreviewVisible
+		ifTrue: [ previewElement visibility: BlVisibility visible. ]
 ]

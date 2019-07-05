@@ -30,7 +30,9 @@ spotterElement spotterModel: spotter
 
 ### Opening in a borderless window
 
+```smalltalk
 space := BlSpace new.
 space root: spotterElement.
 space borderless: true.
 space show
+```

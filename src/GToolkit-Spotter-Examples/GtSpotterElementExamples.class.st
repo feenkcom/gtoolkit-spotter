@@ -33,6 +33,7 @@ GtSpotterElementExamples >> elementOnDefaultSpotterInBorderlessWindow [
 { #category : #examples }
 GtSpotterElementExamples >> elementOnSpotterWithOneStep [
 	<gtExample>
+	<noTest>
 	| aSpotterElement aSpotterModel |
 	
 	aSpotterElement := self emptyElement.

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'spotterModel'
 	],
-	#category : #'GToolkit-Spotter-UI-Bloc'
+	#category : #'GToolkit-Spotter-UI'
 }
 
 { #category : #initialization }

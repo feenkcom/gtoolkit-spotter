@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'stepModel'
 	],
-	#category : #'GToolkit-Spotter-UI-Bloc'
+	#category : #'GToolkit-Spotter-UI'
 }
 
 { #category : #initialization }

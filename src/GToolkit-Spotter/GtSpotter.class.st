@@ -33,57 +33,6 @@ GtSpotter class >> dontShowPreview [
 	isPreviewVisible := false
 ]
 
-{ #category : #example }
-GtSpotter class >> exampleInWindow [
-	<sampleInstance>
-	
-	^ GtSpotterMorph new
-		extent: 400@500;
-		doLayout;
-		spotterModel: self new;
-		openInWindow
-]
-
-{ #category : #example }
-GtSpotter class >> exampleMC [
-	"self exampleMC"
-	<sampleInstance>
-	^ GtSpotterMorph new
-		extent: 400@500;
-		doLayout;
-		spotterModel: (self on: MCWorkingCopy allManagers);
-		openCenteredInWorld
-]
-
-{ #category : #example }
-GtSpotter class >> exampleSpotterWithoutMorph [
-	<sampleInstance>
-	<gtExample>
-	<label: 'A GtSpotter without UI'>
-	
-	^ self new
-]
-
-{ #category : #example }
-GtSpotter class >> exampleWithPreview [
-	<sampleInstance>
-	^ GtSpotterMorph new
-		extent: (World width / 2.5 @ (World height / 1.5)) asIntegerPoint;
-		spotterModel: self new;
-		showPreview;
-		openCenteredInWorld
-]
-
-{ #category : #example }
-GtSpotter class >> exampleWorldMenu [
-	<sampleInstance>
-	^ GtSpotterMorph new
-		extent: 400@500;
-		doLayout;
-		spotterModel: (self on: World worldMenu);
-		openCenteredInWorld
-]
-
 { #category : #accessing }
 GtSpotter class >> extensionsPragma [
 	^ #spotterOrder:
@@ -115,18 +64,6 @@ GtSpotter class >> isPreviewVisible [
 GtSpotter class >> markOpened [
 
 	wasOpened := true
-]
-
-{ #category : #'world menu' }
-GtSpotter class >> menuCommandOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #Spotter)
-		action: [ GtSpotterGlobalShortcut openGlobalSpotter ];
-		keyText: 'Shift + Enter';
-		order: 50;
-		parent: #Tools;
-		help: 'Search tool to explore Pharo system effectively.';
-		iconName: #smallFindIcon
 ]
 
 { #category : #'instance creation' }
@@ -332,22 +269,6 @@ GtSpotter >> getText [
 GtSpotter >> gtDisplayOn: stream [
 
 	stream nextPutAll: 'Spotter'
-]
-
-{ #category : #printing }
-GtSpotter >> gtDisplaySpotterMorphOn: aComposite [
-	<gtInspectorPresentationOrder: 50>
-	
-	aComposite morph 
-		title: 'Live';
-		display: [ 
-			GLMBrick new 
-				hSpaceFill;
-				vSpaceFill;
-				addMorphBack: 
-					(GtSpotterMorph new
-						spotterModel: self);
-				yourself ]
 ]
 
 { #category : #'gt-extension' }

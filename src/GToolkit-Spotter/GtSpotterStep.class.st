@@ -106,13 +106,20 @@ GtSpotterStep >> canDiveInSelectedCandidate [
 
 { #category : #accessing }
 GtSpotterStep >> candidates [
-
-	^ candidates ifNil: [
-		candidates := GtSpotterCandidates new.
-		candidates announcer subscribe: GtSpotterCandidateAdded send: #onCandidateAdded to: self.
-		candidates announcer subscribe: GtSpotterAllCandidatesAdded send: #onCandidateAdded to: self.
-		candidates announcer subscribe: GtSpotterAllCandidatesRemoved do: [ self deselect ].
-		candidates ]
+	^ candidates
+		ifNil: [ candidates := GtSpotterCandidates new.
+			candidates announcer
+				when: GtSpotterCandidateAdded
+				send: #onCandidateAdded
+				to: self.
+			candidates announcer
+				when: GtSpotterAllCandidatesAdded
+				send: #onCandidateAdded
+				to: self.
+			candidates announcer
+				when: GtSpotterAllCandidatesRemoved
+				do: [ self deselect ].
+			candidates ]
 ]
 
 { #category : #processing }

@@ -78,15 +78,18 @@ GtSpotterStepElement >> onCandidateSelected: anAnnouncement [
 { #category : #accessing }
 GtSpotterStepElement >> stepModel: aSpotterStepModel [
 	stepModel := aSpotterStepModel.
-	
 	stepModel candidates announcer weak
-		subscribe: GtSpotterCandidateAdded send: #onCandidateAdded: to: self;
-		subscribe: GtSpotterAllCandidatesAdded send: #onAllCandidatesAdded: to: self;
-		subscribe: GtSpotterAllCandidatesRemoved send: #onAllCandidatesRemoved: to: self.
-
+		when: GtSpotterCandidateAdded send: #onCandidateAdded: to: self;
+		when: GtSpotterAllCandidatesAdded
+			send: #onAllCandidatesAdded:
+			to: self;
+		when: GtSpotterAllCandidatesRemoved
+			send: #onAllCandidatesRemoved:
+			to: self.
 	stepModel announcer weak
-		subscribe: GtSpotterSelectedCandidateChanged send: #onCandidateSelected: to: self.
-
+		when: GtSpotterSelectedCandidateChanged
+		send: #onCandidateSelected:
+		to: self.
 	self updateCandidates.
 	self updateSelection
 ]

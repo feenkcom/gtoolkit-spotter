@@ -23,7 +23,7 @@ GtSpotterBreadcrumb >> addStep: aNewStep [
 			origin := aNewStep origin.
 			
 			(selectedItem = origin)
-				ifTrue: [ (aPreviousStep selected renderingProcessor render: selectedItem) labelBrick text ]
+				ifTrue: [ aPreviousStep selected renderingProcessor itemNameFor: selectedItem ]
 				ifFalse: [ (origin isKindOf: Collection)
 					ifTrue: [ aNewStep processors first title ]
 					ifFalse: [ origin gtDisplayString] ] ].

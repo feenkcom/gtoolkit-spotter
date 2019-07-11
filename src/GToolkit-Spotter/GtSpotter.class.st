@@ -561,7 +561,7 @@ GtSpotter >> requestNextStepWith: anOriginObject for: anEventType [
 	self popUntil: self currentStep.
 	
 	self pushStep: (self newStep origin: anOriginObject; event: anEventType; yourself).
-	self steps last process: nil
+	self steps last process: ''
 ]
 
 { #category : #'api - steps' }

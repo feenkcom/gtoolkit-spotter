@@ -143,6 +143,11 @@ GtSpotterElement >> onCloseSpotter [
 			ifFalse: [ self removeFromParent ]
 ]
 
+{ #category : #accessing }
+GtSpotterElement >> searchField [
+	^ searchField
+]
+
 { #category : #action }
 GtSpotterElement >> selectNextCandidateDueTo: anEventType [
 

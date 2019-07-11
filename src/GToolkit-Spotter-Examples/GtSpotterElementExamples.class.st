@@ -33,23 +33,7 @@ GtSpotterElementExamples >> elementOnDefaultSpotterInBorderlessWindow [
 { #category : #examples }
 GtSpotterElementExamples >> elementOnSpotterInDropdown [
 	<gtExample>
-	| aSpotterElement aSpotterModel dropdown |
-	aSpotterElement := self emptyElement.
-	aSpotterModel := self defaultSpotter.
-	aSpotterModel announcer
-		when: GtSpotterSelectedCandidateChanged
-		do: [ :e | 
-			((#(singleClick doubleClick keyPressed) includes: e eventType)
-				and: [ true ])
-				ifTrue: [ dropdown collapse ] ].
-	aSpotterElement
-		spotterModel: aSpotterModel;
-		constraintsDo: [ :c | 
-			c horizontal exact: 600.
-			c vertical exact: 400 ];
-		margin: (BlInsets all: 1);
-		geometry: (BlRectangle cornerRadius: 4);
-		yourself.
+	| dropdown |
 	dropdown := BrDropdown new.
 	^ dropdown
 		look:
@@ -69,7 +53,22 @@ GtSpotterElementExamples >> elementOnSpotterInDropdown [
 								~= BrGlamorousColors lightBorderColor ])
 						ifTrue: [ e target background: BrGlamorousColors lightBorderColor ] ];
 				yourself ];
-		popup: [ aSpotterElement ];
+		popup: [ | aSpotterElement aSpotterModel |
+			aSpotterElement := self emptyElement.
+			aSpotterModel := self defaultSpotter.
+			aSpotterModel announcer
+				when: GtSpotterActOn
+				do: [ :e | 
+					(#(singleClick doubleClick keyPressed) includes: e eventType)
+						ifTrue: [ dropdown collapse ] ].
+			aSpotterElement
+				spotterModel: aSpotterModel;
+				constraintsDo: [ :c | 
+					c horizontal exact: 600.
+					c vertical exact: 400 ];
+				margin: (BlInsets all: 1);
+				geometry: (BlRectangle cornerRadius: 4);
+				yourself ];
 		yourself
 ]
 

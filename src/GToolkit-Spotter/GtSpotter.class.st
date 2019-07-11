@@ -57,7 +57,7 @@ GtSpotter class >> history [
 { #category : #testing }
 GtSpotter class >> isPreviewVisible [
 
-	^ isPreviewVisible ifNil: [ isPreviewVisible := false ]
+	^ isPreviewVisible ifNil: [ isPreviewVisible := true ]
 ]
 
 { #category : #accessing }

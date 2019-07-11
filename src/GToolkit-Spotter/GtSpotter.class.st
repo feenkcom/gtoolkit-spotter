@@ -209,15 +209,6 @@ GtSpotter >> defaultStep [
 	^ GtSpotterStep new
 ]
 
-{ #category : #'actions api' }
-GtSpotter >> doIt [
-	| result |
-	Smalltalk compiler
-		silentlyDo: [ result := Smalltalk compiler evaluate: text trimBoth ]
-		exceptionDo: [:ex | ^ex ]. 
-	"self exitDueTo: #doIt"
-]
-
 { #category : #accessing }
 GtSpotter >> exceptionHandler [
 	^ exceptionHandler ifNil: [ exceptionHandler := self defaultExceptionHandler ]
@@ -300,14 +291,14 @@ GtSpotter >> hasSteps [
 	^ 	self steps isNotEmpty
 ]
 
-{ #category : #'actions api' }
+{ #category : #'api - preview' }
 GtSpotter >> hidePreview [
-
-	self isPreviewVisible ifFalse: [ ^ self ].
+	self isPreviewVisible
+		ifFalse: [ ^ self ].
 	isPreviewVisible := false.
+	
 	self class dontShowPreview.
 	self notifyHidePreview
-	
 ]
 
 { #category : #'actions api' }
@@ -351,16 +342,6 @@ GtSpotter >> initializeWith: anFoundationObject [
 
 	currentStep := self steps last.
 	text := ''
-]
-
-{ #category : #'actions api' }
-GtSpotter >> inspectIt [
-	| result |
-	Smalltalk compiler
-		silentlyDo: [ result := Smalltalk compiler evaluate: text trimBoth ]
-		exceptionDo: [ :ex | ^ex  ].
-	result inspect.
-	self exitDueTo: #inspectIt 
 ]
 
 { #category : #testing }
@@ -591,18 +572,30 @@ GtSpotter >> requestPreviousStepFor: anEventType [
 	self currentStep: (self steps at: (aCurrentStepIndex - 1 max: 1))
 ]
 
-{ #category : #'model access' }
-GtSpotter >> setText: aString [
-	"I am the main entry point for triggering a new search in the current step."
+{ #category : #'api - search' }
+GtSpotter >> search [
+	"Trigger a search with the current string as a query"
 	
 	self
 		assert: [ self hasSteps ]
 		description: [ 'There must be at least one step' ].
+		
+	self search: text
+]
 
-	(aString isEmpty and: [ self text isNotEmpty ])
-		ifTrue: [ self currentStep process: nil ]
-		ifFalse: [ self currentStep process: aString ].
+{ #category : #'api - search' }
+GtSpotter >> search: aString [
+	"Trigger a search with the following string as a query"
 
+	self
+		assert: [ self hasSteps ]
+		description: [ 'There must be at least one step' ].
+	
+	self
+		assert: [ aString isNotNil ]
+		description: [ 'Search query must not be nil' ]. 
+
+	self currentStep process: aString.
 	text := aString
 ]
 
@@ -623,14 +616,16 @@ GtSpotter >> shiftPressed: aBoolean [
 	
 ]
 
-{ #category : #'actions api' }
+{ #category : #'api - preview' }
 GtSpotter >> showPreview [
 
-	self isPreviewVisible ifTrue: [ ^ self ].
+	self isPreviewVisible
+		ifTrue: [ ^ self ].
+
 	isPreviewVisible := true.
+
 	self class showPreview.
 	self notifyShowPreview
-	
 ]
 
 { #category : #accessing }
@@ -653,7 +648,7 @@ GtSpotter >> text [
 	^ text ifNil: [ text := '' ]
 ]
 
-{ #category : #'actions api' }
+{ #category : #'api - preview' }
 GtSpotter >> togglePreview [
 
 	self isPreviewVisible

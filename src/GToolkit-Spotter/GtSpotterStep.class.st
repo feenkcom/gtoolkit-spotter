@@ -393,8 +393,10 @@ GtSpotterStep >> process: aString [
 	destinguish when user deletes last character in the search and when search field became
 	empty after spawning new step"
 	
-	"no need to search for the same query"
-	(self context matches: aString) ifTrue: [ ^ self ].
+	self
+		assert: [ aString isNotNil ]
+		description: [ 'Search query must not be nil' ].
+
 	self context: (self newContextForQuery: aString).
 
 	" updating timestamp in a stream, to prevent candidates from old process being shown "

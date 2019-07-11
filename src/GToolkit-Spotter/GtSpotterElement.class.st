@@ -185,7 +185,9 @@ GtSpotterElement >> spotterModel: aSpotter [
 	breadcrumb spotterModel: aSpotter.
 	
 	spotterModel announcer when: GtSpotterExitAnnouncement send: #onCloseSpotter to: self.
-	spotterModel announcer when: GtSpotterSelectedCandidateChanged send: #onCandidateSelected: to: self
+	spotterModel announcer when: GtSpotterSelectedCandidateChanged send: #onCandidateSelected: to: self.
+	
+	aSpotter search
 ]
 
 { #category : #accessing }

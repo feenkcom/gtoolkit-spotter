@@ -22,20 +22,23 @@ GtSpotterSearchField >> onCurrentStepChanged: anAnnouncement [
 
 { #category : #accessing }
 GtSpotterSearchField >> spotterModel [
+	<return: #GtSpotter>
+
 	^ spotterModel
 ]
 
 { #category : #accessing }
 GtSpotterSearchField >> spotterModel: aGtSpotter [
 	spotterModel := aGtSpotter.
+	
 	self editor
 		when: BrTextEditorInsertedEvent
-		do:
-			[ :anEvent | self spotterModel setText: anEvent currentTarget text asString ].
+		do: [ :anEvent | self spotterModel search: anEvent currentTarget text asString ].
+	
 	self editor
 		when: BrTextEditorDeletedEvent
-		do:
-			[ :anEvent | self spotterModel setText: anEvent currentTarget text asString ].
+		do: [ :anEvent | self spotterModel search: anEvent currentTarget text asString ].
+
 	spotterModel announcer weak
 		when: GtSpotterCurrentStepChanged
 		send: #onCurrentStepChanged:

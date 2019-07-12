@@ -1,0 +1,95 @@
+Extension { #name : #Behavior }
+
+{ #category : #'*GToolkit-Spotter' }
+Behavior >> gtSpotterClassInstanceVariablesFor: aStep [
+	<gtSearch>
+	self isTrait
+		ifTrue: [ ^ self ].
+	aStep listProcessor
+		priority: 25;
+		title: 'Class instance variables';
+		allCandidates: [ self class classLayout allSlots ];
+		itemName: [ :each | each name asString ];
+		filter: GTFilterSubstring
+]
+
+{ #category : #'*GToolkit-Spotter' }
+Behavior >> gtSpotterCompositionFor: aStep [
+	<gtSearch>
+	aStep listProcessor
+		priority: 25;
+		title: 'Composing traits';
+		allCandidates: [ self traitComposition allTraits ];
+		itemIcon: #systemIcon;
+		filter: GTFilterSubstring
+]
+
+{ #category : #'*GToolkit-Spotter' }
+Behavior >> gtSpotterInstanceVariablesFor: aStep [
+	<gtSearch>
+	self isTrait
+		ifTrue: [ ^ self ].
+	aStep listProcessor
+		priority: 20;
+		title: 'Instance variables';
+		allCandidates: [ self classLayout allSlots ];
+		itemName: [ :each | each name asString ];
+		filter: GTFilterSubstring
+]
+
+{ #category : #'*GToolkit-Spotter' }
+Behavior >> gtSpotterSubclassesFor: aStep [
+	<gtSearch>
+	aStep listProcessor
+		priority: 50;
+		title: 'All subclasses';
+		allCandidates: [ self allSubclasses ];
+		itemIcon: #systemIcon;
+		filter: GTFilterSubstring
+]
+
+{ #category : #'*GToolkit-Spotter' }
+Behavior >> gtSpotterSuperclassesFor: aStep [
+	<gtSearch>
+	aStep listProcessor
+		priority: 40;
+		title: 'All superclasses';
+		allCandidates: [ self allSuperclasses ];
+		itemIcon: #systemIcon;
+		filter: GTFilterSubstring
+]
+
+{ #category : #'*GToolkit-Spotter' }
+Behavior >> gtSpotterTraitUsersFor: aStep [
+	<gtSearch>
+	self isTrait
+		ifFalse: [ ^ self ].
+	aStep listProcessor
+		priority: 20;
+		title: 'Users';
+		allCandidates: [ self traitUsers asArray ];
+		itemIcon: #systemIcon;
+		filter: GTFilterSubstring
+]
+
+{ #category : #'*GToolkit-Spotter' }
+Behavior >> gtSpotterUsedSlotsFor: aStep [
+	<gtSearch>
+	aStep listProcessor
+		priority: 70;
+		title: 'Special Slots';
+		allCandidates: [ self slots select: [ :slot | slot isSpecial ] ];
+		itemName: [ :item | item definitionString ];
+		filter: GTFilterSubstring
+]
+
+{ #category : #'*GToolkit-Spotter' }
+Behavior >> gtSpotterUsedTraitsFor: aStep [
+	<gtSearch>
+	aStep listProcessor
+		priority: 60;
+		title: 'Uses Traits';
+		allCandidates: [ self traits asArray ];
+		itemIcon: #systemIcon;
+		filter: GTFilterSubstring
+]

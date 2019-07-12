@@ -94,7 +94,7 @@ GtSpotterStep >> canDiveIn: aCandidate [
 	newFakeStep := self spotter newStep origin: self origin.
 	self spotter
 		addStep: newFakeStep
-		during: [ aCandidate spotterProcessorsFor: newFakeStep.
+		during: [ aCandidate gtSpotterProcessorsFor: newFakeStep.
 			canDiveIn := newFakeStep processors notEmpty ].
 	^ canDiveIn
 ]
@@ -440,7 +440,7 @@ GtSpotterStep >> processors [
 
 	^ processors ifNil: [ 
 		processors := OrderedCollection new.
-		self origin spotterProcessorsFor: self.
+		self origin gtSpotterProcessorsFor: self.
 		"this is a hack. we do it here just because we need to store the
 		category name in the brick after the processors have been created"
 		processors do: [ :each | 				

@@ -249,6 +249,17 @@ GtSpotterStep >> gtInspectorProcessorsIn: composite [
 		when: [ self spotter notNil ]
 ]
 
+{ #category : #'gt-extension' }
+GtSpotterStep >> gtProcessorsFor: aView [
+	<gtView>
+
+	^ aView columnedList 
+		title: 'Processors';
+		items: [ self processors ];
+		column: 'Name' format: [ :each | each title ];
+		column: 'Priority' format: [:each | each priority asString ]
+]
+
 { #category : #testing }
 GtSpotterStep >> hasCandidates [
 	"Return true if there are any candidates in all categories,

@@ -1,6 +1,17 @@
 Extension { #name : #Object }
 
 { #category : #'*GToolkit-Spotter' }
+Object >> gtSpotterActDefault [
+	^ GtInspector openOn: self
+]
+
+{ #category : #'*GToolkit-Spotter' }
+Object >> gtSpotterActDefault: aStep [
+	aStep exit.
+	self gtSpotterActDefault
+]
+
+{ #category : #'*GToolkit-Spotter' }
 Object >> gtSpotterProcessorsFor: aSpotterStep [
 	"This is a utility method that collects all extensions (processors) for the current object.
 	By default, it simply looks for the #spotterOrder: pragma.

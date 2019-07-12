@@ -10,7 +10,7 @@ Class {
 
 { #category : #public }
 GtSpotterProcessor >> actOn: anObject for: aStep [
-	anObject spotterActDefault: aStep
+	anObject gtSpotterActDefault: aStep
 ]
 
 { #category : #public }

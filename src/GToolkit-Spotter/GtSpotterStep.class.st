@@ -136,8 +136,7 @@ GtSpotterStep >> configureProcessorsStartingAt: anIndex with: aConfigurationBloc
 
 { #category : #accessing }
 GtSpotterStep >> context [
-
-	^ context ifNil: [ context := self newContextForQuery: nil ]
+	^ context ifNil: [ context := self newContextForQuery: '' ]
 ]
 
 { #category : #accessing }
@@ -322,6 +321,10 @@ GtSpotterStep >> listProcessor [
 
 { #category : #processing }
 GtSpotterStep >> newContextForQuery: aString [
+	self
+		assert: [ aString isNotNil ]
+		description: [ 'Query must not be nil' ].
+
 	^ GtSpotterContext new 
 		step: self;
 		stream: self stream;
@@ -465,6 +468,13 @@ GtSpotterStep >> relevantProcessorsProcess: aSpotterContext [
 			self exceptionHandler 
 				handleException: exception 
 				do: [ ('[Spotter] Exception in process: ', exception asString) logCr ] ]
+]
+
+{ #category : #accessing }
+GtSpotterStep >> searchQuery [
+	<return: #String>
+	
+	^ self context search
 ]
 
 { #category : #selecting }

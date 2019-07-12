@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'allFilteredCandidates',
-		'order'
+		'priority'
 	],
 	#category : #'GToolkit-Spotter-Model - Processors'
 }
@@ -97,19 +97,39 @@ GtSpotterProcessor >> order [
 	"Return assigned spotter order used to arrange categories in spotter UI"
 	<return: #Number>
 	
-	^ order
+	self deprecated: 'Use #priority instead'.
+	
+	^ self priority
 ]
 
 { #category : #accessing }
 GtSpotterProcessor >> order: aNumber [
 	"Assign to processor its spotter order to arrange categories
 	within spotter ui"
-	order := aNumber
+	
+	self deprecated: 'Use #priority: instead'.
+	
+	self priority: aNumber
 ]
 
 { #category : #private }
 GtSpotterProcessor >> prepareProcessorInContext: aContext [
 	allFilteredCandidates := nil
+]
+
+{ #category : #accessing }
+GtSpotterProcessor >> priority [
+	"Return assigned spotter order used to arrange categories in spotter UI"
+	<return: #Number>
+	
+	^ priority
+]
+
+{ #category : #accessing }
+GtSpotterProcessor >> priority: aNumber [
+	"Assign to processor its spotter order to arrange categories
+	within spotter ui"
+	priority := aNumber
 ]
 
 { #category : #testing }

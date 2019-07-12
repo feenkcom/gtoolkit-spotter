@@ -107,8 +107,6 @@ GtSpotterProcessor >> order: aNumber [
 	"Assign to processor its spotter order to arrange categories
 	within spotter ui"
 	
-	self deprecated: 'Use #priority: instead'.
-	
 	self priority: aNumber
 ]
 

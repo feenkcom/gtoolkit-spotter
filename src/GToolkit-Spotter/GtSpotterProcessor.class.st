@@ -10,7 +10,7 @@ Class {
 
 { #category : #public }
 GtSpotterProcessor >> actOn: anObject for: aStep [
-	anObject spotterActDefault: aStep
+	anObject gtSpotterActDefault: aStep
 ]
 
 { #category : #public }
@@ -96,8 +96,6 @@ GtSpotterProcessor >> hasFilteredCandidates [
 GtSpotterProcessor >> order [
 	"Return assigned spotter order used to arrange categories in spotter UI"
 	<return: #Number>
-	
-	self deprecated: 'Use #priority instead'.
 	
 	^ self priority
 ]

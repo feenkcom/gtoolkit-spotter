@@ -371,10 +371,15 @@ GtSpotter >> newStep [
 
 { #category : #notifying }
 GtSpotter >> notifyActOn: anObject for: anEventType [
-
-	self announce: (GtSpotterActOn new 
+	| anAnnouncement |
+	
+	anAnnouncement := GtSpotterActOn new 
 		element: anObject;
-		eventType: anEventType)
+		eventType: anEventType.
+	
+	self announce: anAnnouncement.
+	
+	^ anAnnouncement
 ]
 
 { #category : #notifying }

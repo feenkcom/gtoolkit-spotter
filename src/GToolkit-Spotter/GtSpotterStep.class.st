@@ -27,15 +27,16 @@ GtSpotterStep class >> gtExampleBasic [
 GtSpotterStep >> actDueTo: anEventType [
 	"Perform an action associated with currently selected item.
 	(can be triggered by doubleClick: or keyboard Enter press)"
-	
+	| anAnnouncement |
 	self
 		assert: [ self hasSelected ]
 		description: [ 'Spotter can not perform an action due to ', anEventType asString, ' if there is no selected candidate' ].
 
-	self spotter
-		historize: self selected;
-		notifyActOn: self selectedCandidate for: anEventType.
-	self selectedCategory actOn: self selectedCandidate for: self
+	self spotter historize: self selected.
+	
+	anAnnouncement := self spotter notifyActOn: self selectedCandidate for: anEventType.
+	anAnnouncement isActedUpon
+		ifFalse: [ self selectedCategory actOn: self selectedCandidate for: self ]
 ]
 
 { #category : #accessing }

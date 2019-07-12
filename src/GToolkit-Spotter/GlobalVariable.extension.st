@@ -1,6 +1,11 @@
 Extension { #name : #GlobalVariable }
 
 { #category : #'*GToolkit-Spotter' }
+GlobalVariable >> gtSpotterActDefault [
+	self value inspect
+]
+
+{ #category : #'*GToolkit-Spotter' }
 GlobalVariable >> gtSpotterClassFor: aStep [
 	<gtSearch>
 	aStep listProcessor

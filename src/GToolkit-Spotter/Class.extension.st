@@ -1,6 +1,21 @@
 Extension { #name : #Class }
 
 { #category : #'*GToolkit-Spotter' }
+Class >> gtSpotterActDefault [
+	| aCoder aSpace |
+		
+	aCoder := GtInspector createOnPlayBook: (GtClassCoder forClass: self).
+	aSpace := BlSpace new.
+	aSpace host: BlOSWindowHost default.
+	aSpace title: 'Coder'.
+	aSpace extent: 1200@600.
+	aSpace addChild: aCoder.
+	aSpace withHalos.
+	aSpace withSpotter.
+	aSpace show
+]
+
+{ #category : #'*GToolkit-Spotter' }
 Class >> gtSpotterClassMethodsFor: aStep [
 	<gtSearch>
 	aStep listProcessor

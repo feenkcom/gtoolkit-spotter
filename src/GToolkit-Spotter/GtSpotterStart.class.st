@@ -182,20 +182,6 @@ GtSpotterStart >> spotterForSendersFor: aStep [
 ]
 
 { #category : #spotter }
-GtSpotterStart >> spotterHistoryFor: aStep [
-	<spotterOrder: 8>
-
-	aStep listProcessor
-			allCandidates: [ self spotterModel history asArray select: [ :eachCandidate | eachCandidate isNotNil ] ];
-			title: 'History';
-			itemName: [ :eachCandidate | 
-				eachCandidate class = GTSpotterProcessorLink 
-					ifTrue: [ eachCandidate processor itemNameFor: eachCandidate item ] " HACK: this triggers a recursion ! ... but processor is undefined for aCandidate "
-					ifFalse: [ eachCandidate gtDisplayString ] ];
-			filter: GTFilterSubstring
-]
-
-{ #category : #spotter }
 GtSpotterStart >> spotterImplementorsFor: aStep [
 	<spotterOrder: 30>
 	self flag: #specialFilter.

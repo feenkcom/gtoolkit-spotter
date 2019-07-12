@@ -33,57 +33,6 @@ GtSpotter class >> dontShowPreview [
 	isPreviewVisible := false
 ]
 
-{ #category : #example }
-GtSpotter class >> exampleInWindow [
-	<sampleInstance>
-	
-	^ GtSpotterMorph new
-		extent: 400@500;
-		doLayout;
-		spotterModel: self new;
-		openInWindow
-]
-
-{ #category : #example }
-GtSpotter class >> exampleMC [
-	"self exampleMC"
-	<sampleInstance>
-	^ GtSpotterMorph new
-		extent: 400@500;
-		doLayout;
-		spotterModel: (self on: MCWorkingCopy allManagers);
-		openCenteredInWorld
-]
-
-{ #category : #example }
-GtSpotter class >> exampleSpotterWithoutMorph [
-	<sampleInstance>
-	<gtExample>
-	<label: 'A GtSpotter without UI'>
-	
-	^ self new
-]
-
-{ #category : #example }
-GtSpotter class >> exampleWithPreview [
-	<sampleInstance>
-	^ GtSpotterMorph new
-		extent: (World width / 2.5 @ (World height / 1.5)) asIntegerPoint;
-		spotterModel: self new;
-		showPreview;
-		openCenteredInWorld
-]
-
-{ #category : #example }
-GtSpotter class >> exampleWorldMenu [
-	<sampleInstance>
-	^ GtSpotterMorph new
-		extent: 400@500;
-		doLayout;
-		spotterModel: (self on: World worldMenu);
-		openCenteredInWorld
-]
-
 { #category : #accessing }
 GtSpotter class >> extensionsPragma [
 	^ #spotterOrder:
@@ -108,25 +57,13 @@ GtSpotter class >> history [
 { #category : #testing }
 GtSpotter class >> isPreviewVisible [
 
-	^ isPreviewVisible ifNil: [ isPreviewVisible := false ]
+	^ isPreviewVisible ifNil: [ isPreviewVisible := true ]
 ]
 
 { #category : #accessing }
 GtSpotter class >> markOpened [
 
 	wasOpened := true
-]
-
-{ #category : #'world menu' }
-GtSpotter class >> menuCommandOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #Spotter)
-		action: [ GtSpotterGlobalShortcut openGlobalSpotter ];
-		keyText: 'Shift + Enter';
-		order: 50;
-		parent: #Tools;
-		help: 'Search tool to explore Pharo system effectively.';
-		iconName: #smallFindIcon
 ]
 
 { #category : #'instance creation' }
@@ -272,15 +209,6 @@ GtSpotter >> defaultStep [
 	^ GtSpotterStep new
 ]
 
-{ #category : #'actions api' }
-GtSpotter >> doIt [
-	| result |
-	Smalltalk compiler
-		silentlyDo: [ result := Smalltalk compiler evaluate: text trimBoth ]
-		exceptionDo: [:ex | ^ex ]. 
-	"self exitDueTo: #doIt"
-]
-
 { #category : #accessing }
 GtSpotter >> exceptionHandler [
 	^ exceptionHandler ifNil: [ exceptionHandler := self defaultExceptionHandler ]
@@ -334,22 +262,6 @@ GtSpotter >> gtDisplayOn: stream [
 	stream nextPutAll: 'Spotter'
 ]
 
-{ #category : #printing }
-GtSpotter >> gtDisplaySpotterMorphOn: aComposite [
-	<gtInspectorPresentationOrder: 50>
-	
-	aComposite morph 
-		title: 'Live';
-		display: [ 
-			GLMBrick new 
-				hSpaceFill;
-				vSpaceFill;
-				addMorphBack: 
-					(GtSpotterMorph new
-						spotterModel: self);
-				yourself ]
-]
-
 { #category : #'gt-extension' }
 GtSpotter >> gtStepsFor: aView [
 	<gtView>
@@ -379,14 +291,14 @@ GtSpotter >> hasSteps [
 	^ 	self steps isNotEmpty
 ]
 
-{ #category : #'actions api' }
+{ #category : #'api - preview' }
 GtSpotter >> hidePreview [
-
-	self isPreviewVisible ifFalse: [ ^ self ].
+	self isPreviewVisible
+		ifFalse: [ ^ self ].
 	isPreviewVisible := false.
+	
 	self class dontShowPreview.
 	self notifyHidePreview
-	
 ]
 
 { #category : #'actions api' }
@@ -432,16 +344,6 @@ GtSpotter >> initializeWith: anFoundationObject [
 	text := ''
 ]
 
-{ #category : #'actions api' }
-GtSpotter >> inspectIt [
-	| result |
-	Smalltalk compiler
-		silentlyDo: [ result := Smalltalk compiler evaluate: text trimBoth ]
-		exceptionDo: [ :ex | ^ex  ].
-	result inspect.
-	self exitDueTo: #inspectIt 
-]
-
 { #category : #testing }
 GtSpotter >> isPreviewVisible [
 
@@ -469,10 +371,15 @@ GtSpotter >> newStep [
 
 { #category : #notifying }
 GtSpotter >> notifyActOn: anObject for: anEventType [
-
-	self announce: (GtSpotterActOn new 
+	| anAnnouncement |
+	
+	anAnnouncement := GtSpotterActOn new 
 		element: anObject;
-		eventType: anEventType)
+		eventType: anEventType.
+	
+	self announce: anAnnouncement.
+	
+	^ anAnnouncement
 ]
 
 { #category : #notifying }
@@ -659,7 +566,7 @@ GtSpotter >> requestNextStepWith: anOriginObject for: anEventType [
 	self popUntil: self currentStep.
 	
 	self pushStep: (self newStep origin: anOriginObject; event: anEventType; yourself).
-	self steps last process: nil
+	self steps last process: ''
 ]
 
 { #category : #'api - steps' }
@@ -670,18 +577,30 @@ GtSpotter >> requestPreviousStepFor: anEventType [
 	self currentStep: (self steps at: (aCurrentStepIndex - 1 max: 1))
 ]
 
-{ #category : #'model access' }
-GtSpotter >> setText: aString [
-	"I am the main entry point for triggering a new search in the current step."
+{ #category : #'api - search' }
+GtSpotter >> search [
+	"Trigger a search with the current string as a query"
 	
 	self
 		assert: [ self hasSteps ]
 		description: [ 'There must be at least one step' ].
+		
+	self search: text
+]
 
-	(aString isEmpty and: [ self text isNotEmpty ])
-		ifTrue: [ self currentStep process: nil ]
-		ifFalse: [ self currentStep process: aString ].
+{ #category : #'api - search' }
+GtSpotter >> search: aString [
+	"Trigger a search with the following string as a query"
 
+	self
+		assert: [ self hasSteps ]
+		description: [ 'There must be at least one step' ].
+	
+	self
+		assert: [ aString isNotNil ]
+		description: [ 'Search query must not be nil' ]. 
+
+	self currentStep process: aString.
 	text := aString
 ]
 
@@ -702,14 +621,16 @@ GtSpotter >> shiftPressed: aBoolean [
 	
 ]
 
-{ #category : #'actions api' }
+{ #category : #'api - preview' }
 GtSpotter >> showPreview [
 
-	self isPreviewVisible ifTrue: [ ^ self ].
+	self isPreviewVisible
+		ifTrue: [ ^ self ].
+
 	isPreviewVisible := true.
+
 	self class showPreview.
 	self notifyShowPreview
-	
 ]
 
 { #category : #accessing }
@@ -732,7 +653,7 @@ GtSpotter >> text [
 	^ text ifNil: [ text := '' ]
 ]
 
-{ #category : #'actions api' }
+{ #category : #'api - preview' }
 GtSpotter >> togglePreview [
 
 	self isPreviewVisible

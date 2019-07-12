@@ -8,8 +8,19 @@ Class {
 		'breadcrumb',
 		'results'
 	],
-	#category : #'GToolkit-Spotter-UI-Bloc'
+	#category : #'GToolkit-Spotter-UI'
 }
+
+{ #category : #actions }
+GtSpotterElement >> actDueTo: anEventType [
+	self
+		spotterModelDo: [ :aSpotter | 
+			aSpotter hasSteps
+				ifFalse: [ ^ self ].
+			aSpotter currentStep hasCandidates
+				ifFalse: [ ^ self ].
+			aSpotter currentStep actDueTo: anEventType ]
+]
 
 { #category : #initialization }
 GtSpotterElement >> bindingDictionnary [
@@ -39,9 +50,9 @@ GtSpotterElement >> bindingDictionnary [
 	(Character arrowUp alt -> [ self stepScrollPageUp ]).
 	(Character arrowDown alt -> [ self stepScrollPageDown ]).
 	(Character pageUp -> [ self stepScrollPageUp ]).
-	(Character pageDown -> [ self stepScrollPageDown ]).
-	(Character cr asKeyCombination -> [ self actDueTo: #keyPressed ]).
-	($p meta shift -> [ self exportAsPNGSilently ])"}
+	(Character pageDown -> [ self stepScrollPageDown ])."
+	(BlKeyCombination return -> [ self actDueTo: #keyPressed ]).
+	"($p meta shift -> [ self exportAsPNGSilently ])"}
 ]
 
 { #category : #action }
@@ -143,6 +154,11 @@ GtSpotterElement >> onCloseSpotter [
 			ifFalse: [ self removeFromParent ]
 ]
 
+{ #category : #accessing }
+GtSpotterElement >> searchField [
+	^ searchField
+]
+
 { #category : #action }
 GtSpotterElement >> selectNextCandidateDueTo: anEventType [
 
@@ -169,7 +185,9 @@ GtSpotterElement >> spotterModel: aSpotter [
 	breadcrumb spotterModel: aSpotter.
 	
 	spotterModel announcer when: GtSpotterExitAnnouncement send: #onCloseSpotter to: self.
-	spotterModel announcer when: GtSpotterSelectedCandidateChanged send: #onCandidateSelected: to: self
+	spotterModel announcer when: GtSpotterSelectedCandidateChanged send: #onCandidateSelected: to: self.
+	
+	aSpotter search
 ]
 
 { #category : #accessing }

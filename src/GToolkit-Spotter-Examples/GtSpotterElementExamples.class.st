@@ -31,6 +31,48 @@ GtSpotterElementExamples >> elementOnDefaultSpotterInBorderlessWindow [
 ]
 
 { #category : #examples }
+GtSpotterElementExamples >> elementOnSpotterInDropdown [
+	<gtExample>
+	| dropdown |
+	dropdown := BrDropdown new.
+	^ dropdown
+		look:
+			(BrGlamorousDropdownLook new
+				outskirtsEmbellisher: [ :e | 
+					e
+						background: BrGlamorousColors lightBorderColor;
+						yourself ];
+				yourself);
+		toggle: [ BrButton new
+				look: BrGlamorousButtonWithIconLook;
+				icon: BrGlamorousIcons search asElement;
+				when: BlElementBackgroundChangedEvent
+					do: [ :e | 
+					(dropdown isExpanded
+						and: [ e target background paint color
+								~= BrGlamorousColors lightBorderColor ])
+						ifTrue: [ e target background: BrGlamorousColors lightBorderColor ] ];
+				yourself ];
+		popup: [ | aSpotterElement aSpotterModel |
+			aSpotterElement := self emptyElement.
+			aSpotterModel := self defaultSpotter.
+			aSpotterModel announcer
+				when: GtSpotterActOn
+				do: [ :e | 
+					(#(singleClick doubleClick keyPressed) includes: e eventType)
+						ifTrue: [ dropdown collapse ] ].
+			aSpotterElement
+				spotterModel: aSpotterModel;
+				constraintsDo: [ :c | 
+					c horizontal exact: 600.
+					c vertical exact: 400 ];
+				margin: (BlInsets all: 1);
+				geometry: (BlRectangle cornerRadius: 4);
+				yourself ];
+		yourself
+]
+
+{ #category : #examples }
 GtSpotterElementExamples >> elementOnSpotterWithOneStep [
 	<gtExample>
 	<noTest>

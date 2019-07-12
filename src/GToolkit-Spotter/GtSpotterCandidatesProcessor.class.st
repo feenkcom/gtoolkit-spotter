@@ -94,13 +94,6 @@ GtSpotterCandidatesProcessor >> prepareProcessorInContext: aContext [
 	self hasDynamicItems ifTrue: [ allCandidates := nil ]
 ]
 
-{ #category : #private }
-GtSpotterCandidatesProcessor >> render: anObject [
-	^ GtSpotterItemBrick new
-		icon: (self itemIconFor: anObject);
-		text: (self itemNameFor: anObject)
-]
-
 { #category : #accessing }
 GtSpotterCandidatesProcessor >> title [
 	^ 'undefined'

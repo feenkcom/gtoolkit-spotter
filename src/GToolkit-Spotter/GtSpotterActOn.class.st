@@ -3,10 +3,16 @@ Class {
 	#superclass : #Announcement,
 	#instVars : [
 		'element',
-		'eventType'
+		'eventType',
+		'isActedUpon'
 	],
 	#category : #'GToolkit-Spotter-Announcements'
 }
+
+{ #category : #accessing }
+GtSpotterActOn >> actedUpon: aBoolean [
+	isActedUpon := aBoolean
+]
 
 { #category : #'as yet unclassified' }
 GtSpotterActOn >> asRecorderEvent [
@@ -32,4 +38,16 @@ GtSpotterActOn >> eventType [
 { #category : #accessing }
 GtSpotterActOn >> eventType: anObject [
 	eventType := anObject
+]
+
+{ #category : #initialization }
+GtSpotterActOn >> initialize [
+	super initialize.
+	
+	isActedUpon := false
+]
+
+{ #category : #accessing }
+GtSpotterActOn >> isActedUpon [
+	^ isActedUpon
 ]

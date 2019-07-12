@@ -5,7 +5,7 @@ Class {
 		'previewElement',
 		'labelElement'
 	],
-	#category : #'GToolkit-Spotter-UI-Bloc'
+	#category : #'GToolkit-Spotter-UI'
 }
 
 { #category : #initialization }

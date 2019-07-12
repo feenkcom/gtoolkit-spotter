@@ -27,15 +27,16 @@ GtSpotterStep class >> gtExampleBasic [
 GtSpotterStep >> actDueTo: anEventType [
 	"Perform an action associated with currently selected item.
 	(can be triggered by doubleClick: or keyboard Enter press)"
-	
+	| anAnnouncement |
 	self
 		assert: [ self hasSelected ]
 		description: [ 'Spotter can not perform an action due to ', anEventType asString, ' if there is no selected candidate' ].
 
-	self spotter
-		historize: self selected;
-		notifyActOn: self selectedCandidate for: anEventType.
-	self selectedCategory actOn: self selectedCandidate for: self
+	self spotter historize: self selected.
+	
+	anAnnouncement := self spotter notifyActOn: self selectedCandidate for: anEventType.
+	anAnnouncement isActedUpon
+		ifFalse: [ self selectedCategory actOn: self selectedCandidate for: self ]
 ]
 
 { #category : #accessing }
@@ -106,13 +107,20 @@ GtSpotterStep >> canDiveInSelectedCandidate [
 
 { #category : #accessing }
 GtSpotterStep >> candidates [
-
-	^ candidates ifNil: [
-		candidates := GtSpotterCandidates new.
-		candidates announcer subscribe: GtSpotterCandidateAdded send: #onCandidateAdded to: self.
-		candidates announcer subscribe: GtSpotterAllCandidatesAdded send: #onCandidateAdded to: self.
-		candidates announcer subscribe: GtSpotterAllCandidatesRemoved do: [ self deselect ].
-		candidates ]
+	^ candidates
+		ifNil: [ candidates := GtSpotterCandidates new.
+			candidates announcer
+				when: GtSpotterCandidateAdded
+				send: #onCandidateAdded
+				to: self.
+			candidates announcer
+				when: GtSpotterAllCandidatesAdded
+				send: #onCandidateAdded
+				to: self.
+			candidates announcer
+				when: GtSpotterAllCandidatesRemoved
+				do: [ self deselect ].
+			candidates ]
 ]
 
 { #category : #processing }
@@ -386,8 +394,10 @@ GtSpotterStep >> process: aString [
 	destinguish when user deletes last character in the search and when search field became
 	empty after spawning new step"
 	
-	"no need to search for the same query"
-	(self context matches: aString) ifTrue: [ ^ self ].
+	self
+		assert: [ aString isNotNil ]
+		description: [ 'Search query must not be nil' ].
+
 	self context: (self newContextForQuery: aString).
 
 	" updating timestamp in a stream, to prevent candidates from old process being shown "

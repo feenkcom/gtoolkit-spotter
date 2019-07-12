@@ -1,6 +1,11 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*GToolkit-Spotter' }
+CompiledMethod >> gtSpotterActDefault [
+	^ super gtSpotterActDefault
+]
+
+{ #category : #'*GToolkit-Spotter' }
 CompiledMethod >> gtSpotterForBytecodesFor: aStep [
 	<gtSearch>
 	aStep listProcessor

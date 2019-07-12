@@ -1,6 +1,11 @@
 Extension { #name : #Pragma }
 
 { #category : #'*GToolkit-Spotter' }
+Pragma >> gtSpotterActDefault [
+    ^ super gtSpotterActDefault
+]
+
+{ #category : #'*GToolkit-Spotter' }
 Pragma >> gtSpotterForBytecodesFor: aStep [
 	<gtSearch>
 	self method spotterForBytecodesFor: aStep

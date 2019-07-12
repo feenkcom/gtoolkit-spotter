@@ -1,6 +1,11 @@
 Extension { #name : #RPackage }
 
 { #category : #'*GToolkit-Spotter' }
+RPackage >> gtSpotterActDefault [
+	^ super gtSpotterActDefault
+]
+
+{ #category : #'*GToolkit-Spotter' }
 RPackage >> gtSpotterClassesFor: aStep [
 	<gtSearch>
 	aStep listProcessor

@@ -92,6 +92,12 @@ GtSpotterProcessor >> hasFilteredCandidates [
 	^ self allFilteredCandidates notEmpty
 ]
 
+{ #category : #initialization }
+GtSpotterProcessor >> initialize [
+	super initialize.
+	priority := 100
+]
+
 { #category : #accessing }
 GtSpotterProcessor >> order [
 	"Return assigned spotter order used to arrange categories in spotter UI"

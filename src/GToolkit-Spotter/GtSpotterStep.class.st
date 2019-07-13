@@ -450,11 +450,11 @@ GtSpotterStep >> processor: aProcessor isRelevantForQuery: aString [
 GtSpotterStep >> processors [
 
 	^ processors ifNil: [ 
-		processors := SortedCollection sortBlock: [:a :b | a priority < b priority].
+		processors := OrderedCollection new.
 		self origin gtSpotterProcessorsFor: self.
 		"this is a hack. we do it here just because we need to store the
 		category name in the brick after the processors have been created"
-		processors do: [ :each | self candidates addProcessor: each ].
+		(processors sorted: [:a :b | a priority < b priority]) do: [ :each | self candidates addProcessor: each ].
 		processors ]
 ]
 

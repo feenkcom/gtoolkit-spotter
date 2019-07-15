@@ -1,6 +1,6 @@
 Class {
 	#name : #GtSpotterCandidateAdded,
-	#superclass : #GtSpotterAnnouncement,
+	#superclass : #GlamorousAuthor,
 	#instVars : [
 		'candidate'
 	],

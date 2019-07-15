@@ -50,9 +50,11 @@ GtSpotterStepElement >> initialize [
 						text: '#', aCategory processor title;
 						padding: (BlInsets top: 12 left: 6 bottom: 6 right: 6);
 						hMatchParent ] ].
-				
+
 	self removeShortcutsWithCombination: BlKeyCombination arrowDown.
 	self removeShortcutsWithCombination: BlKeyCombination arrowUp.
+	self removeShortcutsWithCombination: BlKeyCombination arrowLeft.
+	self removeShortcutsWithCombination: BlKeyCombination arrowRight.
 ]
 
 { #category : #'event handling' }

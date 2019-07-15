@@ -17,7 +17,12 @@ GtSpotterSearchField >> initialize [
 
 { #category : #'event handling' }
 GtSpotterSearchField >> onCurrentStepChanged: anAnnouncement [
-	self text: anAnnouncement stepModel searchQuery asRopedText
+	self text: anAnnouncement stepModel searchQuery asRopedText.
+	self navigator
+		moveTo: self text size;
+		apply.
+
+	self requestFocus
 ]
 
 { #category : #accessing }

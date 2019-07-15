@@ -40,8 +40,6 @@ GtSpotterElement >> bindingDictionnary [
 
 	(BlKeyCombination primaryArrowRight -> [ self diveInDueTo: #keyPressed ]).
 	(BlKeyCombination primaryArrowLeft -> [ self diveOutDueTo: #keyPressed ]).
-	(BlKeyCombination arrowLeft -> [ self ]).
-	(BlKeyCombination arrowRight -> [ self ]).
 	(BlKeyCombination arrowUp -> [ self selectPreviousCandidateDueTo: #keyPressedArrowUp ]).
 	(BlKeyCombination arrowDown -> [ self selectNextCandidateDueTo: #keyPressedArrowDown ]).
 

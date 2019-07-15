@@ -93,7 +93,7 @@ GtSpotterCandidates >> initialize [
 
 { #category : #notifying }
 GtSpotterCandidates >> notifyAllCandidatesRemoved [
-	self announcer announce: GTSpotterAllCandidatesRemoved new
+	self announcer announce: GtSpotterAllCandidatesRemoved new
 ]
 
 { #category : #notifying }
@@ -129,12 +129,7 @@ GtSpotterCandidates >> remove: aGtSpotterCandidate ifAbsent: anExceptionBlock [
 
 	"Add a spotter candidate to a collection of all candidates"
 
-	(processorCandidates
-		at: aGtSpotterCandidate processor
-		ifAbsent: anExceptionBlock)
-			remove: aGtSpotterCandidate
-			ifAbsent: anExceptionBlock.
-	self notifyCandidateRemoved: aGtSpotterCandidate
+	self shouldNotImplement
 ]
 
 { #category : #removing }

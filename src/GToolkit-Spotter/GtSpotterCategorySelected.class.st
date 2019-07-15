@@ -1,6 +1,6 @@
 Class {
 	#name : #GtSpotterCategorySelected,
-	#superclass : #GTSpotterAnnouncement,
+	#superclass : #GlamorousAuthor,
 	#category : #'GToolkit-Spotter-Announcements'
 }
 

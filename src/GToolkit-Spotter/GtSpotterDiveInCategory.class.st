@@ -1,6 +1,6 @@
 Class {
 	#name : #GtSpotterDiveInCategory,
-	#superclass : #GTSpotterAnnouncement,
+	#superclass : #GlamorousAuthor,
 	#instVars : [
 		'eventType'
 	],

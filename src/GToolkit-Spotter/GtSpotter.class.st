@@ -378,6 +378,15 @@ GtSpotter >> notifyActOn: anObject for: anEventType [
 ]
 
 { #category : #notifying }
+GtSpotter >> notifyCandidateDeselected: aCandidate [
+	self
+		assert: [ aCandidate isNotNil ]
+		description: [ 'aCandidate must not be nil' ].
+
+	self announce: (GtSpotterCandidateDeselected new candidate: aCandidate).
+]
+
+{ #category : #notifying }
 GtSpotter >> notifyCandidateSelected: anObject for: anEventType [
 
 	self announce: (GtSpotterSelectedCandidateChanged new 

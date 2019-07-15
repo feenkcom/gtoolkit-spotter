@@ -1,6 +1,6 @@
 Class {
 	#name : #GtSpotterDebuggingExceptionHandler,
-	#superclass : #GTSpotterExceptionHandler,
+	#superclass : #GtSpotterExceptionHandler,
 	#category : #'GToolkit-Spotter-Exceptions'
 }
 

@@ -145,7 +145,7 @@ GtSpotterContext >> equals: aContext [
 { #category : #public }
 GtSpotterContext >> exceptionHandler [
 	self flag: 'Bloc -> overrides doesNotUnderstand discarding the current exception context'.
-	^ GTCurrentSpotterExceptionHandler value ifNil: [ self step exceptionHandler ]
+	^ GtCurrentSpotterExceptionHandler value ifNil: [ self step exceptionHandler ]
 ]
 
 { #category : #accessing }

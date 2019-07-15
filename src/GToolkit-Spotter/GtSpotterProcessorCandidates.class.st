@@ -59,6 +59,11 @@ GtSpotterProcessorCandidates >> initialize [
 ]
 
 { #category : #accessing }
+GtSpotterProcessorCandidates >> priority [
+	^ self processor priority
+]
+
+{ #category : #accessing }
 GtSpotterProcessorCandidates >> processor [
 	<return: #GtSpotterProcessor>
 
@@ -79,4 +84,9 @@ GtSpotterProcessorCandidates >> remove: oldObject ifAbsent: anExceptionBlock [
 	respond to this message."
 
 	candidates remove: oldObject ifAbsent: anExceptionBlock
+]
+
+{ #category : #removing }
+GtSpotterProcessorCandidates >> removeAll [
+	candidates removeAll
 ]

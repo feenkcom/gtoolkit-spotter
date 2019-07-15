@@ -23,11 +23,12 @@ Object >> gtSpotterProcessorsFor: aSpotterStep [
 		from: self class 
 		to: Object)
 			select: [:pragma | aSpotterStep processorsFilter shouldEnableProcessorsCreateBy: pragma method])
-			do: [ :pragma ||currentSize|
+			do: [ :pragma |
+				| currentSize |
 				currentSize := aSpotterStep processors size.
 				self gtSpotterProcessorsFor: aSpotterStep pragma: pragma.
 				aSpotterStep "configure the new processors if required"
-					configureProcessorsStartingAt: currentSize+1 
+					configureProcessorsStartingAt: currentSize + 1
 					with: (aSpotterStep processorsFilter configurationBlockForProcessorsCreatedBy: pragma method)]
 ]
 
@@ -35,16 +36,7 @@ Object >> gtSpotterProcessorsFor: aSpotterStep [
 Object >> gtSpotterProcessorsFor: aSpotterStep pragma: aPragma [
 	" if there is a problem with the definition of one or more processors, let the other processors continue to work "
 
-	[ | processorsSize addedProcessorsSize |
-	"To allow nice arrangement of processor within UI we need to assign to
-		each processor its spotter order. Because it is possible
-		to define multiple (or none) processors using pragma
-		we need to detect how many new processors were added"
-	processorsSize := aSpotterStep processors size.
-	self perform: aPragma methodSelector with: aSpotterStep.
-	addedProcessorsSize := aSpotterStep processors size - processorsSize.
-	"assign spotter order for newly added ones"
-	(aSpotterStep processors last: addedProcessorsSize)]
+	[ self perform: aPragma methodSelector with: aSpotterStep ]
 		on: Error
 		do: [ :exception | 
 			aSpotterStep exceptionHandler

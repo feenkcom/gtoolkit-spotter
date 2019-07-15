@@ -270,11 +270,6 @@ GtSpotter >> gtStepsFor: aView [
 		items: [ self steps ]
 ]
 
-{ #category : #'event handling' }
-GtSpotter >> handleExceptionsDuring: aBlock [
-	self exceptionHandler handleExceptionsDuring: aBlock
-]
-
 { #category : #testing }
 GtSpotter >> hasMultipleSteps [
 

@@ -59,7 +59,12 @@ GtSpotterStep >> asElement [
 { #category : #accessing }
 GtSpotterStep >> asyncTask [
 
-	^ asyncTask ifNil: [ asyncTask := self defaultTask ]
+	^ asyncTask
+]
+
+{ #category : #accessing }
+GtSpotterStep >> asyncTask: anAsyncTask [
+	asyncTask := anAsyncTask
 ]
 
 { #category : #private }
@@ -136,7 +141,9 @@ GtSpotterStep >> configureProcessorsStartingAt: anIndex with: aConfigurationBloc
 
 { #category : #accessing }
 GtSpotterStep >> context [
-	^ context ifNil: [ context := self newContextForQuery: '' ]
+	<return: #GtSpotterContext>
+
+	^ context
 ]
 
 { #category : #accessing }
@@ -217,8 +224,12 @@ GtSpotterStep >> event: anObject [
 
 { #category : #'accessing - dynamic' }
 GtSpotterStep >> exceptionHandler [
-	^ GTCurrentSpotterExceptionHandler value ifNil: [ self spotter exceptionHandler ]
+
 	" #ifNil: is necessary because the sender chain of #spotterProcessorsFor:pragma: may have multiple callees outside of the exception handler (async) ... so we have to provide a global but yet easy fallback "
+	^ GtCurrentSpotterExceptionHandler value ifNil: [
+		self hasSpotter
+			ifTrue: [ self spotter exceptionHandler ]
+			ifFalse: [ GtSpotterDebuggingExceptionHandler new ] ]
 ]
 
 { #category : #actions }
@@ -260,6 +271,11 @@ GtSpotterStep >> gtProcessorsFor: aView [
 		column: 'Priority' format: [:each | each priority asString ]
 ]
 
+{ #category : #'event handling' }
+GtSpotterStep >> handleExceptionsDuring: aBlock [
+	self exceptionHandler handleExceptionsDuring: aBlock
+]
+
 { #category : #testing }
 GtSpotterStep >> hasCandidates [
 	"Return true if there are any candidates in all categories,
@@ -296,6 +312,30 @@ GtSpotterStep >> hasSelected [
 	<return: #Boolean>
 	
 	^ selected isNotNil
+]
+
+{ #category : #testing }
+GtSpotterStep >> hasSpotter [
+	<return: #Boolean>
+	
+	^ spotter isNotNil
+]
+
+{ #category : #initialization }
+GtSpotterStep >> initialize [
+	super initialize.
+
+	context := self newContextForQuery: ''.
+
+	asyncTask := self defaultTask.
+
+	stream := self defaultStream.
+	stream
+		onAddedSelector: #add:;
+		onAddedAllSelector: #addAll:;
+		onRemoveSelector: #removeAllCandidatesOf:;
+		receiver: self candidates.
+	stream
 ]
 
 { #category : #testing }
@@ -345,6 +385,24 @@ GtSpotterStep >> newContextForQuery: aString [
 ]
 
 { #category : #notifying }
+GtSpotterStep >> notifyCategorySelected: aProcessor [
+	self hasSpotter
+		ifTrue: [ self spotter notifyCategorySelected: aProcessor ]
+]
+
+{ #category : #notifying }
+GtSpotterStep >> notifyContextChangedFrom: aPreviousContext to: aCurrentContext [
+	self hasSpotter
+		ifTrue: [ self spotter notifyContextChangedFrom: aPreviousContext to: aCurrentContext ]
+]
+
+{ #category : #notifying }
+GtSpotterStep >> notifySearchFinishedFor: aString processors: aCollectionOfProcessors [
+	self hasSpotter
+		ifTrue: [ self spotter notifySearchFinishedFor: aString processors: aCollectionOfProcessors ]
+]
+
+{ #category : #notifying }
 GtSpotterStep >> notifySelectedCandidateChanged: aCandidate [
 	
 	self notifySelectedCandidateChanged: aCandidate for: #unknown
@@ -357,7 +415,9 @@ GtSpotterStep >> notifySelectedCandidateChanged: aCandidate for: anEventType [
 		description: [ 'aCandidate must not be nil' ].
 
 	self announcer announce: (GtSpotterSelectedCandidateChanged new select: aCandidate).
-	self spotter notifyCandidateSelected: aCandidate for: anEventType
+	
+	self hasSpotter
+		ifTrue: [ self spotter notifyCandidateSelected: aCandidate for: anEventType ]
 ]
 
 { #category : #'event processing' }
@@ -419,12 +479,12 @@ GtSpotterStep >> process: aString [
 
 	self asyncTask
 		execute: [ :aCurrentContext |
-			self spotter notifyContextChangedFrom: lastSearchContext to: self context.
+			self notifyContextChangedFrom: lastSearchContext to: self context.
 			self processContext: aCurrentContext ]
 		withArguments: { self context. }
 		callback: [
 			lastSearchContext := self context. 
-			self spotter notifySearchFinishedFor: aString processors: self processors ]
+			self notifySearchFinishedFor: aString processors: self processors ]
 		"added small delay before actual searching. It makes spotter faster :)"
 		priority: Processor userSchedulingPriority - 10
 		delay: 200
@@ -432,7 +492,7 @@ GtSpotterStep >> process: aString [
 
 { #category : #processing }
 GtSpotterStep >> processContext: aSpotterContext [
-	self spotter handleExceptionsDuring: [ 
+	self handleExceptionsDuring: [ 
 		self stream removeAllCandidates.
 		self relevantProcessorsProcess: aSpotterContext  ]
 ]
@@ -452,9 +512,6 @@ GtSpotterStep >> processors [
 	^ processors ifNil: [ 
 		processors := OrderedCollection new.
 		self origin gtSpotterProcessorsFor: self.
-		"this is a hack. we do it here just because we need to store the
-		category name in the brick after the processors have been created"
-		(processors sorted: [:a :b | a priority < b priority]) do: [ :each | self candidates addProcessor: each ].
 		processors ]
 ]
 
@@ -466,8 +523,11 @@ GtSpotterStep >> processors: aCollection [
 
 { #category : #'accessing - dynamic' }
 GtSpotterStep >> processorsFilter [
+	<return: #GtSpotterProcessorFilter>
 
-	^ self spotter processorsFilter
+	^ self hasSpotter
+		ifTrue: [ self spotter processorsFilter ]
+		ifFalse: [ GtSpotterNullProcessorFilter new ]
 ]
 
 { #category : #private }
@@ -516,12 +576,11 @@ GtSpotterStep >> select: aCandidate dueTo: anEventType [
 	(self isSelected: aCandidate)
 		ifTrue: [ ^ self ].
 
-	self spotter
-		after: [
-			selected := aCandidate.
-			self notifySelectedCandidateChanged: aCandidate for: anEventType ]
-		do: [ self spotter notifyCategorySelected: self selected processor ]
-		ifTrue: [ (self isCategorySelected: aCandidate processor) not ]
+	selected := aCandidate.
+	self notifySelectedCandidateChanged: aCandidate for: anEventType.
+
+	(self isCategorySelected: aCandidate processor)
+		ifFalse: [ self notifyCategorySelected: aCandidate processor ]
 ]
 
 { #category : #selecting }
@@ -626,15 +685,9 @@ GtSpotterStep >> spotter: aSpotter [
 
 { #category : #accessing }
 GtSpotterStep >> stream [
+	<return: #GtSpotterUIThreadStream>
 
-	^ stream ifNil: [
-		stream := self defaultStream.
-		stream
-			onAddedSelector: #add:;
-			onAddedAllSelector: #addAll:;
-			onRemoveSelector: #removeAllCandidatesOf:;
-			receiver: self candidates.
-		stream ]
+	^ stream
 ]
 
 { #category : #actions }

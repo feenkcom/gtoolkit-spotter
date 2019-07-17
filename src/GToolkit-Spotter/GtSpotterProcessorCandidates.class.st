@@ -16,6 +16,11 @@ GtSpotterProcessorCandidates class >> of: aGtSpotterProcessor [
 	^ self basicNew initialize processor: aGtSpotterProcessor
 ]
 
+{ #category : #comparing }
+GtSpotterProcessorCandidates >> < otherProcessorCandidates [
+	^ self processor < otherProcessorCandidates processor
+]
+
 { #category : #adding }
 GtSpotterProcessorCandidates >> add: newObject [ 
 	"Include newObject as one of the receiver's elements. Answer newObject. 

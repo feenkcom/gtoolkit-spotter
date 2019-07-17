@@ -8,6 +8,13 @@ Class {
 	#category : #'GToolkit-Spotter-Model - Processors'
 }
 
+{ #category : #comparing }
+GtSpotterProcessor >> < anOtherProcessor [ 
+	"Answer whether the receiver is less than the argument."
+	
+	^ self priority < anOtherProcessor priority
+]
+
 { #category : #public }
 GtSpotterProcessor >> actOn: anObject for: aStep [
 	anObject gtSpotterActDefault: aStep

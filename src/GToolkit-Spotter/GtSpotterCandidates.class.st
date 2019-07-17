@@ -88,7 +88,7 @@ GtSpotterCandidates >> indexOf: aCandidate [
 GtSpotterCandidates >> initialize [
 	super initialize.
 	
-	processorCandidates := SortedCollection sortBlock: [ :a :b | a priority < b priority ]
+	processorCandidates := SortedCollection sortBlock: [ :a :b | a < b ]
 ]
 
 { #category : #notifying }

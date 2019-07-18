@@ -270,11 +270,6 @@ GtSpotter >> gtStepsFor: aView [
 		items: [ self steps ]
 ]
 
-{ #category : #'event handling' }
-GtSpotter >> handleExceptionsDuring: aBlock [
-	self exceptionHandler handleExceptionsDuring: aBlock
-]
-
 { #category : #testing }
 GtSpotter >> hasMultipleSteps [
 
@@ -380,6 +375,15 @@ GtSpotter >> notifyActOn: anObject for: anEventType [
 	self announce: anAnnouncement.
 	
 	^ anAnnouncement
+]
+
+{ #category : #notifying }
+GtSpotter >> notifyCandidateDeselected: aCandidate [
+	self
+		assert: [ aCandidate isNotNil ]
+		description: [ 'aCandidate must not be nil' ].
+
+	self announce: (GtSpotterCandidateDeselected new candidate: aCandidate).
 ]
 
 { #category : #notifying }

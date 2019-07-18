@@ -1,6 +1,6 @@
 Class {
 	#name : #GtSpotterNullProcessorFilter,
-	#superclass : #GTSpotterProcessorFilter,
+	#superclass : #GtSpotterProcessorFilter,
 	#category : #'GToolkit-Spotter-Model'
 }
 

@@ -11,19 +11,15 @@ Class {
 { #category : #adding }
 GtSpotterCandidates >> add: aGtSpotterCandidate [ 
 	"Add a spotter candidate to a collection of all candidates"
-
-	(processorCandidates
-		at: aGtSpotterCandidate processor
-		ifAbsentPut: [ GtSpotterProcessorCandidates of: aGtSpotterCandidate processor ])
-			add: aGtSpotterCandidate.
+	| theProcessorCandidates |
+	
+	theProcessorCandidates := processorCandidates
+		detect: [ :eachProcessorCandidates | eachProcessorCandidates processor == aGtSpotterCandidate processor ]
+		ifFound: #yourself
+		ifNone: [ processorCandidates add: (GtSpotterProcessorCandidates of: aGtSpotterCandidate processor) ].
+		
+	theProcessorCandidates add: aGtSpotterCandidate.
 	self notifyCandidateAdded: aGtSpotterCandidate
-]
-
-{ #category : #adding }
-GtSpotterCandidates >> addProcessor: aProcessor [
-	processorCandidates
-		at: aProcessor
-		ifAbsentPut: [ GtSpotterProcessorCandidates of: aProcessor ]
 ]
 
 { #category : #accessing }
@@ -47,15 +43,14 @@ GtSpotterCandidates >> at: anIndex [
 
 { #category : #accessing }
 GtSpotterCandidates >> children [
-	^ processorCandidates values
+	^ processorCandidates
 ]
 
 { #category : #enumerating }
 GtSpotterCandidates >> do: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument."
 
-	processorCandidates
-		valuesDo: [ :eachProcessorCandidates | eachProcessorCandidates do: aBlock ]
+	processorCandidates do: [ :eachProcessorCandidates | eachProcessorCandidates do: aBlock ]
 ]
 
 { #category : #accessing }
@@ -93,12 +88,12 @@ GtSpotterCandidates >> indexOf: aCandidate [
 GtSpotterCandidates >> initialize [
 	super initialize.
 	
-	processorCandidates := OrderedDictionary new
+	processorCandidates := SortedCollection sortBlock: [ :a :b | a < b ]
 ]
 
 { #category : #notifying }
 GtSpotterCandidates >> notifyAllCandidatesRemoved [
-	self announcer announce: GTSpotterAllCandidatesRemoved new
+	self announcer announce: GtSpotterAllCandidatesRemoved new
 ]
 
 { #category : #notifying }
@@ -134,17 +129,13 @@ GtSpotterCandidates >> remove: aGtSpotterCandidate ifAbsent: anExceptionBlock [
 
 	"Add a spotter candidate to a collection of all candidates"
 
-	(processorCandidates
-		at: aGtSpotterCandidate processor
-		ifAbsent: anExceptionBlock)
-			remove: aGtSpotterCandidate
-			ifAbsent: anExceptionBlock.
-	self notifyCandidateRemoved: aGtSpotterCandidate
+	self shouldNotImplement
 ]
 
 { #category : #removing }
 GtSpotterCandidates >> removeAllCandidates [
-	processorCandidates := OrderedDictionary new.
+	processorCandidates removeAll.
+
 	self notifyAllCandidatesRemoved
 ]
 

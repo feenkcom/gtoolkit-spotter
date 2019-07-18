@@ -22,7 +22,7 @@ GtSpotterExceptionHandler >> handleException: anException with: anObject [
 
 { #category : #handling }
 GtSpotterExceptionHandler >> handleExceptionsDuring: aBlock [
-	[ GTCurrentSpotterExceptionHandler use: self during: aBlock ] 
+	[ GtCurrentSpotterExceptionHandler use: self during: aBlock ] 
 		on: self 
 		do: [ :exception | 
 			[ self handleException: exception ] " handle any exception during aBlock "

@@ -20,26 +20,36 @@ GtSpotterExamples >> defaultSpotter [
 	^ aSpotter
 ]
 
+{ #category : #'instance creation' }
+GtSpotterExamples >> processorWithName: aString [
+	^ GtSpotterCandidatesListProcessor new title: aString
+]
+
 { #category : #'instance creation examples' }
 GtSpotterExamples >> spotterWithOneStep [
 	<gtExample>
-	| aSpotter aStep |
+	| aSpotter aStep implementorsProcessor classesProcessor pseudoVariablesProcesspr |
 	
 	aSpotter := self defaultSpotter.
 	aSpotter addStep: (aStep := aSpotter newStep).
+	
+	
+	implementorsProcessor := self processorWithName: #Implementers.
+	classesProcessor := self processorWithName: #Classes.
+	pseudoVariablesProcesspr := self processorWithName: #'Pseudo-Variables'.
 
-	aStep candidates add: (GtSpotterCandidate new item: Object >> #hash; processor: #Implementers).
-	aStep candidates add: (GtSpotterCandidate new item: Object >> #=; processor: #Implementers).
-	aStep candidates add: (GtSpotterCandidate new item: Object >> #at:; processor: #Implementers).
+	aStep candidates add: (GtSpotterCandidate new item: Object >> #hash; processor: implementorsProcessor).
+	aStep candidates add: (GtSpotterCandidate new item: Object >> #=; processor: implementorsProcessor).
+	aStep candidates add: (GtSpotterCandidate new item: Object >> #at:; processor: implementorsProcessor).
 	
-	aStep candidates add: (GtSpotterCandidate new item: Object; processor: #Classes).
-	aStep candidates add: (GtSpotterCandidate new item: Collection; processor: #Classes).
-	aStep candidates add: (GtSpotterCandidate new item: Number; processor: #Classes).
-	aStep candidates add: (GtSpotterCandidate new item: Boolean; processor: #Classes).
+	aStep candidates add: (GtSpotterCandidate new item: Object; processor: classesProcessor).
+	aStep candidates add: (GtSpotterCandidate new item: Collection; processor: classesProcessor).
+	aStep candidates add: (GtSpotterCandidate new item: Number; processor: classesProcessor).
+	aStep candidates add: (GtSpotterCandidate new item: Boolean; processor: classesProcessor).
 	
-	aStep candidates add: (GtSpotterCandidate new item: nil; processor: #'Pseudo-Variables').
-	aStep candidates add: (GtSpotterCandidate new item: true; processor: #'Pseudo-Variables').
-	aStep candidates add: (GtSpotterCandidate new item: false; processor: #'Pseudo-Variables').
+	aStep candidates add: (GtSpotterCandidate new item: nil; processor: pseudoVariablesProcesspr).
+	aStep candidates add: (GtSpotterCandidate new item: true; processor: pseudoVariablesProcesspr).
+	aStep candidates add: (GtSpotterCandidate new item: false; processor: pseudoVariablesProcesspr).
 
 	^ aSpotter
 ]
@@ -47,12 +57,14 @@ GtSpotterExamples >> spotterWithOneStep [
 { #category : #'instance creation examples' }
 GtSpotterExamples >> spotterWithTwoSteps [
 	<gtExample>
-	| aSpotter aStep |
+	| aSpotter aStep collectionProcessor |
 	
 	aSpotter := self spotterWithOneStep.
 	aSpotter addStep: (aStep := aSpotter newStep).
 	
-	aStep candidates add: (GtSpotterCandidate new item: 'Second'; processor: Collection).
+	collectionProcessor := self processorWithName: #Collection.
+	
+	aStep candidates add: (GtSpotterCandidate new item: 'Second'; processor: collectionProcessor).
 
 	^ aSpotter
 ]

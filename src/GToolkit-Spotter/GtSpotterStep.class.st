@@ -41,7 +41,6 @@ GtSpotterStep >> actDueTo: anEventType [
 
 { #category : #accessing }
 GtSpotterStep >> addProcessor: aProcessor [
-
 	self processors add: aProcessor
 ]
 
@@ -59,7 +58,12 @@ GtSpotterStep >> asElement [
 { #category : #accessing }
 GtSpotterStep >> asyncTask [
 
-	^ asyncTask ifNil: [ asyncTask := self defaultTask ]
+	^ asyncTask
+]
+
+{ #category : #accessing }
+GtSpotterStep >> asyncTask: anAsyncTask [
+	asyncTask := anAsyncTask
 ]
 
 { #category : #private }
@@ -71,20 +75,24 @@ GtSpotterStep >> basicRelevantProcessorsProcess: aSpotterContext [
 
 { #category : #private }
 GtSpotterStep >> basicRelevantProcessorsProcess: aSpotterContext do: aBlock [
+	| theSortedProcessors |
+	
+	theSortedProcessors := self processors sorted: [ :a :b | a priority < b priority ].
+
 	aSpotterContext text substrings 
 		detect: [ :each | each beginsWith: '#' ]
 		ifFound: [ :categoryQuery | 
 			| categoryQueryPrefix |
 			aSpotterContext text: (aSpotterContext text copyReplaceAll: categoryQuery with: '').
 			categoryQueryPrefix := categoryQuery allButFirst asLowercase.
-			self processors 
+			theSortedProcessors
 				select: [ :each | 
 					self 
 						processor: each 
 						isRelevantForQuery: categoryQueryPrefix ]
 				thenDo: aBlock ]
 		ifNone: [ 
-			self processors do: aBlock ]
+			theSortedProcessors do: aBlock ]
 ]
 
 { #category : #actions }
@@ -108,19 +116,6 @@ GtSpotterStep >> canDiveInSelectedCandidate [
 { #category : #accessing }
 GtSpotterStep >> candidates [
 	^ candidates
-		ifNil: [ candidates := GtSpotterCandidates new.
-			candidates announcer
-				when: GtSpotterCandidateAdded
-				send: #onCandidateAdded
-				to: self.
-			candidates announcer
-				when: GtSpotterAllCandidatesAdded
-				send: #onCandidateAdded
-				to: self.
-			candidates announcer
-				when: GtSpotterAllCandidatesRemoved
-				do: [ self deselect ].
-			candidates ]
 ]
 
 { #category : #processing }
@@ -136,7 +131,9 @@ GtSpotterStep >> configureProcessorsStartingAt: anIndex with: aConfigurationBloc
 
 { #category : #accessing }
 GtSpotterStep >> context [
-	^ context ifNil: [ context := self newContextForQuery: '' ]
+	<return: #GtSpotterContext>
+
+	^ context
 ]
 
 { #category : #accessing }
@@ -156,9 +153,14 @@ GtSpotterStep >> defaultTask [
 
 { #category : #selecting }
 GtSpotterStep >> deselect [
-	"Deselects a candidate without notifying anyone"
-
-	selected := nil
+	| anAlreadySelected |
+	
+	self hasSelected
+		ifFalse: [ ^ self ].
+	
+	anAlreadySelected := self selected.
+	selected := nil.
+	self notifyCandidateDeselected: anAlreadySelected
 ]
 
 { #category : #actions }
@@ -217,8 +219,12 @@ GtSpotterStep >> event: anObject [
 
 { #category : #'accessing - dynamic' }
 GtSpotterStep >> exceptionHandler [
-	^ GTCurrentSpotterExceptionHandler value ifNil: [ self spotter exceptionHandler ]
+
 	" #ifNil: is necessary because the sender chain of #spotterProcessorsFor:pragma: may have multiple callees outside of the exception handler (async) ... so we have to provide a global but yet easy fallback "
+	^ GtCurrentSpotterExceptionHandler value ifNil: [
+		self hasSpotter
+			ifTrue: [ self spotter exceptionHandler ]
+			ifFalse: [ GtSpotterDebuggingExceptionHandler new ] ]
 ]
 
 { #category : #actions }
@@ -260,6 +266,11 @@ GtSpotterStep >> gtProcessorsFor: aView [
 		column: 'Priority' format: [:each | each priority asString ]
 ]
 
+{ #category : #'error handling' }
+GtSpotterStep >> handleExceptionsDuring: aBlock [
+	self exceptionHandler handleExceptionsDuring: aBlock
+]
+
 { #category : #testing }
 GtSpotterStep >> hasCandidates [
 	"Return true if there are any candidates in all categories,
@@ -299,18 +310,51 @@ GtSpotterStep >> hasSelected [
 ]
 
 { #category : #testing }
+GtSpotterStep >> hasSpotter [
+	<return: #Boolean>
+	
+	^ spotter isNotNil
+]
+
+{ #category : #initialization }
+GtSpotterStep >> initialize [
+	super initialize.
+
+	asyncTask := self defaultTask.
+	
+	candidates := GtSpotterCandidates new.
+	candidates announcer
+		when: GtSpotterCandidateAdded
+		send: #onCandidateAdded
+		to: self.
+	candidates announcer
+		when: GtSpotterAllCandidatesAdded
+		send: #onCandidateAdded
+		to: self.
+	candidates announcer
+		when: GtSpotterAllCandidatesRemoved
+		send: #onAllCandidateRemoved
+		to: self.
+	candidates.
+
+	stream := self defaultStream.
+	stream
+		onAddedSelector: #add:;
+		onAddedAllSelector: #addAll:;
+		onRemoveSelector: #removeAllCandidatesOf:;
+		receiver: candidates.
+	stream.
+	
+	context := self newContextForQuery: ''
+]
+
+{ #category : #testing }
 GtSpotterStep >> isCategorySelected: aProcessor [
 	"Return true if a category assigned to aProcessor is currently selected,
 	false otherwise"
 	<return: #Boolean>
 	
 	^ self hasSelected and: [ self selected processor == aProcessor ]
-]
-
-{ #category : #'zz-deprecated' }
-GtSpotterStep >> isEmpty [
-	self deprecated: 'Use hasCandidates instead'.
-	^ self hasCandidates not
 ]
 
 { #category : #testing }
@@ -345,6 +389,36 @@ GtSpotterStep >> newContextForQuery: aString [
 ]
 
 { #category : #notifying }
+GtSpotterStep >> notifyCandidateDeselected: aCandidate [
+	self
+		assert: [ aCandidate isNotNil ]
+		description: [ 'aCandidate must not be nil' ].
+
+	self announcer announce: (GtSpotterCandidateDeselected new candidate: aCandidate).
+	
+	self hasSpotter
+		ifTrue: [ self spotter notifyCandidateDeselected: aCandidate ]
+]
+
+{ #category : #notifying }
+GtSpotterStep >> notifyCategorySelected: aProcessor [
+	self hasSpotter
+		ifTrue: [ self spotter notifyCategorySelected: aProcessor ]
+]
+
+{ #category : #notifying }
+GtSpotterStep >> notifyContextChangedFrom: aPreviousContext to: aCurrentContext [
+	self hasSpotter
+		ifTrue: [ self spotter notifyContextChangedFrom: aPreviousContext to: aCurrentContext ]
+]
+
+{ #category : #notifying }
+GtSpotterStep >> notifySearchFinishedFor: aString processors: aCollectionOfProcessors [
+	self hasSpotter
+		ifTrue: [ self spotter notifySearchFinishedFor: aString processors: aCollectionOfProcessors ]
+]
+
+{ #category : #notifying }
 GtSpotterStep >> notifySelectedCandidateChanged: aCandidate [
 	
 	self notifySelectedCandidateChanged: aCandidate for: #unknown
@@ -357,15 +431,23 @@ GtSpotterStep >> notifySelectedCandidateChanged: aCandidate for: anEventType [
 		description: [ 'aCandidate must not be nil' ].
 
 	self announcer announce: (GtSpotterSelectedCandidateChanged new select: aCandidate).
-	self spotter notifyCandidateSelected: aCandidate for: anEventType
+	
+	self hasSpotter
+		ifTrue: [ self spotter notifyCandidateSelected: aCandidate for: anEventType ]
+]
+
+{ #category : #'event processing' }
+GtSpotterStep >> onAllCandidateRemoved [
+	self deselect
 ]
 
 { #category : #'event processing' }
 GtSpotterStep >> onCandidateAdded [
 	"Select first candidate item in the list if there is no already selected
 	candidate and candidate list has at least one candidate"
-	(self hasSelected or: [ self candidates isEmpty ])
-		ifFalse: [ self selectFirst ]
+
+	(self hasSelected not and: [ self hasCandidates ])
+		ifTrue: [ self selectFirst ]
 ]
 
 { #category : #accessing }
@@ -419,12 +501,12 @@ GtSpotterStep >> process: aString [
 
 	self asyncTask
 		execute: [ :aCurrentContext |
-			self spotter notifyContextChangedFrom: lastSearchContext to: self context.
+			self notifyContextChangedFrom: lastSearchContext to: self context.
 			self processContext: aCurrentContext ]
 		withArguments: { self context. }
 		callback: [
 			lastSearchContext := self context. 
-			self spotter notifySearchFinishedFor: aString processors: self processors ]
+			self notifySearchFinishedFor: aString processors: self processors ]
 		"added small delay before actual searching. It makes spotter faster :)"
 		priority: Processor userSchedulingPriority - 10
 		delay: 200
@@ -432,9 +514,9 @@ GtSpotterStep >> process: aString [
 
 { #category : #processing }
 GtSpotterStep >> processContext: aSpotterContext [
-	self spotter handleExceptionsDuring: [ 
+	self handleExceptionsDuring: [ 
 		self stream removeAllCandidates.
-		self relevantProcessorsProcess: aSpotterContext  ]
+		self relevantProcessorsProcess: aSpotterContext ]
 ]
 
 { #category : #private }
@@ -452,9 +534,6 @@ GtSpotterStep >> processors [
 	^ processors ifNil: [ 
 		processors := OrderedCollection new.
 		self origin gtSpotterProcessorsFor: self.
-		"this is a hack. we do it here just because we need to store the
-		category name in the brick after the processors have been created"
-		(processors sorted: [:a :b | a priority < b priority]) do: [ :each | self candidates addProcessor: each ].
 		processors ]
 ]
 
@@ -466,8 +545,11 @@ GtSpotterStep >> processors: aCollection [
 
 { #category : #'accessing - dynamic' }
 GtSpotterStep >> processorsFilter [
+	<return: #GtSpotterProcessorFilter>
 
-	^ self spotter processorsFilter
+	^ self hasSpotter
+		ifTrue: [ self spotter processorsFilter ]
+		ifFalse: [ GtSpotterNullProcessorFilter new ]
 ]
 
 { #category : #private }
@@ -516,12 +598,11 @@ GtSpotterStep >> select: aCandidate dueTo: anEventType [
 	(self isSelected: aCandidate)
 		ifTrue: [ ^ self ].
 
-	self spotter
-		after: [
-			selected := aCandidate.
-			self notifySelectedCandidateChanged: aCandidate for: anEventType ]
-		do: [ self spotter notifyCategorySelected: self selected processor ]
-		ifTrue: [ (self isCategorySelected: aCandidate processor) not ]
+	selected := aCandidate.
+	self notifySelectedCandidateChanged: aCandidate for: anEventType.
+
+	(self isCategorySelected: aCandidate processor)
+		ifFalse: [ self notifyCategorySelected: aCandidate processor ]
 ]
 
 { #category : #selecting }
@@ -552,6 +633,14 @@ GtSpotterStep >> selectNextCategory [
 GtSpotterStep >> selectNextDueTo: anEventType [
 	| anIndex aNextCandidate |
 
+	self
+		assert: [ self hasSelected ]
+		description: [ 'I must have selected candidate' ].
+	
+	self
+		assert: [ self hasCandidates ]
+		description: [ 'I must have candidates' ].
+
 	anIndex := self candidates indexOf: self selected.
 	aNextCandidate := self candidates at: (anIndex + 1 min: self candidates size).
 
@@ -572,6 +661,14 @@ GtSpotterStep >> selectPreviousCategory [
 { #category : #selecting }
 GtSpotterStep >> selectPreviousDueTo: anEventType [
 	| anIndex aPreviousCandidate |
+	
+	self
+		assert: [ self hasSelected ]
+		description: [ 'I must have selected candidate' ].
+	
+	self
+		assert: [ self hasCandidates ]
+		description: [ 'I must have candidates' ].
 
 	anIndex := self candidates indexOf: self selected.
 	aPreviousCandidate := self candidates at: (anIndex - 1 max: 1).
@@ -626,15 +723,9 @@ GtSpotterStep >> spotter: aSpotter [
 
 { #category : #accessing }
 GtSpotterStep >> stream [
+	<return: #GtSpotterUIThreadStream>
 
-	^ stream ifNil: [
-		stream := self defaultStream.
-		stream
-			onAddedSelector: #add:;
-			onAddedAllSelector: #addAll:;
-			onRemoveSelector: #removeAllCandidatesOf:;
-			receiver: self candidates.
-		stream ]
+	^ stream
 ]
 
 { #category : #actions }

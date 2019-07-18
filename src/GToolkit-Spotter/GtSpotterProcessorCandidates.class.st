@@ -16,6 +16,11 @@ GtSpotterProcessorCandidates class >> of: aGtSpotterProcessor [
 	^ self basicNew initialize processor: aGtSpotterProcessor
 ]
 
+{ #category : #comparing }
+GtSpotterProcessorCandidates >> < otherProcessorCandidates [
+	^ self processor < otherProcessorCandidates processor
+]
+
 { #category : #adding }
 GtSpotterProcessorCandidates >> add: newObject [ 
 	"Include newObject as one of the receiver's elements. Answer newObject. 
@@ -59,6 +64,11 @@ GtSpotterProcessorCandidates >> initialize [
 ]
 
 { #category : #accessing }
+GtSpotterProcessorCandidates >> priority [
+	^ self processor priority
+]
+
+{ #category : #accessing }
 GtSpotterProcessorCandidates >> processor [
 	<return: #GtSpotterProcessor>
 
@@ -79,4 +89,9 @@ GtSpotterProcessorCandidates >> remove: oldObject ifAbsent: anExceptionBlock [
 	respond to this message."
 
 	candidates remove: oldObject ifAbsent: anExceptionBlock
+]
+
+{ #category : #removing }
+GtSpotterProcessorCandidates >> removeAll [
+	candidates removeAll
 ]

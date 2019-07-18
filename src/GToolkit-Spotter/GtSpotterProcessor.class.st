@@ -8,6 +8,13 @@ Class {
 	#category : #'GToolkit-Spotter-Model - Processors'
 }
 
+{ #category : #comparing }
+GtSpotterProcessor >> < anOtherProcessor [ 
+	"Answer whether the receiver is less than the argument."
+	
+	^ self priority < anOtherProcessor priority
+]
+
 { #category : #public }
 GtSpotterProcessor >> actOn: anObject for: aStep [
 	anObject gtSpotterActDefault: aStep
@@ -67,7 +74,7 @@ GtSpotterProcessor >> doFilterInContext: aSpotterContext [
 { #category : #'accessing-dynamic' }
 GtSpotterProcessor >> exceptionHandler [
 	self flag: 'Bloc -> overrides doesNotUnderstand discarding the current exception context'.
-	^ GTCurrentSpotterExceptionHandler value ifNil: [ GtSpotterExceptionHandlerNotFound signal ]
+	^ GtCurrentSpotterExceptionHandler value ifNil: [ GtSpotterExceptionHandlerNotFound signal ]
 ]
 
 { #category : #private }

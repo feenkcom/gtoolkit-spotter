@@ -40,6 +40,21 @@ GtSpotterElementWithPreview >> initialize [
 ]
 
 { #category : #'event - handling' }
+GtSpotterElementWithPreview >> onCandidateDeselected [
+	self onHidePreview
+]
+
+{ #category : #'event - handling' }
+GtSpotterElementWithPreview >> onCandidateSelected: anAnnouncement [
+	| anObject |
+	super onCandidateSelected: anAnnouncement.
+	
+	anObject := anAnnouncement selected item.
+	
+	self updatePreview: anObject
+]
+
+{ #category : #'event - handling' }
 GtSpotterElementWithPreview >> onCurrentStepChanged: anAnnouncement [
 	| anObject |
 	
@@ -55,15 +70,6 @@ GtSpotterElementWithPreview >> onCurrentStepChanged: anAnnouncement [
 { #category : #'event - handling' }
 GtSpotterElementWithPreview >> onHidePreview [
 	previewElement visibility: BlVisibility gone
-]
-
-{ #category : #'event - handling' }
-GtSpotterElementWithPreview >> onSelectedCandidateChanged: anAnnouncement [
-	| anObject |
-	
-	anObject := anAnnouncement selected item.
-	
-	self updatePreview: anObject
 ]
 
 { #category : #'event - handling' }
@@ -89,8 +95,8 @@ GtSpotterElementWithPreview >> spotterModel: aSpotterModel [
 
 	spotterModel announcer when: GtSpotterShowPreview send: #onShowPreview to: self.
 	spotterModel announcer when: GtSpotterHidePreview send: #onHidePreview to: self.
-	spotterModel announcer when: GtSpotterSelectedCandidateChanged send: #onSelectedCandidateChanged: to: self.
 	spotterModel announcer when: GtSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self.
+	spotterModel announcer when: GtSpotterCandidateDeselected send: #onCandidateDeselected to: self.
 	
 	spotterModel class isPreviewVisible
 		ifTrue: [ spotterModel showPreview ]
@@ -105,7 +111,7 @@ GtSpotterElementWithPreview >> updatePreview: anObject [
 		ifFound: #yourself
 		ifNone: [ previewElement ].
 	aPreviewContainer removeChildren.
-	
+
 	(anObject gtViewsFor: GtPhlowView empty)  originalView asElementDo: [ :anElement |
 		aPreviewContainer addChild: anElement ].
 	

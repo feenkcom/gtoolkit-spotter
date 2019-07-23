@@ -66,6 +66,11 @@ GtSpotterStep >> asyncTask: anAsyncTask [
 	asyncTask := anAsyncTask
 ]
 
+{ #category : #accessing }
+GtSpotterStep >> attachedTo: anElement [
+	stream attachedTo: anElement
+]
+
 { #category : #private }
 GtSpotterStep >> basicRelevantProcessorsProcess: aSpotterContext [
 	self basicRelevantProcessorsProcess: aSpotterContext do: [ :eachProcessor | 
@@ -718,7 +723,8 @@ GtSpotterStep >> spotter [
 
 { #category : #accessing }
 GtSpotterStep >> spotter: aSpotter [
-	spotter := aSpotter 
+	spotter := aSpotter.
+	spotter attachedElementDo: [ :anElement | self attachedTo: anElement ]
 ]
 
 { #category : #accessing }

@@ -6,7 +6,8 @@ Class {
 		'onAddedAllSelector',
 		'onRemoveSelector',
 		'receiver',
-		'timestamp'
+		'timestamp',
+		'spotterElement'
 	],
 	#category : #'GToolkit-Spotter-Utils'
 }
@@ -32,6 +33,19 @@ GtSpotterUIThreadStream >> addObjects: aCollection inProcessor: aProcessor [
 			processor: aProcessor ].
 
 	self performSymbol: self onAddedAllSelector withArguments: { theCandidates }.
+]
+
+{ #category : #accessing }
+GtSpotterUIThreadStream >> attachedElementDo: aBlock [
+	"spotterElement is a weak reference"
+	spotterElement
+		ifNil: [ ^ self ].
+	(spotterElement at: 1) ifNotNil: aBlock
+]
+
+{ #category : #accessing }
+GtSpotterUIThreadStream >> attachedTo: anElement [
+	spotterElement := anElement asWeakReference
 ]
 
 { #category : #accessing }
@@ -70,10 +84,11 @@ GtSpotterUIThreadStream >> performSymbol: aSymbol withArguments: aCollection [
 
 	"we save current timestamp here, so that defer block can check if it belongs to the correct task"
 	time := self timestamp.
-	"UI manages commands for us"
-	Processor yield.
+
 	"if timestamp is wrong just skip command"
-	BlUniverse defer: [ time = self timestamp ifTrue: [ self receiver perform: aSymbol withEnoughArguments: aCollection ] ]
+	self attachedElementDo: [ :anElement |
+		anElement enqueueTask: (BlTaskAction new action: [
+			time = self timestamp ifTrue: [ self receiver perform: aSymbol withEnoughArguments: aCollection ] ]) ]
 ]
 
 { #category : #accessing }

@@ -177,6 +177,7 @@ GtSpotterElement >> selectPreviousCandidateDueTo: anEventType [
 GtSpotterElement >> spotterModel: aSpotter [
 
 	spotterModel := aSpotter.
+	spotterModel attachedTo: self.
 	
 	searchField spotterModel: aSpotter.
 	stepsPager spotterModel: aSpotter.

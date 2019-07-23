@@ -11,7 +11,8 @@ Class {
 		'isShiftPressed',
 		'exceptionHandler',
 		'history',
-		'processorsFilter'
+		'processorsFilter',
+		'spotterElement'
 	],
 	#classInstVars : [
 		'history',
@@ -154,6 +155,20 @@ GtSpotter >> announce: anAnnouncement [
 GtSpotter >> announcer [
 
 	^ announcer ifNil: [ announcer := Announcer new ]
+]
+
+{ #category : #accessing }
+GtSpotter >> attachedElementDo: aBlock [
+	"spotterElement is a weak reference"
+	spotterElement
+		ifNil: [ ^ self ].
+	(spotterElement at: 1) ifNotNil: aBlock
+]
+
+{ #category : #accessing }
+GtSpotter >> attachedTo: anElement [
+	spotterElement := anElement asWeakReference.
+	self steps do: [ :eachStep | eachStep attachedTo: anElement ]
 ]
 
 { #category : #'accessing-convenience' }

@@ -153,7 +153,7 @@ GtSpotterStep >> defaultStream [
 
 { #category : #'accessing - defaults' }
 GtSpotterStep >> defaultTask [
-	^ GtSpotterAsyncTask new
+	^ GtSpotterTaskItAsyncTask new
 ]
 
 { #category : #selecting }

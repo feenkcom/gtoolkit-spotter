@@ -1,5 +1,9 @@
+"
+I am a asynchronous task adaptor.
+I use a Bloc TaskIt worker pool to schedule background tasks.
+"
 Class {
-	#name : #GtSpotterAsyncTask,
+	#name : #GtSpotterTaskItAsyncTask,
 	#superclass : #Object,
 	#instVars : [
 		'command'
@@ -8,13 +12,14 @@ Class {
 }
 
 { #category : #async }
-GtSpotterAsyncTask >> execute: aBlock withArguments: aCollection callback: aCallbackBlock priority: aPriority delay: anIntegerMilliseconds [
+GtSpotterTaskItAsyncTask >> execute: aBlock withArguments: aCollection callback: aCallbackBlock priority: aPriority delay: anIntegerMilliseconds [
 	| aPool aCommand aFuture |
 	self terminate.
 	aPool := BlTktWorkerProvider highUICPUBoundPool.
-	aCommand := command := [
+	aCommand := command := [ :aTaskItContext |
 		anIntegerMilliseconds > 0 ifTrue: [ anIntegerMilliseconds milliSeconds wait ].
-		aBlock valueWithEnoughArguments: aCollection ] asBlTktCommand.
+		aTaskItContext isTerminationRequested ifFalse: [ 
+			aBlock valueWithEnoughArguments: aCollection ] ] asBlTktCommand.
 	aCommand name: 'Spotter Task'.
 	aFuture := aPool future: aCommand.
 	aCallbackBlock ifNotNil: [ 
@@ -26,7 +31,7 @@ GtSpotterAsyncTask >> execute: aBlock withArguments: aCollection callback: aCall
 ]
 
 { #category : #async }
-GtSpotterAsyncTask >> terminate [
+GtSpotterTaskItAsyncTask >> terminate [
 	command
 		ifNotNil: [ :aCommand | aCommand terminationRequested ]
 ]

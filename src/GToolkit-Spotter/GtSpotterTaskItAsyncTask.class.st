@@ -25,9 +25,7 @@ GtSpotterTaskItAsyncTask >> execute: aBlock withArguments: aCollection callback:
 	aCallbackBlock ifNotNil: [ 
 		aFuture
 			onSuccessDo: [ :aResult | 
-				"we use it to pass result from background thread and execute callback block in UI thread"
-				UIManager default
-					defer: [ aCommand == command ifTrue: [ aCallbackBlock cull: aResult ] ] ] ]
+				aCommand == command ifTrue: [ aCallbackBlock cull: aResult ] ] ]
 ]
 
 { #category : #async }

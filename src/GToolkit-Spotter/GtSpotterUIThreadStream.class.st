@@ -79,7 +79,19 @@ GtSpotterUIThreadStream >> onRemoveSelector: anObject [
 ]
 
 { #category : #performing }
+GtSpotterUIThreadStream >> performCallback: aBlock [
+	
+	self performSymbol: #value withArguments: #() receiver: aBlock
+]
+
+{ #category : #performing }
 GtSpotterUIThreadStream >> performSymbol: aSymbol withArguments: aCollection [
+	
+	self performSymbol: aSymbol withArguments: aCollection receiver: self receiver
+]
+
+{ #category : #performing }
+GtSpotterUIThreadStream >> performSymbol: aSymbol withArguments: aCollection receiver: aReceiver [
 	| time |
 
 	"we save current timestamp here, so that defer block can check if it belongs to the correct task"
@@ -88,7 +100,7 @@ GtSpotterUIThreadStream >> performSymbol: aSymbol withArguments: aCollection [
 	"if timestamp is wrong just skip command"
 	self attachedElementDo: [ :anElement |
 		anElement enqueueTask: (BlTaskAction new action: [
-			time = self timestamp ifTrue: [ self receiver perform: aSymbol withEnoughArguments: aCollection ] ]) ]
+			time = self timestamp ifTrue: [ aReceiver perform: aSymbol withEnoughArguments: aCollection ] ]) ]
 ]
 
 { #category : #accessing }

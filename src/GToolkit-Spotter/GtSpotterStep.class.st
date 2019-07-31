@@ -509,12 +509,18 @@ GtSpotterStep >> process: aString [
 			self notifyContextChangedFrom: lastSearchContext to: self context.
 			self processContext: aCurrentContext ]
 		withArguments: { self context. }
-		callback: [
-			lastSearchContext := self context. 
-			self notifySearchFinishedFor: aString processors: self processors ]
+		callback: [ self processCallback: aString ]
 		"added small delay before actual searching. It makes spotter faster :)"
 		priority: Processor userSchedulingPriority - 10
 		delay: 200
+]
+
+{ #category : #processing }
+GtSpotterStep >> processCallback: aString [
+	"Process callback is called from another process. We need to execute it from here"
+	self stream performCallback: [ 
+		lastSearchContext := self context. 
+		self notifySearchFinishedFor: aString processors: self processors ]
 ]
 
 { #category : #processing }

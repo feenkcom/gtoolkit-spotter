@@ -16,10 +16,9 @@ GtSpotterTaskItAsyncTask >> execute: aBlock withArguments: aCollection callback:
 	| aPool aCommand aFuture |
 	self terminate.
 	aPool := BlTktWorkerProvider highUICPUBoundPool.
-	aCommand := command := [ :aTaskItContext |
+	aCommand := command := [
 		anIntegerMilliseconds > 0 ifTrue: [ anIntegerMilliseconds milliSeconds wait ].
-		aTaskItContext isTerminationRequested ifFalse: [ 
-			aBlock valueWithEnoughArguments: aCollection ] ] asBlTktCommand.
+		aBlock valueWithEnoughArguments: aCollection ] asBlTktTerminableCommand.
 	aCommand name: 'Spotter Task'.
 	aFuture := aPool future: aCommand.
 	aCallbackBlock ifNotNil: [ 
@@ -31,5 +30,5 @@ GtSpotterTaskItAsyncTask >> execute: aBlock withArguments: aCollection callback:
 { #category : #async }
 GtSpotterTaskItAsyncTask >> terminate [
 	command
-		ifNotNil: [ :aCommand | aCommand terminationRequested ]
+		ifNotNil: [ :aCommand | aCommand terminate ]
 ]

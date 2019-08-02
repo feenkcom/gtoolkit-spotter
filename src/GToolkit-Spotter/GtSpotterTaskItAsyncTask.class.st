@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'command'
 	],
-	#category : #'GToolkit-Spotter-Model'
+	#category : #'GToolkit-Spotter-Utils'
 }
 
 { #category : #async }
@@ -19,7 +19,9 @@ GtSpotterTaskItAsyncTask >> execute: aBlock withArguments: aCollection callback:
 	aCommand := command := [
 		anIntegerMilliseconds > 0 ifTrue: [ anIntegerMilliseconds milliSeconds wait ].
 		aBlock valueWithEnoughArguments: aCollection ] asBlTktTerminableCommand.
-	aCommand name: 'Spotter Task'.
+	"TODO: aPriority is not a priority, but a query string. 
+	We should change the method name it once we are fine with the implementation."
+	aCommand name: 'Spotter Search for ''', aPriority asString, ''''.
 	aFuture := aPool future: aCommand.
 	aCallbackBlock ifNotNil: [ 
 		aFuture

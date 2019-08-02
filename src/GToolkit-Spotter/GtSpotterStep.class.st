@@ -511,7 +511,7 @@ GtSpotterStep >> process: aString [
 		withArguments: { self context. }
 		callback: [ self processCallback: aString ]
 		"added small delay before actual searching. It makes spotter faster :)"
-		priority: Processor userSchedulingPriority - 10
+		priority: aString "Processor userSchedulingPriority - 10"
 		delay: 200
 ]
 

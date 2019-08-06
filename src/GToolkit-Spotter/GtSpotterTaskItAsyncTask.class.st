@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'command'
 	],
-	#category : #'GToolkit-Spotter-Model'
+	#category : #'GToolkit-Spotter-Utils'
 }
 
 { #category : #async }
@@ -16,11 +16,12 @@ GtSpotterTaskItAsyncTask >> execute: aBlock withArguments: aCollection callback:
 	| aPool aCommand aFuture |
 	self terminate.
 	aPool := BlTktWorkerProvider highUICPUBoundPool.
-	aCommand := command := [ :aTaskItContext |
+	aCommand := command := [
 		anIntegerMilliseconds > 0 ifTrue: [ anIntegerMilliseconds milliSeconds wait ].
-		aTaskItContext isTerminationRequested ifFalse: [ 
-			aBlock valueWithEnoughArguments: aCollection ] ] asBlTktCommand.
-	aCommand name: 'Spotter Task'.
+		aBlock valueWithEnoughArguments: aCollection ] asBlTktTerminableCommand.
+	"TODO: aPriority is not a priority, but a query string. 
+	We should change the method name it once we are fine with the implementation."
+	aCommand name: 'Spotter Search for ''', aPriority asString, ''''.
 	aFuture := aPool future: aCommand.
 	aCallbackBlock ifNotNil: [ 
 		aFuture
@@ -31,5 +32,5 @@ GtSpotterTaskItAsyncTask >> execute: aBlock withArguments: aCollection callback:
 { #category : #async }
 GtSpotterTaskItAsyncTask >> terminate [
 	command
-		ifNotNil: [ :aCommand | aCommand terminationRequested ]
+		ifNotNil: [ :aCommand | aCommand terminate ]
 ]

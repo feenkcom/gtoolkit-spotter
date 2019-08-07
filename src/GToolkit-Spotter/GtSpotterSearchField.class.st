@@ -44,7 +44,7 @@ GtSpotterSearchField >> spotterModel: aGtSpotter [
 		when: BrTextEditorDeletedEvent
 		do: [ :anEvent | self spotterModel search: anEvent currentTarget text asString ].
 
-	spotterModel announcer weak
+	spotterModel announcer 
 		when: GtSpotterCurrentStepChanged
 		send: #onCurrentStepChanged:
 		to: self

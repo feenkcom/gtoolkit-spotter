@@ -80,7 +80,7 @@ GtSpotterStepElement >> onCandidateSelected: anAnnouncement [
 { #category : #accessing }
 GtSpotterStepElement >> stepModel: aSpotterStepModel [
 	stepModel := aSpotterStepModel.
-	stepModel candidates announcer weak
+	stepModel candidates announcer 
 		when: GtSpotterCandidateAdded send: #onCandidateAdded: to: self;
 		when: GtSpotterAllCandidatesAdded
 			send: #onAllCandidatesAdded:
@@ -88,7 +88,7 @@ GtSpotterStepElement >> stepModel: aSpotterStepModel [
 		when: GtSpotterAllCandidatesRemoved
 			send: #onAllCandidatesRemoved:
 			to: self.
-	stepModel announcer weak
+	stepModel announcer 
 		when: GtSpotterSelectedCandidateChanged
 		send: #onCandidateSelected:
 		to: self.

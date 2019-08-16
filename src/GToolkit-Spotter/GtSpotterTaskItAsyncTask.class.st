@@ -17,7 +17,7 @@ GtSpotterTaskItAsyncTask >> execute: aBlock withArguments: aCollection callback:
 	self terminate.
 	aPool := BlTktWorkerProvider highUICPUBoundPool.
 	aCommand := command := [
-		anIntegerMilliseconds > 0 ifTrue: [ anIntegerMilliseconds milliSeconds wait ].
+		"anIntegerMilliseconds > 0 ifTrue: [ anIntegerMilliseconds milliSeconds wait ]."
 		aBlock valueWithEnoughArguments: aCollection ] asBlTktTerminableCommand.
 	"TODO: aPriority is not a priority, but a query string. 
 	We should change the method name it once we are fine with the implementation."

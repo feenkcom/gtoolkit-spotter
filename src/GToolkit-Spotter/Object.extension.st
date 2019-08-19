@@ -1,6 +1,55 @@
 Extension { #name : #Object }
 
 { #category : #'*GToolkit-Spotter' }
+Object >> gtActionSearchFor: anAction [
+	<gtAction>
+	| fakeStep |
+	fakeStep := GtSpotter new newStep origin: self.
+	self spotterProcessorsFor: fakeStep.
+	fakeStep processors isEmpty ifTrue: [ ^ anAction noAction ].
+	^ anAction explicit stencil: [
+		| dropdown |
+		dropdown := BrDropdown new.
+		dropdown
+			look:
+				(BrGlamorousDropdownLook new
+					outskirtsEmbellisher: [ :e | 
+						e background: BrGlamorousColors lightBorderColor ]);
+			layout: BlLinearLayout horizontal;
+			constraintsDo: [ :c | 
+				c horizontal fitContent.
+				c vertical fitContent ];
+			toggle: [ BrButton new
+					look: BrGlamorousButtonWithIconLook;
+					icon: BrGlamorousIcons search asElement;
+					when: BlElementBackgroundChangedEvent
+						do: [ :e | 
+							(dropdown isExpanded
+								and: [ e target background paint color
+									~= BrGlamorousColors lightBorderColor ])
+							ifTrue: [ e target background: BrGlamorousColors lightBorderColor ] ] ];
+			popup: [ | model |
+				model := GtSpotter new initializeWith: self.
+				model announcer
+					when: GtSpotterActOn
+					do: [ :e | 
+						| item |
+						item := e element.
+						e actedUpon: true.
+						self flag: 'FIXME candidates may be wrapped for some reason'.
+						[ (item isKindOf: GtSpotterCandidate) and: [ item item ~~ item ] ]
+							whileTrue: [ item := item item ].
+						dropdown phlow spawnObject: item ].
+				GtSpotterElementWithPreview new
+					spotterModel: model;
+					size: 600@400;
+					margin: (BlInsets all: 1);
+					geometry: (BlRectangle cornerRadius: 4);
+					yourself ];
+			yourself ]
+]
+
+{ #category : #'*GToolkit-Spotter' }
 Object >> gtSpotterActDefault [
 	^ GtInspector openOn: self
 ]

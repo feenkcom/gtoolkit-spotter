@@ -1,8 +1,8 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*GToolkit-Spotter' }
-CompiledMethod >> gtSpotterActDefault [
-	^ super gtSpotterActDefault
+CompiledMethod >> gtSpotterActDefaultFrom: aSpotterElement [
+	^ super gtSpotterActDefaultFrom: aSpotterElement
 ]
 
 { #category : #'*GToolkit-Spotter' }

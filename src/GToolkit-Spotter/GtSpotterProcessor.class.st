@@ -16,8 +16,8 @@ GtSpotterProcessor >> < anOtherProcessor [
 ]
 
 { #category : #public }
-GtSpotterProcessor >> actOn: anObject for: aStep [
-	anObject gtSpotterActDefault: aStep
+GtSpotterProcessor >> actOn: anObject for: aStep from: aSpotterElement [
+	anObject gtSpotterActDefault: aStep from: aSpotterElement
 ]
 
 { #category : #public }

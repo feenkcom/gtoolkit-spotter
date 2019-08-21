@@ -19,7 +19,7 @@ GtSpotterElement >> actDueTo: anEventType [
 				ifFalse: [ ^ self ].
 			aSpotter currentStep hasCandidates
 				ifFalse: [ ^ self ].
-			aSpotter currentStep actDueTo: anEventType ]
+			aSpotter currentStep actDueTo: anEventType from: self ]
 ]
 
 { #category : #initialization }

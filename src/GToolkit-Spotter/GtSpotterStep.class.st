@@ -24,7 +24,7 @@ GtSpotterStep class >> gtExampleBasic [
 ]
 
 { #category : #actions }
-GtSpotterStep >> actDueTo: anEventType [
+GtSpotterStep >> actDueTo: anEventType from: aSpotterElement [
 	"Perform an action associated with currently selected item.
 	(can be triggered by doubleClick: or keyboard Enter press)"
 	| anAnnouncement |
@@ -36,7 +36,7 @@ GtSpotterStep >> actDueTo: anEventType [
 	
 	anAnnouncement := self spotter notifyActOn: self selectedCandidate for: anEventType.
 	anAnnouncement isActedUpon
-		ifFalse: [ self selectedCategory actOn: self selectedCandidate for: self ]
+		ifFalse: [ self selectedCategory actOn: self selectedCandidate for: self from: aSpotterElement ]
 ]
 
 { #category : #accessing }

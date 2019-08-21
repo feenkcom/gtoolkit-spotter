@@ -1,8 +1,8 @@
 Extension { #name : #Pragma }
 
 { #category : #'*GToolkit-Spotter' }
-Pragma >> gtSpotterActDefault [
-    ^ super gtSpotterActDefault
+Pragma >> gtSpotterActDefaultFrom: aSpotterElement [
+    ^ super gtSpotterActDefaultFrom: aSpotterElement
 ]
 
 { #category : #'*GToolkit-Spotter' }

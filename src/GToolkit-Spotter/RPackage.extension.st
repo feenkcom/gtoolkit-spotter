@@ -1,8 +1,8 @@
 Extension { #name : #RPackage }
 
 { #category : #'*GToolkit-Spotter' }
-RPackage >> gtSpotterActDefault [
-	^ super gtSpotterActDefault
+RPackage >> gtSpotterActDefaultFrom: aSpotterElement [
+	^ super gtSpotterActDefaultFrom: aSpotterElement
 ]
 
 { #category : #'*GToolkit-Spotter' }

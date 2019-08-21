@@ -166,6 +166,17 @@ GtSpotterStart >> gtSpotterForSendersFor: aStep [
 ]
 
 { #category : #'*GToolkit-Spotter' }
+GtSpotterStart >> gtSpotterForToolsFor: aStep [
+	<gtSearch>
+	aStep listProcessor
+		priority: 1;
+		allCandidates: [ {GtPlaygroundStencil new . GtCoderStencil new . GtMonitorStencil new . GtTranscriptStencil new } ];
+		title: 'Tools';
+		filter: GTFilterSubstring;
+		wantsToDisplayOnEmptyQuery: true
+]
+
+{ #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterImplementorsFor: aStep [
 	<gtSearch>
 	self flag: #specialFilter.

@@ -11,24 +11,13 @@ Object >> gtActionSearchFor: anAction [
 		| dropdown |
 		dropdown := BrDropdown new.
 		dropdown
-			look:
-				(BrGlamorousDropdownLook new
-					outskirtsEmbellisher: [ :e | 
-						e background: BrGlamorousColors lightBorderColor ]);
-			layout: BlLinearLayout horizontal;
-			constraintsDo: [ :c | 
-				c horizontal fitContent.
-				c vertical fitContent ];
-			toggle: [ BrButton new
-					look: BrGlamorousButtonWithIconLook;
-					icon: BrGlamorousIcons search asElement;
-					when: BlElementBackgroundChangedEvent
-						do: [ :e | 
-							(dropdown isExpanded
-								and: [ e target background paint color
-									~= BrGlamorousColors lightBorderColor ])
-							ifTrue: [ e target background: BrGlamorousColors lightBorderColor ] ] ];
-			popup: [ | model |
+			look: (BrGlamorousDropdownLook new backgroundPaint: BrGlamorousColors secondaryHeaderBackgroundColor);
+			toggle: [
+				BrButton new
+					look: BrGlamorousButtonWithIconLook + BrGlamorousDropdownToggleLook;
+					icon: BrGlamorousIcons search asElement ];
+			popup: [
+				| model |
 				model := GtSpotter new initializeWith: self.
 				model announcer
 					when: GtSpotterActOn

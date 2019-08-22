@@ -36,24 +36,14 @@ GtSpotterElementExamples >> elementOnSpotterInDropdown [
 	| dropdown |
 	dropdown := BrDropdown new.
 	^ dropdown
-		look:
-			(BrGlamorousDropdownLook new
-				outskirtsEmbellisher: [ :e | 
-					e
-						background: BrGlamorousColors lightBorderColor;
-						yourself ];
-				yourself);
-		toggle: [ BrButton new
-				look: BrGlamorousButtonWithIconLook;
+		look: (BrGlamorousDropdownLook new backgroundPaint: BrGlamorousColors secondaryHeaderBackgroundColor);
+		toggle: [
+			BrButton new
+				look: BrGlamorousButtonWithIconLook + BrGlamorousDropdownToggleLook;
 				icon: BrGlamorousIcons search asElement;
-				when: BlElementBackgroundChangedEvent
-					do: [ :e | 
-					(dropdown isExpanded
-						and: [ e target background paint color
-								~= BrGlamorousColors lightBorderColor ])
-						ifTrue: [ e target background: BrGlamorousColors lightBorderColor ] ];
 				yourself ];
-		popup: [ | aSpotterElement aSpotterModel |
+		popup: [
+			| aSpotterElement aSpotterModel |
 			aSpotterElement := self emptyElement.
 			aSpotterModel := self defaultSpotter.
 			aSpotterModel announcer

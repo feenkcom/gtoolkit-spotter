@@ -19,7 +19,7 @@ GtSpotterElement >> actDueTo: anEventType [
 				ifFalse: [ ^ self ].
 			aSpotter currentStep hasCandidates
 				ifFalse: [ ^ self ].
-			aSpotter currentStep actDueTo: anEventType ]
+			aSpotter currentStep actDueTo: anEventType from: self ]
 ]
 
 { #category : #initialization }
@@ -88,7 +88,7 @@ GtSpotterElement >> initialize [
 	self geometry: (BlRectangle cornerRadius: 5).
 	
 	breadcrumb := GtSpotterBreadcrumb new.
-	breadcrumb background: (BrGlamorousColors defaultButtonBorderColor).
+	breadcrumb background: (BrGlamorousColors secondaryHeaderBackgroundColor).
 
 	searchField := GtSpotterSearchField new.
 	searchField vFitContent; hMatchParent.
@@ -109,7 +109,7 @@ GtSpotterElement >> initialize [
 			constraintsDo: [ :c |
 				c horizontal matchParent.
 				c vertical exact: 1 ];
-			background: BrGlamorousColors defaultButtonBorderColor
+			background: BrGlamorousColors secondaryHeaderBackgroundColor
 	 }.
 	
 	results := BrPager new.

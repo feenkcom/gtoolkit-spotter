@@ -1,8 +1,8 @@
 Extension { #name : #Class }
 
 { #category : #'*GToolkit-Spotter' }
-Class >> gtSpotterActDefault [
-	self gtBrowse
+Class >> gtSpotterActDefaultFrom: aSpotterElement [
+	self gtBrowseFrom: aSpotterElement
 ]
 
 { #category : #'*GToolkit-Spotter' }

@@ -30,11 +30,11 @@ GtSpotterCandidatesListProcessor >> actLogic: aBlockWithTwoArguments [
 ]
 
 { #category : #private }
-GtSpotterCandidatesListProcessor >> actOn: anObject for: aStep [
+GtSpotterCandidatesListProcessor >> actOn: anObject for: aStep from: aSpotterElement [
 	
 	actBlock
-		ifNil: [ super actOn: anObject for: aStep ]
-		ifNotNil: [ actBlock cull: anObject cull: aStep ]
+		ifNil: [ super actOn: anObject for: aStep from: aSpotterElement ]
+		ifNotNil: [ actBlock cull: anObject cull: aStep cull: aSpotterElement ]
 ]
 
 { #category : #compatibility }

@@ -15,7 +15,7 @@ Class {
 GtSpotterTaskItAsyncTask >> execute: aBlock withArguments: aCollection callback: aCallbackBlock priority: aPriority delay: anIntegerMilliseconds [
 	| aPool aCommand aFuture |
 	self terminate.
-	aPool := BlTktWorkerProvider highUICPUBoundPool.
+	aPool := BlTktWorkerProvider spotterPool.
 	aCommand := command := [
 		"anIntegerMilliseconds > 0 ifTrue: [ anIntegerMilliseconds milliSeconds wait ]."
 		aBlock valueWithEnoughArguments: aCollection ] asBlTktTerminableCommand.

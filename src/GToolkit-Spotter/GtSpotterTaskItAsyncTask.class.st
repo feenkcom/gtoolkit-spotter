@@ -18,7 +18,7 @@ GtSpotterTaskItAsyncTask >> execute: aBlock withArguments: aCollection callback:
 	aPool := BlTktWorkerProvider spotterPool.
 	aCommand := command := [
 		"anIntegerMilliseconds > 0 ifTrue: [ anIntegerMilliseconds milliSeconds wait ]."
-		aBlock valueWithEnoughArguments: aCollection ] asBlTktTerminableCommand.
+		aBlock valueWithEnoughArguments: aCollection ] asBlTktTerminableCommand asBlTktLoggingCommand.
 	"TODO: aPriority is not a priority, but a query string. 
 	We should change the method name it once we are fine with the implementation."
 	aCommand name: 'Spotter Search for ''', aPriority asString, ''''.

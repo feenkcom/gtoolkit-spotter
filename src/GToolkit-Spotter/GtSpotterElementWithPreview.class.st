@@ -2,11 +2,29 @@ Class {
 	#name : #GtSpotterElementWithPreview,
 	#superclass : #GtSpotterElement,
 	#instVars : [
+		'previewObject',
+		'previewTask',
 		'previewElement',
 		'labelElement'
 	],
 	#category : #'GToolkit-Spotter-UI'
 }
+
+{ #category : #private }
+GtSpotterElementWithPreview >> generatePreviewFor: anObject in: aPreviewContainer [
+
+	| childElement |
+
+	(anObject gtViewsFor: GtPhlowView empty) originalView asElementDo: [ :anElement |
+		childElement := anElement ].
+
+	self enqueueTask: (BlTaskAction new action: [
+		previewObject = anObject ifTrue: [ 
+			aPreviewContainer addChild: childElement.
+			labelElement text: anObject gtDisplayText.
+			spotterModel class isPreviewVisible
+				ifTrue: [ previewElement visibility: BlVisibility visible. ] ] ]).
+]
 
 { #category : #initialization }
 GtSpotterElementWithPreview >> initialize [
@@ -104,19 +122,24 @@ GtSpotterElementWithPreview >> spotterModel: aSpotterModel [
 
 { #category : #'event - handling' }
 GtSpotterElementWithPreview >> updatePreview: anObject [
-	| aPreviewContainer |
-	
+	| aPreviewContainer signal |
+
+	signal := StringSignal new.
+	signal message: 'updatePreview: ', anObject gtDisplayText.
+	signal properties at: #anObject put: anObject.
+	signal emit.
+
 	aPreviewContainer := previewElement
 		childNamed: #previewContent
 		ifFound: #yourself
 		ifNone: [ previewElement ].
 	aPreviewContainer removeChildren.
 
-	(anObject gtViewsFor: GtPhlowView empty)  originalView asElementDo: [ :anElement |
-		aPreviewContainer addChild: anElement ].
-	
-	labelElement text: anObject gtDisplayText.
-	
-	spotterModel class isPreviewVisible
-		ifTrue: [ previewElement visibility: BlVisibility visible. ]
+	previewObject := anObject.
+	previewTask ifNotNil: [ previewTask terminate ].
+	previewTask := [ self generatePreviewFor: anObject in: aPreviewContainer ]
+		asBlTktTerminableCommand asBlTktLoggingCommand.
+	previewTask name: 'Spotter update ', anObject gtDisplayText.
+	BlTktWorkerProvider highUICPUBoundPool schedule: previewTask.
+
 ]

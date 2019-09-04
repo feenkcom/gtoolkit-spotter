@@ -22,8 +22,7 @@ GtSpotterElementWithPreview >> generatePreviewFor: anObject in: aPreviewContaine
 		previewObject = anObject ifTrue: [ 
 			aPreviewContainer addChild: childElement.
 			labelElement text: anObject gtDisplayText.
-			spotterModel class isPreviewVisible
-				ifTrue: [ previewElement visibility: BlVisibility visible. ] ] ]).
+			previewElement visibility: BlVisibility visible. ] ]).
 ]
 
 { #category : #initialization }
@@ -74,13 +73,12 @@ GtSpotterElementWithPreview >> onCandidateSelected: anAnnouncement [
 
 { #category : #'event - handling' }
 GtSpotterElementWithPreview >> onCurrentStepChanged: anAnnouncement [
-	| anObject |
-	
+
 	self spotterModelDo: [ :aSpotter | aSpotter hasSelected
-		ifTrue: [
-			anObject := aSpotter currentStep selected item.
-	
-			self updatePreview: anObject ] ]
+		ifTrue: [ self updatePreview: aSpotter currentStep selected item ]
+		ifFalse: [ 
+			self onHidePreview.
+			previewObject := nil. ] ]
 	
 	
 ]
@@ -111,10 +109,8 @@ GtSpotterElementWithPreview >> spotterModel: aSpotterModel [
 	
 	self when: GtPhlowObjectToSelect do: [ :anEvent | anEvent consumed: anEvent sourceElement == self ].
 
-	spotterModel announcer when: GtSpotterShowPreview send: #onShowPreview to: self.
-	spotterModel announcer when: GtSpotterHidePreview send: #onHidePreview to: self.
 	spotterModel announcer when: GtSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self.
-	spotterModel announcer when: GtSpotterCandidateDeselected send: #onCandidateDeselected to: self.
+	spotterModel announcer when: GtSpotterSearchFinished send: #onCurrentStepChanged: to: self.
 	
 	spotterModel class isPreviewVisible
 		ifTrue: [ spotterModel showPreview ]
@@ -122,12 +118,9 @@ GtSpotterElementWithPreview >> spotterModel: aSpotterModel [
 
 { #category : #'event - handling' }
 GtSpotterElementWithPreview >> updatePreview: anObject [
-	| aPreviewContainer signal |
+	| aPreviewContainer |
 
-	signal := StringSignal new.
-	signal message: 'updatePreview: ', anObject gtDisplayText.
-	signal properties at: #anObject put: anObject.
-	signal emit.
+	anObject = previewObject ifTrue: [ ^self ].
 
 	aPreviewContainer := previewElement
 		childNamed: #previewContent

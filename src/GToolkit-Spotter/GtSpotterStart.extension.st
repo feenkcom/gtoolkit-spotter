@@ -97,12 +97,7 @@ GtSpotterStart >> gtSpotterForMetacelloConfigurationsFor: aStep [
 	aStep listProcessor
 		priority: 86;
 		title: 'Metacello Configurations';
-		allCandidates: [ Smalltalk allClasses
-				select: [ :each | 
-					(each respondsTo: #isMetacelloConfig)
-						and:
-							[ each isMetacelloConfig and: [ each name beginsWith: 'BaselineOf' ] ] ]
-				thenCollect: #project ];
+		allCandidates: [ BaselineOf allSubclasses ];
 		itemName: [ :each | each configuration class name ];
 		itemIcon: [ Smalltalk ui icons iconNamed: #config ];
 		filter: GTFilterSubstring;

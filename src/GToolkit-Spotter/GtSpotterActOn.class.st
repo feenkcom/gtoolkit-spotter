@@ -51,3 +51,13 @@ GtSpotterActOn >> initialize [
 GtSpotterActOn >> isActedUpon [
 	^ isActedUpon
 ]
+
+{ #category : #accessing }
+GtSpotterActOn >> realItem [
+	| anItem |
+	anItem := self element.
+	self flag: 'FIXME candidates may be wrapped for some reason'.
+	[ (anItem isKindOf: self class) and: [ anItem item ~~ anItem ] ]
+		whileTrue: [ anItem := anItem item ].
+	^ anItem
+]

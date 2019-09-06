@@ -170,12 +170,7 @@ GtSpotterStart >> gtSpotterForMetacelloConfigurationsFor: aStep [
 	aStep listProcessor
 		priority: 86;
 		title: 'Metacello Configurations';
-		allCandidates: [ Smalltalk allClasses
-				select: [ :each | 
-					(each respondsTo: #isMetacelloConfig)
-						and:
-							[ each isMetacelloConfig and: [ each name beginsWith: 'BaselineOf' ] ] ]
-				thenCollect: #project ];
+		allCandidates: [ BaselineOf allSubclasses ];
 		itemName: [ :each | each configuration class name ];
 		itemIcon: [ Smalltalk ui icons iconNamed: #config ];
 		filter: GTFilterSubstring;
@@ -262,6 +257,25 @@ GtSpotterStart >> gtSpotterImplementorsFor: aStep [
 				allBehaviorsDo: [ :class | class localMethods do: filter ] ];
 		keyBinding: $m meta;
 		wantsToDisplayOnEmptyQuery: false
+]
+
+{ #category : #'as yet unclassified' }
+GtSpotterStart >> gtSpotterXdocFor: aStep [
+	<gtSearch>
+	^ aStep listProcessor
+		priority: 30;
+		title: 'XDoc';
+		itemName: [ :aFileInfo | aFileInfo titleAndAuthor ];
+		wantsToDisplayOnEmptyQuery: false;
+		filter: GTNullFilter
+			item: [ :filter :context | 
+			(context textTrimmed beginsWith: XdClientSettings xdServerUrlString)
+				ifTrue:
+					[ XdClient downloadFileInfo: context textTrimmed thenDo: filter ] ];
+		actLogic: [ :aFileInfo :step :spotterElement | 
+			(XdClient new downloadXDocUsingFileInfo: aFileInfo) 
+				gtSpotterActDefault: step 
+				from: spotterElement ]
 ]
 
 { #category : #accessing }

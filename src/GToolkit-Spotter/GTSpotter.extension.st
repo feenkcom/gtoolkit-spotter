@@ -172,19 +172,6 @@ GTSpotter >> gtSpotterForGlobalVarsFor: aStep [
 ]
 
 { #category : #'*GToolkit-Spotter' }
-GTSpotter >> gtSpotterForHelpTopicFor: aStep [
-	<gtSearch>
-	aStep listProcessor
-		priority: 200;
-		allCandidates: [ SystemHelp asHelpTopic gtAllSubtopics ];
-		title: 'Help topics';
-		itemName: [ :helpTopic | helpTopic title ];
-		itemIcon: [ :helpTopic | helpTopic gtTopicIcon ];
-		matchSubstrings;
-		wantsToDisplayOnEmptyQuery: true
-]
-
-{ #category : #'*GToolkit-Spotter' }
 GTSpotter >> gtSpotterForMessagesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -355,35 +342,6 @@ GTSpotter >> gtSpotterStfxFor: aStep [
 			item: [ :filter :context | 
 			(context textTrimmed beginsWith: 'http://ws.stfx.eu')
 				ifTrue: [ GTPlayPage loadFromPublishUrl: context textTrimmed thenDo: filter ] ]
-]
-
-{ #category : #'*GToolkit-Spotter' }
-GTSpotter >> gtSpotterWindowsFor: aStep [
-	<gtSearch>
-	aStep listProcessor
-		priority: 5;
-		title: 'Windows';
-		candidatesLimit: 10;
-		allCandidates:
-				[ World submorphs select: [ :window | window isKindOf: SystemWindow ] ];
-		itemName: [ :window | 
-			'{1} [{2}]'
-				format:
-					{window label.
-					window className} ];
-		itemIcon: [ :window | window taskbarIcon ];
-		sort: [ :window1 :window2 | window1 label < window2 label ];
-		filter: GTFilterSubstring;
-		wantsToDisplayOnEmptyQuery: true
-]
-
-{ #category : #'*GToolkit-Spotter' }
-GTSpotter >> gtSpotterWorldMenuFor: aStep [
-	<gtSearch>
-	^ (World worldMenu spotterItemsFor: aStep)
-		candidatesLimit: 15;
-		allCandidates: [ World worldMenu allItems ];
-		title: 'Menu'
 ]
 
 { #category : #'*GToolkit-Spotter' }

@@ -24,7 +24,7 @@ GtSpotterCandidate >> gtDisplayOn: aStream [
 
 { #category : #printing }
 GtSpotterCandidate >> gtDisplayText [
-	^ self item gtDisplayText
+	^ (self renderingProcessor itemNameFor: self item) gtDisplayText.
 ]
 
 { #category : #accessing }

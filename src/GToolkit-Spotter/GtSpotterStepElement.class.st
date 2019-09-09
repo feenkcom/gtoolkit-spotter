@@ -35,7 +35,7 @@ GtSpotterStepElement >> initialize [
 					
 					BrLabel new
 						look: (BrGlamorousLabelLook new);
-						text: aNode value gtDisplayText;
+						text: aCandidate gtDisplayText;
 						padding: (BlInsets all: 6);
 						hMatchParent
 					

@@ -13,7 +13,8 @@ Class {
 		'filterBlock',
 		'itemFilterNameBlock',
 		'keyBinding',
-		'sortBlock'
+		'sortBlock',
+		'previewObjectBlock'
 	],
 	#category : #'GToolkit-Spotter-Model - Processors'
 }
@@ -206,6 +207,18 @@ GtSpotterCandidatesListProcessor >> matchSubstring [
 { #category : #'scripting-convenience' }
 GtSpotterCandidatesListProcessor >> matchSubstrings [
 	self filter: GTFilterSubstrings
+]
+
+{ #category : #scripting }
+GtSpotterCandidatesListProcessor >> previewObject: aBlockWithOneArgument [
+	previewObjectBlock := aBlockWithOneArgument
+]
+
+{ #category : #private }
+GtSpotterCandidatesListProcessor >> previewObjectFor: anObject [
+	^ previewObjectBlock isNil
+		ifTrue: [ super previewObjectFor: anObject ]
+		ifFalse: [ previewObjectBlock cull: anObject ]
 ]
 
 { #category : #accessing }

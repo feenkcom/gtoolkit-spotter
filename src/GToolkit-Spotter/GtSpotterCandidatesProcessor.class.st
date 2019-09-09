@@ -94,6 +94,11 @@ GtSpotterCandidatesProcessor >> prepareProcessorInContext: aContext [
 	self hasDynamicItems ifTrue: [ allCandidates := nil ]
 ]
 
+{ #category : #private }
+GtSpotterCandidatesProcessor >> previewObjectFor: anObject [
+	^ anObject
+]
+
 { #category : #accessing }
 GtSpotterCandidatesProcessor >> title [
 	^ 'undefined'

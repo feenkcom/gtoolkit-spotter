@@ -11,18 +11,20 @@ Class {
 }
 
 { #category : #private }
-GtSpotterElementWithPreview >> generatePreviewFor: anObject in: aPreviewContainer [
+GtSpotterElementWithPreview >> generatePreviewFor: aSpotterCandidate in: aPreviewContainer [
 
-	| childElement |
+	| aChildElement anObject |
+
+	anObject := aSpotterCandidate previewObject.
 
 	(anObject gtViewsFor: GtPhlowView empty) originalView asElementDo: [ :anElement |
-		childElement := anElement ].
+		aChildElement := anElement ].
 
 	self enqueueTask: (BlTaskAction new action: [
-		previewObject = anObject ifTrue: [ 
-			aPreviewContainer addChild: childElement.
-			labelElement text: anObject gtDisplayText.
-			previewElement visibility: BlVisibility visible. ] ]).
+		previewObject = aSpotterCandidate item ifTrue: [ 
+			aPreviewContainer addChild: aChildElement.
+			labelElement text: aSpotterCandidate gtDisplayText.
+			previewElement visibility: BlVisibility visible ] ]).
 ]
 
 { #category : #initialization }
@@ -63,24 +65,18 @@ GtSpotterElementWithPreview >> onCandidateDeselected [
 
 { #category : #'event - handling' }
 GtSpotterElementWithPreview >> onCandidateSelected: anAnnouncement [
-	| anObject |
 	super onCandidateSelected: anAnnouncement.
-	
-	anObject := anAnnouncement selected item.
-	
-	self updatePreview: anObject
+	self updatePreview: anAnnouncement selected
 ]
 
 { #category : #'event - handling' }
 GtSpotterElementWithPreview >> onCurrentStepChanged: anAnnouncement [
 
 	self spotterModelDo: [ :aSpotter | aSpotter hasSelected
-		ifTrue: [ self updatePreview: aSpotter currentStep selected item ]
+		ifTrue: [ self updatePreview: aSpotter currentStep selected ]
 		ifFalse: [ 
 			self onHidePreview.
 			previewObject := nil. ] ]
-	
-	
 ]
 
 { #category : #'event - handling' }
@@ -117,10 +113,10 @@ GtSpotterElementWithPreview >> spotterModel: aSpotterModel [
 ]
 
 { #category : #'event - handling' }
-GtSpotterElementWithPreview >> updatePreview: anObject [
+GtSpotterElementWithPreview >> updatePreview: aSpotterCandidate [
 	| aPreviewContainer |
 
-	anObject = previewObject ifTrue: [ ^self ].
+	previewObject = aSpotterCandidate item ifTrue: [ ^self ].
 
 	aPreviewContainer := previewElement
 		childNamed: #previewContent
@@ -128,11 +124,11 @@ GtSpotterElementWithPreview >> updatePreview: anObject [
 		ifNone: [ previewElement ].
 	aPreviewContainer removeChildren.
 
-	previewObject := anObject.
+	previewObject := aSpotterCandidate item.
 	previewTask ifNotNil: [ previewTask terminate ].
-	previewTask := [ self generatePreviewFor: anObject in: aPreviewContainer ]
+	previewTask := [ self generatePreviewFor: aSpotterCandidate in: aPreviewContainer ]
 		asBlTktTerminableCommand asBlTktLoggingCommand.
-	previewTask name: 'Spotter update ', anObject gtDisplayText.
+	previewTask name: 'Spotter update ', aSpotterCandidate item gtDisplayString.
 	BlTktWorkerProvider highUICPUBoundPool schedule: previewTask.
 
 ]

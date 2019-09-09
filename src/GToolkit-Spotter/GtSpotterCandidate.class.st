@@ -37,6 +37,11 @@ GtSpotterCandidate >> item: anObject [
 	item := anObject
 ]
 
+{ #category : #printing }
+GtSpotterCandidate >> previewObject [
+	^ self renderingProcessor previewObjectFor: self item.
+]
+
 { #category : #accessing }
 GtSpotterCandidate >> processor [
 	^ processor

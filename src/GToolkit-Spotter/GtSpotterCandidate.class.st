@@ -38,6 +38,12 @@ GtSpotterCandidate >> item: anObject [
 ]
 
 { #category : #printing }
+GtSpotterCandidate >> previewElement [
+	<return: #BlElement>
+	^ self renderingProcessor previewElementFor: self previewObject.
+]
+
+{ #category : #printing }
 GtSpotterCandidate >> previewObject [
 	^ self renderingProcessor previewObjectFor: self item.
 ]

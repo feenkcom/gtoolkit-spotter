@@ -13,17 +13,16 @@ Class {
 { #category : #private }
 GtSpotterElementWithPreview >> generatePreviewFor: aSpotterCandidate in: aPreviewContainer [
 
-	| aChildElement anObject |
+	| aChildElement aText |
 
-	anObject := aSpotterCandidate previewObject.
-
-	(anObject gtViewsFor: GtPhlowView empty) originalView asElementDo: [ :anElement |
-		aChildElement := anElement ].
+	aChildElement := aSpotterCandidate previewElement.
+	aChildElement ifNil: [ ^ self ].
+	aText := aSpotterCandidate gtDisplayText.
 
 	self enqueueTask: (BlTaskAction new action: [
 		previewObject = aSpotterCandidate item ifTrue: [ 
 			aPreviewContainer addChild: aChildElement.
-			labelElement text: aSpotterCandidate gtDisplayText.
+			labelElement text: aText.
 			previewElement visibility: BlVisibility visible ] ]).
 ]
 

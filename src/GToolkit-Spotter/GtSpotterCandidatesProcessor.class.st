@@ -95,6 +95,16 @@ GtSpotterCandidatesProcessor >> prepareProcessorInContext: aContext [
 ]
 
 { #category : #private }
+GtSpotterCandidatesProcessor >> previewElementFor: anObject [
+	<return: #BlElement or: nil>
+	| aPreviewElement |
+	aPreviewElement := nil.
+	(anObject gtViewsFor: GtPhlowView empty) originalView asElementDo: [ :anElement |
+		aPreviewElement := anElement ].
+	^ aPreviewElement
+]
+
+{ #category : #private }
 GtSpotterCandidatesProcessor >> previewObjectFor: anObject [
 	^ anObject
 ]

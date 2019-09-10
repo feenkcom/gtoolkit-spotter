@@ -55,7 +55,7 @@ GtSpotterCandidatesProcessor >> doFilterInContext: aSpotterContext [
 
 { #category : #private }
 GtSpotterCandidatesProcessor >> itemFilterNameFor: anObject [
-	^ self itemNameFor: anObject
+	^ (self itemNameFor: anObject) asString
 ]
 
 { #category : #private }
@@ -65,7 +65,7 @@ GtSpotterCandidatesProcessor >> itemIconFor: anObject [
 
 { #category : #private }
 GtSpotterCandidatesProcessor >> itemNameFor: anObject [
-	^ anObject gtDisplayText
+	^ anObject gtDisplayString
 ]
 
 { #category : #accessing }

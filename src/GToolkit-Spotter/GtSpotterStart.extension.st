@@ -3,7 +3,7 @@ Extension { #name : #GtSpotterStart }
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterClipboardFor: aStep [
 	<gtSearch>
-	^ aStep listProcessor
+	aStep listProcessor
 		priority: 90;
 		title: 'Clipboard History';
 		items: [ Clipboard default recentItems ];
@@ -21,7 +21,7 @@ GtSpotterStart >> gtSpotterForClassesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
 		priority: 10;
-		allCandidates: [ Smalltalk allClassesAndTraits ];
+		items: [ Smalltalk allClassesAndTraits ];
 		title: 'Classes';
 		filter: GTFilterSubstring;
 		itemIcon: #systemIcon;

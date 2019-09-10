@@ -97,6 +97,24 @@ GtSpotterCandidatesListProcessor >> filterUsing: aFilter [
 	self filter: aFilter
 ]
 
+{ #category : #'gt-extension' }
+GtSpotterCandidatesListProcessor >> gtAllCandidatesFor: aView [
+	<gtView>
+	allCandidates ifNil: [ ^ aView empty ].
+	^ (allCandidates gtItemsFor: aView)
+			title: 'All Candidates';
+			priority: 1
+]
+
+{ #category : #'gt-extension' }
+GtSpotterCandidatesListProcessor >> gtAllFilteredCandidatesFor: aView [
+	<gtView>
+	allFilteredCandidates ifNil: [ ^ aView empty ].
+	^ (allFilteredCandidates gtItemsFor: aView)
+			title: 'All Filtered Candidates';
+			priority: 2
+]
+
 { #category : #testing }
 GtSpotterCandidatesListProcessor >> hasDynamicItems [
 	^ allCandidatesBlock hasDynamicItems
@@ -116,7 +134,7 @@ GtSpotterCandidatesListProcessor >> itemFilterName: aBlockWithOneArgument [
 GtSpotterCandidatesListProcessor >> itemFilterNameFor: anObject [
 	^ itemFilterNameBlock isNil
 		ifTrue: [ super itemFilterNameFor: anObject ]
-		ifFalse: [ itemFilterNameBlock cull: anObject ]
+		ifFalse: [ (itemFilterNameBlock cull: anObject) asString ]
 ]
 
 { #category : #accessing }

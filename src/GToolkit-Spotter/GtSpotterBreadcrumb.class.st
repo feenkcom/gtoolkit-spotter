@@ -26,7 +26,7 @@ GtSpotterBreadcrumb >> addStep: aNewStep [
 				ifTrue: [ aPreviousStep selected renderingProcessor itemNameFor: selectedItem ]
 				ifFalse: [ (origin isKindOf: Collection)
 					ifTrue: [ aNewStep processors first title ]
-					ifFalse: [ origin gtDisplayString] ] ].
+					ifFalse: [ origin gtDisplayText ] ] ].
 
 	self addItem: (BrButton new
 		look: (BrGlamorousButtonRectangularLook + (BrGlamorousButtonLabelLook new selectedColor: Color black));

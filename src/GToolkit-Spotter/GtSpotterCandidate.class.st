@@ -24,7 +24,7 @@ GtSpotterCandidate >> gtDisplayOn: aStream [
 
 { #category : #printing }
 GtSpotterCandidate >> gtDisplayText [
-	^ self item gtDisplayText
+	^ (self renderingProcessor itemNameFor: self item) gtDisplayText.
 ]
 
 { #category : #accessing }
@@ -35,6 +35,17 @@ GtSpotterCandidate >> item [
 { #category : #accessing }
 GtSpotterCandidate >> item: anObject [
 	item := anObject
+]
+
+{ #category : #printing }
+GtSpotterCandidate >> previewElement [
+	<return: #BlElement>
+	^ self renderingProcessor previewElementFor: self previewObject.
+]
+
+{ #category : #printing }
+GtSpotterCandidate >> previewObject [
+	^ self renderingProcessor previewObjectFor: self item.
 ]
 
 { #category : #accessing }

@@ -13,7 +13,9 @@ Class {
 		'filterBlock',
 		'itemFilterNameBlock',
 		'keyBinding',
-		'sortBlock'
+		'sortBlock',
+		'previewObjectBlock',
+		'previewElementBlock'
 	],
 	#category : #'GToolkit-Spotter-Model - Processors'
 }
@@ -95,6 +97,24 @@ GtSpotterCandidatesListProcessor >> filterUsing: aFilter [
 	self filter: aFilter
 ]
 
+{ #category : #'gt-extension' }
+GtSpotterCandidatesListProcessor >> gtAllCandidatesFor: aView [
+	<gtView>
+	allCandidates ifNil: [ ^ aView empty ].
+	^ (allCandidates gtItemsFor: aView)
+			title: 'All Candidates';
+			priority: 1
+]
+
+{ #category : #'gt-extension' }
+GtSpotterCandidatesListProcessor >> gtAllFilteredCandidatesFor: aView [
+	<gtView>
+	allFilteredCandidates ifNil: [ ^ aView empty ].
+	^ (allFilteredCandidates gtItemsFor: aView)
+			title: 'All Filtered Candidates';
+			priority: 2
+]
+
 { #category : #testing }
 GtSpotterCandidatesListProcessor >> hasDynamicItems [
 	^ allCandidatesBlock hasDynamicItems
@@ -114,7 +134,7 @@ GtSpotterCandidatesListProcessor >> itemFilterName: aBlockWithOneArgument [
 GtSpotterCandidatesListProcessor >> itemFilterNameFor: anObject [
 	^ itemFilterNameBlock isNil
 		ifTrue: [ super itemFilterNameFor: anObject ]
-		ifFalse: [ itemFilterNameBlock cull: anObject ]
+		ifFalse: [ (itemFilterNameBlock cull: anObject) asString ]
 ]
 
 { #category : #accessing }
@@ -206,6 +226,31 @@ GtSpotterCandidatesListProcessor >> matchSubstring [
 { #category : #'scripting-convenience' }
 GtSpotterCandidatesListProcessor >> matchSubstrings [
 	self filter: GTFilterSubstrings
+]
+
+{ #category : #scripting }
+GtSpotterCandidatesListProcessor >> previewElement: aBlockWithOneArgument [
+	previewElementBlock := aBlockWithOneArgument
+]
+
+{ #category : #private }
+GtSpotterCandidatesListProcessor >> previewElementFor: anObject [
+	<return: #BlElement or: nil>
+	^ previewElementBlock isNil
+		ifTrue: [ super previewElementFor: anObject ]
+		ifFalse: [ previewElementBlock cull: anObject ]
+]
+
+{ #category : #scripting }
+GtSpotterCandidatesListProcessor >> previewObject: aBlockWithOneArgument [
+	previewObjectBlock := aBlockWithOneArgument
+]
+
+{ #category : #private }
+GtSpotterCandidatesListProcessor >> previewObjectFor: anObject [
+	^ previewObjectBlock isNil
+		ifTrue: [ super previewObjectFor: anObject ]
+		ifFalse: [ previewObjectBlock cull: anObject ]
 ]
 
 { #category : #accessing }

@@ -64,7 +64,7 @@ GtSpotterStart >> gtDisplayOn: stream [
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterClipboardFor: aStep [
 	<gtSearch>
-	^ aStep listProcessor
+	aStep listProcessor
 		priority: 90;
 		title: 'Clipboard History';
 		items: [ Clipboard default recentItems ];
@@ -80,7 +80,7 @@ GtSpotterStart >> gtSpotterClipboardFor: aStep [
 { #category : #accessing }
 GtSpotterStart >> gtSpotterConcreteMethodFor: aStep [
 	<gtSearch>
-	^ aStep listProcessor
+	aStep listProcessor
 		priority: 30;
 		title: 'Methods';
 		filter: GTNullFilter
@@ -94,7 +94,7 @@ GtSpotterStart >> gtSpotterForClassesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
 		priority: 10;
-		allCandidates: [ Smalltalk allClassesAndTraits ];
+		items: [ Smalltalk allClassesAndTraits ];
 		title: 'Classes';
 		filter: GTFilterSubstring;
 		itemIcon: #systemIcon;

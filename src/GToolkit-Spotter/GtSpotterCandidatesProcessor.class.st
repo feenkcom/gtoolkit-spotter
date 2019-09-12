@@ -55,7 +55,7 @@ GtSpotterCandidatesProcessor >> doFilterInContext: aSpotterContext [
 
 { #category : #private }
 GtSpotterCandidatesProcessor >> itemFilterNameFor: anObject [
-	^ self itemNameFor: anObject
+	^ (self itemNameFor: anObject) asString
 ]
 
 { #category : #private }
@@ -92,6 +92,21 @@ GtSpotterCandidatesProcessor >> prepareProcessorInContext: aContext [
 	super prepareProcessorInContext: aContext.
 	
 	self hasDynamicItems ifTrue: [ allCandidates := nil ]
+]
+
+{ #category : #private }
+GtSpotterCandidatesProcessor >> previewElementFor: anObject [
+	<return: #BlElement or: nil>
+	| aPreviewElement |
+	aPreviewElement := nil.
+	(anObject gtViewsFor: GtPhlowView empty) originalView asElementDo: [ :anElement |
+		aPreviewElement := anElement ].
+	^ aPreviewElement
+]
+
+{ #category : #private }
+GtSpotterCandidatesProcessor >> previewObjectFor: anObject [
+	^ anObject
 ]
 
 { #category : #accessing }

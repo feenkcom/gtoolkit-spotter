@@ -3,10 +3,9 @@ Class {
 	#superclass : #BlElement,
 	#instVars : [
 		'spotterModel',
-		'searchField',
 		'stepsPager',
-		'breadcrumb',
-		'results'
+		'results',
+		'header'
 	],
 	#category : #'GToolkit-Spotter-UI'
 }
@@ -53,6 +52,11 @@ GtSpotterElement >> bindingDictionnary [
 	"($p meta shift -> [ self exportAsPNGSilently ])"}
 ]
 
+{ #category : #initialization }
+GtSpotterElement >> createHeaderElement [
+	^ GtSpotterHeaderElement new
+]
+
 { #category : #action }
 GtSpotterElement >> diveInDueTo: anEventType [
 
@@ -74,9 +78,13 @@ GtSpotterElement >> exitDueTo: anEventType [
 	self spotterModelDo: [ :aSpotter | aSpotter exitDueTo: anEventType ]
 ]
 
+{ #category : #accessing }
+GtSpotterElement >> header [
+	^ header
+]
+
 { #category : #initialization }
 GtSpotterElement >> initialize [
-	| aTopBar |
 	super initialize.
 
 	self layout: BlLinearLayout vertical.
@@ -87,30 +95,7 @@ GtSpotterElement >> initialize [
 	self background: Color white.
 	self geometry: (BlRectangle cornerRadius: 5).
 	
-	breadcrumb := GtSpotterBreadcrumb new.
-	breadcrumb background: (BrGlamorousColors secondaryHeaderBackgroundColor).
-
-	searchField := GtSpotterSearchField new.
-	searchField vFitContent; hMatchParent.
-	searchField padding: (BlInsets all: 15).
-	
-	aTopBar := BlElement new.
-	aTopBar background: Color white.
-	aTopBar layout: BlLinearLayout vertical.
-	aTopBar constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical fitContent ].
-	
-	aTopBar addChildren: {
-		breadcrumb.
-		searchField.
-		
-		BlElement new
-			constraintsDo: [ :c |
-				c horizontal matchParent.
-				c vertical exact: 1 ];
-			background: BrGlamorousColors secondaryHeaderBackgroundColor
-	 }.
+	header := self createHeaderElement.
 	
 	results := BrPager new.
 	results look: BrProportionalPagerLook new.
@@ -125,7 +110,7 @@ GtSpotterElement >> initialize [
 			c vertical matchParent ];
 		addChild: stepsPager).
 	
-	self addChildren: { aTopBar . results }.
+	self addChildren: { header . results }.
 	
 	self initializeListeners
 ]
@@ -135,7 +120,7 @@ GtSpotterElement >> initializeListeners [
 	self bindingDictionnary
 		associationsDo: [ :anAssociation |
 			self addShortcut: (BlShortcut new combination: anAssociation key; action: anAssociation value).
-			searchField removeShortcutsWithCombination: anAssociation key ]
+			self searchField removeShortcutsWithCombination: anAssociation key ]
 ]
 
 { #category : #'event - handling' }
@@ -154,7 +139,7 @@ GtSpotterElement >> onCloseSpotter [
 
 { #category : #accessing }
 GtSpotterElement >> searchField [
-	^ searchField
+	^ self header searchField
 ]
 
 { #category : #action }
@@ -179,9 +164,8 @@ GtSpotterElement >> spotterModel: aSpotter [
 	spotterModel := aSpotter.
 	spotterModel attachedTo: self.
 	
-	searchField spotterModel: aSpotter.
+	header spotterModel: aSpotter.
 	stepsPager spotterModel: aSpotter.
-	breadcrumb spotterModel: aSpotter.
 	
 	spotterModel announcer when: GtSpotterExitAnnouncement send: #onCloseSpotter to: self.
 	spotterModel announcer when: GtSpotterSelectedCandidateChanged send: #onCandidateSelected: to: self.

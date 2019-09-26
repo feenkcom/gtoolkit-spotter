@@ -2,95 +2,22 @@ Class {
 	#name : #GtSpotterElementWithPreview,
 	#superclass : #GtSpotterElement,
 	#instVars : [
-		'previewObject',
-		'previewTask',
-		'previewElement',
-		'labelElement'
+		'previewElement'
 	],
 	#category : #'GToolkit-Spotter-UI'
 }
-
-{ #category : #private }
-GtSpotterElementWithPreview >> generatePreviewFor: aSpotterCandidate in: aPreviewContainer [
-
-	| aChildElement aText |
-
-	aChildElement := aSpotterCandidate previewElement.
-	aChildElement ifNil: [ ^ self ].
-	aText := aSpotterCandidate gtDisplayText.
-
-	self enqueueTask: (BlTaskAction new action: [
-		previewObject = aSpotterCandidate item ifTrue: [ 
-			aPreviewContainer addChild: aChildElement.
-			labelElement text: aText.
-			previewElement visibility: BlVisibility visible ] ]).
-]
 
 { #category : #initialization }
 GtSpotterElementWithPreview >> initialize [
 	super initialize.
 	
-	previewElement := BlElement new.
-	previewElement viewModel: BrPagerPageModel new.
-	previewElement layout: BlLinearLayout vertical.
-	previewElement constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical matchParent ].
-	previewElement padding: (BlInsets all: 10).
-	
-	labelElement := BrLabel new
-		look: (BrGlamorousLabelLook new foreground: Color gray);
-		alignCenter;
-		hMatchParent;
-		vFitContent.
-	
-	previewElement addChild: labelElement.
-	
-	previewElement addChild: (BlElement new
-		margin: (BlInsets all: 5);
-		constraintsDo: [ :c |
-			c horizontal matchParent.
-			c vertical matchParent ]) as: #previewContent.
-
-	previewElement visibility: BlVisibility gone.
-	
+	previewElement := GtSpotterPreviewElement new.
 	results addPage: previewElement
 ]
 
-{ #category : #'event - handling' }
-GtSpotterElementWithPreview >> onCandidateDeselected [
-	self onHidePreview
-]
-
-{ #category : #'event - handling' }
-GtSpotterElementWithPreview >> onCandidateSelected: anAnnouncement [
-	super onCandidateSelected: anAnnouncement.
-	self updatePreview: anAnnouncement selected
-]
-
-{ #category : #'event - handling' }
-GtSpotterElementWithPreview >> onCurrentStepChanged: anAnnouncement [
-
-	self spotterModelDo: [ :aSpotter | aSpotter hasSelected
-		ifTrue: [ self updatePreview: aSpotter currentStep selected ]
-		ifFalse: [ 
-			self onHidePreview.
-			previewObject := nil. ] ]
-]
-
-{ #category : #'event - handling' }
-GtSpotterElementWithPreview >> onHidePreview [
-	previewElement visibility: BlVisibility gone
-]
-
-{ #category : #'event - handling' }
-GtSpotterElementWithPreview >> onShowPreview [
-
-	self spotterModelDo: [ :aSpotterModel | aSpotterModel hasSelected
-			ifFalse: [ ^ self ] ].
-
-	previewElement visibility: BlVisibility visible.
-	
+{ #category : #accessing }
+GtSpotterElementWithPreview >> preview [
+	^ previewElement
 ]
 
 { #category : #accessing }
@@ -101,33 +28,5 @@ GtSpotterElementWithPreview >> spotterModel [
 { #category : #accessing }
 GtSpotterElementWithPreview >> spotterModel: aSpotterModel [
 	super spotterModel: aSpotterModel.
-	
-	self when: GtPhlowObjectToSelect do: [ :anEvent | anEvent consumed: anEvent sourceElement == self ].
-
-	spotterModel announcer when: GtSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self.
-	spotterModel announcer when: GtSpotterSearchFinished send: #onCurrentStepChanged: to: self.
-	
-	spotterModel class isPreviewVisible
-		ifTrue: [ spotterModel showPreview ]
-]
-
-{ #category : #'event - handling' }
-GtSpotterElementWithPreview >> updatePreview: aSpotterCandidate [
-	| aPreviewContainer |
-
-	previewObject = aSpotterCandidate item ifTrue: [ ^self ].
-
-	aPreviewContainer := previewElement
-		childNamed: #previewContent
-		ifFound: #yourself
-		ifNone: [ previewElement ].
-	aPreviewContainer removeChildren.
-
-	previewObject := aSpotterCandidate item.
-	previewTask ifNotNil: [ previewTask terminate ].
-	previewTask := [ self generatePreviewFor: aSpotterCandidate in: aPreviewContainer ]
-		asBlTktTerminableCommand asBlTktLoggingCommand.
-	previewTask name: 'Spotter update ', aSpotterCandidate item gtDisplayString.
-	BlTktWorkerProvider highUICPUBoundPool schedule: previewTask.
-
+	self preview spotterModel: aSpotterModel
 ]

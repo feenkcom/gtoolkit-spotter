@@ -29,7 +29,7 @@ Object >> gtActionSearchFor: anAction [
 						[ (item isKindOf: GtSpotterCandidate) and: [ item item ~~ item ] ]
 							whileTrue: [ item := item item ].
 						dropdown phlow spawnObject: item ].
-				GtSpotterElementWithPreview new
+				GtSpotterElement new
 					spotterModel: model;
 					size: 600@400;
 					margin: (BlInsets all: 1);

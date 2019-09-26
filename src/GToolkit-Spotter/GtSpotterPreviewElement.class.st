@@ -1,17 +1,17 @@
 Class {
-	#name : #GtSpotterElementWithPreview,
-	#superclass : #GtSpotterElement,
+	#name : #GtSpotterPreviewElement,
+	#superclass : #BlElement,
 	#instVars : [
+		'spotterModel',
 		'previewObject',
 		'previewTask',
-		'previewElement',
 		'labelElement'
 	],
 	#category : #'GToolkit-Spotter-UI'
 }
 
 { #category : #private }
-GtSpotterElementWithPreview >> generatePreviewFor: aSpotterCandidate in: aPreviewContainer [
+GtSpotterPreviewElement >> generatePreviewFor: aSpotterCandidate in: aPreviewContainer [
 
 	| aChildElement aText |
 
@@ -23,20 +23,19 @@ GtSpotterElementWithPreview >> generatePreviewFor: aSpotterCandidate in: aPrevie
 		previewObject = aSpotterCandidate item ifTrue: [ 
 			aPreviewContainer addChild: aChildElement.
 			labelElement text: aText.
-			previewElement visibility: BlVisibility visible ] ]).
+			self visibility: BlVisibility visible ] ]).
 ]
 
 { #category : #initialization }
-GtSpotterElementWithPreview >> initialize [
+GtSpotterPreviewElement >> initialize [
 	super initialize.
 	
-	previewElement := BlElement new.
-	previewElement viewModel: BrPagerPageModel new.
-	previewElement layout: BlLinearLayout vertical.
-	previewElement constraintsDo: [ :c |
+	self viewModel: BrPagerPageModel new.
+	self layout: BlLinearLayout vertical.
+	self constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
-	previewElement padding: (BlInsets all: 10).
+	self padding: (BlInsets all: 10).
 	
 	labelElement := BrLabel new
 		look: (BrGlamorousLabelLook new foreground: Color gray);
@@ -44,32 +43,22 @@ GtSpotterElementWithPreview >> initialize [
 		hMatchParent;
 		vFitContent.
 	
-	previewElement addChild: labelElement.
-	
-	previewElement addChild: (BlElement new
+	self addChild: labelElement.
+	self addChild: (BlElement new
 		margin: (BlInsets all: 5);
 		constraintsDo: [ :c |
 			c horizontal matchParent.
 			c vertical matchParent ]) as: #previewContent.
-
-	previewElement visibility: BlVisibility gone.
-	
-	results addPage: previewElement
+	self visibility: BlVisibility gone.
 ]
 
 { #category : #'event - handling' }
-GtSpotterElementWithPreview >> onCandidateDeselected [
-	self onHidePreview
-]
-
-{ #category : #'event - handling' }
-GtSpotterElementWithPreview >> onCandidateSelected: anAnnouncement [
-	super onCandidateSelected: anAnnouncement.
+GtSpotterPreviewElement >> onCandidateSelected: anAnnouncement [
 	self updatePreview: anAnnouncement selected
 ]
 
 { #category : #'event - handling' }
-GtSpotterElementWithPreview >> onCurrentStepChanged: anAnnouncement [
+GtSpotterPreviewElement >> onCurrentStepChanged: anAnnouncement [
 
 	self spotterModelDo: [ :aSpotter | aSpotter hasSelected
 		ifTrue: [ self updatePreview: aSpotter currentStep selected ]
@@ -79,48 +68,53 @@ GtSpotterElementWithPreview >> onCurrentStepChanged: anAnnouncement [
 ]
 
 { #category : #'event - handling' }
-GtSpotterElementWithPreview >> onHidePreview [
-	previewElement visibility: BlVisibility gone
+GtSpotterPreviewElement >> onHidePreview [
+	self visibility: BlVisibility gone
 ]
 
 { #category : #'event - handling' }
-GtSpotterElementWithPreview >> onShowPreview [
+GtSpotterPreviewElement >> onShowPreview [
 
-	self spotterModelDo: [ :aSpotterModel | aSpotterModel hasSelected
-			ifFalse: [ ^ self ] ].
+	self spotterModel hasSelected
+			ifFalse: [ ^ self ].
 
-	previewElement visibility: BlVisibility visible.
+	self visibility: BlVisibility visible.
 	
 ]
 
 { #category : #accessing }
-GtSpotterElementWithPreview >> spotterModel [
+GtSpotterPreviewElement >> spotterModel [
 	^ spotterModel
 ]
 
 { #category : #accessing }
-GtSpotterElementWithPreview >> spotterModel: aSpotterModel [
-	super spotterModel: aSpotterModel.
-	
+GtSpotterPreviewElement >> spotterModel: aSpotterModel [
+	spotterModel := aSpotterModel.
 	self when: GtPhlowObjectToSelect do: [ :anEvent | anEvent consumed: anEvent sourceElement == self ].
 
 	spotterModel announcer when: GtSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self.
 	spotterModel announcer when: GtSpotterSearchFinished send: #onCurrentStepChanged: to: self.
+	spotterModel announcer when: GtSpotterSelectedCandidateChanged send: #onCandidateSelected: to: self.
 	
 	spotterModel class isPreviewVisible
 		ifTrue: [ spotterModel showPreview ]
 ]
 
+{ #category : #enumerating }
+GtSpotterPreviewElement >> spotterModelDo: aBlock [
+	spotterModel ifNotNil: aBlock
+]
+
 { #category : #'event - handling' }
-GtSpotterElementWithPreview >> updatePreview: aSpotterCandidate [
+GtSpotterPreviewElement >> updatePreview: aSpotterCandidate [
 	| aPreviewContainer |
 
 	previewObject = aSpotterCandidate item ifTrue: [ ^self ].
 
-	aPreviewContainer := previewElement
+	aPreviewContainer := self
 		childNamed: #previewContent
 		ifFound: #yourself
-		ifNone: [ previewElement ].
+		ifNone: [ self ].
 	aPreviewContainer removeChildren.
 
 	previewObject := aSpotterCandidate item.

@@ -5,7 +5,8 @@ Class {
 		'spotterModel',
 		'stepsPager',
 		'results',
-		'header'
+		'header',
+		'preview'
 	],
 	#category : #'GToolkit-Spotter-UI'
 }
@@ -57,7 +58,7 @@ GtSpotterElement >> createHeaderElement [
 	^ GtSpotterHeaderElement new
 ]
 
-{ #category : #action }
+{ #category : #actions }
 GtSpotterElement >> diveInDueTo: anEventType [
 
 	self spotterModelDo: [ :aSpotter |
@@ -65,7 +66,7 @@ GtSpotterElement >> diveInDueTo: anEventType [
 			ifTrue: [ aSpotter currentStep diveInDueTo: anEventType ] ]
 ]
 
-{ #category : #action }
+{ #category : #actions }
 GtSpotterElement >> diveOutDueTo: anEventType [
 
 	self spotterModelDo: [ :aSpotter |
@@ -73,12 +74,12 @@ GtSpotterElement >> diveOutDueTo: anEventType [
 			ifTrue: [ aSpotter currentStep diveOutDueTo: anEventType ] ]
 ]
 
-{ #category : #action }
+{ #category : #actions }
 GtSpotterElement >> exitDueTo: anEventType [
 	self spotterModelDo: [ :aSpotter | aSpotter exitDueTo: anEventType ]
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - elements' }
 GtSpotterElement >> header [
 	^ header
 ]
@@ -110,6 +111,9 @@ GtSpotterElement >> initialize [
 			c vertical matchParent ];
 		addChild: stepsPager).
 	
+	preview := GtSpotterPreviewElement new.
+	results addPage: preview.
+	
 	self addChildren: { header . results }.
 	
 	self initializeListeners
@@ -137,12 +141,17 @@ GtSpotterElement >> onCloseSpotter [
 			ifFalse: [ self removeFromParent ]
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - elements' }
+GtSpotterElement >> preview [
+	^ preview
+]
+
+{ #category : #'accessing - elements' }
 GtSpotterElement >> searchField [
 	^ self header searchField
 ]
 
-{ #category : #action }
+{ #category : #actions }
 GtSpotterElement >> selectNextCandidateDueTo: anEventType [
 
 	self spotterModelDo: [ :aSpotter |
@@ -150,7 +159,7 @@ GtSpotterElement >> selectNextCandidateDueTo: anEventType [
 			ifTrue: [ aSpotter currentStep selectNextDueTo: anEventType ] ]
 ]
 
-{ #category : #action }
+{ #category : #actions }
 GtSpotterElement >> selectPreviousCandidateDueTo: anEventType [
 
 	self spotterModelDo: [ :aSpotter |
@@ -166,6 +175,7 @@ GtSpotterElement >> spotterModel: aSpotter [
 	
 	header spotterModel: aSpotter.
 	stepsPager spotterModel: aSpotter.
+	preview spotterModel: aSpotter.
 	
 	spotterModel announcer when: GtSpotterExitAnnouncement send: #onCloseSpotter to: self.
 	spotterModel announcer when: GtSpotterSelectedCandidateChanged send: #onCandidateSelected: to: self.

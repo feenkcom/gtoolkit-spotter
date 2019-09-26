@@ -94,7 +94,7 @@ GtSpotterElementExamples >> elementWithPreviewOnDefaultSpotter [
 	<gtExample>
 	| aSpotterElement aSpotterModel |
 
-	aSpotterElement := GtSpotterElementWithPreview new.
+	aSpotterElement := GtSpotterElement new.
 	aSpotterModel := self defaultSpotter.
 
 	aSpotterElement spotterModel: aSpotterModel.

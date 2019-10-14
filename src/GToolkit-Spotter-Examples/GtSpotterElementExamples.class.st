@@ -33,12 +33,13 @@ GtSpotterElementExamples >> elementOnDefaultSpotterInBorderlessWindow [
 { #category : #examples }
 GtSpotterElementExamples >> elementOnSpotterInDropdown [
 	<gtExample>
+	| look |
 	^ BrButton new
 		look:
 			BrGlamorousButtonWithIconLook
 				+
-					(BrGlamorousWithDropdownLook
-						stencil: [ | look aSpotterElement aSpotterModel |
+					(look := BrGlamorousWithDropdownLook
+						stencil: [ | aSpotterElement aSpotterModel |
 							aSpotterElement := self emptyElement.
 							aSpotterModel := self defaultSpotter.
 							aSpotterModel announcer
@@ -46,24 +47,24 @@ GtSpotterElementExamples >> elementOnSpotterInDropdown [
 								do: [ :e | 
 									(#(singleClick doubleClick keyPressed) includes: e eventType)
 										ifTrue: [ look hide ] ].
-							look := BrGlamorousDropdownLook new
-								handle:
-									(BrButton new
-										look:
-											BrGlamorousButtonWithIconLook - BrGlamorousWithLabelTooltipLook
-												- BrGlamorousButtonExteriorLook;
-										icon: BrGlamorousIcons search asElement;
-										yourself);
-								content:
-									(aSpotterElement
-										spotterModel: aSpotterModel;
-										constraintsDo: [ :c | 
-											c horizontal exact: 600.
-											c vertical exact: 400 ];
-										yourself);
-								yourself.
 							BlElement new
-								look: look;
+								look:
+									(BrGlamorousDropdownLook new
+										handle:
+											(BrButton new
+												look:
+													BrGlamorousButtonWithIconLook - BrGlamorousWithLabelTooltipLook
+														- BrGlamorousButtonExteriorLook;
+												icon: BrGlamorousIcons search asElement;
+												yourself);
+										content:
+											(aSpotterElement
+												spotterModel: aSpotterModel;
+												constraintsDo: [ :c | 
+													c horizontal exact: 600.
+													c vertical exact: 400 ];
+												yourself);
+										yourself);
 								background: BrGlamorousColors secondaryHeaderBackgroundColor;
 								yourself ]);
 		icon: BrGlamorousIcons search asElement;

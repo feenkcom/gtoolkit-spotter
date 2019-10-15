@@ -33,32 +33,41 @@ GtSpotterElementExamples >> elementOnDefaultSpotterInBorderlessWindow [
 { #category : #examples }
 GtSpotterElementExamples >> elementOnSpotterInDropdown [
 	<gtExample>
-	| dropdown |
-	dropdown := BrDropdown new.
-	^ dropdown
-		look: (BrGlamorousDropdownLook new backgroundPaint: BrGlamorousColors secondaryHeaderBackgroundColor);
-		toggle: [
-			BrButton new
-				look: BrGlamorousButtonWithIconLook + BrGlamorousDropdownToggleLook;
-				icon: BrGlamorousIcons search asElement;
-				yourself ];
-		popup: [
-			| aSpotterElement aSpotterModel |
-			aSpotterElement := self emptyElement.
-			aSpotterModel := self defaultSpotter.
-			aSpotterModel announcer
-				when: GtSpotterActOn
-				do: [ :e | 
-					(#(singleClick doubleClick keyPressed) includes: e eventType)
-						ifTrue: [ dropdown collapse ] ].
-			aSpotterElement
-				spotterModel: aSpotterModel;
-				constraintsDo: [ :c | 
-					c horizontal exact: 600.
-					c vertical exact: 400 ];
-				margin: (BlInsets all: 1);
-				geometry: (BlRectangle cornerRadius: 4);
-				yourself ];
+	| look |
+	^ BrButton new
+		look:
+			BrGlamorousButtonWithIconLook
+				+
+					(look := BrGlamorousWithDropdownLook
+						stencil: [ | aSpotterElement aSpotterModel |
+							aSpotterElement := self emptyElement.
+							aSpotterModel := self defaultSpotter.
+							aSpotterModel announcer
+								when: GtSpotterActOn
+								do: [ :e | 
+									(#(singleClick doubleClick keyPressed) includes: e eventType)
+										ifTrue: [ look hide ] ].
+							BlElement new
+								look:
+									(BrGlamorousDropdownLook new
+										handle:
+											(BrButton new
+												look:
+													BrGlamorousButtonWithIconLook - BrGlamorousWithLabelTooltipLook
+														- BrGlamorousButtonExteriorLook;
+												icon: BrGlamorousIcons search asElement;
+												yourself);
+										content:
+											(aSpotterElement
+												spotterModel: aSpotterModel;
+												constraintsDo: [ :c | 
+													c horizontal exact: 600.
+													c vertical exact: 400 ];
+												yourself);
+										yourself);
+								background: BrGlamorousColors secondaryHeaderBackgroundColor;
+								yourself ]);
+		icon: BrGlamorousIcons search asElement;
 		yourself
 ]
 

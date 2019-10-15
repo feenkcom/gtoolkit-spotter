@@ -6,36 +6,50 @@ Object >> gtActionSearchFor: anAction [
 	| fakeStep |
 	fakeStep := GtSpotter new newStep origin: self.
 	self spotterProcessorsFor: fakeStep.
-	fakeStep processors isEmpty ifTrue: [ ^ anAction noAction ].
-	^ anAction explicit stencil: [
-		| dropdown |
-		dropdown := BrDropdown new.
-		dropdown
-			look: (BrGlamorousDropdownLook new backgroundPaint: BrGlamorousColors secondaryHeaderBackgroundColor);
-			toggle: [
-				BrButton new
-					look: BrGlamorousButtonWithIconLook + BrGlamorousDropdownToggleLook;
-					icon: BrGlamorousIcons search asElement ];
-			popup: [
-				| model |
-				model := GtSpotter new initializeWith: self.
-				model announcer
-					when: GtSpotterActOn
-					do: [ :e | 
-						| item |
-						item := e element.
-						e actedUpon: true.
-						self flag: 'FIXME candidates may be wrapped for some reason'.
-						[ (item isKindOf: GtSpotterCandidate) and: [ item item ~~ item ] ]
-							whileTrue: [ item := item item ].
-						dropdown phlow spawnObject: item ].
-				GtSpotterElement new
-					spotterModel: model;
-					size: 600@400;
-					margin: (BlInsets all: 1);
-					geometry: (BlRectangle cornerRadius: 4);
-					yourself ];
-			yourself ]
+	fakeStep processors isEmpty
+		ifTrue: [ ^ anAction noAction ].
+	^ anAction explicit
+		stencil: [ BrButton new
+				icon: BrGlamorousIcons search asElement;
+				label: 'Search';
+				look:
+					BrGlamorousButtonWithIconLook
+						+
+							(BrGlamorousWithDropdownLook
+								stencil: [ | model look element |
+									model := GtSpotter new initializeWith: self.
+									model announcer
+										when: GtSpotterActOn
+										do: [ :e | 
+											| item |
+											item := e element.
+											e actedUpon: true.
+											self
+												flag: 'FIXME candidates may be wrapped for some reason'.
+											[ (item isKindOf: GtSpotterCandidate)
+												and: [ item item ~~ item ] ]
+												whileTrue: [ item := item item ].
+											element phlow spawnObject: item ].
+									look := BrGlamorousDropdownLook new
+										handle:
+											(BrButton new
+												icon: BrGlamorousIcons search asElement;
+												label: 'Search';
+												look:
+													BrGlamorousButtonWithIconLook - BrGlamorousWithLabelTooltipLook
+														- BrGlamorousButtonExteriorLook;
+												yourself);
+										content:
+											(GtSpotterElement new
+												spotterModel: model;
+												size: 600 @ 400;
+												yourself);
+										yourself.
+									element := BlElement new
+										look: look;
+										background: BrGlamorousColors secondaryHeaderBackgroundColor;
+										yourself ]);
+				yourself ]
 ]
 
 { #category : #'*GToolkit-Spotter' }

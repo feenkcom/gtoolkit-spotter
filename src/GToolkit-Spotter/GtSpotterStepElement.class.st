@@ -50,7 +50,7 @@ GtSpotterStepElement >> initialize [
 
 	self column
 		title: 'Item';
-		stencil: [ :aNode :index |			
+		stencil: [ :aNode :index |
 			aNode value children
 				ifEmpty: [ self buildCandidatesElementFor: aNode value ]
 				ifNotEmpty: [ self buildCategoryElementFor: aNode value ] ].

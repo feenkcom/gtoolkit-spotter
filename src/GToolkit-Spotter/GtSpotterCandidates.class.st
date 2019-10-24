@@ -23,6 +23,11 @@ GtSpotterCandidates >> add: aGtSpotterCandidate [
 ]
 
 { #category : #accessing }
+GtSpotterCandidates >> allCandidates [
+	^ Array streamContents: [ :aStream | self do: [ :eachCandidate | aStream nextPut: eachCandidate ] ]
+]
+
+{ #category : #accessing }
 GtSpotterCandidates >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]

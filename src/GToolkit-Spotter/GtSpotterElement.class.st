@@ -88,6 +88,20 @@ GtSpotterElement >> header [
 GtSpotterElement >> initialize [
 	super initialize.
 
+	self initializeSpotterElements.
+	self initializeListeners
+]
+
+{ #category : #initialization }
+GtSpotterElement >> initializeListeners [
+	self bindingDictionnary
+		associationsDo: [ :anAssociation |
+			self addShortcut: (BlShortcut new combination: anAssociation key; action: anAssociation value).
+			self searchField removeShortcutsWithCombination: anAssociation key ]
+]
+
+{ #category : #initialization }
+GtSpotterElement >> initializeSpotterElements [
 	self layout: BlLinearLayout vertical.
 	self constraintsDo: [ :c |
 		c horizontal matchParent.
@@ -103,28 +117,17 @@ GtSpotterElement >> initialize [
 	results hMatchParent; vMatchParent.
 
 	stepsPager := GtSpotterPager new.
-
 	results addPage: (BlElement new
 		viewModel: BrPagerPageModel new;
 		constraintsDo: [ :c |
 			c horizontal matchParent.
 			c vertical matchParent ];
 		addChild: stepsPager).
-	
+		
 	preview := GtSpotterPreviewElement new.
 	results addPage: preview.
 	
 	self addChildren: { header . results }.
-	
-	self initializeListeners
-]
-
-{ #category : #initialization }
-GtSpotterElement >> initializeListeners [
-	self bindingDictionnary
-		associationsDo: [ :anAssociation |
-			self addShortcut: (BlShortcut new combination: anAssociation key; action: anAssociation value).
-			self searchField removeShortcutsWithCombination: anAssociation key ]
 ]
 
 { #category : #'event - handling' }
@@ -139,11 +142,6 @@ GtSpotterElement >> onCloseSpotter [
 		and: [ self space root == self ])
 			ifTrue: [ self space close ]
 			ifFalse: [ self removeFromParent ]
-]
-
-{ #category : #'accessing - elements' }
-GtSpotterElement >> preview [
-	^ preview
 ]
 
 { #category : #'accessing - elements' }

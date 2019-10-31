@@ -58,6 +58,11 @@ GtSpotterElement >> createHeaderElement [
 	^ GtSpotterHeaderElement new
 ]
 
+{ #category : #initialization }
+GtSpotterElement >> createPreviewElement [
+	^ GtSpotterPreviewElement new
+]
+
 { #category : #actions }
 GtSpotterElement >> diveInDueTo: anEventType [
 
@@ -124,7 +129,7 @@ GtSpotterElement >> initializeSpotterElements [
 			c vertical matchParent ];
 		addChild: stepsPager).
 		
-	preview := GtSpotterPreviewElement new.
+	preview := self createPreviewElement.
 	results addPage: preview.
 	
 	self addChildren: { header . results }.

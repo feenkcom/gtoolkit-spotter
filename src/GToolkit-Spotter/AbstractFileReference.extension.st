@@ -1,6 +1,20 @@
 Extension { #name : #AbstractFileReference }
 
 { #category : #'*GToolkit-Spotter' }
+AbstractFileReference >> gtSpotterForAddressFileFor: aStep [
+	<gtSearch>
+	self isAddressBookFile
+		ifFalse: [ ^ self ].
+	aStep listProcessor
+		priority: 40;
+		title: 'Contacts';
+		allCandidates: [ self contactsFromFile ];
+		itemName: #fullName;
+		filter: GTFilterSubstrings;
+		wantsToDisplayOnEmptyQuery: true
+]
+
+{ #category : #'*GToolkit-Spotter' }
 AbstractFileReference >> gtSpotterForDirectoriesFor: aStep [
 	<gtSearch>
 	^ self isDirectory
@@ -26,6 +40,23 @@ AbstractFileReference >> gtSpotterForFilesFor: aStep [
 				itemName: #basename;
 				itemIcon: [ GLMUIThemeExtraIcons glamorousBrowse ];
 				filter: GTFilterSubstring ]
+]
+
+{ #category : #'*GToolkit-Spotter' }
+AbstractFileReference >> gtSpotterForXMLFileFor: aStep [
+	<gtSearch>
+	| xmlFileHandle |
+	xmlFileHandle := XMLFileSystemFileHandle fileReference: self.
+	xmlFileHandle isXMLDocumentFile
+		ifFalse: [ ^ self ].
+	aStep listProcessor
+		priority: 40;
+		title: 'XML Document';
+		allCandidates:
+				[ (XMLDOMParser parseFileNamed: xmlFileHandle path) allElements ];
+		itemName: #gtDisplayString;
+		filter: GTFilterSubstring;
+		wantsToDisplayOnEmptyQuery: true
 ]
 
 { #category : #'*GToolkit-Spotter' }

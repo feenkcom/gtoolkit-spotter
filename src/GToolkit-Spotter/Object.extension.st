@@ -9,7 +9,8 @@ Object >> gtActionSearchFor: anAction [
 	fakeStep processors isEmpty
 		ifTrue: [ ^ anAction noAction ].
 	^ anAction explicit
-		stencil: [ BrButton new
+		stencil: [ | actionButtonElement |
+			actionButtonElement := BrButton new
 				icon: BrGlamorousIcons search asElement;
 				label: 'Search';
 				look:
@@ -22,6 +23,7 @@ Object >> gtActionSearchFor: anAction [
 										when: GtSpotterActOn
 										do: [ :e | 
 											| item |
+											
 											item := e element.
 											e actedUpon: true.
 											self
@@ -29,7 +31,8 @@ Object >> gtActionSearchFor: anAction [
 											[ (item isKindOf: GtSpotterCandidate)
 												and: [ item item ~~ item ] ]
 												whileTrue: [ item := item item ].
-											element phlow spawnObject: item ].
+											look hide.
+											actionButtonElement phlow spawnObject: item ].
 									look := BrGlamorousDropdownLook new
 										handle:
 											(BrButton new

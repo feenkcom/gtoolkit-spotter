@@ -15,7 +15,8 @@ Class {
 		'keyBinding',
 		'sortBlock',
 		'previewObjectBlock',
-		'previewElementBlock'
+		'previewElementBlock',
+		'transformation'
 	],
 	#category : #'GToolkit-Spotter-Model - Processors'
 }
@@ -228,6 +229,16 @@ GtSpotterCandidatesListProcessor >> matchSubstrings [
 	self filter: GTFilterSubstrings
 ]
 
+{ #category : #accessing }
+GtSpotterCandidatesListProcessor >> objectToActOn: anObject from: aStep [
+	"Return an object that should be acted upon from a given step"
+	<return: #Object>
+	
+	^ transformation
+		ifNil: [ anObject ]
+		ifNotNil: [ transformation cull: anObject cull: aStep ].
+]
+
 { #category : #scripting }
 GtSpotterCandidatesListProcessor >> previewElement: aBlockWithOneArgument [
 	previewElementBlock := aBlockWithOneArgument
@@ -251,6 +262,23 @@ GtSpotterCandidatesListProcessor >> previewObjectFor: anObject [
 	^ previewObjectBlock isNil
 		ifTrue: [ super previewObjectFor: anObject ]
 		ifFalse: [ previewObjectBlock cull: anObject ]
+]
+
+{ #category : #scripting }
+GtSpotterCandidatesListProcessor >> send: aBlock [
+	self
+		assert: [ aBlock notNil ]
+		description: [ 'Send transformation block must be non-nil'  ].
+	aBlock isSymbol ifTrue: [ 
+		self 
+			assert: [ aBlock isUnary ]
+			description: [ 'Send transformation symbol must be unary' ].
+		transformation := [ :obj | aBlock value: obj ].
+		^self ].
+	self
+		assert: [ aBlock numArgs <= 2 ]
+		description: [ 'Send transformation block must have two or less arguments'  ].
+	transformation := aBlock
 ]
 
 { #category : #accessing }

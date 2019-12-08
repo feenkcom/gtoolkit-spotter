@@ -118,10 +118,12 @@ GtSpotterPreviewElement >> updatePreview: aSpotterCandidate [
 	aPreviewContainer removeChildren.
 
 	previewObject := aSpotterCandidate item.
-	previewTask ifNotNil: [ previewTask terminate ].
-	previewTask := [ self generatePreviewFor: aSpotterCandidate in: aPreviewContainer ]
-		asBlTktTerminableCommand asBlTktLoggingCommand.
-	previewTask name: 'Spotter update ', aSpotterCandidate item gtDisplayString.
-	BlTktWorkerProvider highUICPUBoundPool schedule: previewTask.
-
+	previewTask ifNotNil: [ :aTask | aTask terminate ].
+	BlUseAsyncFeatures 
+		ifEnabledDo: [
+			previewTask := [ self generatePreviewFor: aSpotterCandidate in: aPreviewContainer ] 
+				asBlTktTerminableCommand asBlTktLoggingCommand.
+			previewTask name: 'Spotter update ', aSpotterCandidate item gtDisplayString.
+	 		BlTktWorkerProvider highUICPUBoundPool schedule: previewTask ]
+		otherwise: [ self generatePreviewFor: aSpotterCandidate in: aPreviewContainer ].
 ]

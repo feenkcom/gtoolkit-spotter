@@ -4,8 +4,8 @@ Extension { #name : #GtResourcesUtilityLocation }
 GtResourcesUtilityLocation >> spotterForPathResourcesFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor
-		title: 'Resources';
-		itemName: #basename;
+		title: 'Resource from Path object';
+		priority: 1;
 		filter: GTNullFilter item: [ :aFilter :aContext | 
 			(aContext textTrimmed beginsWith: 'Path') ifTrue: [
 				| aPath |
@@ -14,18 +14,18 @@ GtResourcesUtilityLocation >> spotterForPathResourcesFor: aStep [
 				aPath ifNotNil: [ 
 					| aResult |
 					aResult := self resourceAtPath: aPath.
-					aResult exists ifTrue: [ aFilter value: aResult file ] ] ] ]
+					aFilter value: aResult ] ] ]
 ]
 
 { #category : #'*GToolkit-Spotter' }
 GtResourcesUtilityLocation >> spotterForStringResourcesFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor
-		title: 'Resources';
-		itemName: #basename;
+		title: 'Resource from file or directory name';
+		priority: 2;
 		filter: GTNullFilter item: [ :aFilter :aContext | 
 			| aResult |
 			aContext textTrimmed ifNotEmpty: [ :aText |
 				aResult := self resourceAtPath: aContext textTrimmed.
-				aResult exists ifTrue: [ aFilter value: aResult file ] ] ]
+				aFilter value: aResult ] ]
 ]

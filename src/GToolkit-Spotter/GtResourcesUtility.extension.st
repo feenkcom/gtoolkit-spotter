@@ -7,6 +7,7 @@ GtResourcesUtility >> spotterForPathResourcesFor: aStep [
 		title: 'Resource from Path object';
 		priority: 1;
 		itemName: #basename;
+		wantsToDisplayOnEmptyQuery: false;
 		filter: GTNullFilter item: [ :aFilter :aContext | 
 			(aContext textTrimmed beginsWith: 'Path') ifTrue: [
 				| aPath |
@@ -25,6 +26,7 @@ GtResourcesUtility >> spotterForStringResourcesFor: aStep [
 		title: 'Resource from file or directory name';
 		priority: 2;
 		itemName: #basename;
+		wantsToDisplayOnEmptyQuery: false;
 		filter: GTNullFilter item: [ :aFilter :aContext | 
 			| aFile |
 			aContext textTrimmed ifNotEmpty: [ :aText |
@@ -38,6 +40,7 @@ GtResourcesUtility >> spotterPathResourceAtLocationsFor: aStep [
 	^ aStep listProcessor
 		title: 'Locations from Path object';
 		priority: 4;
+		wantsToDisplayOnEmptyQuery: false;
 		items: [ self locations collect: [ :eachLocation | 
 				GtResourcesUtilityResultContext new location: eachLocation ] ];
 		filter: (GTFilterBlock new matcher: [ :anItem :aContext | 
@@ -58,6 +61,7 @@ GtResourcesUtility >> spotterStringResourcesAtLocationsFor: aStep [
 	^ aStep listProcessor
 		title: 'Locations from file or directory name';
 		priority: 5;
+		wantsToDisplayOnEmptyQuery: false;
 		items: [ self locations collect: [ :eachLocation | 
 				GtResourcesUtilityResultContext new location: eachLocation ] ];
 		filter: (GTFilterBlock new matcher: [ :anItem :aContext | 

@@ -219,6 +219,29 @@ GtSpotterStart >> gtSpotterForReferencesFor: aStep [
 ]
 
 { #category : #'*GToolkit-Spotter' }
+GtSpotterStart >> gtSpotterForResourcesUtilityFromPathFor: aStep [
+	<gtSearch>
+	^ (GtResourcesUtility default spotterForPathResourcesFor: aStep)
+		priority: 40;
+		wantsToDisplayOnEmptyQuery: false
+]
+
+{ #category : #'*GToolkit-Spotter' }
+GtSpotterStart >> gtSpotterForResourcesUtilityFromStringFor: aStep [
+	<gtSearch>
+	^ aStep listProcessor
+		title: 'Resource from file or directory name';
+		priority: 2;
+		itemName: #basename;
+		wantsToDisplayOnEmptyQuery: false;
+		filter: GTNullFilter item: [ :aFilter :aContext | 
+			| aFile |
+			aContext textTrimmed ifNotEmpty: [ :aText |
+				aFile := GtResourcesUtility default resourceAtPath: aContext textTrimmed.
+				aFile exists ifTrue: [ aFilter value: aFile ] ] ]
+]
+
+{ #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterForSendersFor: aStep [
 	<gtSearch>
 	aStep listProcessor

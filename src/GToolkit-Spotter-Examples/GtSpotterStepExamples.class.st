@@ -4,14 +4,14 @@ Class {
 	#category : #'GToolkit-Spotter-Examples'
 }
 
-{ #category : #'accessing-defaults' }
+{ #category : #'step - examples' }
 GtSpotterStepExamples >> defaultStep [
 	<gtExample>
 	| aStep |
-	
-	aStep := GtSpotterStep new.
-	aStep asyncTask: GtSpotterSyncTask new.
-	
+
+	aStep := self emptyStep.
+	aStep origin: GtSpotterStart new.
+
 	^ aStep
 ]
 
@@ -26,13 +26,24 @@ GtSpotterStepExamples >> emptyQueryOnStepWithProcessors [
 	^ aStep
 ]
 
+{ #category : #'accessing-defaults' }
+GtSpotterStepExamples >> emptyStep [
+	<gtExample>
+	| aStep |
+	
+	aStep := GtSpotterStep new.
+	aStep asyncTask: GtSpotterSyncTask new.
+	
+	^ aStep
+]
+
 { #category : #'step - examples' }
 GtSpotterStepExamples >> stepWithProcessors [
 	<gtExample>
 	| aStep theProcessors |
 
-	aStep := self defaultStep.
-	aStep origin: GtSpotterStartExample new.
+	aStep := self emptyStep.
+	aStep origin: GtSpotterStartSample new.
 
 	theProcessors := aStep processors.
 

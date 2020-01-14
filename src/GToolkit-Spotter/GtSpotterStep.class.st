@@ -268,7 +268,7 @@ GtSpotterStep >> gtProcessorsFor: aView [
 
 	^ aView columnedList 
 		title: 'Processors';
-		items: [ self processors ];
+		items: [ self processors sorted: [:a :b | a priority < b priority ]];
 		column: 'Name' format: [ :each | each title ];
 		column: 'Priority' format: [:each | each priority asString ]
 ]

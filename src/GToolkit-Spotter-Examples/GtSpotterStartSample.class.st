@@ -1,11 +1,11 @@
 Class {
-	#name : #GtSpotterStartExample,
+	#name : #GtSpotterStartSample,
 	#superclass : #Object,
 	#category : #'GToolkit-Spotter-Examples'
 }
 
 { #category : #'as yet unclassified' }
-GtSpotterStartExample >> gtSpotterSearch_10: aStep [
+GtSpotterStartSample >> gtSpotterSearch_10: aStep [
 	<gtSearch>
 
 	aStep listProcessor
@@ -18,7 +18,7 @@ GtSpotterStartExample >> gtSpotterSearch_10: aStep [
 ]
 
 { #category : #'as yet unclassified' }
-GtSpotterStartExample >> gtSpotterSearch_20: aStep [
+GtSpotterStartSample >> gtSpotterSearch_20: aStep [
 	<gtSearch>
 
 	aStep listProcessor
@@ -31,7 +31,7 @@ GtSpotterStartExample >> gtSpotterSearch_20: aStep [
 ]
 
 { #category : #'as yet unclassified' }
-GtSpotterStartExample >> gtSpotterSearch_30: aStep [
+GtSpotterStartSample >> gtSpotterSearch_30: aStep [
 	<gtSearch>
 
 	aStep listProcessor

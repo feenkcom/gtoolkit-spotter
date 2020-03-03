@@ -1,5 +1,5 @@
 Class {
 	#name : #GtSpotterResizedEvent,
-	#superclass : #BlElementEvent,
+	#superclass : #BlEvent,
 	#category : #'GToolkit-Spotter-UI'
 }

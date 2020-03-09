@@ -11,7 +11,8 @@ Class {
 GtSpotterPager >> initialize [
 	super initialize.
 
-	self look: BrScrollablePagerLook new + BrLayoutLook linearVertical.
+	self look: BrScrollablePagerLook new.
+	self layout: BlLinearLayout vertical.
 	self constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ]

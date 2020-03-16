@@ -623,6 +623,22 @@ GtSpotter >> search: aString [
 	text := aString
 ]
 
+{ #category : #'api - search' }
+GtSpotter >> searchSync: aString [
+	"Trigger a search with the following string as a query"
+
+	self
+		assert: [ self hasSteps ]
+		description: [ 'There must be at least one step' ].
+	
+	self
+		assert: [ aString isNotNil ]
+		description: [ 'Search query must not be nil' ]. 
+
+	text := aString.
+	self currentStep processSync: aString.
+]
+
 { #category : #'actions api' }
 GtSpotter >> shiftPressed: aBoolean [
 

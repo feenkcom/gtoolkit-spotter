@@ -1,6 +1,6 @@
 Class {
 	#name : #GtSpotterSyncTask,
-	#superclass : #GLMAsyncTask,
+	#superclass : #GtSpotterTask,
 	#category : #'GToolkit-Spotter-Utils'
 }
 

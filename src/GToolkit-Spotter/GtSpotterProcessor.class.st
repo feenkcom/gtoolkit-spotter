@@ -44,7 +44,7 @@ GtSpotterProcessor >> basicFilterInContext: aSpotterContext [
 	(self shouldFilterInContext: aSpotterContext) ifTrue: [
 		allFilteredCandidates := self doFilterInContext: aSpotterContext ].
 	aSpotterContext stream 
-		performSymbol: #onAmountChanged:in: 
+		performSymbol: #onAmountChanged:in:
 		withArguments: { self allFilteredCandidates size . self }
 ]
 

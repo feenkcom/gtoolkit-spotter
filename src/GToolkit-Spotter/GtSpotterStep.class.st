@@ -148,12 +148,12 @@ GtSpotterStep >> context: aGtSpotterContext [
 	context := aGtSpotterContext
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : #initialization }
 GtSpotterStep >> defaultStream [
 	^ GtSpotterUIThreadStream new
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : #initialization }
 GtSpotterStep >> defaultTask [
 	^ GtSpotterTaskItAsyncTask new
 ]
@@ -508,7 +508,7 @@ GtSpotterStep >> process: aString [
 
 	self asyncTask
 		execute: [ :aCurrentContext |
-			self notifyContextChangedFrom: lastSearchContext to: self context.
+			self notifyContextChangedFrom: lastSearchContext to: aCurrentContext.
 			self processContext: aCurrentContext ]
 		withArguments: { self context. }
 		callback: [ self processCallback: aString ]
@@ -530,6 +530,29 @@ GtSpotterStep >> processContext: aSpotterContext [
 	self handleExceptionsDuring: [ 
 		self stream removeAllCandidates.
 		self relevantProcessorsProcess: aSpotterContext ]
+]
+
+{ #category : #processing }
+GtSpotterStep >> processSync: aString [
+	"I do not accept empty queries or the same queries as before.
+	If nil is passed, than an empty string will be processed. This approach is used to
+	destinguish when user deletes last character in the search and when search field became
+	empty after spawning new step"
+	
+	self
+		assert: [ aString isNotNil ]
+		description: [ 'Search query must not be nil' ].
+
+	self context: (self newContextForQuery: aString).
+
+	" updating timestamp in a stream, to prevent candidates from old process being shown "
+	self stream updateTimestamp.
+	
+	self notifyContextChangedFrom: lastSearchContext to: self context.
+	self processContext: self context.
+
+	lastSearchContext := self context. 
+	self notifySearchFinishedFor: aString processors: self processors
 ]
 
 { #category : #private }
@@ -737,7 +760,7 @@ GtSpotterStep >> spotter: aSpotter [
 
 { #category : #accessing }
 GtSpotterStep >> stream [
-	<return: #GtSpotterUIThreadStream>
+	<return: #GtSpotterStream>
 
 	^ stream
 ]

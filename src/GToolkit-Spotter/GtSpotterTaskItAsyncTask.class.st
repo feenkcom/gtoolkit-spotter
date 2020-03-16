@@ -4,7 +4,7 @@ I use a Bloc TaskIt worker pool to schedule background tasks.
 "
 Class {
 	#name : #GtSpotterTaskItAsyncTask,
-	#superclass : #Object,
+	#superclass : #GtSpotterTask,
 	#instVars : [
 		'command',
 		'mutex'

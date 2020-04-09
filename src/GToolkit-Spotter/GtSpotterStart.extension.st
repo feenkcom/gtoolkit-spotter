@@ -208,3 +208,18 @@ GtSpotterStart >> gtSpotterImplementorsFor: aStep [
 		keyBinding: $m meta;
 		wantsToDisplayOnEmptyQuery: false
 ]
+
+{ #category : #'*GToolkit-Spotter' }
+GtSpotterStart >> spotterForVectorIconFor: aStep [
+	<gtSearch>
+	^ aStep listProcessor
+		title: 'Vector Icons';
+		priority: 100;
+		allCandidates: [ BrGlamorousVectorIcons allIcons ];
+		itemName: #key;
+		itemIcon: [ :anAssoc | anAssoc value ];
+		filter: GTFilterSubstring;
+		actLogic: [ :item :step | 
+			step exit.
+			(BrGlamorousVectorIcons class >> item key) gtInspect ]
+]

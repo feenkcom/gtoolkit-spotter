@@ -215,7 +215,7 @@ GtSpotterStart >> spotterForVectorIconFor: aStep [
 	^ aStep listProcessor
 		title: 'Vector Icons';
 		priority: 100;
-		allCandidates: [ GtSpotterVectorIconPreviewStencil 
+		allCandidates: [ GtSpotterVectorIconPreview 
 			library: BrGlamorousVectorIcons allIcons: BrGlamorousVectorIcons allIcons ];
 		itemName: #iconSelector;
 		filter: GTFilterSubstring

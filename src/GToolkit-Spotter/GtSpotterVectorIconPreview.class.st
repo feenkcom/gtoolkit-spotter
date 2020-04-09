@@ -1,25 +1,30 @@
+"
+I create a preview for a given vertical icon, see ${class:BrGlamorousVectorIcons}$.
+I am used by Spotter to nicely display icon previews.
+"
 Class {
-	#name : #GtSpotterVectorIconPreviewStencil,
-	#superclass : #GtSpotterIconPreviewStencil,
+	#name : #GtSpotterVectorIconPreview,
+	#superclass : #GtSpotterIconPreview,
 	#category : #'GToolkit-Spotter-Utils'
 }
 
 { #category : #'api - instantiation' }
-GtSpotterVectorIconPreviewStencil >> create [
+GtSpotterVectorIconPreview >> asElement [
 	<return: #BlElement>
 	^ BrVerticalPane new matchParent
 		addChild: self newEditorAndClipboardElement;
-		addChild: self newIconPreviewElement
+		addChild: self newIconPreviewElement;
+		margin: (BlInsets all: 5)
 ]
 
 { #category : #accessing }
-GtSpotterVectorIconPreviewStencil >> iconCreationCode [
+GtSpotterVectorIconPreview >> iconCreationCode [
 	<return: #String>
 	^ self iconLibrary asString , ' ' , self iconSelector asString
 ]
 
 { #category : #accessing }
-GtSpotterVectorIconPreviewStencil >> iconCreationCodeRope [
+GtSpotterVectorIconPreview >> iconCreationCodeRope [
 	<return: #BlRope>
 	^ self iconCreationCode asRopedText 
 		attribute: (BrTextAdornmentDynamicAttribute new 
@@ -28,7 +33,7 @@ GtSpotterVectorIconPreviewStencil >> iconCreationCodeRope [
 ]
 
 { #category : #'api - instantiation' }
-GtSpotterVectorIconPreviewStencil >> newClipboardElement [
+GtSpotterVectorIconPreview >> newClipboardElement [
 	^ BrButton new
 		"look: BrGlamorousButtonRectangularLook + BrGlamorousButtonIconLook + BrGlamorousWithLabelTooltipLook;"
 		look: BrGlamorousButtonWithIconLook;
@@ -41,9 +46,9 @@ GtSpotterVectorIconPreviewStencil >> newClipboardElement [
 ]
 
 { #category : #'api - instantiation' }
-GtSpotterVectorIconPreviewStencil >> newCodeEditor [
+GtSpotterVectorIconPreview >> newCodeEditor [
 	^ BrEditor new
-		look: BrGlamorousCodeEditorLook + BrShadowLook;
+		look: BrGlamorousCodeEditorLook;
 		beReadOnlyWithSelection;
 		background: Color white;
 		margin: (BlInsets all: 5);
@@ -55,7 +60,7 @@ GtSpotterVectorIconPreviewStencil >> newCodeEditor [
 ]
 
 { #category : #'instance creation' }
-GtSpotterVectorIconPreviewStencil >> newEditorAndClipboardElement [
+GtSpotterVectorIconPreview >> newEditorAndClipboardElement [
 	^ BrHorizontalPane new fitContent
 		addChild: self newCodeEditor;
 		addChild: self newClipboardElement;
@@ -64,7 +69,7 @@ GtSpotterVectorIconPreviewStencil >> newEditorAndClipboardElement [
 ]
 
 { #category : #'api - instantiation' }
-GtSpotterVectorIconPreviewStencil >> newIconPreviewElement [
+GtSpotterVectorIconPreview >> newIconPreviewElement [
 	^ self iconStencil create asElement asScalableElement
 		margin: (BlInsets all: 5);
 		constraintsDo: [ :c | 

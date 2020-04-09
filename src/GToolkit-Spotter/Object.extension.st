@@ -11,7 +11,7 @@ Object >> gtActionSearchFor: anAction [
 	^ anAction explicit
 		stencil: [ | actionButtonElement |
 			actionButtonElement := BrButton new
-				icon: BrGlamorousIcons search asElement;
+				icon: BrGlamorousVectorIcons search;
 				label: 'Search';
 				look:
 					BrGlamorousButtonWithIconLook
@@ -36,7 +36,7 @@ Object >> gtActionSearchFor: anAction [
 									look := BrGlamorousDropdownLook new
 										handle:
 											(BrButton new
-												icon: BrGlamorousIcons search asElement;
+												icon: BrGlamorousVectorIcons search;
 												label: 'Search';
 												look:
 													BrGlamorousButtonWithIconLook - BrGlamorousWithLabelTooltipLook

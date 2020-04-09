@@ -55,7 +55,7 @@ GtSpotterElementExamples >> elementOnSpotterInDropdown [
 												look:
 													BrGlamorousButtonWithIconLook - BrGlamorousWithLabelTooltipLook
 														- BrGlamorousButtonExteriorLook;
-												icon: BrGlamorousIcons search asElement;
+												icon: BrGlamorousVectorIcons search;
 												yourself);
 										content:
 											(aSpotterElement
@@ -67,7 +67,7 @@ GtSpotterElementExamples >> elementOnSpotterInDropdown [
 										yourself);
 								background: BrGlamorousColors secondaryHeaderBackgroundColor;
 								yourself ]);
-		icon: BrGlamorousIcons search asElement;
+		icon: BrGlamorousVectorIcons search;
 		yourself
 ]
 

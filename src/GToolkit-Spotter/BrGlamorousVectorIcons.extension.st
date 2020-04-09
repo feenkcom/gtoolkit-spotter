@@ -6,11 +6,8 @@ BrGlamorousVectorIcons class >> spotterForVectorIconFor: aStep [
 	^ aStep listProcessor
 		title: 'Vector Icons';
 		priority: 1;
-		allCandidates: [ self allIcons ];
-		itemName: #key;
-		itemIcon: [ :anAssoc | anAssoc value ];
-		filter: GTFilterSubstring;
-		actLogic: [ :item :step | 
-			step exit.
-			(BrGlamorousVectorIcons class >> item key) gtInspect ]
+		allCandidates: [ GtSpotterVectorIconPreviewStencil 
+			library: BrGlamorousVectorIcons allIcons: BrGlamorousVectorIcons allIcons ];
+		itemName: #iconSelector;
+		filter: GTFilterSubstring
 ]

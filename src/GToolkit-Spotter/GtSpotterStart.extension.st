@@ -210,6 +210,18 @@ GtSpotterStart >> gtSpotterImplementorsFor: aStep [
 ]
 
 { #category : #'*GToolkit-Spotter' }
+GtSpotterStart >> spotterForPixelIconFor: aStep [
+	<gtSearch>
+	^ aStep listProcessor
+		title: 'Pixel Icons';
+		priority: 101;
+		allCandidates: [ GtSpotterPixelIconPreview 
+			library: BrGlamorousIcons allForms: BrGlamorousIcons allIcons ];
+		itemName: #iconSelector;
+		filter: GTFilterSubstring
+]
+
+{ #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> spotterForVectorIconFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor

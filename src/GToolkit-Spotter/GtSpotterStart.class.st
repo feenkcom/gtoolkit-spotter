@@ -291,7 +291,8 @@ GtSpotterStart >> spotterForPixelIconFor: aStep [
 		allCandidates: [ GtSpotterPixelIconPreview 
 			library: BrGlamorousIcons allForms: BrGlamorousIcons allIcons ];
 		itemName: #iconSelector;
-		filter: GTFilterSubstring
+		filter: GTFilterSubstring;
+		wantsToDisplayOnEmptyQuery: false
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -303,7 +304,8 @@ GtSpotterStart >> spotterForVectorIconFor: aStep [
 		allCandidates: [ GtSpotterVectorIconPreview 
 			library: BrGlamorousVectorIcons allIcons: BrGlamorousVectorIcons allIcons ];
 		itemName: #iconSelector;
-		filter: GTFilterSubstring
+		filter: GTFilterSubstring;
+		wantsToDisplayOnEmptyQuery: false
 ]
 
 { #category : #accessing }

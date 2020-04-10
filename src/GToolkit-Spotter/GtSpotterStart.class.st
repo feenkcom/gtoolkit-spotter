@@ -282,23 +282,16 @@ GtSpotterStart >> gtSpotterImplementorsFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'as yet unclassified' }
-GtSpotterStart >> gtSpotterXdocFor: aStep [
+{ #category : #'*GToolkit-Spotter' }
+GtSpotterStart >> spotterForVectorIconFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor
-		priority: 30;
-		title: 'XDoc';
-		itemName: [ :aFileInfo | aFileInfo titleAndAuthor ];
-		wantsToDisplayOnEmptyQuery: false;
-		filter: GTNullFilter
-			item: [ :filter :context | 
-			(context textTrimmed beginsWith: XdClientSettings xdServerUrlString)
-				ifTrue:
-					[ XdClient downloadFileInfo: context textTrimmed thenDo: filter ] ];
-		actLogic: [ :aFileInfo :step :spotterElement | 
-			(XdClient new downloadXDocUsingFileInfo: aFileInfo) 
-				gtSpotterActDefault: step 
-				from: spotterElement ]
+		title: 'Vector Icons';
+		priority: 100;
+		allCandidates: [ GtSpotterVectorIconPreview 
+			library: BrGlamorousVectorIcons allIcons: BrGlamorousVectorIcons allIcons ];
+		itemName: #iconSelector;
+		filter: GTFilterSubstring
 ]
 
 { #category : #accessing }

@@ -213,7 +213,7 @@ GtSpotterStart >> gtSpotterImplementorsFor: aStep [
 GtSpotterStart >> spotterForPixelIconFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor
-		title: 'Pixel Icons';
+		title: 'Icon - Pixeled';
 		priority: 101;
 		allCandidates: [ GtSpotterPixelIconPreview 
 			library: BrGlamorousIcons allForms: BrGlamorousIcons allIcons ];
@@ -226,7 +226,7 @@ GtSpotterStart >> spotterForPixelIconFor: aStep [
 GtSpotterStart >> spotterForVectorIconFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor
-		title: 'Vector Icons';
+		title: 'Icons - Vectorized';
 		priority: 100;
 		allCandidates: [ GtSpotterVectorIconPreview 
 			library: BrGlamorousVectorIcons allIcons: BrGlamorousVectorIcons allIcons ];

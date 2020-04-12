@@ -283,15 +283,29 @@ GtSpotterStart >> gtSpotterImplementorsFor: aStep [
 ]
 
 { #category : #'*GToolkit-Spotter' }
+GtSpotterStart >> spotterForPixelIconFor: aStep [
+	<gtSearch>
+	^ aStep listProcessor
+		title: 'Icon - Pixeled';
+		priority: 101;
+		allCandidates: [ GtSpotterPixelIconPreview 
+			library: BrGlamorousIcons allForms: BrGlamorousIcons allIcons ];
+		itemName: #iconSelector;
+		filter: GTFilterSubstring;
+		wantsToDisplayOnEmptyQuery: false
+]
+
+{ #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> spotterForVectorIconFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor
-		title: 'Vector Icons';
+		title: 'Icons - Vectorized';
 		priority: 100;
 		allCandidates: [ GtSpotterVectorIconPreview 
 			library: BrGlamorousVectorIcons allIcons: BrGlamorousVectorIcons allIcons ];
 		itemName: #iconSelector;
-		filter: GTFilterSubstring
+		filter: GTFilterSubstring;
+		wantsToDisplayOnEmptyQuery: false
 ]
 
 { #category : #accessing }

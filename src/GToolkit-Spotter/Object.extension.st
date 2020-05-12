@@ -65,7 +65,7 @@ Object >> gtSpotterActDefault: aStep from: aSpotterElement [
 
 { #category : #'*GToolkit-Spotter' }
 Object >> gtSpotterActDefaultFrom: aSpotterElement [
-	^ GtInspector openOn: self from: aSpotterElement
+	^ Gt2Inspector openOn: self from: aSpotterElement
 ]
 
 { #category : #'*GToolkit-Spotter' }

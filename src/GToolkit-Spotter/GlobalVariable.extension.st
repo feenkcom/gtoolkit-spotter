@@ -2,7 +2,7 @@ Extension { #name : #GlobalVariable }
 
 { #category : #'*GToolkit-Spotter' }
 GlobalVariable >> gtSpotterActDefaultFrom: aSpotterElement [
-	Gt2Inspector openOn: self value from: aSpotterElement
+	GtInspector openOn: self value from: aSpotterElement
 ]
 
 { #category : #'*GToolkit-Spotter' }

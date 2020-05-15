@@ -189,6 +189,7 @@ GtSpotterStart >> gtSpotterForToolsFor: aStep [
 	aStep listProcessor
 		priority: 1;
 		allCandidates: [ {GtPlaygroundStencil new . GtCoderStencil new . GtMonitorStencil new . GtRlGToolkitExamplesExplorer buildForGToolkitProject . GtTranscriptStencil new } ];
+		previewElement: [ :aStencil | aStencil asPreviewElement asElement ];
 		title: 'Tools';
 		filter: GTFilterSubstring;
 		wantsToDisplayOnEmptyQuery: true

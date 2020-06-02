@@ -8,3 +8,8 @@ Class {
 GtSpotterSignal >> isFilterSignal [
 	^ false
 ]
+
+{ #category : #testing }
+GtSpotterSignal >> isPreviewSignal [
+	^ false
+]

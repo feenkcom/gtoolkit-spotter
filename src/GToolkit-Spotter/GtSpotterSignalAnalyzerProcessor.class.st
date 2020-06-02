@@ -12,14 +12,16 @@ Class {
 { #category : #'instance creation' }
 GtSpotterSignalAnalyzerProcessor class >> fromSignals: aCollection [
 	<return: #Array of: #GtSpotterSignalAnalyzerProcessor>
-	| theGroups aFilteredCollection |
+	| theGroups aFilteredCollection theProcessors |
 	aFilteredCollection := aCollection select: #isFilterSignal.
 	theGroups := aFilteredCollection groupedBy: #processor.
-	^ theGroups 
+	theProcessors := theGroups 
 		collect: [ :eachCollection | 
 			eachCollection sort: [ :a :b | a timestamp < b timestamp ].
 			self new signals: eachCollection ]
 		as: Array.
+	theProcessors := theProcessors sort: [ :a :b | a startTimestamp < b startTimestamp ].
+	^ theProcessors
 ]
 
 { #category : #'api - accessing' }

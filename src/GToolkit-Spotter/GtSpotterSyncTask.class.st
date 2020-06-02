@@ -17,3 +17,8 @@ GtSpotterSyncTask >> execute: aGtSpotterTaskCommand [
 		aGtSpotterTaskCommand notifyFailure: anException.
 		anException pass ].
 ]
+
+{ #category : #'api - execution' }
+GtSpotterSyncTask >> terminate [
+	"do nothing"
+]

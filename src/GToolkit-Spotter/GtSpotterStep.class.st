@@ -34,6 +34,7 @@ GtSpotterStep >> actDueTo: anEventType from: aSpotterElement [
 		description: [ 'Spotter can not perform an action due to ', anEventType asString, ' if there is no selected candidate' ].
 
 	hasActedOn := true.
+	self terminateProcessors.
 
 	self spotter historize: self selected.
 	

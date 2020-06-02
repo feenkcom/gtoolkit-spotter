@@ -5,7 +5,7 @@ Object >> gtActionSearchFor: anAction [
 	<gtAction>
 	| fakeStep |
 	fakeStep := GtSpotter new newStep origin: self.
-	self spotterProcessorsFor: fakeStep.
+	self gtSpotterProcessorsFor: fakeStep.
 	fakeStep processors isEmpty
 		ifTrue: [ ^ anAction noAction ].
 	^ anAction explicit

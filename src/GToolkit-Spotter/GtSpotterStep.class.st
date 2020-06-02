@@ -12,7 +12,8 @@ Class {
 		'asyncTask',
 		'spotter',
 		'lastSearchContext',
-		'event'
+		'event',
+		'hasActedOn'
 	],
 	#category : #'GToolkit-Spotter-Model'
 }
@@ -31,6 +32,8 @@ GtSpotterStep >> actDueTo: anEventType from: aSpotterElement [
 	self
 		assert: [ self hasSelected ]
 		description: [ 'Spotter can not perform an action due to ', anEventType asString, ' if there is no selected candidate' ].
+
+	hasActedOn := true.
 
 	self spotter historize: self selected.
 	
@@ -76,7 +79,8 @@ GtSpotterStep >> attachedTo: anElement [
 { #category : #private }
 GtSpotterStep >> basicRelevantProcessorsProcess: aSpotterContext [
 	self basicRelevantProcessorsProcess: aSpotterContext do: [ :eachProcessor | 
-		eachProcessor filterInContext: aSpotterContext ].
+		self hasActedOn ifFalse: [ 
+			eachProcessor filterInContext: aSpotterContext ] ].
 	aSpotterContext continueFilter
 ]
 
@@ -282,6 +286,11 @@ GtSpotterStep >> handleExceptionsDuring: aBlock [
 ]
 
 { #category : #testing }
+GtSpotterStep >> hasActedOn [
+	^ hasActedOn
+]
+
+{ #category : #testing }
 GtSpotterStep >> hasCandidates [
 	"Return true if there are any candidates in all categories,
 	false otherwise"
@@ -330,6 +339,7 @@ GtSpotterStep >> hasSpotter [
 GtSpotterStep >> initialize [
 	super initialize.
 
+	hasActedOn := false.
 	asyncTask := self defaultTask.
 	
 	candidates := GtSpotterCandidates new.

@@ -29,6 +29,7 @@ GtSpotterSignalAnalyzerQuery >> gtProcessorsFor: aView [
 	self signals ifNil: [ ^ aView empty ].
 	^ aView columnedList
 		title: 'Procesors';
+		priority: 1;
 		items: [ self processors ];
 		column: 'Title' item: #title;
 		column: 'Duration' item: #duration format: [ :each | 

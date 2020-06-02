@@ -14,6 +14,7 @@ TGtSpotterSignalsView >> gtSignalsFor: aView [
 	self signals ifNil: [ ^ aView empty ].
 	^ aView columnedList
 		title: 'Signals';
+		priority: 10;
 		items: [ self signals ];
 		column: 'Timestamp' item: [ :each | each timestamp ];
 		column: 'Process' item: [ :each | each processId ];

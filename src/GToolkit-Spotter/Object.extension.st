@@ -70,36 +70,11 @@ Object >> gtSpotterActDefaultFrom: aSpotterElement [
 
 { #category : #'*GToolkit-Spotter' }
 Object >> gtSpotterProcessorsFor: aSpotterStep [
-	"This is a utility method that collects all extensions (processors) for the current object.
-	By default, it simply looks for the #spotterOrder: pragma.
-	The step can decice whether or not an extension should be enabled.
-	The step can also configure each extension (e.g. override any property)"
-	
-	^ ((Pragma 
-		allNamed: #gtSearch
-		from: self class 
-		to: Object)
-			select: [:pragma | aSpotterStep processorsFilter shouldEnableProcessorsCreateBy: pragma method])
-			do: [ :pragma |
-				| currentSize |
-				currentSize := aSpotterStep processors size.
-				self gtSpotterProcessorsFor: aSpotterStep pragma: pragma.
-				aSpotterStep "configure the new processors if required"
-					configureProcessorsStartingAt: currentSize + 1
-					with: (aSpotterStep processorsFilter configurationBlockForProcessorsCreatedBy: pragma method)]
-]
-
-{ #category : #'*GToolkit-Spotter' }
-Object >> gtSpotterProcessorsFor: aSpotterStep pragma: aPragma [
-	" if there is a problem with the definition of one or more processors, let the other processors continue to work "
-
-	[ self perform: aPragma methodSelector with: aSpotterStep ]
-		on: Error
-		do: [ :exception | 
-			aSpotterStep exceptionHandler
-				handleException: exception
-				do: [ ('[Spotter] Exception while collecting processors for <'
-						, self class name , '>: ' , exception asString) traceCr ] ]
+	<return: #Collection of: #Pragma>
+	^ GtSpotterProcessorsCollector new 
+		fromObject: self;
+		spotterStep: aSpotterStep;
+		collect
 ]
 
 { #category : #'*GToolkit-Spotter' }

@@ -7,12 +7,6 @@ Class {
 	#category : #'GToolkit-Spotter-Announcements'
 }
 
-{ #category : #'as yet unclassified' }
-GtSpotterExitAnnouncement >> asRecorderEvent [
-
-	^ GTSpotterRecorderExitAnnouncementEvent fromAnnouncement: self
-]
-
 { #category : #accessing }
 GtSpotterExitAnnouncement >> eventType [
 	^ eventType

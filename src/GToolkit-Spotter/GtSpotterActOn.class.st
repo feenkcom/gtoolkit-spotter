@@ -14,12 +14,6 @@ GtSpotterActOn >> actedUpon: aBoolean [
 	isActedUpon := aBoolean
 ]
 
-{ #category : #'as yet unclassified' }
-GtSpotterActOn >> asRecorderEvent [
-
-	^ GTSpotterRecorderActOnEvent fromAnnouncement: self
-]
-
 { #category : #accessing }
 GtSpotterActOn >> element [
 	^ element

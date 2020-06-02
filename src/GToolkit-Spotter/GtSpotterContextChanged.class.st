@@ -8,12 +8,6 @@ Class {
 	#category : #'GToolkit-Spotter-Announcements'
 }
 
-{ #category : #'as yet unclassified' }
-GtSpotterContextChanged >> asRecorderEvent [
-
-	^ GTSpotterRecorderContextChangedEvent fromAnnouncement: self
-]
-
 { #category : #compatibility }
 GtSpotterContextChanged >> context [
 	^ self current

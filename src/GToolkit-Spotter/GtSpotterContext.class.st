@@ -128,12 +128,16 @@ GtSpotterContext >> doContinueFilterForProcessor: aGTProcessor [
 
 { #category : #private }
 GtSpotterContext >> doFilter: aGTFilter forProcessor: aGTProcessor [
+	| aResult |
 	self processor: aGTProcessor.
 	self filter: aGTFilter.
 	self streamed: (OrderedCollection new: 100). " not a limitation, just a reasonable start size "
 	(self cache at: #processorsAndFilters) at: aGTProcessor put: aGTFilter.
 	(self cache at: #processorsAndStreamed) at: aGTProcessor put: streamed.
-	^ aGTFilter value: self
+	self signalFilterStart.
+	aResult := aGTFilter value: self.
+	self signalFilterFinished.
+	^ aResult
 ]
 
 { #category : #comparing }
@@ -220,6 +224,26 @@ GtSpotterContext >> search [
 GtSpotterContext >> search: anObject [
 	" search stores the fully entered text (including categories) "
 	search := anObject
+]
+
+{ #category : #signaling }
+GtSpotterContext >> signalFilterFinished [
+	GtSpotterFinishedFilterSignal new
+		context: self;
+		filter: self filter;
+		processor: self processor;
+		streamed: self streamed;
+		emit
+]
+
+{ #category : #signaling }
+GtSpotterContext >> signalFilterStart [
+	GtSpotterStartFilterSignal new
+		context: self;
+		filter: self filter;
+		processor: self processor;
+		streamed: self streamed;
+		emit
 ]
 
 { #category : #'accessing-dynamic' }

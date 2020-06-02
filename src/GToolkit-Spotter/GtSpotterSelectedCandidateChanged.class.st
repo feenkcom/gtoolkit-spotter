@@ -8,12 +8,6 @@ Class {
 	#category : #'GToolkit-Spotter-Announcements'
 }
 
-{ #category : #'as yet unclassified' }
-GtSpotterSelectedCandidateChanged >> asRecorderEvent [
-
-	^ GTSpotterRecorderSelectedCandidateChangedEvent fromAnnouncement: self
-]
-
 { #category : #accessing }
 GtSpotterSelectedCandidateChanged >> eventType [
 	^ eventType

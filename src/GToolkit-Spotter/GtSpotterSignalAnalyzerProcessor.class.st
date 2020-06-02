@@ -33,8 +33,22 @@ GtSpotterSignalAnalyzerProcessor >> gtCandidatesFor: aView [
 	self processor ifNil: [ ^ aView empty ].
 	^ aView forward 
 		title: 'All Filtered Candidates';
+		priority: 1;
 		object: [ self processor ];
 		view: #gtAllFilteredCandidatesFor:
+]
+
+{ #category : #'gt-extensions' }
+GtSpotterSignalAnalyzerProcessor >> gtDefiningMethodFor: aView [
+	<gtView>
+	self signals ifNil: [ ^ aView empty ].
+	self processor hasDefiningMethod ifFalse: [ ^ aView empty ].
+	^ aView forward
+		title: 'Method';
+		priority: 2;
+		object: [ self processor ];
+		view: #gtDefiningMethodFor:
+
 ]
 
 { #category : #'api - accessing' }

@@ -30,6 +30,17 @@ GtSpotterFilterSignal >> filter: anObject [
 	filter := anObject
 ]
 
+{ #category : #accessing }
+GtSpotterFilterSignal >> gtDefiningMethodFor: aView [
+	<gtView>
+	self processor ifNil: [ ^ aView empty ].
+	^ aView forward
+		title: 'Method';
+		object: [ self processor ];
+		view: #gtDefiningMethodFor:
+
+]
+
 { #category : #testing }
 GtSpotterFilterSignal >> isFilterSignal [
 	^ true

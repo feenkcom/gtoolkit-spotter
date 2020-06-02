@@ -116,6 +116,17 @@ GtSpotterCandidatesListProcessor >> gtAllFilteredCandidatesFor: aView [
 			priority: 2
 ]
 
+{ #category : #accessing }
+GtSpotterCandidatesListProcessor >> gtDefiningMethodFor: aView [
+	<gtView>
+	self hasDefiningMethod ifFalse: [ ^ aView empty ].
+	^ aView forward
+		title: 'Method';
+		object: [ self definingMethod ];
+		view: #gtSourceFor:
+
+]
+
 { #category : #testing }
 GtSpotterCandidatesListProcessor >> hasDynamicItems [
 	^ allCandidatesBlock hasDynamicItems

@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'allFilteredCandidates',
-		'priority'
+		'priority',
+		'definingMethod'
 	],
 	#category : #'GToolkit-Spotter-Model - Processors'
 }
@@ -58,6 +59,16 @@ GtSpotterProcessor >> continueFilterInContext: aSpotterContext [
 				do: [ ('[Spotter] Exception in continuing processor <', self title asString, '>: ', exception asString) logCr ] ]
 ]
 
+{ #category : #accessing }
+GtSpotterProcessor >> definingMethod [
+	^ definingMethod
+]
+
+{ #category : #accessing }
+GtSpotterProcessor >> definingMethod: anObject [
+	definingMethod := anObject
+]
+
 { #category : #private }
 GtSpotterProcessor >> doContinueFilterInContext: aSpotterContext [
 	^ aSpotterContext doContinueFilterForProcessor: self
@@ -92,6 +103,12 @@ GtSpotterProcessor >> gtDisplayOn: stream [
 	stream 
 		nextPutAll: 'Processor: ';
 		nextPutAll: self title asString
+]
+
+{ #category : #testing }
+GtSpotterProcessor >> hasDefiningMethod [
+	<return: #Boolean>
+	^ self definingMethod isNotNil
 ]
 
 { #category : #testing }

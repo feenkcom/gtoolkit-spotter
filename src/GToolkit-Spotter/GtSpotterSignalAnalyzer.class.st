@@ -26,6 +26,7 @@ GtSpotterSignalAnalyzer >> gtQueriesFor: aView [
 	self queries ifNil: [ ^ aView empty ].
 	^ aView columnedList
 		title: 'Queries';
+		priority: 1;
 		items: [ self queries ];
 		column: 'Query' item: #query width: 150;
 		column: 'Duration' item: #duration format: #humanReadablePrintString

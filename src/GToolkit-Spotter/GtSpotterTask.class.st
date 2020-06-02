@@ -36,3 +36,9 @@ GtSpotterTask >> signalFailure: anException for: aGtSpotterTaskCommand [
 		exception: anException;
 		emit
 ]
+
+{ #category : #'api - execution' }
+GtSpotterTask >> terminate [
+	"Terminate any task activity"
+	^ self subclassResponsibility
+]

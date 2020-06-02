@@ -89,7 +89,7 @@ GtSpotterPreviewElement >> onShowPreview [
 ]
 
 { #category : #signaling }
-GtSpotterPreviewElement >> signalPreviewCanceled: anOriginalSpotterCandidate dueTo: aNewSpotterCandidate [
+GtSpotterPreviewElement >> signalPreviewCanceledFor: anOriginalSpotterCandidate dueTo: aNewSpotterCandidate [
 	self spotterModelDo: [ :aSpotter | 
 		GtSpotterPreviewCanceledSignal new
 			context: aSpotter currentStep context;

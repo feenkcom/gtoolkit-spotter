@@ -8,11 +8,6 @@ Class {
 	#category : #'GToolkit-Spotter-Announcements'
 }
 
-{ #category : #'as yet unclassified' }
-GtSpotterDiveInElement >> asRecorderEvent [
-	^ GTSpotterRecorderDiveInElementEvent fromAnnouncement: self
-]
-
 { #category : #accessing }
 GtSpotterDiveInElement >> element [
 	^ element

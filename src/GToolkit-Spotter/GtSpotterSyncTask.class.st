@@ -4,9 +4,16 @@ Class {
 	#category : #'GToolkit-Spotter-Utils'
 }
 
-{ #category : #async }
-GtSpotterSyncTask >> execute: aBlock withArguments: aCollection callback: callbackBlock priority: aPriority delay: anIntegerMilliseconds [
-	" we cannot handle asynchronous processes well in tests, so just execute is synchronously "
-	aBlock valueWithPossibleArgs: aCollection.
-	aCollection value.
+{ #category : #'api - execution' }
+GtSpotterSyncTask >> execute: aGtSpotterTaskCommand [
+	self signalExecutionStart: aGtSpotterTaskCommand.
+	[ 
+		| aResult |
+		aResult := aGtSpotterTaskCommand execute.
+		aGtSpotterTaskCommand notifySuccess: aResult.
+		self signalExecutionFinished: aGtSpotterTaskCommand withResult: aResult.
+	] on: Error do: [ :anException | 
+		self signalFailure: anException for: aGtSpotterTaskCommand.
+		aGtSpotterTaskCommand notifyFailure: anException.
+		anException pass ].
 ]

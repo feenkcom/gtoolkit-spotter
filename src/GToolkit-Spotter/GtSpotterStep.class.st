@@ -507,14 +507,14 @@ GtSpotterStep >> process: aString [
 	self stream updateTimestamp.
 
 	self asyncTask
-		execute: [ :aCurrentContext |
-			self notifyContextChangedFrom: lastSearchContext to: aCurrentContext.
-			self processContext: aCurrentContext ]
-		withArguments: { self context. }
-		callback: [ self processCallback: aString ]
-		"added small delay before actual searching. It makes spotter faster :)"
-		priority: aString "Processor userSchedulingPriority - 10"
-		delay: 200
+		execute: (GtSpotterTaskCommand new
+			query: aString;
+			context: self context;
+			valuable: [ :aCurrentContext |
+				self notifyContextChangedFrom: lastSearchContext to: aCurrentContext.
+				self processContext: aCurrentContext ];
+			argument: self context;
+			onSuccessDo: [ self processCallback: aString ])
 ]
 
 { #category : #processing }
@@ -595,7 +595,7 @@ GtSpotterStep >> relevantProcessorsProcess: aSpotterContext [
 		do: [ :exception | 
 			self exceptionHandler 
 				handleException: exception 
-				do: [ ('[Spotter] Exception in process: ', exception asString) logCr ] ]
+				do: [ ('[Spotter] Exception in process: ', exception asString) traceCr ] ]
 ]
 
 { #category : #accessing }

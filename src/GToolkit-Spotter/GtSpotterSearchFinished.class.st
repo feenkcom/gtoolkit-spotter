@@ -8,12 +8,6 @@ Class {
 	#category : #'GToolkit-Spotter-Announcements'
 }
 
-{ #category : #'as yet unclassified' }
-GtSpotterSearchFinished >> asRecorderEvent [
-
-	^ GTSpotterRecorderSearchFinishedEvent fromAnnouncement: self
-]
-
 { #category : #accessing }
 GtSpotterSearchFinished >> processors [
 	^ processors

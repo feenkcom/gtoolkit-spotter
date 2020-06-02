@@ -7,29 +7,21 @@ Class {
 	#superclass : #GtSpotterTask,
 	#instVars : [
 		'command',
-		'mutex'
+		'mutex',
+		'spotterCommand'
 	],
 	#category : #'GToolkit-Spotter-Utils'
 }
 
-{ #category : #async }
-GtSpotterTaskItAsyncTask >> execute: aBlock withArguments: aCollection callback: aCallbackBlock priority: aPriority delay: anIntegerMilliseconds [
-	"TODO: aPriority is not a priority, but a query string. 
-	We should change the method name it once we are fine with the implementation."
+{ #category : #'api - execution' }
+GtSpotterTaskItAsyncTask >> execute: aGtSpotterTaskCommand [
 	BlUseAsyncFeatures 
 		ifEnabledDo: [
 			mutex critical: [ 
-				self terminate.
-				self 
-					postponeSearchingOf: aPriority asString 
-					for: aBlock 
-					withArguments: aCollection 
-					callback: aCallbackBlock 
-					delay: anIntegerMilliseconds milliSeconds ] ]
+				self terminateBecauseOf: aGtSpotterTaskCommand.
+				self postpone: aGtSpotterTaskCommand ] ]
 		otherwise: [ 
-			| aResult |
-			aResult := aBlock valueWithEnoughArguments: aCollection.
-			aCallbackBlock cull: aResult ]
+			GtSpotterSyncTask new execute: aGtSpotterTaskCommand ]
 ]
 
 { #category : #initialization }
@@ -39,30 +31,54 @@ GtSpotterTaskItAsyncTask >> initialize [
 ]
 
 { #category : #'instance creation' }
-GtSpotterTaskItAsyncTask >> newSearchCommandOf: aName for: aBlock withArguments: aCollection [
+GtSpotterTaskItAsyncTask >> newSearchCommandFor: aGtSpotterTaskCommand [
 	| aCommand |
-	aCommand := [ aBlock valueWithEnoughArguments: aCollection ] 
+	spotterCommand := aGtSpotterTaskCommand.
+	aCommand := [ 
+			| aResult |
+			self signalExecutionStart: aGtSpotterTaskCommand.
+			aResult := aGtSpotterTaskCommand execute.
+			self signalExecutionFinished: aGtSpotterTaskCommand withResult: aResult ] 
 		asBlTktTerminableCommand asBlTktLoggingCommand.
-	aCommand name: 'Spotter Search for ''', aName asString, ''''.
+	aCommand name: 'Spotter Search for ''', aGtSpotterTaskCommand query asString, ''''.
 	^ aCommand
 ]
 
-{ #category : #async }
-GtSpotterTaskItAsyncTask >> postponeSearchingOf: aName for: aBlock withArguments: aCollection callback: aCallbackBlock delay: aDelay [
+{ #category : #execution }
+GtSpotterTaskItAsyncTask >> postpone: aGtSpotterTaskCommand [
 	"Must be called withing monitor critical code"
 	| aCommand |
 	command := aCommand := BlTaskAtPostponedTerminableFuture new.
 	aCommand
-		command: (self newSearchCommandOf: aName for: aBlock withArguments: aCollection);
+		command: (self newSearchCommandFor: aGtSpotterTaskCommand);
 		onSuccessDo:  [ :aResult | 
-				aCommand == command ifTrue: [ aCallbackBlock cull: aResult ] ];
+			aCommand == command ifTrue: [ aGtSpotterTaskCommand notifySuccess: aResult ] ];
+		onFailureDo: [ :anException | 
+			self signalFailure: anException for: aGtSpotterTaskCommand ];
 		pool: BlTktWorkerProvider spotterPool;
-		scheduledTime: BlTime real now + aDelay.
+		scheduledTime: BlTime real now + aGtSpotterTaskCommand delay.
 	BlTaskAtQueue default schedule: command
 ]
 
-{ #category : #async }
+{ #category : #signaling }
+GtSpotterTaskItAsyncTask >> signalTerminationOf: aCurrentCommand becauseOf: aNewCommand [
+	GtSpotterExecutionTerminatingTaskSignal new
+		task: self;
+		terminatingCommand: aCurrentCommand;
+		newCommand: aNewCommand;
+		emit
+]
+
+{ #category : #execution }
 GtSpotterTaskItAsyncTask >> terminate [
 	"Must be called withing monitor critical code"
 	command ifNotNil: [ :aCommand | aCommand terminate ]
+]
+
+{ #category : #execution }
+GtSpotterTaskItAsyncTask >> terminateBecauseOf: aNewCommand [
+	"Must be called withing monitor critical code"
+	command ifNotNil: [ :aCurrentCommand | 
+		self signalTerminationOf: spotterCommand becauseOf: aNewCommand.
+		aCurrentCommand terminate ]
 ]

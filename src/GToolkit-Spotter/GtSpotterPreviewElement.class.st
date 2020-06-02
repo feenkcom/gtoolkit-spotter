@@ -10,20 +10,25 @@ Class {
 	#category : #'GToolkit-Spotter-UI'
 }
 
-{ #category : #private }
+{ #category : #updating }
 GtSpotterPreviewElement >> generatePreviewFor: aSpotterCandidate in: aPreviewContainer [
 
 	| aChildElement aText |
-
+	self signalPreviewStartFor: aSpotterCandidate.
 	aChildElement := aSpotterCandidate previewElement.
 	aChildElement ifNil: [ ^ self ].
 	aText := aSpotterCandidate gtDisplayText.
+	self signalPreviewReadyFor: aSpotterCandidate element: aChildElement text: aText.
 
 	self enqueueTask: (BlTaskAction new action: [
-		previewObject = aSpotterCandidate item ifTrue: [ 
-			aPreviewContainer addChild: aChildElement.
-			labelElement text: aText.
-			self visibility: BlVisibility visible ] ]).
+		previewObject = aSpotterCandidate item 
+			ifTrue: [ 
+				aPreviewContainer addChild: aChildElement.
+				labelElement text: aText.
+				self visibility: BlVisibility visible.
+				self signalPreviewFinishedFor: aSpotterCandidate ]
+			ifFalse: [ 
+				self signalPreviewCanceledFor: aSpotterCandidate dueTo: previewObject ] ]).
 ]
 
 { #category : #initialization }
@@ -53,6 +58,11 @@ GtSpotterPreviewElement >> initialize [
 ]
 
 { #category : #'event - handling' }
+GtSpotterPreviewElement >> onActOn: anAnnouncement [ 
+	self terminatePreviewTask
+]
+
+{ #category : #'event - handling' }
 GtSpotterPreviewElement >> onCandidateSelected: anAnnouncement [
 	self updatePreview: anAnnouncement selected
 ]
@@ -68,8 +78,19 @@ GtSpotterPreviewElement >> onCurrentStepChanged: anAnnouncement [
 ]
 
 { #category : #'event - handling' }
+GtSpotterPreviewElement >> onExit: anAnnouncement [ 
+	self terminatePreviewTask
+]
+
+{ #category : #'event - handling' }
 GtSpotterPreviewElement >> onHidePreview [
-	self visibility: BlVisibility gone
+	self visibility: BlVisibility gone.
+]
+
+{ #category : #'hooks - children' }
+GtSpotterPreviewElement >> onRemovedFromSceneGraph [
+	super onRemovedFromSceneGraph.
+	self terminatePreviewTask.
 ]
 
 { #category : #'event - handling' }
@@ -80,6 +101,54 @@ GtSpotterPreviewElement >> onShowPreview [
 
 	self visibility: BlVisibility visible.
 	
+]
+
+{ #category : #signaling }
+GtSpotterPreviewElement >> signalPreviewCanceledFor: anOriginalSpotterCandidate dueTo: aNewSpotterCandidate [
+	self spotterModelDo: [ :aSpotter | 
+		GtSpotterPreviewCanceledSignal new
+			context: aSpotter currentStep context;
+			candidate: anOriginalSpotterCandidate;
+			newCandidate: aNewSpotterCandidate;
+			emit ]
+]
+
+{ #category : #signaling }
+GtSpotterPreviewElement >> signalPreviewFinishedFor: aSpotterCandidate [
+	self spotterModelDo: [ :aSpotter | 
+		GtSpotterPreviewFinishedSignal new
+			context: aSpotter currentStep context;
+			candidate: aSpotterCandidate;
+			emit ]
+]
+
+{ #category : #signaling }
+GtSpotterPreviewElement >> signalPreviewPreparationFor: aSpotterCandidate [
+	self spotterModelDo: [ :aSpotter | 
+		GtSpotterPreviewPreparationSignal new
+			context: aSpotter currentStep context;
+			candidate: aSpotterCandidate;
+			emit ]
+]
+
+{ #category : #signaling }
+GtSpotterPreviewElement >> signalPreviewReadyFor: aSpotterCandidate element: aChildElement text: aText [
+	self spotterModelDo: [ :aSpotter | 
+		GtSpotterPreviewReadySignal new
+			context: aSpotter currentStep context;
+			candidate: aSpotterCandidate;
+			previewElement: aChildElement;
+			text: aText;
+			emit ]
+]
+
+{ #category : #signaling }
+GtSpotterPreviewElement >> signalPreviewStartFor: aSpotterCandidate [
+	self spotterModelDo: [ :aSpotter | 
+		GtSpotterPreviewStartSignal new
+			context: aSpotter currentStep context;
+			candidate: aSpotterCandidate;
+			emit ]
 ]
 
 { #category : #accessing }
@@ -95,6 +164,8 @@ GtSpotterPreviewElement >> spotterModel: aSpotterModel [
 	spotterModel announcer when: GtSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self.
 	spotterModel announcer when: GtSpotterSearchFinished send: #onCurrentStepChanged: to: self.
 	spotterModel announcer when: GtSpotterSelectedCandidateChanged send: #onCandidateSelected: to: self.
+	spotterModel announcer when: GtSpotterExitAnnouncement send: #onExit: to: self.
+	spotterModel announcer when: GtSpotterActOn send: #onActOn: to: self.
 	
 	spotterModel class isPreviewVisible
 		ifTrue: [ spotterModel showPreview ]
@@ -105,25 +176,33 @@ GtSpotterPreviewElement >> spotterModelDo: aBlock [
 	spotterModel ifNotNil: aBlock
 ]
 
-{ #category : #'event - handling' }
+{ #category : #private }
+GtSpotterPreviewElement >> terminatePreviewTask [
+	previewTask ifNotNil: [ :aTask | aTask terminate ]
+]
+
+{ #category : #updating }
 GtSpotterPreviewElement >> updatePreview: aSpotterCandidate [
 	| aPreviewContainer |
-
-	previewObject = aSpotterCandidate item ifTrue: [ ^self ].
-
+	previewObject = aSpotterCandidate item
+		ifTrue: [ ^ self ].
 	aPreviewContainer := self
 		childNamed: #previewContent
 		ifFound: #yourself
 		ifNone: [ self ].
 	aPreviewContainer removeChildren.
-
 	previewObject := aSpotterCandidate item.
-	previewTask ifNotNil: [ :aTask | aTask terminate ].
-	BlUseAsyncFeatures 
-		ifEnabledDo: [
-			previewTask := [ self generatePreviewFor: aSpotterCandidate in: aPreviewContainer ] 
-				asBlTktTerminableCommand asBlTktLoggingCommand.
-			previewTask name: 'Spotter update ', aSpotterCandidate item gtDisplayString.
-	 		BlTktWorkerProvider highUICPUBoundPool schedule: previewTask ]
-		otherwise: [ self generatePreviewFor: aSpotterCandidate in: aPreviewContainer ].
+	self terminatePreviewTask.
+	BlUseAsyncFeatures
+		ifEnabledDo: [ 
+			self signalPreviewPreparationFor: aSpotterCandidate.
+			previewTask := [ 
+				self
+					generatePreviewFor: aSpotterCandidate
+					in: aPreviewContainer ] 
+						asBlTktTerminableCommand asBlTktLoggingCommand.
+			previewTask
+				name: 'Spotter update ' , aSpotterCandidate item gtDisplayString.
+			BlTktWorkerProvider highUICPUBoundPool schedule: previewTask ]
+		otherwise: [ self generatePreviewFor: aSpotterCandidate in: aPreviewContainer ]
 ]

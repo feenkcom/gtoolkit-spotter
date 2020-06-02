@@ -5,7 +5,7 @@ Behavior >> gtSpotterClassInstanceVariablesFor: aStep [
 	<gtSearch>
 	self isTrait
 		ifTrue: [ ^ self ].
-	aStep listProcessor
+	^ aStep listProcessor
 		priority: 25;
 		title: 'Class instance variables';
 		allCandidates: [ self class classLayout allSlots ];
@@ -16,7 +16,7 @@ Behavior >> gtSpotterClassInstanceVariablesFor: aStep [
 { #category : #'*GToolkit-Spotter' }
 Behavior >> gtSpotterCompositionFor: aStep [
 	<gtSearch>
-	aStep listProcessor
+	^ aStep listProcessor
 		priority: 25;
 		title: 'Composing traits';
 		allCandidates: [ self traitComposition allTraits ];

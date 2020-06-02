@@ -5,7 +5,7 @@ AbstractFileReference >> gtSpotterForAddressFileFor: aStep [
 	<gtSearch>
 	self isAddressBookFile
 		ifFalse: [ ^ self ].
-	aStep listProcessor
+	^ aStep listProcessor
 		priority: 40;
 		title: 'Contacts';
 		allCandidates: [ self contactsFromFile ];
@@ -49,7 +49,7 @@ AbstractFileReference >> gtSpotterForXMLFileFor: aStep [
 	xmlFileHandle := XMLFileSystemFileHandle fileReference: self.
 	xmlFileHandle isXMLDocumentFile
 		ifFalse: [ ^ self ].
-	aStep listProcessor
+	^ aStep listProcessor
 		priority: 40;
 		title: 'XML Document';
 		allCandidates:
@@ -65,7 +65,7 @@ AbstractFileReference >> gtSpotterForZipDirectoriesFor: aStep [
 	| zipFileSystem |
 	self isZipFile
 		ifFalse: [ ^ self ].
-	aStep listProcessor
+	^ aStep listProcessor
 		priority: 10;
 		allCandidates: [ zipFileSystem := (FileSystem zip: self) open.
 			zipFileSystem workingDirectory directories ];
@@ -82,7 +82,7 @@ AbstractFileReference >> gtSpotterForZipFilesFor: aStep [
 	| zipFileSystem |
 	self isZipFile
 		ifFalse: [ ^ self ].
-	aStep listProcessor
+	^ aStep listProcessor
 		priority: 10;
 		allCandidates: [ zipFileSystem := (FileSystem zip: self) open.
 			zipFileSystem workingDirectory files ];

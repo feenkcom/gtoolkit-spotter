@@ -20,6 +20,13 @@ Class {
 	#category : #'GToolkit-Spotter-Collectors'
 }
 
+{ #category : #enumerating }
+GtSpotterProcessorsCollector >> basicProcessorsForPragma: aPragma [
+	self object
+		perform: aPragma methodSelector
+		with: self spotterStep
+]
+
 { #category : #'api - collect' }
 GtSpotterProcessorsCollector >> collect [
 	<return: #Collection of: #Pragma>
@@ -51,21 +58,16 @@ GtSpotterProcessorsCollector >> defaultToClass [
 ]
 
 { #category : #enumerating }
-GtSpotterProcessorsCollector >> definingMethodFor: aPragma [
-	<return: #CompiledMethod>
-	^ aPragma method
-]
-
-{ #category : #enumerating }
-GtSpotterProcessorsCollector >> doPragma: pragma [
+GtSpotterProcessorsCollector >> doPragma: aPragma [
 	| currentSize |
 	currentSize := self spotterStep processors size.
-	self processorsForPragma: pragma.
+	self processorsForPragma: aPragma.
 	^ self spotterStep
 		configureProcessorsStartingAt: currentSize + 1
+		pragma: aPragma
 		with:
 			(self spotterStep processorsFilter
-				configurationBlockForProcessorsCreatedBy: pragma method)
+				configurationBlockForProcessorsCreatedBy: aPragma method)
 ]
 
 { #category : #'api - accessing' }
@@ -122,17 +124,14 @@ GtSpotterProcessorsCollector >> processorsForPragma: aPragma [
 	"if there is a problem with the definition of one or more processors, 
 	let the other processors continue to work"
 
-	[ 
-		| aProcessor |
-		aProcessor := self object perform: aPragma methodSelector with: self spotterStep.
-		(aProcessor respondsTo: #definingMethod:) ifTrue: [ 
-			aProcessor definingMethod: (self definingMethodFor: aPragma) ]
-	]	on: Error
+	[ self basicProcessorsForPragma: aPragma ]
+		on: Error
 		do: [ :anException | 
 			self exceptionHandler
 				handleException: anException
 				do: [ ('[Spotter] Exception while collecting processors for <'
-						, self object className , '>>#', aPragma methodSelector, '>: ' , anException asString) traceCr ] ]
+						, self object className , '>>#' , aPragma methodSelector , '>: '
+						, anException asString) traceCr ] ]
 ]
 
 { #category : #'api - collect' }

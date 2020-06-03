@@ -39,7 +39,7 @@ Object >> gtActionSearchFor: anAction [
 												icon: BrGlamorousVectorIcons search;
 												label: 'Search';
 												look:
-													BrGlamorousButtonWithIconLook - BrGlamorousWithLabelTooltipLook
+													BrGlamorousButtonWithIconLook - BrGlamorousButtonWithLabelTooltipLook
 														- BrGlamorousButtonExteriorLook;
 												yourself);
 										content:

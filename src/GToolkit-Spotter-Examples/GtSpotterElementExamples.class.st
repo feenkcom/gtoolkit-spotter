@@ -53,7 +53,7 @@ GtSpotterElementExamples >> elementOnSpotterInDropdown [
 										handle:
 											(BrButton new
 												look:
-													BrGlamorousButtonWithIconLook - BrGlamorousWithLabelTooltipLook
+													BrGlamorousButtonWithIconLook - BrGlamorousButtonWithLabelTooltipLook
 														- BrGlamorousButtonExteriorLook;
 												icon: BrGlamorousVectorIcons search;
 												yourself);

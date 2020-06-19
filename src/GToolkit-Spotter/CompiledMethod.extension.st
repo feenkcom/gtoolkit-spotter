@@ -34,7 +34,7 @@ CompiledMethod >> gtSpotterForMessagesFor: aStep [
 		priority: 12;
 		title: 'Messages';
 		allCandidates: [ self messages asSortedCollection
-				collect: [ :each | GTSelector new name: each ] ];
+				collect: [ :each | GtSelector new name: each ] ];
 		filter: GTFilterSubstring
 ]
 

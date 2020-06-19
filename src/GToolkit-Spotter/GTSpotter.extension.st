@@ -179,7 +179,7 @@ GTSpotter >> gtSpotterForMessagesFor: aStep [
 		title: 'Messages';
 		filter: GTNullFilter
 			item:
-				[ :filter :context | GTSelector substring: context textTrimmed filter: filter ];
+				[ :filter :context | GtSelector substring: context textTrimmed filter: filter ];
 		actLogic: [ :each :step | 
 			step exit.
 			self systemNavigation browseAllImplementorsOf: each name ];

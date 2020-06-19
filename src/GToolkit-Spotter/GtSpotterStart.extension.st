@@ -83,11 +83,12 @@ GtSpotterStart >> gtSpotterForMessagesFor: aStep [
 		priority: 35;
 		title: 'Messages';
 		filter: GTNullFilter
-			item:
-				[ :filter :context | GTSelector substring: context textTrimmed filter: filter ];
-		actLogic: [ :each :step | 
-			step exit.
-			self systemNavigation browseAllImplementorsOf: each name ];
+			item: [ :filter :context | 
+				GtSelector substring: context textTrimmed filter: filter ];
+		actLogic: [ :each :step :spotterElement | 
+			(each name asSymbol gtImplementors)
+				gtSpotterActDefault: step
+				from: spotterElement ];
 		wantsToDisplayOnEmptyQuery: false
 ]
 

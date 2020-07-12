@@ -26,19 +26,8 @@ GtSpotterStepElement >> buildCategoryElementFor: aCategory [
 ]
 
 { #category : #initialization }
-GtSpotterStepElement >> createRowStencil [
-	^ (BrColumnedTreeRowStencilBuilder new
-		cellSpacing: 2;
-		indentation: 0;
-		selectable: [ :aNode | aNode value children isEmpty ];
-		padding: (BlInsets left: 0))
-]
-
-{ #category : #initialization }
 GtSpotterStepElement >> initialize [
 	super initialize.
-
-	self rowStencil: self createRowStencil.
 
 	self when: BrSelectionChanged do: [ :anEvent |
 		self selectedNodeDo: [ :aTreeNode |

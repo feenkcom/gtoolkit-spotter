@@ -189,7 +189,7 @@ GtSpotterStart >> gtSpotterForToolsFor: aStep [
 	<gtSearch>
 	aStep listProcessor
 		priority: 1;
-		allCandidates: [ {GtPlaygroundStencil new . GtCoderStencil new . GtMonitorStencil new . GtRlGToolkitExamplesExplorer buildForGToolkitProject . GtTranscriptStencil new } ];
+		allCandidates: [ {"GtPlaygroundStencil new" . GtCoderStencil new . GtMonitorStencil new . GtRlGToolkitExamplesExplorer buildForGToolkitProject . GtTranscriptStencil new } ];
 		previewElement: [ :aStencil | aStencil asPreviewElement asElement ];
 		title: 'Tools';
 		filter: GTFilterSubstring;

@@ -8,99 +8,18 @@ Class {
 	#category : #'GToolkit-Spotter-UI'
 }
 
-{ #category : #'private - actions' }
-GtSpotterStepElement >> actDueTo: anEventType [
-
-	self stepModelDo: [ :aStepModel |
-		aStepModel actDueTo: anEventType from: self ]
-]
-
 { #category : #'private - building widgets' }
 GtSpotterStepElement >> buildCandidateElementFor: aCandidate [
-	| aLabel anActOnButton aDiveInButton |
-	aLabel := BrLabel new
-		look: (BrGlamorousLabelLook new);
-		text: aCandidate gtDisplayText;
-		hMatchParent;
-		vFitContent;
-		alignCenterLeft.
-	
-	anActOnButton := BrButton new
-		look: BrGlamorousButtonWithIconLook;
-		icon: BrGlamorousVectorIcons accept;
-		label: 'Select Item';
-		action: [ self actDueTo: #buttonClick ];
-		visibility: BlVisibility hidden;
-		beSmall;
-		fitContent;
-		alignCenterRight.
-	
-	aDiveInButton := BrButton new
-		look: BrGlamorousButtonWithIconLook;
-		icon: BrGlamorousIcons right;
-		label: 'Dive-In to Search Item Details';
-		action: [ self diveInDueTo: #buttonClick ];
-		visibility: BlVisibility hidden;
-		beSmall;
-		fitContent;
-		alignCenterRight.
-	
-	(self isCandidateSelected: aCandidate) ifFalse: [ 
-		aDiveInButton visibility: BlVisibility hidden ].
-	
-	^ BrHorizontalPane new
-		labeled: 'Candidate';
-		in: [ :thePane | self make: anActOnButton in: thePane visibleWhenCandidateHovered: aCandidate ];
-		in: [ :thePane | self make: aDiveInButton in: thePane visibleWhenCandidateHovered: aCandidate ];
-		cellSpacing: 5;
-		hMatchParent;
-		vFitContent;
-		padding: (BlInsets all: 6);
-		addChild: aLabel as: #label;
-		addChild: anActOnButton as: #actButton;
-		addChild: aDiveInButton as: #diveInButton.
+	^ GtSpotterCandidateElement new 
+			stepModel: self stepModel;
+			candidate: aCandidate
 ]
 
 { #category : #'private - building widgets' }
 GtSpotterStepElement >> buildCategoryElementFor: aCategory [
-	| aLabel aDiveInButton |
-	aLabel := BrLabel new
-		look: (BrGlamorousLabelLook new foreground: Color gray; glamorousRegularSmallSize);
-		text: '#', aCategory processor title;
-		fitContent;
-		alignCenterLeft.
-	
-	aDiveInButton := BrButton new
-		look: BrGlamorousButtonWithIconLook;
-		icon: BrGlamorousIcons right;
-		label: 'Dive-In Category to Refine Search Results';
-		action: [ self diveInCategoryDueTo: #buttonClick ];
-		beSmall;
-		fitContent;
-		alignCenterLeft.
-		
-	^ BrHorizontalPane new
-		labeled: 'Category';
-		cellSpacing: 5;
-		hMatchParent;
-		vFitContent;
-		padding: (BlInsets top: 12 left: 6 bottom: 6 right: 6);
-		addChild: aLabel as: #label;
-		addChild: aDiveInButton as: #button.
-]
-
-{ #category : #'private - actions' }
-GtSpotterStepElement >> diveInCategoryDueTo: anEventType [
-
-	self stepModelDo: [ :aStepModel |
-		aStepModel diveInCategoryDueTo: anEventType ]
-]
-
-{ #category : #'private - actions' }
-GtSpotterStepElement >> diveInDueTo: anEventType [
-
-	self stepModelDo: [ :aStepModel |
-		aStepModel diveInDueTo: anEventType ]
+	^ GtSpotterCategoryElement new 
+			stepModel: self stepModel;
+			category: aCategory
 ]
 
 { #category : #initialization }
@@ -130,18 +49,6 @@ GtSpotterStepElement >> isCandidateSelected: aCandidate [
 	self stepModelDo: [ :aModel |
 		^ aModel isSelected: aCandidate ].
 	^ false
-]
-
-{ #category : #'private - building widgets' }
-GtSpotterStepElement >> make: aButton in: aPane visibleWhenCandidateHovered: aCandidate [
-	aPane
-		when: BlMouseEnterEvent
-		do: [ :anEvent | aButton visibility: BlVisibility visible ].
-	aPane
-		when: BlMouseLeaveEvent
-		do: [ :anEvent | 
-			(self isCandidateSelected: aCandidate) ifFalse: [ 
-				aButton visibility: BlVisibility hidden ] ].
 ]
 
 { #category : #'private - event handling' }
@@ -174,6 +81,11 @@ GtSpotterStepElement >> onItemSelectionChanged: anEvent [
 				aSpotterStep select: aCandidate dueTo: #singleClick ] ] ]
 ]
 
+{ #category : #'private - accessing' }
+GtSpotterStepElement >> stepModel [
+	^ stepModel
+]
+
 { #category : #accessing }
 GtSpotterStepElement >> stepModel: aSpotterStepModel [
 	stepModel := aSpotterStepModel.
@@ -193,9 +105,9 @@ GtSpotterStepElement >> stepModel: aSpotterStepModel [
 	self updateSelection
 ]
 
-{ #category : #accessing }
+{ #category : #'private - accessing' }
 GtSpotterStepElement >> stepModelDo: aBlock [
-	stepModel ifNotNil: aBlock
+	self stepModel ifNotNil: aBlock
 ]
 
 { #category : #private }

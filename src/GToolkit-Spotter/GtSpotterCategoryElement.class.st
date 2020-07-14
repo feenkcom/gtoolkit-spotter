@@ -71,7 +71,7 @@ GtSpotterCategoryElement >> initializeDiveInButton [
 GtSpotterCategoryElement >> initializeLabel [
 	label := BrLabel new
 		look: (BrGlamorousLabelLook new foreground: Color gray; glamorousRegularSmallSize);
-		hMatchParent;
+		hFitContent;
 		vFitContent;
 		alignCenterLeft
 ]

@@ -162,6 +162,17 @@ GtSpotterContext >> filter: anObject [
 	filter := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+GtSpotterContext >> gtCacheFor: aView [
+	<gtView>
+	self cache ifNil: [ ^ self ].
+	^ aView forward 
+		title: 'Cache';
+		priority: 5;
+		object: [ self cache ];
+		view: #gtItemsFor:
+]
+
 { #category : #initializing }
 GtSpotterContext >> initialize [
 	super initialize.

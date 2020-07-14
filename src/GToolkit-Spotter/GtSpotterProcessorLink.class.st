@@ -16,7 +16,7 @@ GtSpotterProcessorLink class >> from: aDoubleLink [
 ]
 
 { #category : #accessing }
-GtSpotterProcessorLink >> asSpotterProcessorLink [
+GtSpotterProcessorLink >> asGtSpotterProcessorLink [
 
 	^ self
 ]

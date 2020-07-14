@@ -15,6 +15,21 @@ GtSpotterUIThreadStream >> attachedElementDo: aBlock [
 	(spotterElement at: 1) ifNotNil: aBlock
 ]
 
+{ #category : #'gt-extensions' }
+GtSpotterUIThreadStream >> attachedElementPreviewFor: aView [
+	<gtView>
+	^ aView forward
+		title: 'Spotter element';
+		priority: 5;
+		object: [
+			| anElement | 
+			self attachedElementDo: [ :theElement | 
+				anElement := theElement ].
+			anElement ];
+		view: #gtLiveFor:;
+		actionUpdateButtonTooltip: 'Refresh attached element preview'
+]
+
 { #category : #accessing }
 GtSpotterUIThreadStream >> attachedTo: anElement [
 	spotterElement := anElement asWeakReference

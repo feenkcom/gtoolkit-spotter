@@ -3,7 +3,9 @@ Class {
 	#superclass : #Collection,
 	#instVars : [
 		'announcer',
-		'processorCandidates'
+		'processorCandidates',
+		'processorLinksMap',
+		'categories'
 	],
 	#category : #'GToolkit-Spotter-Model - Candidates'
 }
@@ -20,6 +22,18 @@ GtSpotterCandidates >> add: aGtSpotterCandidate [
 		
 	theProcessorCandidates add: aGtSpotterCandidate.
 	self notifyCandidateAdded: aGtSpotterCandidate
+]
+
+{ #category : #'adding/removing' }
+GtSpotterCandidates >> addProcessor: aProcessor [
+	|processorLink|
+	
+	processorLink := aProcessor asGtSpotterProcessorLink.
+	"linking processor with it's link"
+	self processorLinksMap add: (aProcessor -> processorLink).
+	self processors addLast: processorLink.
+	
+	^ processorLink
 ]
 
 { #category : #accessing }
@@ -64,6 +78,12 @@ GtSpotterCandidates >> first [
 	<return: #GtSpotterCandidate>
 	
 	self do: [ :aCandidate | ^ aCandidate ]
+]
+
+{ #category : #processors }
+GtSpotterCandidates >> getProcessorLink: aProcessor [
+
+	^ self processorLinksMap at: aProcessor ifAbsentPut: [ self addProcessor: aProcessor ]
 ]
 
 { #category : #'gt-extension' }
@@ -122,6 +142,19 @@ GtSpotterCandidates >> onAmountChanged: anInteger in: aProcessor [
 		ifTrue: [ ^ self ].
 
 	self announcer announce: (GTSpotterCandidatesAmountChanged new amount: anInteger; category: aProcessor; yourself)
+]
+
+{ #category : #accessing }
+GtSpotterCandidates >> processorLinksMap [
+
+	^ processorLinksMap ifNil: [ processorLinksMap := Dictionary new ]
+	
+]
+
+{ #category : #accessing }
+GtSpotterCandidates >> processors [
+
+	^ categories ifNil: [ categories := DoubleLinkedList new ].
 ]
 
 { #category : #removing }

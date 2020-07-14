@@ -43,6 +43,8 @@ GtSpotterElement >> bindingDictionnary [
 	(BlKeyCombination arrowUp -> [ self selectPreviousCandidateDueTo: #keyPressedArrowUp ]).
 	(BlKeyCombination arrowDown -> [ self selectNextCandidateDueTo: #keyPressedArrowDown ]).
 
+	(BlKeyCombination primaryShiftArrowRight -> [ self diveInCategoryDueTo: #keyPressed ]).
+
 	"(Character arrowRight meta shift -> [ self diveInCategoryDueTo: #keyPressed ]).
 	(Character arrowLeft meta shift -> [ self diveOut ]).
 	(Character arrowUp alt -> [ self stepScrollPageUp ]).
@@ -61,6 +63,14 @@ GtSpotterElement >> createHeaderElement [
 { #category : #initialization }
 GtSpotterElement >> createPreviewElement [
 	^ GtSpotterPreviewElement new
+]
+
+{ #category : #actions }
+GtSpotterElement >> diveInCategoryDueTo: anEventType [
+
+	self spotterModelDo: [ :aSpotter |
+		aSpotter hasSelected
+			ifTrue: [ aSpotter currentStep diveInCategoryDueTo: anEventType ] ]
 ]
 
 { #category : #actions }

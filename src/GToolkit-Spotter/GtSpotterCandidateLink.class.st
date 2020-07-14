@@ -108,7 +108,7 @@ GtSpotterCandidateLink >> renderingProcessor [
 { #category : #accessing }
 GtSpotterCandidateLink >> renderingProcessor: aProcessorLink [
 
-	renderingProcessorLink ifNil: [ renderingProcessorLink := aProcessorLink processor asSpotterProcessorLink ].
+	renderingProcessorLink ifNil: [ renderingProcessorLink := aProcessorLink processor asGtSpotterProcessorLink ].
 	processorLink ifNil: [ processorLink := aProcessorLink ]
 ]
 

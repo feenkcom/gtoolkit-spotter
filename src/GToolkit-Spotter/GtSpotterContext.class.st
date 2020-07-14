@@ -162,7 +162,7 @@ GtSpotterContext >> filter: anObject [
 	filter := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'gt-extensions' }
 GtSpotterContext >> gtCacheFor: aView [
 	<gtView>
 	self cache ifNil: [ ^ self ].

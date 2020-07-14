@@ -44,10 +44,9 @@ GtSpotterElement >> bindingDictionnary [
 	(BlKeyCombination arrowDown -> [ self selectNextCandidateDueTo: #keyPressedArrowDown ]).
 
 	(BlKeyCombination primaryShiftArrowRight -> [ self diveInCategoryDueTo: #keyPressed ]).
+	(BlKeyCombination primaryShiftArrowLeft -> [ self diveOutDueTo: #keyPressed ]).
 
-	"(Character arrowRight meta shift -> [ self diveInCategoryDueTo: #keyPressed ]).
-	(Character arrowLeft meta shift -> [ self diveOut ]).
-	(Character arrowUp alt -> [ self stepScrollPageUp ]).
+	"(Character arrowUp alt -> [ self stepScrollPageUp ]).
 	(Character arrowDown alt -> [ self stepScrollPageDown ]).
 	(Character pageUp -> [ self stepScrollPageUp ]).
 	(Character pageDown -> [ self stepScrollPageDown ])."

@@ -18,11 +18,37 @@ GtSpotterStepElement >> buildCandidatesElementFor: aCandidate [
 
 { #category : #'building widgets' }
 GtSpotterStepElement >> buildCategoryElementFor: aCategory [
-	^ BrLabel new
+	| aLabel aDiveInButton |
+	aLabel := BrLabel new
 		look: (BrGlamorousLabelLook new foreground: Color gray; glamorousRegularSmallSize);
 		text: '#', aCategory processor title;
+		fitContent;
+		alignCenterLeft.
+	
+	aDiveInButton := BrButton new
+		look: BrGlamorousButtonWithIconLook;
+		icon: BrGlamorousIcons right;
+		label: 'Dive-In Category to Refine Search Results';
+		action: [ self diveInCategoryDueTo: #buttonClick ];
+		beSmall;
+		fitContent;
+		alignCenterLeft.
+		
+	^ BrHorizontalPane new
+		labeled: 'Category';
+		cellSpacing: 5;
+		hMatchParent;
+		vFitContent;
 		padding: (BlInsets top: 12 left: 6 bottom: 6 right: 6);
-		hMatchParent
+		addChild: aLabel as: #label;
+		addChild: aDiveInButton as: #button.
+]
+
+{ #category : #actions }
+GtSpotterStepElement >> diveInCategoryDueTo: anEventType [
+
+	self stepModelDo: [ :aStepModel |
+		aStepModel diveInCategoryDueTo: anEventType ]
 ]
 
 { #category : #initialization }

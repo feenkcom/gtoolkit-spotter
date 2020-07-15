@@ -52,7 +52,7 @@ GtSpotterStep >> actOn: aCandidate dueTo: anEventType from: aSpotterElement [
 	self spotter historize: aCandidate.
 	
 	aSelectedCategory := aCandidate processor.
-	anObjectToActOn := aSelectedCategory objectToActOn: aCandidate from: self.
+	anObjectToActOn := aSelectedCategory objectToActOn: aCandidate item from: self.
 	
 	anAnnouncement := self spotter notifyActOn: anObjectToActOn for: anEventType.
 	anAnnouncement isActedUpon

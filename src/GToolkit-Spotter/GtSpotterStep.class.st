@@ -286,12 +286,11 @@ GtSpotterStep >> gtInspectorProcessorsIn: composite [
 { #category : #'gt-extension' }
 GtSpotterStep >> gtProcessorsFor: aView [
 	<gtView>
-
-	^ aView columnedList 
+	^ aView columnedList
 		title: 'Processors';
-		items: [ self processors sorted: [:a :b | a priority < b priority ]];
-		column: 'Name' format: [ :each | each title ];
-		column: 'Priority' format: [:each | each priority asString ]
+		items: [ self processors sorted: [ :a :b | a priority < b priority ] ];
+		column: 'Name' text: [ :each | each title ];
+		column: 'Priority' text: [ :each | each priority asString ]
 ]
 
 { #category : #'error handling' }

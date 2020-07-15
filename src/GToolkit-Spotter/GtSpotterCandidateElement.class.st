@@ -17,6 +17,15 @@ GtSpotterCandidateElement >> actDueTo: anEventType [
 		aStepModel actDueTo: anEventType from: self ]
 ]
 
+{ #category : #'api - accessing' }
+GtSpotterCandidateElement >> bindData: anObject [
+	"Bind data to this element"
+	self 
+		assert: [ anObject class = GtSpotterCandidate ] 
+		description: [ 'I can bind only ', GtSpotterCandidate name, ' instances' ].
+	self candidate: anObject
+]
+
 { #category : #'private - accessing' }
 GtSpotterCandidateElement >> candidate [
 	<return: #GtSpotterCandidate>
@@ -25,6 +34,7 @@ GtSpotterCandidateElement >> candidate [
 
 { #category : #'api - accessing' }
 GtSpotterCandidateElement >> candidate: aCandidate [
+	self candidate == aCandidate ifTrue: [ ^ self ].
 	self 
 		assert: [ aCandidate isNotNil ] 
 		description: [ 'Candidate must be non-nil' ].

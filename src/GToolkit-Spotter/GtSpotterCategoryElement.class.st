@@ -9,6 +9,15 @@ Class {
 	#category : #'GToolkit-Spotter-UI'
 }
 
+{ #category : #'api - accessing' }
+GtSpotterCategoryElement >> bindData: anObject [
+	"Bind data to this element"
+	self 
+		assert: [ anObject class = GtSpotterProcessorCandidates ] 
+		description: [ 'I can bind only ', GtSpotterProcessorCandidates name, ' instances' ].
+	self category: anObject
+]
+
 { #category : #'private - accessing' }
 GtSpotterCategoryElement >> category [
 	<return: #GtSpotterProcessorCandidates>
@@ -17,6 +26,7 @@ GtSpotterCategoryElement >> category [
 
 { #category : #'api - accessing' }
 GtSpotterCategoryElement >> category: aGtSpotterProcessorCandidates [
+	self category == aGtSpotterProcessorCandidates ifTrue: [ ^ self ].
 	self 
 		assert: [ aGtSpotterProcessorCandidates isNotNil ] 
 		description: [ 'Candidate must be non-nil' ].

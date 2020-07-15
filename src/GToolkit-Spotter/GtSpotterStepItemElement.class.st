@@ -8,6 +8,17 @@ Class {
 	#category : #'GToolkit-Spotter-UI'
 }
 
+{ #category : #'api - instance creation' }
+GtSpotterStepItemElement class >> asElement [
+	^ self new
+]
+
+{ #category : #'api - accessing' }
+GtSpotterStepItemElement >> bindData: aObject [
+	"Bind data to this element"
+	self subclassResponsibility
+]
+
 { #category : #initialization }
 GtSpotterStepItemElement >> initialize [
 	super initialize.
@@ -57,6 +68,7 @@ GtSpotterStepItemElement >> stepModel [
 
 { #category : #'api - accessing' }
 GtSpotterStepItemElement >> stepModel: aGtSpotterStep [
+	self stepModel == aGtSpotterStep ifTrue: [ ^ self ].
 	self unsubscribeFromSpotterStep.
 	stepModel := aGtSpotterStep.
 	self subscribeToSpotterStep.

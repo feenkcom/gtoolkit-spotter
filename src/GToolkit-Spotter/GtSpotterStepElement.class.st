@@ -2,46 +2,38 @@ Class {
 	#name : #GtSpotterStepElement,
 	#superclass : #BrColumnedTree,
 	#instVars : [
-		'stepModel',
-		'showWhenSelectedOrHovered'
+		'stepModel'
 	],
 	#category : #'GToolkit-Spotter-UI'
 }
 
-{ #category : #'private - building widgets' }
-GtSpotterStepElement >> buildCandidateElementFor: aCandidate [
-	^ GtSpotterCandidateElement new 
-			stepModel: self stepModel;
-			candidate: aCandidate
-]
-
-{ #category : #'private - building widgets' }
-GtSpotterStepElement >> buildCategoryElementFor: aCategory [
-	^ GtSpotterCategoryElement new 
-			stepModel: self stepModel;
-			category: aCategory
-]
-
 { #category : #initialization }
 GtSpotterStepElement >> initialize [
 	super initialize.
-
-	showWhenSelectedOrHovered := OrderedCollection new: 2.
-
-	self when: BrSelectionChanged do: [ :anEvent |
-		self onItemSelectionChanged: anEvent ].
-
-	self column
-		title: 'Item';
-		stencil: [ :aNode :anIndex |
-			aNode value children
-				ifEmpty: [ self buildCandidateElementFor: aNode value ]
-				ifNotEmpty: [ self buildCategoryElementFor: aNode value ] ].
-
+	self
+		when: BrSelectionChanged
+		do: [ :anEvent | self onItemSelectionChanged: anEvent ].
+	self initializeColumn.
 	self removeShortcutsWithCombination: BlKeyCombination arrowDown.
 	self removeShortcutsWithCombination: BlKeyCombination arrowUp.
 	self removeShortcutsWithCombination: BlKeyCombination arrowLeft.
-	self removeShortcutsWithCombination: BlKeyCombination arrowRight.
+	self removeShortcutsWithCombination: BlKeyCombination arrowRight
+]
+
+{ #category : #initialization }
+GtSpotterStepElement >> initializeColumn [
+
+	self nodeType: [ :anItemTypeFactory :aTreeNode :aNodeIndex | 
+		aTreeNode value isCollection
+			ifFalse: [ GtSpotterCandidateElement ] 
+			ifTrue: [ GtSpotterCategoryElement ] ].
+
+	self column
+		title: 'Item';
+		cellStencil: [ :anItemType :aBrColumn :aNodeIndex | 
+			anItemType asElement stepModel: self stepModel ];
+		dataBinder: [ :anItemElement :anItemObject :anItemIndex :aRowHolder :aColumnIndex |
+			anItemElement bindData: anItemObject ].
 ]
 
 { #category : #'private - testing' }

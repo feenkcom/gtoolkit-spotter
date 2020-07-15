@@ -24,25 +24,39 @@ GtSpotterStep class >> gtExampleBasic [
 	^ self new
 ]
 
-{ #category : #actions }
+{ #category : #'api - actions' }
 GtSpotterStep >> actDueTo: anEventType from: aSpotterElement [
 	"Perform an action associated with currently selected item.
 	(can be triggered by doubleClick: or keyboard Enter press)"
-	| anAnnouncement anObjectToActOn |
 	self
 		assert: [ self hasSelected ]
 		description: [ 'Spotter can not perform an action due to ', anEventType asString, ' if there is no selected candidate' ].
 
+	self actOn: self selected dueTo: anEventType from: aSpotterElement
+]
+
+{ #category : #'api - actions' }
+GtSpotterStep >> actOn: aCandidate dueTo: anEventType from: aSpotterElement [
+	"Perform an action associated with currently selected item.
+	(can be triggered by doubleClick: or keyboard Enter press)"
+	| anAnnouncement aSelectedCategory anObjectToActOn |
+	self
+		assert: [ aCandidate isNotNil ]
+		description: [ 'Spotter can not perform an action due to ', 
+			anEventType asString, 
+			' if there is no selected candidate' ].
+
 	hasActedOn := true.
 	self terminateProcessors.
 
-	self spotter historize: self selected.
+	self spotter historize: aCandidate.
 	
-	anObjectToActOn := self selectedCategory objectToActOn: self selectedCandidate from: self.
+	aSelectedCategory := aCandidate processor.
+	anObjectToActOn := aSelectedCategory objectToActOn: aCandidate from: self.
 	
 	anAnnouncement := self spotter notifyActOn: anObjectToActOn for: anEventType.
 	anAnnouncement isActedUpon
-		ifFalse: [ self selectedCategory actOn: anObjectToActOn for: self from: aSpotterElement ]
+		ifFalse: [ aSelectedCategory actOn: anObjectToActOn for: self from: aSpotterElement ]
 ]
 
 { #category : #accessing }
@@ -107,7 +121,7 @@ GtSpotterStep >> basicRelevantProcessorsProcess: aSpotterContext do: aBlock [
 			theSortedProcessors do: aBlock ]
 ]
 
-{ #category : #actions }
+{ #category : #'api - actions' }
 GtSpotterStep >> canDiveIn: aCandidate [
 	| newFakeStep canDiveIn|
 	canDiveIn := false.
@@ -119,13 +133,7 @@ GtSpotterStep >> canDiveIn: aCandidate [
 	^ canDiveIn
 ]
 
-{ #category : #actions }
-GtSpotterStep >> canDiveInSelectedCandidate [
-
-	^ self canDiveIn: self selected item
-]
-
-{ #category : #accessing }
+{ #category : #'api - accessing' }
 GtSpotterStep >> candidates [
 	^ candidates
 ]
@@ -178,19 +186,28 @@ GtSpotterStep >> deselect [
 	self notifyCandidateDeselected: anAlreadySelected
 ]
 
-{ #category : #actions }
+{ #category : #'api - actions' }
 GtSpotterStep >> diveIn [
 	self diveInDueTo: #undefined
 ]
 
-{ #category : #actions }
+{ #category : #'api - actions' }
+GtSpotterStep >> diveIn: aCandidate dueTo: anEventType [
+	(self canDiveIn: aCandidate) ifTrue: [ 
+		self spotter
+			historize: aCandidate;
+			requestNextStepWith: aCandidate item for: #diveIn;
+			notifyDiveIn: aCandidate item for: anEventType ]
+]
+
+{ #category : #'api - actions' }
 GtSpotterStep >> diveInCategory [
 	"dive in category of selected candidate"
 	^ self diveInCategoryDueTo: #unknown
 	
 ]
 
-{ #category : #actions }
+{ #category : #'api - actions' }
 GtSpotterStep >> diveInCategory: aProcessor dueTo: anEventType [
 	"dive in specified aCategory"
 
@@ -199,23 +216,19 @@ GtSpotterStep >> diveInCategory: aProcessor dueTo: anEventType [
 		notifyDiveInCategory: aProcessor for: anEventType
 ]
 
-{ #category : #actions }
+{ #category : #'api - actions' }
 GtSpotterStep >> diveInCategoryDueTo: anEventType [
 	"dive in category of selected candidate"
 
 	self diveInCategory: self selected processor dueTo: anEventType
 ]
 
-{ #category : #actions }
+{ #category : #'api - actions' }
 GtSpotterStep >> diveInDueTo: anEventType [
-	self canDiveInSelectedCandidate ifTrue: [ 
-		self spotter
-			historize: self selected;
-			requestNextStepWith: self selected item for: #diveIn;
-			notifyDiveIn: self selected item for: anEventType ]
+	self diveIn: self selectedCandidate dueTo: anEventType
 ]
 
-{ #category : #actions }
+{ #category : #'api - actions' }
 GtSpotterStep >> diveOutDueTo: anEventType [
 	self spotter
 		requestPreviousStepFor: #diveOut;
@@ -242,7 +255,7 @@ GtSpotterStep >> exceptionHandler [
 			ifFalse: [ GtSpotterDebuggingExceptionHandler new ] ]
 ]
 
-{ #category : #actions }
+{ #category : #'api - actions' }
 GtSpotterStep >> exit [
 
 	self spotter exit
@@ -291,7 +304,7 @@ GtSpotterStep >> hasActedOn [
 	^ hasActedOn
 ]
 
-{ #category : #testing }
+{ #category : #'api - testing' }
 GtSpotterStep >> hasCandidates [
 	"Return true if there are any candidates in all categories,
 	false otherwise"
@@ -486,7 +499,7 @@ GtSpotterStep >> origin: anObject [
 { #category : #accessing }
 GtSpotterStep >> previousProcessorFrom: aCollection [
 	aCollection do: [ :each | 
-		each asSpotterCandidateLink processor ifNotNil: [ ^ each processor ] ]. " we assume they are all identical "
+		each asGtSpotterCandidateLink processor ifNotNil: [ ^ each processor ] ]. " we assume they are all identical "
 	^ GtSpotterCandidatesListProcessor new
 		title: 'Items';
 		filter: GTFilterSubstring;
@@ -648,7 +661,7 @@ GtSpotterStep >> select: aCandidate dueTo: anEventType [
 	(self isSelected: aCandidate)
 		ifTrue: [ ^ self ].
 
-	selected := aCandidate.
+	self selected: aCandidate.
 	self notifySelectedCandidateChanged: aCandidate for: anEventType.
 
 	(self isCategorySelected: aCandidate processor)
@@ -732,12 +745,20 @@ GtSpotterStep >> selected [
 	next and previous candidate. In order to get actual candidate object behind
 	the link send #candidate to it.
 	selected can not be nil (always use hasSelected before using me)"
-	<return: #GtSpotterCandidateLink>
+	<return: #GtSpotterCandidate>
 	self
 		assert: [ selected isNotNil ]
 		description: [ 'Selected candidate can not be accessed where there is no one' ].
 
 	^ selected
+]
+
+{ #category : #'private - accessing' }
+GtSpotterStep >> selected: aCandidate [
+	self 
+		assert: [ aCandidate class = GtSpotterCandidate ] 
+		description: [ 'Selected candidate must be a ', GtSpotterCandidate name, ' instance' ].
+	selected := aCandidate
 ]
 
 { #category : #'accessing - selected' }
@@ -779,7 +800,7 @@ GtSpotterStep >> stream [
 	^ stream
 ]
 
-{ #category : #actions }
+{ #category : #'api - actions' }
 GtSpotterStep >> terminateProcessors [
 
 	self asyncTask terminate

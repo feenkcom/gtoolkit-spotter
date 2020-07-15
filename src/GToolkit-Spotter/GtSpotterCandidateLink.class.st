@@ -22,7 +22,7 @@ GtSpotterCandidateLink >> > anotherCandidateLink [
 ]
 
 { #category : #converting }
-GtSpotterCandidateLink >> asSpotterCandidateLink [
+GtSpotterCandidateLink >> asGtSpotterCandidateLink [
 
 	^ self
 ]

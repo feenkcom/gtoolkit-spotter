@@ -43,7 +43,7 @@ GtSpotterCategoryElement >> categoryDo: aBlock [
 GtSpotterCategoryElement >> diveInCategoryDueTo: anEventType [
 
 	self stepModelDo: [ :aStepModel |
-		aStepModel diveInCategoryDueTo: anEventType ]
+		aStepModel diveInCategory: self processor dueTo: anEventType ]
 ]
 
 { #category : #'private - actions' }
@@ -126,6 +126,12 @@ GtSpotterCategoryElement >> onMouseEnter [
 GtSpotterCategoryElement >> onMouseLeave [
 	super onMouseLeave.
 	self mayHideActions.
+]
+
+{ #category : #'private - accessing' }
+GtSpotterCategoryElement >> processor [
+	<return: #GtSpotterProcessorCandidates>
+	^ self category processor
 ]
 
 { #category : #'private - actions' }

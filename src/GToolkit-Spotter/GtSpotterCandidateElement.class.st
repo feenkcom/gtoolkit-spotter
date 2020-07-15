@@ -14,7 +14,7 @@ Class {
 GtSpotterCandidateElement >> actDueTo: anEventType [
 
 	self stepModelDo: [ :aStepModel |
-		aStepModel actDueTo: anEventType from: self ]
+		aStepModel actOn: self candidate dueTo: anEventType from: self ]
 ]
 
 { #category : #'api - accessing' }
@@ -53,7 +53,7 @@ GtSpotterCandidateElement >> candidateDo: aBlock [
 GtSpotterCandidateElement >> diveInDueTo: anEventType [
 
 	self stepModelDo: [ :aStepModel |
-		aStepModel diveInDueTo: anEventType ]
+		aStepModel diveIn: self candidate dueTo: anEventType ]
 ]
 
 { #category : #'private - actions' }

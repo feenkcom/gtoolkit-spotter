@@ -102,9 +102,11 @@ GtSpotterCandidatesListProcessor >> filterUsing: aFilter [
 GtSpotterCandidatesListProcessor >> gtAllCandidatesFor: aView [
 	<gtView>
 	allCandidates ifNil: [ ^ aView empty ].
-	^ (allCandidates gtItemsFor: aView)
-			title: 'All Candidates';
-			priority: 1
+	^ aView forward
+		title: 'All Candidates';
+		priority: 1;
+		object: [ allCandidates ];
+		view: #gtItemsFor:
 ]
 
 { #category : #'gt-extension' }

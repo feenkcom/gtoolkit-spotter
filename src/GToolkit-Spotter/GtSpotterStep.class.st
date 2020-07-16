@@ -225,7 +225,7 @@ GtSpotterStep >> diveInCategoryDueTo: anEventType [
 
 { #category : #'api - actions' }
 GtSpotterStep >> diveInDueTo: anEventType [
-	self diveIn: self selectedCandidate dueTo: anEventType
+	self diveIn: self selected dueTo: anEventType
 ]
 
 { #category : #'api - actions' }

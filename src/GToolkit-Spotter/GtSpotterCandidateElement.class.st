@@ -71,7 +71,7 @@ GtSpotterCandidateElement >> initialize [
 	self hMatchParent.
 	self vFitContent.
 	self cellSpacing: 5.
-	self padding: (BlInsets all: 6).
+	self padding: (BlInsets top: 5 bottom: 5).
 	self addChild: label as: #label.
 	self addChild: actOnButton as: #actButton.
 	self addChild: diveInButton as: #diveInButton.

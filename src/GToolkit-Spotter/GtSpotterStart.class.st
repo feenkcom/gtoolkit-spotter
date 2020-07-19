@@ -166,14 +166,13 @@ GtSpotterStart >> gtSpotterForMessagesFor: aStep [
 ]
 
 { #category : #'*GToolkit-Spotter' }
-GtSpotterStart >> gtSpotterForMetacelloConfigurationsFor: aStep [
+GtSpotterStart >> gtSpotterForMetacelloBaselinesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
 		priority: 86;
-		title: 'Metacello Configurations';
+		title: 'Metacello baselines';
 		allCandidates: [ BaselineOf allSubclasses ];
-		itemName: [ :each | each configuration class name ];
-		itemIcon: [ Smalltalk ui icons iconNamed: #config ];
+		itemName: [ :each | each name ];
 		filter: GTFilterSubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]

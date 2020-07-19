@@ -285,6 +285,11 @@ GtSpotter >> gtStepsFor: aView [
 		items: [ self steps ]
 ]
 
+{ #category : #'api - testing' }
+GtSpotter >> hasCandidates [
+	^ self hasSteps and: [ self currentStep hasCandidates ]
+]
+
 { #category : #testing }
 GtSpotter >> hasMultipleSteps [
 
@@ -572,7 +577,7 @@ GtSpotter >> requestNextCategoryStepWith: aProcessorLink for: anEventType [
 	|collection|
 	
 	collection := aProcessorLink processor allFilteredCandidates
-		collect: [ :each | each asSpotterCandidateLink renderingProcessor: aProcessorLink ].
+		collect: [ :each | each asGtSpotterCandidateLink renderingProcessor: aProcessorLink ].
 		
 	self requestNextStepWith: collection for: anEventType
 ]

@@ -1,6 +1,18 @@
 Extension { #name : #Object }
 
 { #category : #'*GToolkit-Spotter' }
+Object >> asGtSpotterCandidateLink [
+
+	^ GtSpotterCandidateLink value: self
+]
+
+{ #category : #'*GToolkit-Spotter' }
+Object >> asGtSpotterProcessorLink [
+
+	^ GtSpotterProcessorLink value: self
+]
+
+{ #category : #'*GToolkit-Spotter' }
 Object >> gtActionSearchFor: anAction [
 	<gtAction>
 	| fakeStep |

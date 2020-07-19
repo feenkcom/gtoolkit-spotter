@@ -38,18 +38,19 @@ GtSpotterElement >> bindingDictionnary [
 	(Character arrowUp meta shift -> [ self selectPreviousCategory ]).
 	(Character arrowDown meta shift -> [ self selectNextCategory ])."
 
-	(BlKeyCombination primaryArrowRight -> [ self diveInDueTo: #keyPressed ]).
-	(BlKeyCombination primaryArrowLeft -> [ self diveOutDueTo: #keyPressed ]).
+	(BlKeyCombination primaryArrowRight -> [ self diveInDueTo: #keyPressedPrimaryArrowRight ]).
+	(BlKeyCombination primaryArrowLeft -> [ self diveOutDueTo: #keyPressedPrimaryArrowLeft ]).
 	(BlKeyCombination arrowUp -> [ self selectPreviousCandidateDueTo: #keyPressedArrowUp ]).
 	(BlKeyCombination arrowDown -> [ self selectNextCandidateDueTo: #keyPressedArrowDown ]).
 
-	"(Character arrowRight meta shift -> [ self diveInCategoryDueTo: #keyPressed ]).
-	(Character arrowLeft meta shift -> [ self diveOut ]).
-	(Character arrowUp alt -> [ self stepScrollPageUp ]).
+	(BlKeyCombination primaryShiftArrowRight -> [ self diveInCategoryDueTo: #keyPressedShiftArrowRight ]).
+	(BlKeyCombination primaryShiftArrowLeft -> [ self diveOutDueTo: #keyPressedShiftArrowLeft ]).
+
+	"(Character arrowUp alt -> [ self stepScrollPageUp ]).
 	(Character arrowDown alt -> [ self stepScrollPageDown ]).
 	(Character pageUp -> [ self stepScrollPageUp ]).
 	(Character pageDown -> [ self stepScrollPageDown ])."
-	(BlKeyCombination return -> [ self actDueTo: #keyPressed ]).
+	(BlKeyCombination return -> [ self actDueTo: #keyPressedReturn ]).
 	"($p meta shift -> [ self exportAsPNGSilently ])"}
 ]
 
@@ -61,6 +62,14 @@ GtSpotterElement >> createHeaderElement [
 { #category : #initialization }
 GtSpotterElement >> createPreviewElement [
 	^ GtSpotterPreviewElement new
+]
+
+{ #category : #actions }
+GtSpotterElement >> diveInCategoryDueTo: anEventType [
+
+	self spotterModelDo: [ :aSpotter |
+		aSpotter hasSelected
+			ifTrue: [ aSpotter currentStep diveInCategoryDueTo: anEventType ] ]
 ]
 
 { #category : #actions }
@@ -184,8 +193,9 @@ GtSpotterElement >> searchField [
 GtSpotterElement >> selectNextCandidateDueTo: anEventType [
 
 	self spotterModelDo: [ :aSpotter |
-		aSpotter hasSelected
-			ifTrue: [ aSpotter currentStep selectNextDueTo: anEventType ] ]
+		(aSpotter hasSelected and: [ aSpotter hasCandidates ])
+			ifTrue: [ 
+				aSpotter currentStep selectNextDueTo: anEventType ] ]
 ]
 
 { #category : #actions }

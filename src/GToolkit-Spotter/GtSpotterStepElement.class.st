@@ -7,67 +7,75 @@ Class {
 	#category : #'GToolkit-Spotter-UI'
 }
 
-{ #category : #'building widgets' }
-GtSpotterStepElement >> buildCandidatesElementFor: aCandidate [
-	^ BrLabel new
-		look: (BrGlamorousLabelLook new);
-		text: aCandidate gtDisplayText;
-		padding: (BlInsets all: 6);
-		hMatchParent
-]
-
-{ #category : #'building widgets' }
-GtSpotterStepElement >> buildCategoryElementFor: aCategory [
-	^ BrLabel new
-		look: (BrGlamorousLabelLook new foreground: Color gray; glamorousRegularSmallSize);
-		text: '#', aCategory processor title;
-		padding: (BlInsets top: 12 left: 6 bottom: 6 right: 6);
-		hMatchParent
-]
-
 { #category : #initialization }
 GtSpotterStepElement >> initialize [
 	super initialize.
-
-	self when: BrSelectionChanged do: [ :anEvent |
-		self selectedNodeDo: [ :aTreeNode |
-			self stepModelDo: [ :aSpotterStep |
-				aTreeNode value children ifEmpty: [
-					| aCandidate |
-					aCandidate := aTreeNode value.
-					aSpotterStep select: aCandidate dueTo: #singleClick ] ] ] ].
-
-	self column
-		title: 'Item';
-		stencil: [ :aNode :index |
-			aNode value children
-				ifEmpty: [ self buildCandidatesElementFor: aNode value ]
-				ifNotEmpty: [ self buildCategoryElementFor: aNode value ] ].
-
+	self
+		when: BrSelectionChanged
+		do: [ :anEvent | self onItemSelectionChanged: anEvent ].
+	self initializeColumn.
 	self removeShortcutsWithCombination: BlKeyCombination arrowDown.
 	self removeShortcutsWithCombination: BlKeyCombination arrowUp.
 	self removeShortcutsWithCombination: BlKeyCombination arrowLeft.
-	self removeShortcutsWithCombination: BlKeyCombination arrowRight.
+	self removeShortcutsWithCombination: BlKeyCombination arrowRight
 ]
 
-{ #category : #'event handling' }
+{ #category : #initialization }
+GtSpotterStepElement >> initializeColumn [
+
+	self nodeType: [ :anItemTypeFactory :aTreeNode :aNodeIndex | 
+		aTreeNode value isCollection
+			ifFalse: [ GtSpotterCandidateElement ] 
+			ifTrue: [ GtSpotterCategoryElement ] ].
+
+	self column
+		title: 'Item';
+		cellStencil: [ :anItemType :aBrColumn :aNodeIndex | 
+			anItemType asElement stepModel: self stepModel ];
+		dataBinder: [ :anItemElement :anItemObject :anItemIndex :aRowHolder :aColumnIndex |
+			anItemElement bindData: anItemObject ].
+]
+
+{ #category : #'private - testing' }
+GtSpotterStepElement >> isCandidateSelected: aCandidate [
+	self stepModelDo: [ :aModel |
+		^ aModel isSelected: aCandidate ].
+	^ false
+]
+
+{ #category : #'private - event handling' }
 GtSpotterStepElement >> onAllCandidatesAdded: anAnnouncement [
 	self updateCandidates
 ]
 
-{ #category : #'event handling' }
+{ #category : #'private - event handling' }
 GtSpotterStepElement >> onAllCandidatesRemoved: anAnnouncement [
 	self updateCandidates
 ]
 
-{ #category : #'event handling' }
+{ #category : #'private - event handling' }
 GtSpotterStepElement >> onCandidateAdded: anAnnouncement [
 	self updateCandidates
 ]
 
-{ #category : #'event handling' }
+{ #category : #'private - event handling' }
 GtSpotterStepElement >> onCandidateSelected: anAnnouncement [	
 	self updateSelection
+]
+
+{ #category : #'private - event handling' }
+GtSpotterStepElement >> onItemSelectionChanged: anEvent [
+	self selectedNodeDo: [ :aTreeNode |
+		self stepModelDo: [ :aSpotterStep |
+			aTreeNode value children ifEmpty: [
+				| aCandidate |
+				aCandidate := aTreeNode value.
+				aSpotterStep select: aCandidate dueTo: #singleClick ] ] ]
+]
+
+{ #category : #'private - accessing' }
+GtSpotterStepElement >> stepModel [
+	^ stepModel
 ]
 
 { #category : #accessing }
@@ -89,9 +97,9 @@ GtSpotterStepElement >> stepModel: aSpotterStepModel [
 	self updateSelection
 ]
 
-{ #category : #accessing }
+{ #category : #'private - accessing' }
 GtSpotterStepElement >> stepModelDo: aBlock [
-	stepModel ifNotNil: aBlock
+	self stepModel ifNotNil: aBlock
 ]
 
 { #category : #private }

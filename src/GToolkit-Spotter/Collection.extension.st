@@ -12,7 +12,7 @@ Collection >> gtSpotterItemsFor: aStep [
 		title: processor title;
 		candidatesLimit: 100;
 		items: [ self
-				collect: [ :each | each asSpotterCandidateLink value ]
+				collect: [ :each | each asGtSpotterCandidateLink value ]
 				as: OrderedCollection ];
 		itemName: processor itemName;
 		itemIcon: processor itemIcon;

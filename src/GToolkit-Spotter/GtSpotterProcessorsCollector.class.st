@@ -131,7 +131,7 @@ GtSpotterProcessorsCollector >> processorsForPragma: aPragma [
 				handleException: anException
 				do: [ ('[Spotter] Exception while collecting processors for <'
 						, self object className , '>>#' , aPragma methodSelector , '>: '
-						, anException asString) traceCr ] ]
+						, anException asString) ] ]
 ]
 
 { #category : #'api - collect' }

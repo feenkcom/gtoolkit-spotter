@@ -10,5 +10,5 @@ BlElement >> gtSpotterForChildrenFor: aStep [
 				allCandidates: [ self allChildrenBreadthFirstSelect: [ :x | true ] ];
 				title: 'Children';
 				candidatesLimit: Float infinity;
-				filter: GTFilterSubstring ]
+				filter: GtFilterSubstring ]
 ]

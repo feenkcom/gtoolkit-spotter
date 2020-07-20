@@ -6,7 +6,7 @@ GtResourcesUtilityLocation >> spotterForPathResourcesFor: aStep [
 	^ aStep listProcessor
 		title: 'Resource from Path object';
 		priority: 1;
-		filter: GTNullFilter item: [ :aFilter :aContext | 
+		filter: GtNullFilter item: [ :aFilter :aContext | 
 			(aContext textTrimmed beginsWith: 'Path') ifTrue: [
 				| aPath |
 				aPath := GtResourcesUtilityPathExtractor new
@@ -23,7 +23,7 @@ GtResourcesUtilityLocation >> spotterForStringResourcesFor: aStep [
 	^ aStep listProcessor
 		title: 'Resource from file or directory name';
 		priority: 2;
-		filter: GTNullFilter item: [ :aFilter :aContext | 
+		filter: GtNullFilter item: [ :aFilter :aContext | 
 			| aResult |
 			aContext textTrimmed ifNotEmpty: [ :aText |
 				aResult := self resourceAtPath: aContext textTrimmed.

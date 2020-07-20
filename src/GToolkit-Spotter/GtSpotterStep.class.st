@@ -501,7 +501,7 @@ GtSpotterStep >> previousProcessorFrom: aCollection [
 		each asGtSpotterCandidateLink processor ifNotNil: [ ^ each processor ] ]. " we assume they are all identical "
 	^ GtSpotterCandidatesListProcessor new
 		title: 'Items';
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		yourself
 ]
 

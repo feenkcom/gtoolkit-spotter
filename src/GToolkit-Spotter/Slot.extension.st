@@ -13,5 +13,5 @@ Slot >> gtSpotterAccessesFor: aStep [
 						allAccessesTo: self name
 						from: aStep previousStep origin ];
 				itemName: [ :each | each asString ];
-				filter: GTFilterSubstring ]
+				filter: GtFilterSubstring ]
 ]

@@ -10,7 +10,7 @@ AbstractFileReference >> gtSpotterForAddressFileFor: aStep [
 		title: 'Contacts';
 		allCandidates: [ self contactsFromFile ];
 		itemName: #fullName;
-		filter: GTFilterSubstrings;
+		filter: GtFilterSubstrings;
 		wantsToDisplayOnEmptyQuery: true
 ]
 
@@ -25,7 +25,7 @@ AbstractFileReference >> gtSpotterForDirectoriesFor: aStep [
 				candidatesLimit: Float infinity;
 				itemName: #basename;
 				itemIcon: [ GLMUIThemeExtraIcons glamorousFolder ];
-				filter: GTFilterSubstring ]
+				filter: GtFilterSubstring ]
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -39,7 +39,7 @@ AbstractFileReference >> gtSpotterForFilesFor: aStep [
 				candidatesLimit: Float infinity;
 				itemName: #basename;
 				itemIcon: [ GLMUIThemeExtraIcons glamorousBrowse ];
-				filter: GTFilterSubstring ]
+				filter: GtFilterSubstring ]
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -55,7 +55,7 @@ AbstractFileReference >> gtSpotterForXMLFileFor: aStep [
 		allCandidates:
 				[ (XMLDOMParser parseFileNamed: xmlFileHandle path) allElements ];
 		itemName: #gtDisplayString;
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]
 
@@ -73,7 +73,7 @@ AbstractFileReference >> gtSpotterForZipDirectoriesFor: aStep [
 		candidatesLimit: Float infinity;
 		itemName: #basename;
 		itemIcon: [ GLMUIThemeExtraIcons glamorousFolder ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -90,5 +90,5 @@ AbstractFileReference >> gtSpotterForZipFilesFor: aStep [
 		candidatesLimit: Float infinity;
 		itemName: #basename;
 		itemIcon: [ GLMUIThemeExtraIcons glamorousBrowse ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]

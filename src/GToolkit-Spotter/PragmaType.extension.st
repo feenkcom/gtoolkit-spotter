@@ -8,7 +8,7 @@ PragmaType >> gtSpotterPragmasFor: aStep [
 		title: 'Pragmas';
 		allCandidates: [ self pragmas ];
 		itemName: [ :pragma | pragma method printString , ' ' , pragma asString ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -17,7 +17,7 @@ PragmaType >> gtSpotterUsersFor: aStep [
 	^ aStep listProcessor
 		priority: 50;
 		title: 'Users';
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 			item:
 				[ :filter :context | self users do: [ :sender | filter value: sender ] ]
 ]

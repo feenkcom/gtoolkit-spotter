@@ -8,7 +8,7 @@ GtResourcesUtility >> spotterForPathResourcesFor: aStep [
 		priority: 1;
 		itemName: #basename;
 		wantsToDisplayOnEmptyQuery: false;
-		filter: GTNullFilter item: [ :aFilter :aContext | 
+		filter: GtNullFilter item: [ :aFilter :aContext | 
 			(aContext textTrimmed beginsWith: 'Path') ifTrue: [
 				| aPath |
 				aPath := GtResourcesUtilityPathExtractor new
@@ -27,7 +27,7 @@ GtResourcesUtility >> spotterForStringResourcesFor: aStep [
 		priority: 2;
 		itemName: #basename;
 		wantsToDisplayOnEmptyQuery: false;
-		filter: GTNullFilter item: [ :aFilter :aContext | 
+		filter: GtNullFilter item: [ :aFilter :aContext | 
 			| aFile |
 			aContext textTrimmed ifNotEmpty: [ :aText |
 				aFile := self resourceAtPath: aContext textTrimmed.
@@ -43,7 +43,7 @@ GtResourcesUtility >> spotterPathResourceAtLocationsFor: aStep [
 		wantsToDisplayOnEmptyQuery: false;
 		items: [ self locations collect: [ :eachLocation | 
 				GtResourcesUtilityResultContext new location: eachLocation ] ];
-		filter: (GTFilterBlock new matcher: [ :anItem :aContext | 
+		filter: (GtFilterBlock new matcher: [ :anItem :aContext | 
 			(aContext textTrimmed beginsWith: 'Path')
 				ifTrue: [
 					| aPath |
@@ -64,7 +64,7 @@ GtResourcesUtility >> spotterStringResourcesAtLocationsFor: aStep [
 		wantsToDisplayOnEmptyQuery: false;
 		items: [ self locations collect: [ :eachLocation | 
 				GtResourcesUtilityResultContext new location: eachLocation ] ];
-		filter: (GTFilterBlock new matcher: [ :anItem :aContext | 
+		filter: (GtFilterBlock new matcher: [ :anItem :aContext | 
 			aContext textTrimmed 
 				ifNotEmpty: [ anItem resourceAtPath: aContext textTrimmed. true ]
 				ifEmpty: [ false ] ])

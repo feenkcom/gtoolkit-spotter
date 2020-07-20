@@ -13,7 +13,7 @@ GlobalVariable >> gtSpotterClassFor: aStep [
 		title: 'Class';
 		allCandidates: [ {self value class} ];
 		itemIcon: #systemIcon;
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -25,5 +25,5 @@ GlobalVariable >> gtSpotterForReferencesFor: aStep [
 		allCandidates: [ (SystemNavigation default allReferencesTo: self)
 				collect: #compiledMethod ];
 		itemName: [ :method | method gtDisplayString ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]

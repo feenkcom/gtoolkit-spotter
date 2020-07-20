@@ -8,6 +8,6 @@ GTInspector class >> gtSpotterExtensionsFor: aStep [
 		allCandidates: [ self inspectorExtendingMethods ];
 		title: 'Extensions';
 		itemName: [ :each | each gtDisplayString ];
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]

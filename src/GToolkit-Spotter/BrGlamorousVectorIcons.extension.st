@@ -9,5 +9,5 @@ BrGlamorousVectorIcons class >> spotterForVectorIconFor: aStep [
 		allCandidates: [ GtSpotterVectorIconPreview 
 			library: BrGlamorousVectorIcons allIcons: BrGlamorousVectorIcons allIcons ];
 		itemName: #iconSelector;
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]

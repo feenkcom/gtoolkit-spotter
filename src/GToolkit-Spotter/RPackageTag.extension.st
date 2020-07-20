@@ -7,5 +7,5 @@ RPackageTag >> gtSpotterClassesFor: aStep [
 		priority: 20;
 		allCandidates: [ self classes sorted: [ :a :b | a name < b name ] ];
 		title: 'Classes';
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]

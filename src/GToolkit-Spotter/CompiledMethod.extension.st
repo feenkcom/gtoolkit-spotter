@@ -13,7 +13,7 @@ CompiledMethod >> gtSpotterForBytecodesFor: aStep [
 		title: 'Bytecode';
 		allCandidates: [ self symbolicBytecodes ];
 		itemName: #printString;
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -23,7 +23,7 @@ CompiledMethod >> gtSpotterForImplementorsFor: aStep [
 		priority: 10;
 		title: 'Implementors';
 		allCandidates: [ self implementors collect: #compiledMethod ];
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		keyBinding: $m command
 ]
 
@@ -35,7 +35,7 @@ CompiledMethod >> gtSpotterForMessagesFor: aStep [
 		title: 'Messages';
 		allCandidates: [ self messages asSortedCollection
 				collect: [ :each | GtSelector new name: each ] ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -45,7 +45,7 @@ CompiledMethod >> gtSpotterForSendersFor: aStep [
 		priority: 11;
 		title: 'Senders';
 		allCandidates: [ self senders collect: #compiledMethod ];
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		keyBinding: $n command
 ]
 
@@ -56,6 +56,6 @@ CompiledMethod >> gtSpotterMethodClassFor: aStep [
 		priority: 50;
 		allCandidates: [ {self methodClass} ];
 		title: 'Class';
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		itemIcon: #systemIcon
 ]

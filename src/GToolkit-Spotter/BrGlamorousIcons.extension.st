@@ -9,5 +9,5 @@ BrGlamorousIcons class >> spotterForPixelIconFor: aStep [
 		allCandidates: [ GtSpotterPixelIconPreview 
 			library: self allForms: self allIcons ];
 		itemName: #iconSelector;
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]

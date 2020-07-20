@@ -9,5 +9,5 @@ ClassDescription >> gtSpotterPackageFor: aStep [
 		allCandidates: [ {self package} ];
 		itemName: [ :item | item packageName ];
 		itemIcon: #systemIcon;
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]

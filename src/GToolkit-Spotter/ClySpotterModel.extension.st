@@ -17,7 +17,7 @@ ClySpotterModel >> gtSpotterForGoToFor: aStep [
 		itemName: #name;
 		itemIcon: #icon;
 		candidatesLimit: 10;
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		actLogic: [ :assoc :step | 
 			step exit.
 			assoc activate ]

@@ -60,7 +60,7 @@ GtSelector >> gtSpotterImplementorsFor: aStep [
 	^ aStep listProcessor
 		priority: 40;
 		title: 'Implementors';
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 			item: [ :filter :context | self implementors do: filter ];
 		keyBinding: $m meta
 ]
@@ -71,7 +71,7 @@ GtSelector >> gtSpotterUsersFor: aStep [
 	^ aStep listProcessor
 		priority: 50;
 		title: 'Senders';
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 			item:
 				[ :filter :context | self senders do: [ :sender | filter value: sender compiledMethod ] ];
 		keyBinding: $n meta
@@ -104,18 +104,8 @@ GtSelector >> spotterImplementorsFor: aStep [
 	<spotterOrder: 40>
 	^ aStep listProcessor
 		title: 'Implementors';
-		filter: GTFilterSubstring item: [ :filter :context | self implementors do: filter ];
+		filter: GtFilterSubstring item: [ :filter :context | self implementors do: filter ];
 		keyBinding: $m meta
-]
-
-{ #category : #ui }
-GtSelector >> spotterPreviewIn: aComposite [
-	<spotterPreview: 10>
-	aComposite list
-		title: 'Preview';
-		display: [ :x | x ];
-		format: [ :method | GTSpotterItemBrick new text: method gtDisplayString; disable; yourself ];
-		entity: self implementors
 ]
 
 { #category : #ui }
@@ -123,7 +113,7 @@ GtSelector >> spotterUsersFor: aStep [
 	<spotterOrder: 50>
 	^ aStep listProcessor
 		title: 'Senders';
-		filter: GTFilterSubstring item: [ :filter :context | 
+		filter: GtFilterSubstring item: [ :filter :context | 
 			self senders do: [ :sender | 
 				filter value: sender compiledMethod ] ];
 		keyBinding: $n meta

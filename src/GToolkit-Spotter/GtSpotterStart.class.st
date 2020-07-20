@@ -70,7 +70,7 @@ GtSpotterStart >> gtSpotterClipboardFor: aStep [
 		items: [ Clipboard default recentItems ];
 		itemName: [ :item | item asString contractTo: 100 ];
 		itemFilterName: [ :item | item asString ];
-		filter: GTFilterSubstrings;
+		filter: GtFilterSubstrings;
 		actLogic: [ :item :step | 
 			step exit.
 			item asString inspect ];
@@ -83,7 +83,7 @@ GtSpotterStart >> gtSpotterConcreteMethodFor: aStep [
 	aStep listProcessor
 		priority: 30;
 		title: 'Methods';
-		filter: GTNullFilter
+		filter: GtNullFilter
 			item:
 				[ :filter :context | self concreteMethodsInContext: context usingFilter: filter ];
 		wantsToDisplayOnEmptyQuery: false
@@ -96,7 +96,7 @@ GtSpotterStart >> gtSpotterForClassesFor: aStep [
 		priority: 10;
 		items: [ Smalltalk allClassesAndTraits ];
 		title: 'Classes';
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		itemIcon: #systemIcon;
 		keyBinding: $b meta;
 		wantsToDisplayOnEmptyQuery: false
@@ -111,7 +111,7 @@ GtSpotterStart >> gtSpotterForDirectoriesFor: aStep [
 		title: 'Directories';
 		itemIcon: [ GLMUIThemeExtraIcons glamorousFolder ];
 		itemFilterName: [ :reference | reference basename ];
-		filter: GTFilterFileReference
+		filter: GtFilterFileReference
 			item: [ :filter :context | 
 			self
 				fileReferencesBy: #directories
@@ -129,7 +129,7 @@ GtSpotterStart >> gtSpotterForFilesFor: aStep [
 		title: 'Files';
 		itemIcon: [ GLMUIThemeExtraIcons glamorousBrowse ];
 		itemFilterName: [ :reference | reference basename ];
-		filter: GTFilterFileReference
+		filter: GtFilterFileReference
 			item:
 				[ :filter :context | self fileReferencesBy: #files inContext: context usingFilter: filter ];
 		wantsToDisplayOnEmptyQuery: false
@@ -145,7 +145,7 @@ GtSpotterStart >> gtSpotterForGlobalVarsFor: aStep [
 					[ :assoc | assoc value isBehavior not and: [ assoc value isTrait not ] ] ];
 		title: 'Global variables';
 		itemName: [ :global | global key ];
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
 
@@ -155,7 +155,7 @@ GtSpotterStart >> gtSpotterForMessagesFor: aStep [
 	aStep listProcessor
 		priority: 35;
 		title: 'Messages';
-		filter: GTNullFilter
+		filter: GtNullFilter
 			item: [ :filter :context | 
 				GtSelector substring: context textTrimmed filter: filter ];
 		actLogic: [ :each :step :spotterElement | 
@@ -173,7 +173,7 @@ GtSpotterStart >> gtSpotterForMetacelloBaselinesFor: aStep [
 		title: 'Metacello baselines';
 		allCandidates: [ BaselineOf allSubclasses ];
 		itemName: [ :each | each name ];
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
 
@@ -186,7 +186,7 @@ GtSpotterStart >> gtSpotterForPackagesFor: aStep [
 		title: 'Packages';
 		itemName: [ :package | package name ];
 		itemIcon: [ Smalltalk ui icons iconNamed: #packageIcon ];
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
 
@@ -198,7 +198,7 @@ GtSpotterStart >> gtSpotterForPragmasFor: aStep [
 		allCandidates: [ PragmaType all ];
 		title: 'Pragmas';
 		itemName: [ :pragma | pragma keyword ];
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
 
@@ -208,7 +208,7 @@ GtSpotterStart >> gtSpotterForReferencesFor: aStep [
 	aStep listProcessor
 		priority: 32;
 		title: 'References';
-		filter: GTNullFilter
+		filter: GtNullFilter
 			item: [ :filter :context | 
 			self class environment
 				at: context textTrimmed
@@ -234,7 +234,7 @@ GtSpotterStart >> gtSpotterForResourcesUtilityFromStringFor: aStep [
 		priority: 2;
 		itemName: #basename;
 		wantsToDisplayOnEmptyQuery: false;
-		filter: GTNullFilter item: [ :aFilter :aContext | 
+		filter: GtNullFilter item: [ :aFilter :aContext | 
 			| aFile |
 			aContext textTrimmed ifNotEmpty: [ :aText |
 				aFile := GtResourcesUtility default resourceAtPath: aContext textTrimmed.
@@ -247,7 +247,7 @@ GtSpotterStart >> gtSpotterForSendersFor: aStep [
 	aStep listProcessor
 		priority: 31;
 		title: 'Senders';
-		filter: GTNullFilter
+		filter: GtNullFilter
 			item: [ :filter :context | 
 			SystemNavigation default
 				allSendersToString: context textTrimmed
@@ -264,7 +264,7 @@ GtSpotterStart >> gtSpotterForToolsFor: aStep [
 		allCandidates: [ {GtPlaygroundStencil new . GtCoderStencil new . GtMonitorStencil new . GtRlGToolkitExamplesExplorer buildForGToolkitProject . GtTranscriptStencil new } ];
 		previewElement: [ :aStencil | aStencil asPreviewElement asElement ];
 		title: 'Tools';
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]
 
@@ -275,7 +275,7 @@ GtSpotterStart >> gtSpotterImplementorsFor: aStep [
 	aStep listProcessor
 		priority: 30;
 		title: 'Implementors';
-		filter: GTFilterImplementor
+		filter: GtFilterImplementor
 			item: [ :filter :context | 
 			SystemNavigation default
 				allBehaviorsDo: [ :class | class localMethods do: filter ] ];
@@ -292,7 +292,7 @@ GtSpotterStart >> spotterForPixelIconFor: aStep [
 		allCandidates: [ GtSpotterPixelIconPreview 
 			library: BrGlamorousIcons allForms: BrGlamorousIcons allIcons ];
 		itemName: #iconSelector;
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
 
@@ -305,7 +305,7 @@ GtSpotterStart >> spotterForVectorIconFor: aStep [
 		allCandidates: [ GtSpotterVectorIconPreview 
 			library: BrGlamorousVectorIcons allIcons: BrGlamorousVectorIcons allIcons ];
 		itemName: #iconSelector;
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
 

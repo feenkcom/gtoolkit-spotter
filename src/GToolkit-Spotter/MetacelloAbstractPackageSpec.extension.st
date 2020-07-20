@@ -8,7 +8,7 @@ MetacelloAbstractPackageSpec >> gtSpotterForIncludesFor: aStep [
 		title: 'Includes';
 		allCandidates: [ self includes ];
 		itemName: [ :item | item name ];
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]
 
@@ -20,6 +20,6 @@ MetacelloAbstractPackageSpec >> gtSpotterForRequiresFor: aStep [
 		title: 'Requires';
 		allCandidates: [ self requires ];
 		itemName: [ :item | item name ];
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]

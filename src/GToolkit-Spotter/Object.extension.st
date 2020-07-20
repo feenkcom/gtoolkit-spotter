@@ -100,5 +100,5 @@ Object >> gtSpotterRePropertiesFor: aStep [
 		items: [ self externalProperties asArray ];
 		itemName: #title;
 		itemIcon: #icon;
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]

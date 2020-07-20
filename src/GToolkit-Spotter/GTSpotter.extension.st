@@ -83,7 +83,7 @@ GTSpotter class >> gtSpotterExtensionsFor: aStep [
 		allCandidates: [ self spotterExtendingMethods ];
 		title: 'Extensions';
 		itemName: [ :each | each gtDisplayString ];
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]
 
@@ -95,7 +95,7 @@ GTSpotter >> gtSpotterForCachedPlaygroundPagesFor: aStep [
 		allCandidates: [ GTPlayBook instance pages ];
 		title: 'Playground cached pages';
 		itemName: [ :page | page content asString contractTo: 100 ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -120,7 +120,7 @@ GTSpotter >> gtSpotterForDirectoriesFor: aStep [
 		title: 'Directories';
 		itemIcon: [ GLMUIThemeExtraIcons glamorousFolder ];
 		itemFilterName: [ :reference | reference basename ];
-		filter: GTFilterFileReference
+		filter: GtFilterFileReference
 			item: [ :filter :context | 
 			self
 				fileReferencesBy: #directories
@@ -151,7 +151,7 @@ GTSpotter >> gtSpotterForFilesFor: aStep [
 		title: 'Files';
 		itemIcon: [ GLMUIThemeExtraIcons glamorousBrowse ];
 		itemFilterName: [ :reference | reference basename ];
-		filter: GTFilterFileReference
+		filter: GtFilterFileReference
 			item:
 				[ :filter :context | self fileReferencesBy: #files inContext: context usingFilter: filter ];
 		wantsToDisplayOnEmptyQuery: false
@@ -254,7 +254,7 @@ GTSpotter >> gtSpotterForRepositoriesFor: aStep [
 		allCandidates: [ MCRepositoryGroup default repositories ];
 		itemIcon: #systemIcon;
 		wantsToDisplayOnEmptyQuery: false;
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -286,7 +286,7 @@ GTSpotter >> gtSpotterForStashedPlaygroundPagesFor: aStep [
 						title: (file basename copyUpTo: $-) ] ];
 		title: 'Playground named pages';
 		itemName: [ :page | page title , ' - ' , page content asString contractTo: 100 ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -298,10 +298,10 @@ GTSpotter >> gtSpotterHistoryFor: aStep [
 				select: [ :each | each isNotNil and: [ each value isNotNil ] ] ];
 		title: 'History';
 		itemName: [ :item | 
-			item class = GTSpotterProcessorLink
+			item class = GtSpotterProcessorLink
 				ifTrue: [ " HACK: this triggers a recursion ! ... but processor is undefined for aCandidate " item processor itemNameFor: item value ]
 				ifFalse: [ item gtDisplayString ] ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -311,7 +311,7 @@ GTSpotter >> gtSpotterImplementorsFor: aStep [
 	aStep listProcessor
 		priority: 30;
 		title: 'Implementors';
-		filter: GTFilterImplementor
+		filter: GtFilterImplementor
 			item: [ :filter :context | 
 			SystemNavigation default
 				allBehaviorsDo: [ :class | class localMethods do: filter ] ];
@@ -338,7 +338,7 @@ GTSpotter >> gtSpotterStfxFor: aStep [
 	^ aStep listProcessor
 		priority: 30;
 		title: 'ws.stfx.eu';
-		filter: GTNullFilter
+		filter: GtNullFilter
 			item: [ :filter :context | 
 			(context textTrimmed beginsWith: 'http://ws.stfx.eu')
 				ifTrue: [ GTPlayPage loadFromPublishUrl: context textTrimmed thenDo: filter ] ]

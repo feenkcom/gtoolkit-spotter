@@ -1,6 +1,6 @@
 Class {
 	#name : #GtSpotterBlockIterator,
-	#superclass : #GTSpotterIterator,
+	#superclass : #GtSpotterIterator,
 	#instVars : [
 		'onDo'
 	],

@@ -6,7 +6,7 @@ GTSelector >> gtSpotterImplementorsFor: aStep [
 	^ aStep listProcessor
 		priority: 40;
 		title: 'Implementors';
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 			item: [ :filter :context | self implementors do: filter ];
 		keyBinding: $m meta
 ]
@@ -17,7 +17,7 @@ GTSelector >> gtSpotterUsersFor: aStep [
 	^ aStep listProcessor
 		priority: 50;
 		title: 'Senders';
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 			item:
 				[ :filter :context | self senders do: [ :sender | filter value: sender compiledMethod ] ];
 		keyBinding: $n meta

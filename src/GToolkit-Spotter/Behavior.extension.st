@@ -10,7 +10,7 @@ Behavior >> gtSpotterClassInstanceVariablesFor: aStep [
 		title: 'Class instance variables';
 		allCandidates: [ self class classLayout allSlots ];
 		itemName: [ :each | each name asString ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -21,7 +21,7 @@ Behavior >> gtSpotterCompositionFor: aStep [
 		title: 'Composing traits';
 		allCandidates: [ self traitComposition allTraits ];
 		itemIcon: #systemIcon;
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -34,7 +34,7 @@ Behavior >> gtSpotterInstanceVariablesFor: aStep [
 		title: 'Instance variables';
 		allCandidates: [ self classLayout allSlots ];
 		itemName: [ :each | each name asString ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -45,7 +45,7 @@ Behavior >> gtSpotterSubclassesFor: aStep [
 		title: 'All subclasses';
 		allCandidates: [ self allSubclasses ];
 		itemIcon: #systemIcon;
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -56,7 +56,7 @@ Behavior >> gtSpotterSuperclassesFor: aStep [
 		title: 'All superclasses';
 		allCandidates: [ self allSuperclasses ];
 		itemIcon: #systemIcon;
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -69,7 +69,7 @@ Behavior >> gtSpotterTraitUsersFor: aStep [
 		title: 'Users';
 		allCandidates: [ self traitUsers asArray ];
 		itemIcon: #systemIcon;
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -80,7 +80,7 @@ Behavior >> gtSpotterUsedSlotsFor: aStep [
 		title: 'Special Slots';
 		allCandidates: [ self slots select: [ :slot | slot isSpecial ] ];
 		itemName: [ :item | item definitionString ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -91,5 +91,5 @@ Behavior >> gtSpotterUsedTraitsFor: aStep [
 		title: 'Uses Traits';
 		allCandidates: [ self traits asArray ];
 		itemIcon: #systemIcon;
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]

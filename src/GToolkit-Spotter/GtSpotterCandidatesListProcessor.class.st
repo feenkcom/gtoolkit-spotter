@@ -212,34 +212,34 @@ GtSpotterCandidatesListProcessor >> keyBinding: anObject [
 
 { #category : #'scripting-convenience' }
 GtSpotterCandidatesListProcessor >> match: aBlockWithTwoArguments [
-	self filter: (GTFilterBlock new 
+	self filter: (GtFilterBlock new 
 		matcher: aBlockWithTwoArguments;
 		yourself)
 ]
 
 { #category : #'scripting-convenience' }
 GtSpotterCandidatesListProcessor >> matchAlike [
-	self filter: GTFilterAlike
+	self filter: GtFilterAlike
 ]
 
 { #category : #'scripting-convenience' }
 GtSpotterCandidatesListProcessor >> matchRegex [
-	self filter: GTFilterRegex
+	self filter: GtFilterRegex
 ]
 
 { #category : #'scripting-convenience' }
 GtSpotterCandidatesListProcessor >> matchString [
-	self filter: GTFilterStringMatch
+	self filter: GtFilterStringMatch
 ]
 
 { #category : #'scripting-convenience' }
 GtSpotterCandidatesListProcessor >> matchSubstring [
-	self filter: GTFilterSubstring
+	self filter: GtFilterSubstring
 ]
 
 { #category : #'scripting-convenience' }
 GtSpotterCandidatesListProcessor >> matchSubstrings [
-	self filter: GTFilterSubstrings
+	self filter: GtFilterSubstrings
 ]
 
 { #category : #accessing }

@@ -13,6 +13,6 @@ MetacelloProject >> gtSpotterForVersionsFor: aStep [
 						on: Error
 						do: [ nil ] ]) reject: [ :each | each isNil ] ];
 		itemName: [ :version | version versionString ];
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]

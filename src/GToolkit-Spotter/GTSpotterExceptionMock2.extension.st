@@ -8,5 +8,5 @@ GTSpotterExceptionMock2 >> gtMockProcessorFor: aSpotterStep [
 		allCandidates: [ nil ];
 		" Exception while collecting candidates "
 			itemName: [ :item | item asString ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]

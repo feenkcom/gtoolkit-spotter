@@ -48,9 +48,14 @@ GtSpotterCandidatesProcessor >> continueItemsLimit [
 	^ (self defaultContinueItemsLimit - self itemsLimit) max: 0
 ]
 
+{ #category : #'accessing-defaults' }
+GtSpotterCandidatesProcessor >> defaultContinueItemsLimit [
+	^ self subclassResponsibility
+]
+
 { #category : #private }
 GtSpotterCandidatesProcessor >> doFilterInContext: aSpotterContext [
-	^ aSpotterContext doFilter: GTFilterBlock gtFilter forProcessor: self
+	^ aSpotterContext doFilter: GtFilterBlock gtFilter forProcessor: self
 ]
 
 { #category : #private }

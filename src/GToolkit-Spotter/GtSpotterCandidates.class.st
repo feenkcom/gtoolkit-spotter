@@ -94,7 +94,9 @@ GtSpotterCandidates >> gtCandidatesFor: aView [
 		title: 'Candidates';
 		priority: 10;
 		items: [ self children ];
-		children: #children
+		children: #children;
+		expandUpTo: 1;
+		actionUpdateButtonTooltip: 'Update candidate list'
 ]
 
 { #category : #accessing }
@@ -141,7 +143,7 @@ GtSpotterCandidates >> onAmountChanged: anInteger in: aProcessor [
 	anInteger isZero
 		ifTrue: [ ^ self ].
 
-	self announcer announce: (GTSpotterCandidatesAmountChanged new amount: anInteger; category: aProcessor; yourself)
+	self announcer announce: (GtSpotterCandidatesAmountChanged new amount: anInteger; category: aProcessor; yourself)
 ]
 
 { #category : #accessing }

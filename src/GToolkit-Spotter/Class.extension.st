@@ -13,7 +13,7 @@ Class >> gtSpotterClassMethodsFor: aStep [
 		title: 'Class methods';
 		allCandidates: [ self classSide methods ];
 		itemName: [ :method | method selector ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -24,7 +24,7 @@ Class >> gtSpotterMethodsFor: aStep [
 		title: 'Instance methods';
 		allCandidates: [ self methods ];
 		itemName: [ :method | method selector ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -36,7 +36,7 @@ Class >> gtSpotterReferenceFor: aStep [
 		allCandidates: [ (SystemNavigation default allReferencesTo: self binding)
 				collect: #compiledMethod ];
 		itemName: [ :method | method gtDisplayString ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -51,7 +51,7 @@ Class >> gtSpotterSuperClassMethodsFor: aStep [
 				select: [ :each | 
 					(each methodClass = self classSide) not
 						& (superclasses includes: each methodClass) ] ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -61,5 +61,5 @@ Class >> gtSpotterSuperMethodsFor: aStep [
 		priority: 11;
 		title: 'Super instance methods';
 		allCandidates: [ self allMethods reject: [ :each | each methodClass = self ] ];
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]

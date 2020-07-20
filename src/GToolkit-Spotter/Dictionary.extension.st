@@ -8,5 +8,5 @@ Dictionary >> gtSpotterForKeysFor: aStep [
 		title: 'Keys';
 		allCandidates: [ self keys ];
 		candidatesLimit: 5;
-		filter: GTFilterSubstring
+		filter: GtFilterSubstring
 ]

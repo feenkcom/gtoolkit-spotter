@@ -13,7 +13,7 @@ GtSpotterStartSample >> gtSpotterSearch_10: aStep [
 		title: 'Priority 10';
 		allCandidates: [ #(10) ];
 		itemName: [ :each | each asString ];
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]
 
@@ -26,7 +26,7 @@ GtSpotterStartSample >> gtSpotterSearch_20: aStep [
 		title: 'Priority 20';
 		allCandidates: [ #(20 20) ];
 		itemName: [ :each | each asString ];
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]
 
@@ -39,6 +39,6 @@ GtSpotterStartSample >> gtSpotterSearch_30: aStep [
 		title: 'Priority 30';
 		allCandidates: [ #(30 30 30) ];
 		itemName: [ :each | each asString ];
-		filter: GTFilterSubstring;
+		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]

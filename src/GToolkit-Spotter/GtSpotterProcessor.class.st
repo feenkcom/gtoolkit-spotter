@@ -26,6 +26,11 @@ GtSpotterProcessor >> allFilteredCandidates [
 	^ allFilteredCandidates ifNil: [ allFilteredCandidates := OrderedCollection new ]
 ]
 
+{ #category : #public }
+GtSpotterProcessor >> allFilteredCandidatesDo: aBlock [
+	allFilteredCandidates ifNotNil: aBlock
+]
+
 { #category : #private }
 GtSpotterProcessor >> basicContinueFilterInContext: aSpotterContext [
 

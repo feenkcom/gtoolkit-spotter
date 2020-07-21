@@ -44,22 +44,22 @@ GtSpotterStepElement >> isCandidateSelected: aCandidate [
 ]
 
 { #category : #'private - event handling' }
-GtSpotterStepElement >> onAllCandidatesAdded: anAnnouncement [
+GtSpotterStepElement >> onAsyncAllCandidatesAdded: anAnnouncement [
 	self updateCandidates
 ]
 
 { #category : #'private - event handling' }
-GtSpotterStepElement >> onAllCandidatesRemoved: anAnnouncement [
+GtSpotterStepElement >> onAsyncAllCandidatesRemoved: anAnnouncement [
 	self updateCandidates
 ]
 
 { #category : #'private - event handling' }
-GtSpotterStepElement >> onCandidateAdded: anAnnouncement [
+GtSpotterStepElement >> onAsyncCandidateAdded: anAnnouncement [
 	self updateCandidates
 ]
 
 { #category : #'private - event handling' }
-GtSpotterStepElement >> onCandidateSelected: anAnnouncement [	
+GtSpotterStepElement >> onAsyncCandidateSelected: anAnnouncement [	
 	self updateSelection
 ]
 
@@ -80,19 +80,9 @@ GtSpotterStepElement >> stepModel [
 
 { #category : #accessing }
 GtSpotterStepElement >> stepModel: aSpotterStepModel [
+	self unsubscribeFromStepModel.
 	stepModel := aSpotterStepModel.
-	stepModel candidates announcer 
-		when: GtSpotterCandidateAdded send: #onCandidateAdded: to: self;
-		when: GtSpotterAllCandidatesAdded
-			send: #onAllCandidatesAdded:
-			to: self;
-		when: GtSpotterAllCandidatesRemoved
-			send: #onAllCandidatesRemoved:
-			to: self.
-	stepModel announcer 
-		when: GtSpotterSelectedCandidateChanged
-		send: #onCandidateSelected:
-		to: self.
+	self subscribeToStepModel.
 	self updateCandidates.
 	self updateSelection
 ]
@@ -102,7 +92,31 @@ GtSpotterStepElement >> stepModelDo: aBlock [
 	self stepModel ifNotNil: aBlock
 ]
 
-{ #category : #private }
+{ #category : #'private - subscriptions' }
+GtSpotterStepElement >> subscribeToStepModel [
+	self stepModelDo: [ :aStepModel |
+		aStepModel candidates announcer
+			when: GtSpotterCandidateAdded send: #onAsyncCandidateAdded: to: self;
+			when: GtSpotterAllCandidatesAdded
+				send: #onAsyncAllCandidatesAdded:
+				to: self;
+			when: GtSpotterAllCandidatesRemoved
+				send: #onAsyncAllCandidatesRemoved:
+				to: self.
+		aStepModel announcer
+			when: GtSpotterSelectedCandidateChanged
+			send: #onAsyncCandidateSelected:
+			to: self ]
+]
+
+{ #category : #'private - subscriptions' }
+GtSpotterStepElement >> unsubscribeFromStepModel [
+	self stepModelDo: [ :aStepModel |
+		aStepModel candidates announcer unsubscribe: self.
+		aStepModel announcer unsubscribe: self ].
+]
+
+{ #category : #'private - updating' }
 GtSpotterStepElement >> updateCandidates [
 
 	self stepModelDo: [ :aSpotterStep |
@@ -111,7 +125,7 @@ GtSpotterStepElement >> updateCandidates [
 			expandAll ]
 ]
 
-{ #category : #private }
+{ #category : #'private - updating' }
 GtSpotterStepElement >> updateSelection [
 
 	self stepModelDo: [ :aSpotterStep |		

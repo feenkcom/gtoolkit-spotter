@@ -48,6 +48,12 @@ GtSpotterStepItemElement >> markMouseIsHovering [
 ]
 
 { #category : #'private - hooks' }
+GtSpotterStepItemElement >> onAsyncCandidateSelected: aGtSpotterSelectedCandidateChanged [
+	self enqueueTask: (BlTaskAction new action: [
+		self onCandidateSelected: aGtSpotterSelectedCandidateChanged ])
+]
+
+{ #category : #'private - hooks' }
 GtSpotterStepItemElement >> onCandidateSelected: aGtSpotterSelectedCandidateChanged [
 ]
 
@@ -83,7 +89,7 @@ GtSpotterStepItemElement >> stepModelDo: aBlock [
 GtSpotterStepItemElement >> subscribeToSpotterStep [
 	self stepModel announcer
 		when: GtSpotterSelectedCandidateChanged
-		send: #onCandidateSelected:
+		send: #onAsyncCandidateSelected:
 		to: self.
 ]
 

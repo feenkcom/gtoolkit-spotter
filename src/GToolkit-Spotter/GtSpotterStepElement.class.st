@@ -7,6 +7,18 @@ Class {
 	#category : #'GToolkit-Spotter-UI'
 }
 
+{ #category : #'private - updating' }
+GtSpotterStepElement >> asyncUpdateCandidates [
+	self enqueueTask: (BlTaskAction new action: [ 
+		self updateCandidates ])
+]
+
+{ #category : #'private - updating' }
+GtSpotterStepElement >> asyncUpdateSelection [
+	self enqueueTask: (BlTaskAction new action: [ 
+		self updateSelection ])
+]
+
 { #category : #initialization }
 GtSpotterStepElement >> initialize [
 	super initialize.
@@ -45,26 +57,27 @@ GtSpotterStepElement >> isCandidateSelected: aCandidate [
 
 { #category : #'private - event handling' }
 GtSpotterStepElement >> onAsyncAllCandidatesAdded: anAnnouncement [
-	self updateCandidates
+	self asyncUpdateCandidates
 ]
 
 { #category : #'private - event handling' }
 GtSpotterStepElement >> onAsyncAllCandidatesRemoved: anAnnouncement [
-	self updateCandidates
+	self asyncUpdateCandidates
 ]
 
 { #category : #'private - event handling' }
 GtSpotterStepElement >> onAsyncCandidateAdded: anAnnouncement [
-	self updateCandidates
+	self asyncUpdateCandidates
 ]
 
 { #category : #'private - event handling' }
 GtSpotterStepElement >> onAsyncCandidateSelected: anAnnouncement [	
-	self updateSelection
+	self asyncUpdateSelection 
 ]
 
 { #category : #'private - event handling' }
 GtSpotterStepElement >> onItemSelectionChanged: anEvent [
+	"This ${class:BrSelectionChanged}$ event comes from the UI process"
 	self selectedNodeDo: [ :aTreeNode |
 		self stepModelDo: [ :aSpotterStep |
 			aTreeNode value children ifEmpty: [

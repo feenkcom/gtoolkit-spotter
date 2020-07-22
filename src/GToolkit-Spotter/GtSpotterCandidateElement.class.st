@@ -38,9 +38,7 @@ GtSpotterCandidateElement >> candidate: aCandidate [
 	self 
 		assert: [ aCandidate isNotNil ] 
 		description: [ 'Candidate must be non-nil' ].
-	self unsubscribeFromCandidate.
 	candidate := aCandidate.
-	self subscriteToCandidate.
 	self onCandidateChanged.
 ]
 
@@ -129,13 +127,11 @@ GtSpotterCandidateElement >> mayHideActions [
 
 { #category : #'private - hooks' }
 GtSpotterCandidateElement >> onCandidateChanged [
-	label text: self candidate gtDisplayText.
-	self isCandidateSelected 
-		ifTrue: [ self showActions ]
-		ifFalse: [ self hideActions ].
+	self updateLabel.
+	self updateActions.
 ]
 
-{ #category : #'private - hooks' }
+{ #category : #'private - event handling' }
 GtSpotterCandidateElement >> onCandidateSelected: aGtSpotterSelectedCandidateChanged [
 	super onCandidateSelected: aGtSpotterSelectedCandidateChanged.
 	(aGtSpotterSelectedCandidateChanged selected = self candidate)
@@ -143,13 +139,13 @@ GtSpotterCandidateElement >> onCandidateSelected: aGtSpotterSelectedCandidateCha
 		ifFalse: [ self mayHideActions ]
 ]
 
-{ #category : #'private - hooks' }
+{ #category : #'private - event handling' }
 GtSpotterCandidateElement >> onMouseEnter [
 	super onMouseEnter.
 	self showActions.
 ]
 
-{ #category : #'private - hooks' }
+{ #category : #'private - event handling' }
 GtSpotterCandidateElement >> onMouseLeave [
 	super onMouseLeave.
 	self mayHideActions.
@@ -161,14 +157,14 @@ GtSpotterCandidateElement >> showActions [
 	diveInButton visibility: BlVisibility visible.
 ]
 
-{ #category : #'private - subscriptions' }
-GtSpotterCandidateElement >> subscriteToCandidate [
-	self candidate ifNil: [ ^ self ].
-	
+{ #category : #'private - updating' }
+GtSpotterCandidateElement >> updateActions [
+	self isCandidateSelected
+		ifTrue: [ self showActions ]
+		ifFalse: [ self hideActions ]
 ]
 
-{ #category : #'private - subscriptions' }
-GtSpotterCandidateElement >> unsubscribeFromCandidate [
-	self candidate ifNil: [ ^ self ].
-	
+{ #category : #'private - updating' }
+GtSpotterCandidateElement >> updateLabel [
+	label text: self candidate gtDisplayText
 ]

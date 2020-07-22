@@ -119,17 +119,18 @@ GtSpotterCategoryElement >> numberOfVisibleChildren [
 	^ 0
 ]
 
-{ #category : #'private - hooks' }
+{ #category : #'private - event handling' }
 GtSpotterCategoryElement >> onAsyncCandidatesAmountChanged: aGtSpotterCandidatesAmountChanged [
 	
 	| aProcessor anAmount |
 	aProcessor := aGtSpotterCandidatesAmountChanged category.
 	anAmount := aGtSpotterCandidatesAmountChanged amount.
 	
-	self enqueueTask: (BlTaskAction new action: [ self onProcessor: aProcessor candidatesAmountChangedTo: anAmount ]).
+	self enqueueTask: (BlTaskAction new action: [ 
+		self onProcessor: aProcessor candidatesAmountChangedTo: anAmount ]).
 ]
 
-{ #category : #'private - hooks' }
+{ #category : #'private - event handling' }
 GtSpotterCategoryElement >> onCandidateSelected: aGtSpotterSelectedCandidateChanged [
 	super onCandidateSelected: aGtSpotterSelectedCandidateChanged.
 	(aGtSpotterSelectedCandidateChanged selected processor = self processor)
@@ -139,29 +140,24 @@ GtSpotterCategoryElement >> onCandidateSelected: aGtSpotterSelectedCandidateChan
 
 { #category : #'private - hooks' }
 GtSpotterCategoryElement >> onCategoryChanged [
-	labelElement text: '#', self category processor title asString.
-	self updateVisibleAmount: self numberOfVisibleChildren.
-	self processor allFilteredCandidatesDo: [ :aCollection | 
-		self updateTotalAmount: aCollection size ].
-	"self updateTotalAmount: self numberOfVisibleChildren."
-	self isCategorySelected 
-		ifTrue: [ self showActions ]
-		ifFalse: [ self hideActions ].
+	self updateLabel.
+	self updateVisibleAndTotalAmount.
+	self updateActions
 ]
 
-{ #category : #'private - hooks' }
+{ #category : #'private - event handling' }
 GtSpotterCategoryElement >> onMouseEnter [
 	super onMouseEnter.
 	self showActions.
 ]
 
-{ #category : #'private - hooks' }
+{ #category : #'private - event handling' }
 GtSpotterCategoryElement >> onMouseLeave [
 	super onMouseLeave.
 	self mayHideActions.
 ]
 
-{ #category : #'private - hooks' }
+{ #category : #'private - event handling' }
 GtSpotterCategoryElement >> onProcessor: aProcessor candidatesAmountChangedTo: anAmount [
 
 	aProcessor = self processor ifFalse: [ ^ self ].
@@ -190,6 +186,18 @@ GtSpotterCategoryElement >> subscribeToSpotterStep [
 ]
 
 { #category : #'private - updating' }
+GtSpotterCategoryElement >> updateActions [
+	self isCategorySelected
+		ifTrue: [ self showActions ]
+		ifFalse: [ self hideActions ]
+]
+
+{ #category : #'private - updating' }
+GtSpotterCategoryElement >> updateLabel [
+	labelElement text: '#' , self category processor title asString
+]
+
+{ #category : #'private - updating' }
 GtSpotterCategoryElement >> updateTotalAmount: anInteger [ 
 	amountElement total: anInteger
 ]
@@ -197,4 +205,11 @@ GtSpotterCategoryElement >> updateTotalAmount: anInteger [
 { #category : #'private - updating' }
 GtSpotterCategoryElement >> updateVisibleAmount: anInteger [ 
 	amountElement visible: anInteger
+]
+
+{ #category : #'private - updating' }
+GtSpotterCategoryElement >> updateVisibleAndTotalAmount [
+	self updateVisibleAmount: self numberOfVisibleChildren.
+	self processor allFilteredCandidatesDo: [ :aCollection | 
+		self updateTotalAmount: aCollection size ]
 ]

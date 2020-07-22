@@ -57,7 +57,7 @@ GtSpotterCategoryElement >> diveInCategoryDueTo: anEventType [
 
 { #category : #'private - actions' }
 GtSpotterCategoryElement >> hideActions [
-	actOnButton visibility: BlVisibility visible.
+	actOnButton visibility: BlVisibility hidden.
 	diveInButton visibility: BlVisibility hidden.
 ]
 

@@ -47,22 +47,22 @@ GtSpotterStepItemElement >> markMouseIsHovering [
 	isMouseHovering := true
 ]
 
-{ #category : #'private - hooks' }
+{ #category : #'private - event handling' }
 GtSpotterStepItemElement >> onAsyncCandidateSelected: aGtSpotterSelectedCandidateChanged [
 	self enqueueTask: (BlTaskAction new action: [
 		self onCandidateSelected: aGtSpotterSelectedCandidateChanged ])
 ]
 
-{ #category : #'private - hooks' }
+{ #category : #'private - event handling' }
 GtSpotterStepItemElement >> onCandidateSelected: aGtSpotterSelectedCandidateChanged [
 ]
 
-{ #category : #'private - hooks' }
+{ #category : #'private - event handling' }
 GtSpotterStepItemElement >> onMouseEnter [
 	self markMouseIsHovering.
 ]
 
-{ #category : #'private - hooks' }
+{ #category : #'private - event handling' }
 GtSpotterStepItemElement >> onMouseLeave [
 	self unmarkMouseIsHovering.
 ]

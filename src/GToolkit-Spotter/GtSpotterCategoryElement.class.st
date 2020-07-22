@@ -5,10 +5,18 @@ Class {
 		'category',
 		'diveInButton',
 		'amountElement',
-		'labelElement'
+		'labelElement',
+		'actOnButton'
 	],
 	#category : #'GToolkit-Spotter-UI'
 }
+
+{ #category : #'private - actions' }
+GtSpotterCategoryElement >> actDueTo: anEventType [
+
+	self stepModelDo: [ :aStepModel |
+		aStepModel actOnCategory: self category dueTo: anEventType from: self ]
+]
 
 { #category : #'api - accessing' }
 GtSpotterCategoryElement >> bindData: anObject [
@@ -49,6 +57,7 @@ GtSpotterCategoryElement >> diveInCategoryDueTo: anEventType [
 
 { #category : #'private - actions' }
 GtSpotterCategoryElement >> hideActions [
+	actOnButton visibility: BlVisibility visible.
 	diveInButton visibility: BlVisibility hidden.
 ]
 
@@ -57,6 +66,7 @@ GtSpotterCategoryElement >> initialize [
 	super initialize.
 	self initializeLabel.
 	self initializeAmountElement.
+	self initializeActOnButton.
 	self initializeDiveInButton.
 	self hMatchParent.
 	self vFitContent.
@@ -64,7 +74,21 @@ GtSpotterCategoryElement >> initialize [
 	self padding: (BlInsets top: 12 left: 6 bottom: 6 right: 6).
 	self addChild: labelElement as: #label.
 	self addChild: amountElement as: #amount.
+	self addChild: actOnButton as: #actOnButton.
 	self addChild: diveInButton as: #diveInButton.
+]
+
+{ #category : #initialization }
+GtSpotterCategoryElement >> initializeActOnButton [
+	actOnButton := BrButton new
+		look: BrGlamorousButtonWithIconLook;
+		icon: BrGlamorousVectorIcons accept;
+		label: 'Select Category Items';
+		action: [ self actDueTo: #buttonClick ];
+		visibility: BlVisibility hidden;
+		beTiny;
+		fitContent;
+		alignCenterLeft.
 ]
 
 { #category : #initialization }
@@ -173,6 +197,7 @@ GtSpotterCategoryElement >> processor [
 
 { #category : #'private - actions' }
 GtSpotterCategoryElement >> showActions [
+	actOnButton visibility: BlVisibility visible.
 	diveInButton visibility: BlVisibility visible.
 ]
 

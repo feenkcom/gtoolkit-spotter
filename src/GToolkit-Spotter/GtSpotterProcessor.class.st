@@ -22,6 +22,11 @@ GtSpotterProcessor >> actOn: anObject for: aStep from: aSpotterElement [
 ]
 
 { #category : #public }
+GtSpotterProcessor >> actOnCategory: anObject for: aStep from: aSpotterElement [
+	anObject gtSpotterActDefault: aStep from: aSpotterElement
+]
+
+{ #category : #public }
 GtSpotterProcessor >> allFilteredCandidates [
 	^ allFilteredCandidates ifNil: [ allFilteredCandidates := OrderedCollection new ]
 ]

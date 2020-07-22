@@ -37,26 +37,55 @@ GtSpotterStep >> actDueTo: anEventType from: aSpotterElement [
 
 { #category : #'api - actions' }
 GtSpotterStep >> actOn: aCandidate dueTo: anEventType from: aSpotterElement [
-	"Perform an action associated with currently selected item.
+	"Perform an action associated with the given candidate item.
 	(can be triggered by doubleClick: or keyboard Enter press)"
-	| anAnnouncement aSelectedCategory anObjectToActOn |
+	| anAnnouncement aCantidateProcessor anObjectToActOn |
 	self
 		assert: [ aCandidate isNotNil ]
 		description: [ 'Spotter can not perform an action due to ', 
 			anEventType asString, 
-			' if there is no selected candidate' ].
+			' if there is no candidate' ].
 
 	hasActedOn := true.
 	self terminateProcessors.
 
 	self spotter historize: aCandidate.
 	
-	aSelectedCategory := aCandidate processor.
-	anObjectToActOn := aSelectedCategory objectToActOn: aCandidate item from: self.
+	aCantidateProcessor := aCandidate processor.
+	anObjectToActOn := aCantidateProcessor objectToActOn: aCandidate item from: self.
 	
 	anAnnouncement := self spotter notifyActOn: anObjectToActOn for: anEventType.
 	anAnnouncement isActedUpon
-		ifFalse: [ aSelectedCategory actOn: anObjectToActOn for: self from: aSpotterElement ]
+		ifFalse: [ aCantidateProcessor actOn: anObjectToActOn for: self from: aSpotterElement ]
+]
+
+{ #category : #'api - actions' }
+GtSpotterStep >> actOnCategory: aProcessorCadidates dueTo: anEventType from: aSpotterElement [
+	"Perform an action associated with currently selected item.
+	(can be triggered by doubleClick: or keyboard Enter press)"
+	| anAnnouncement anObjectToActOn theItems |
+	self
+		assert: [ aProcessorCadidates isNotNil ]
+		description: [ 'Spotter can not perform an action due to ', 
+			anEventType asString, 
+			' if there are no candidates' ].
+
+	hasActedOn := true.
+	self terminateProcessors.
+
+	aProcessorCadidates processor allFilteredCandidatesDo: [ :allCandidates | 
+		theItems := allCandidates ].
+	theItems ifNil: [
+		theItems := aProcessorCadidates children collect: #item ].
+	
+	anObjectToActOn := theItems 
+		collect: [ :eachItem | 
+			aProcessorCadidates processor objectToActOn: eachItem from: self ]
+		as: Array.
+	
+	anAnnouncement := self spotter notifyActOn: anObjectToActOn for: anEventType.
+	anAnnouncement isActedUpon
+		ifFalse: [ aProcessorCadidates processor actOnCategory: anObjectToActOn for: self from: aSpotterElement ]
 ]
 
 { #category : #accessing }

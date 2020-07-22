@@ -11,7 +11,7 @@ Class {
 	#category : #'GToolkit-Spotter-UI'
 }
 
-{ #category : #actions }
+{ #category : #'private - actions' }
 GtSpotterElement >> actDueTo: anEventType [
 	self
 		spotterModelDo: [ :aSpotter | 
@@ -64,7 +64,7 @@ GtSpotterElement >> createPreviewElement [
 	^ GtSpotterPreviewElement new
 ]
 
-{ #category : #actions }
+{ #category : #'private - actions' }
 GtSpotterElement >> diveInCategoryDueTo: anEventType [
 
 	self spotterModelDo: [ :aSpotter |
@@ -72,7 +72,7 @@ GtSpotterElement >> diveInCategoryDueTo: anEventType [
 			ifTrue: [ aSpotter currentStep diveInCategoryDueTo: anEventType ] ]
 ]
 
-{ #category : #actions }
+{ #category : #'private - actions' }
 GtSpotterElement >> diveInDueTo: anEventType [
 
 	self spotterModelDo: [ :aSpotter |
@@ -80,7 +80,7 @@ GtSpotterElement >> diveInDueTo: anEventType [
 			ifTrue: [ aSpotter currentStep diveInDueTo: anEventType ] ]
 ]
 
-{ #category : #actions }
+{ #category : #'private - actions' }
 GtSpotterElement >> diveOutDueTo: anEventType [
 
 	self spotterModelDo: [ :aSpotter |
@@ -88,12 +88,12 @@ GtSpotterElement >> diveOutDueTo: anEventType [
 			ifTrue: [ aSpotter currentStep diveOutDueTo: anEventType ] ]
 ]
 
-{ #category : #actions }
+{ #category : #'private - actions' }
 GtSpotterElement >> exitDueTo: anEventType [
 	self spotterModelDo: [ :aSpotter | aSpotter exitDueTo: anEventType ]
 ]
 
-{ #category : #'accessing - elements' }
+{ #category : #'private - accessing elements' }
 GtSpotterElement >> header [
 	^ header
 ]
@@ -170,12 +170,18 @@ GtSpotterElement >> initializeSpotterElements [
 	self addChildren: { header . results }.
 ]
 
-{ #category : #'event - handling' }
+{ #category : #'private - event handling' }
+GtSpotterElement >> onAsyncCandidateSelected: anAnnouncement [
+	self enqueueTask: (BlTaskAction new action: [
+		self onCandidateSelected: anAnnouncement ])
+]
+
+{ #category : #'private - event handling' }
 GtSpotterElement >> onCandidateSelected: anAnnouncement [
 	self phlow selectObject: anAnnouncement selected item
 ]
 
-{ #category : #'event - handling' }
+{ #category : #'private - event handling' }
 GtSpotterElement >> onCloseSpotter [
 	"Check if I am opened in a separate window, then close that window otherwise just remove me from the space"
 	(self isAttachedToSceneGraph
@@ -184,12 +190,12 @@ GtSpotterElement >> onCloseSpotter [
 			ifFalse: [ self removeFromParent ]
 ]
 
-{ #category : #'accessing - elements' }
+{ #category : #'private - accessing elements' }
 GtSpotterElement >> searchField [
 	^ self header searchField
 ]
 
-{ #category : #actions }
+{ #category : #'private - actions' }
 GtSpotterElement >> selectNextCandidateDueTo: anEventType [
 
 	self spotterModelDo: [ :aSpotter |
@@ -198,7 +204,7 @@ GtSpotterElement >> selectNextCandidateDueTo: anEventType [
 				aSpotter currentStep selectNextDueTo: anEventType ] ]
 ]
 
-{ #category : #actions }
+{ #category : #'private - actions' }
 GtSpotterElement >> selectPreviousCandidateDueTo: anEventType [
 
 	self spotterModelDo: [ :aSpotter |
@@ -206,7 +212,7 @@ GtSpotterElement >> selectPreviousCandidateDueTo: anEventType [
 			ifTrue: [ aSpotter currentStep selectPreviousDueTo: anEventType ] ]
 ]
 
-{ #category : #accessing }
+{ #category : #'api - accessing' }
 GtSpotterElement >> spotterModel: aSpotter [
 
 	spotterModel := aSpotter.
@@ -217,12 +223,12 @@ GtSpotterElement >> spotterModel: aSpotter [
 	preview spotterModel: aSpotter.
 	
 	spotterModel announcer when: GtSpotterExitAnnouncement send: #onCloseSpotter to: self.
-	spotterModel announcer when: GtSpotterSelectedCandidateChanged send: #onCandidateSelected: to: self.
+	spotterModel announcer when: GtSpotterSelectedCandidateChanged send: #onAsyncCandidateSelected: to: self.
 	
 	aSpotter search
 ]
 
-{ #category : #accessing }
+{ #category : #'private - accessing' }
 GtSpotterElement >> spotterModelDo: aBlock [
 	spotterModel ifNotNil: aBlock
 ]

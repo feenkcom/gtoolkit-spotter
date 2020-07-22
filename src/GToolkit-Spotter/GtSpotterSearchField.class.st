@@ -15,7 +15,7 @@ GtSpotterSearchField >> initialize [
 	self requestFocus
 ]
 
-{ #category : #'event handling' }
+{ #category : #'private - event handling' }
 GtSpotterSearchField >> onCurrentStepChanged: anAnnouncement [
 	self text: anAnnouncement stepModel searchQuery asRopedText.
 	self navigator
@@ -25,14 +25,14 @@ GtSpotterSearchField >> onCurrentStepChanged: anAnnouncement [
 	self requestFocus
 ]
 
-{ #category : #accessing }
+{ #category : #'private - accessing' }
 GtSpotterSearchField >> spotterModel [
 	<return: #GtSpotter>
 
 	^ spotterModel
 ]
 
-{ #category : #accessing }
+{ #category : #'api - accessing' }
 GtSpotterSearchField >> spotterModel: aGtSpotter [
 	spotterModel := aGtSpotter.
 	

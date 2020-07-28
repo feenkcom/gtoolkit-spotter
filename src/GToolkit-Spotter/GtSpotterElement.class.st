@@ -148,7 +148,7 @@ GtSpotterElement >> initializeSpotterElements [
 		c vertical matchParent ].
 	
 	self background: Color white.
-	self geometry: (BlRectangle cornerRadius: 5).
+	self geometry: (BlRoundedRectangleGeometry cornerRadius: 5).
 	
 	header := self createHeaderElement.
 	

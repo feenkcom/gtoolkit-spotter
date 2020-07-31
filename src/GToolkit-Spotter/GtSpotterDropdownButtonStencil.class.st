@@ -85,13 +85,13 @@ GtSpotterDropdownButtonStencil >> newDropdownLookWithSpotterModel: aSpotterModel
 { #category : #'api - accessing' }
 GtSpotterDropdownButtonStencil >> object [
 	"Return an object on which a Spotter search starts"
-	^ object
+	^ object value
 ]
 
 { #category : #'api - accessing' }
-GtSpotterDropdownButtonStencil >> object: anObject [
+GtSpotterDropdownButtonStencil >> object: aValuable [
 	"Set an object on which a Spotter search starts"
-	object := anObject
+	object := aValuable
 ]
 
 { #category : #'api - accessing' }

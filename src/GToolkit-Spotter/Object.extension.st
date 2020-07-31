@@ -21,50 +21,11 @@ Object >> gtActionSearchFor: anAction [
 	fakeStep processors isEmpty
 		ifTrue: [ ^ anAction noAction ].
 	^ anAction explicit
-		stencil: [ | actionButtonElement |
-			actionButtonElement := BrButton new
-				icon: BrGlamorousVectorIcons search;
-				label: 'Search';
-				look:
-					BrGlamorousButtonWithIconLook
-						+
-							(BrGlamorousWithDropdownLook
-								stencil: [ | model look element |
-									model := GtSpotter new initializeWith: self.
-									model announcer
-										when: GtSpotterActOn
-										do: [ :e | 
-											| item |
-											
-											item := e element.
-											e actedUpon: true.
-											self
-												flag: 'FIXME candidates may be wrapped for some reason'.
-											[ (item isKindOf: GtSpotterCandidate)
-												and: [ item item ~~ item ] ]
-												whileTrue: [ item := item item ].
-											look hide.
-											actionButtonElement phlow spawnObject: item ].
-									look := BrGlamorousDropdownLook new
-										handle:
-											(BrButton new
-												icon: BrGlamorousVectorIcons search;
-												label: 'Search';
-												look:
-													BrGlamorousButtonWithIconLook - BrGlamorousButtonWithLabelTooltipLook
-														- BrGlamorousButtonExteriorLook;
-												yourself);
-										content:
-											(GtSpotterElement new
-												spotterModel: model;
-												size: 600 @ 400;
-												yourself);
-										yourself.
-									element := BlElement new
-										look: look;
-										background: BrGlamorousColors secondaryHeaderBackgroundColor;
-										yourself ]);
-				yourself ]
+		stencil: [ GtSpotterDropdownButtonStencil new
+			object: self;
+			actOn: [ :anActOnEvent :anItem :aButton | 
+				aButton phlow spawnObject: anItem.
+				anActOnEvent beActed ] ]
 ]
 
 { #category : #'*GToolkit-Spotter' }

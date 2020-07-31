@@ -15,6 +15,11 @@ GtSpotterActOn >> actedUpon: aBoolean [
 ]
 
 { #category : #accessing }
+GtSpotterActOn >> beActed [
+	self actedUpon: true.
+]
+
+{ #category : #accessing }
 GtSpotterActOn >> element [
 	^ element
 ]

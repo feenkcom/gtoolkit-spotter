@@ -52,6 +52,10 @@ GtSpotterDropdownButtonStencil >> dropdownStencilFor: aButton [
 	| aSpotterModel aDropdownLook |
 	aSpotterModel := GtSpotter new initializeWith: self object.
 	aDropdownLook := self newDropdownLookWithSpotterModel: aSpotterModel.
+	aSpotterModel announcer
+		when: GtSpotterExitAnnouncement
+		send: #hide
+		to: aDropdownLook.
 	aSpotterModel announcer 
 		when: GtSpotterActOn
 		do: (self actOnHandlerWithDropdown: aDropdownLook andButton: aButton).

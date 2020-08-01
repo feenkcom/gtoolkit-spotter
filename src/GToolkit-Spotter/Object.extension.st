@@ -22,7 +22,7 @@ Object >> gtActionSearchFor: anAction [
 		ifTrue: [ ^ anAction noAction ].
 	^ anAction explicit
 		stencil: [ GtSpotterDropdownButtonStencil new
-			valuable: [ self ];
+			object: self;
 			actOn: [ :anActOnEvent :anItem :aButton | 
 				aButton phlow spawnObject: anItem.
 				anActOnEvent beActed ] ]

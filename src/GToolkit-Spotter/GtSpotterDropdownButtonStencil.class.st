@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'actOn',
 		'tooltip',
-		'valuable'
+		'valuable',
+		'extent'
 	],
 	#category : #'GToolkit-Spotter-Stencils'
 }
@@ -27,7 +28,11 @@ GtSpotterDropdownButtonStencil >> actOn: aBlock [
 GtSpotterDropdownButtonStencil >> actOnHandlerWithDropdown: aDropdownLook andButton: aButton [
 	^ [ :anEvent | 
 		self actOn cull: anEvent cull: anEvent realItem cull: aButton.
-		aDropdownLook hide ].
+		"hide Spotter in the next Space iteration 
+		to be able to open a new World tab if necessary"
+		aDropdownLook widgetDo: [ :aWidget | 
+			aWidget enqueueTask: (BlTaskAction new action: [
+				aDropdownLook hide ]) ] ].
 ]
 
 { #category : #'api - instantiation' }
@@ -57,15 +62,25 @@ GtSpotterDropdownButtonStencil >> dropdownStencilFor: aButton [
 
 { #category : #'api - accessing' }
 GtSpotterDropdownButtonStencil >> extent [
-	^ 600 @ 400
+	<return: #Point>
+	^ extent 
+]
+
+{ #category : #'api - accessing' }
+GtSpotterDropdownButtonStencil >> extent: aPoint [
+	self 
+		assert: [ aPoint isNotNil ]
+		description: [ 'Extent must be non-nil' ].
+	extent := aPoint
 ]
 
 { #category : #initialization }
 GtSpotterDropdownButtonStencil >> initialize [
 	super initialize.
-	valuable := GtSpotterStart new.
 	actOn := [ :anActOnEvent :anItem :aButton | "do nothing" ].
 	tooltip := 'Search'.
+	extent := 600 @ 400.
+	self receiver: GtSpotterStart selector: #new.
 ]
 
 { #category : #'private - instantiation' }
@@ -89,6 +104,19 @@ GtSpotterDropdownButtonStencil >> object [
 ]
 
 { #category : #'api - accessing' }
+GtSpotterDropdownButtonStencil >> object: anObject [ 
+	"Set an object on which a Spotter search starts"
+	valuable := GtSpotterDropdownObjectSource object: anObject
+]
+
+{ #category : #'api - accessing' }
+GtSpotterDropdownButtonStencil >> receiver: aReceiver selector: aSelector [
+	valuable := GtSpotterDropdownValuableSource 
+		receiver: aReceiver 
+		selector: aSelector
+]
+
+{ #category : #'api - accessing' }
 GtSpotterDropdownButtonStencil >> tooltip [
 	^ tooltip
 ]
@@ -101,5 +129,5 @@ GtSpotterDropdownButtonStencil >> tooltip: aString [
 { #category : #'api - accessing' }
 GtSpotterDropdownButtonStencil >> valuable: aValuable [
 	"Set a valuable on which a Spotter search starts"
-	valuable := aValuable
+	valuable := GtSpotterDropdownValuableSource valuable: aValuable
 ]

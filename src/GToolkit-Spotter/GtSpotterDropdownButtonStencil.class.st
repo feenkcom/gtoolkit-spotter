@@ -5,7 +5,8 @@ Class {
 		'actOn',
 		'tooltip',
 		'valuable',
-		'extent'
+		'extent',
+		'spotterElementAction'
 	],
 	#category : #'GToolkit-Spotter-Stencils'
 }
@@ -81,6 +82,7 @@ GtSpotterDropdownButtonStencil >> extent: aPoint [
 { #category : #initialization }
 GtSpotterDropdownButtonStencil >> initialize [
 	super initialize.
+	spotterElementAction := [ :aSpotterElement | "do nothing" ].
 	actOn := [ :anActOnEvent :anItem :aButton | "do nothing" ].
 	tooltip := 'Search'.
 	extent := 600 @ 400.
@@ -89,16 +91,20 @@ GtSpotterDropdownButtonStencil >> initialize [
 
 { #category : #'private - instantiation' }
 GtSpotterDropdownButtonStencil >> newDropdownLookWithSpotterModel: aSpotterModel [
-	^ BrGlamorousDropdownLook new
+	| aLook aSpotterElement |
+	aLook := BrGlamorousDropdownLook new
 		handle: (BrButton new
 			icon: BrGlamorousVectorIcons search;
 			label: self tooltip;
 			look: BrGlamorousButtonWithIconLook 
 				- BrGlamorousButtonWithLabelTooltipLook
 				- BrGlamorousButtonExteriorLook);
-		content: (GtSpotterElement new
+		content: (aSpotterElement := GtSpotterElement new
 			spotterModel: aSpotterModel;
-			size: self extent)
+			size: self extent).
+	spotterElementAction ifNotNil: [ :theAction | 
+		theAction cull: aSpotterElement ].
+	^ aLook
 ]
 
 { #category : #'private - accessing' }
@@ -118,6 +124,14 @@ GtSpotterDropdownButtonStencil >> receiver: aReceiver selector: aSelector [
 	valuable := GtSpotterDropdownValuableSource 
 		receiver: aReceiver 
 		selector: aSelector
+]
+
+{ #category : #'api - accessing' }
+GtSpotterDropdownButtonStencil >> spotterElementDo: aOneArgBlock [
+	"Configure a ${class:GtSpotterElement}$ instance.
+	Remember that the element size can be set using ${method:GtSpotterDropdownButtonStencil>>extent:}$.
+	The block receives one argument [ :aSpotterElement | ]."
+	spotterElementAction := aOneArgBlock
 ]
 
 { #category : #'api - accessing' }

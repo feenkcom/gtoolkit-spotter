@@ -66,6 +66,9 @@ GtSpotterCandidateElement >> initialize [
 	self initializeLabel.
 	self initializeActOnButton.
 	self initializeDiveInButton.
+	self
+		when: BlDoubleClickEvent
+		do: [ :anEvent | self actDueTo: #buttonClick ].
 	self hMatchParent.
 	self vFitContent.
 	self cellSpacing: 5.

@@ -215,7 +215,8 @@ GtSpotterStart >> gtSpotterForReferencesFor: aStep [
 				ifPresent:
 					[ :class | SystemNavigation default allReferencesTo: class binding do: filter ] ];
 		keyBinding: $n shift meta;
-		itemName: [ :method | method gtDisplayString ]
+		itemName: [ :method | method gtDisplayString ];
+		wantsToDisplayOnEmptyQuery: false
 ]
 
 { #category : #'*GToolkit-Spotter' }

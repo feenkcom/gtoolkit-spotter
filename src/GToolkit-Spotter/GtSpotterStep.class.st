@@ -319,7 +319,8 @@ GtSpotterStep >> gtProcessorsFor: aView [
 		title: 'Processors';
 		items: [ self processors sorted: [ :a :b | a priority < b priority ] ];
 		column: 'Name' text: [ :each | each title ];
-		column: 'Priority' text: [ :each | each priority asString ]
+		column: 'Priority' text: [ :each | each priority asString ];
+		column: 'Visible by default' text: [:each | each wantsToDisplayOnEmptyQuery ]
 ]
 
 { #category : #'error handling' }

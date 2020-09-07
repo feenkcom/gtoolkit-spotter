@@ -131,11 +131,11 @@ GtSpotterStepElement >> unsubscribeFromStepModel [
 
 { #category : #'private - updating' }
 GtSpotterStepElement >> updateCandidates [
-
-	self stepModelDo: [ :aSpotterStep |
-		self
-			items: aSpotterStep candidates children children: #children;
-			expandAll ]
+	self
+		stepModelDo: [ :aSpotterStep | 
+			self
+				items: aSpotterStep candidates children lazy: #children;
+				expandAll ]
 ]
 
 { #category : #'private - updating' }

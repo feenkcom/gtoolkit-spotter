@@ -1,5 +1,5 @@
 "
-I represent one search candidate produced by a spotter porcessor
+I represent one search candidate produced by a spotter processor
 "
 Class {
 	#name : #GtSpotterCandidate,

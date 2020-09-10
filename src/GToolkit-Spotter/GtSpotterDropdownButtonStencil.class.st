@@ -6,7 +6,8 @@ Class {
 		'tooltip',
 		'valuable',
 		'extent',
-		'spotterElementAction'
+		'spotterElementAction',
+		'icon'
 	],
 	#category : #'GToolkit-Spotter-Stencils'
 }
@@ -41,7 +42,7 @@ GtSpotterDropdownButtonStencil >> create [
 	| aButton |
 	aButton := BrButton new.
 	aButton
-		icon: BrGlamorousVectorIcons search;
+		icon: icon;
 		label: self tooltip;
 		look: BrGlamorousButtonWithIconLook;
 		addLook: (BrGlamorousWithDropdownLook stencil: [ self dropdownStencilFor: aButton ]).
@@ -79,11 +80,17 @@ GtSpotterDropdownButtonStencil >> extent: aPoint [
 	extent := aPoint
 ]
 
+{ #category : #accessing }
+GtSpotterDropdownButtonStencil >> icon: anIcon [
+	icon := anIcon
+]
+
 { #category : #initialization }
 GtSpotterDropdownButtonStencil >> initialize [
 	super initialize.
 	spotterElementAction := [ :aSpotterElement | "do nothing" ].
 	actOn := [ :anActOnEvent :anItem :aButton | "do nothing" ].
+	icon := BrGlamorousVectorIcons search.
 	tooltip := 'Search'.
 	extent := 600 @ 400.
 	self receiver: GtSpotterStart selector: #new.

@@ -81,6 +81,11 @@ GtSpotterDropdownButtonStencil >> extent: aPoint [
 ]
 
 { #category : #accessing }
+GtSpotterDropdownButtonStencil >> icon [
+	^ icon
+]
+
+{ #category : #accessing }
 GtSpotterDropdownButtonStencil >> icon: anIcon [
 	icon := anIcon
 ]
@@ -101,7 +106,7 @@ GtSpotterDropdownButtonStencil >> newDropdownLookWithSpotterModel: aSpotterModel
 	| aLook aSpotterElement |
 	aLook := BrGlamorousDropdownLook new
 		handle: (BrButton new
-			icon: BrGlamorousVectorIcons search;
+			icon: self icon;
 			label: self tooltip;
 			look: BrGlamorousButtonWithIconLook 
 				- BrGlamorousButtonWithLabelTooltipLook

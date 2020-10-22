@@ -27,43 +27,35 @@ GtSpotterDropdownButtonStencil >> actOn: aBlock [
 ]
 
 { #category : #'private - actions' }
-GtSpotterDropdownButtonStencil >> actOnHandlerWithDropdown: aDropdownLook andButton: aButton [
+GtSpotterDropdownButtonStencil >> actOnHandlerWithButton: aButton [
 	^ [ :anEvent | 
 		self actOn cull: anEvent cull: anEvent realItem cull: aButton.
 		"hide Spotter in the next Space iteration 
 		to be able to open a new World tab if necessary"
-		aDropdownLook widgetDo: [ :aWidget | 
-			aWidget enqueueTask: (BlTaskAction new action: [
-				aDropdownLook hide ]) ] ].
+
+		aButton enqueueTask: (BlTaskAction new action: [
+			aButton fireEvent: (BrDropdownHideWish new anchor: aButton) ]) ].
 ]
 
 { #category : #'api - instantiation' }
 GtSpotterDropdownButtonStencil >> create [
 	| aButton |
+
 	aButton := BrButton new.
 	aButton
 		icon: icon;
 		label: self tooltip;
 		look: BrGlamorousButtonWithIconLook;
-		addLook: (BrGlamorousWithDropdownLook stencil: [ self dropdownStencilFor: aButton ]).
-	^ aButton.
-]
-
-{ #category : #'private - instantiation' }
-GtSpotterDropdownButtonStencil >> dropdownStencilFor: aButton [ 
-	| aSpotterModel aDropdownLook |
-	aSpotterModel := GtSpotter new initializeWith: self object.
-	aDropdownLook := self newDropdownLookWithSpotterModel: aSpotterModel.
-	aSpotterModel announcer
-		when: GtSpotterExitAnnouncement
-		send: #hide
-		to: aDropdownLook.
-	aSpotterModel announcer 
-		when: GtSpotterActOn
-		do: (self actOnHandlerWithDropdown: aDropdownLook andButton: aButton).
-	^ BlElement new
-		look: aDropdownLook;
-		background: BrGlamorousColors secondaryHeaderBackgroundColor
+		addLook: (BrGlamorousWithDropdownLook
+			handle: [ BrButton new
+				icon: self icon;
+				label: self tooltip;
+				look: BrGlamorousButtonWithIconLook 
+					- BrGlamorousButtonWithLabelTooltipLook
+					- BrGlamorousButtonExteriorLook ]
+			content: [ self spotterElementFor: aButton ]
+			lookDo: [ :aDropdownLook | aDropdownLook background: BrGlamorousColors secondaryHeaderBackgroundColor ]).
+	^ aButton
 ]
 
 { #category : #'api - accessing' }
@@ -80,12 +72,12 @@ GtSpotterDropdownButtonStencil >> extent: aPoint [
 	extent := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : #'api - accessing' }
 GtSpotterDropdownButtonStencil >> icon [
 	^ icon
 ]
 
-{ #category : #accessing }
+{ #category : #'api - accessing' }
 GtSpotterDropdownButtonStencil >> icon: anIcon [
 	icon := anIcon
 ]
@@ -99,24 +91,6 @@ GtSpotterDropdownButtonStencil >> initialize [
 	tooltip := 'Search'.
 	extent := 600 @ 400.
 	self receiver: GtSpotterStart selector: #new.
-]
-
-{ #category : #'private - instantiation' }
-GtSpotterDropdownButtonStencil >> newDropdownLookWithSpotterModel: aSpotterModel [
-	| aLook aSpotterElement |
-	aLook := BrGlamorousDropdownLook new
-		handle: (BrButton new
-			icon: self icon;
-			label: self tooltip;
-			look: BrGlamorousButtonWithIconLook 
-				- BrGlamorousButtonWithLabelTooltipLook
-				- BrGlamorousButtonExteriorLook);
-		content: (aSpotterElement := GtSpotterElement new
-			spotterModel: aSpotterModel;
-			size: self extent).
-	spotterElementAction ifNotNil: [ :theAction | 
-		theAction cull: aSpotterElement ].
-	^ aLook
 ]
 
 { #category : #'private - accessing' }
@@ -144,6 +118,30 @@ GtSpotterDropdownButtonStencil >> spotterElementDo: aOneArgBlock [
 	Remember that the element size can be set using ${method:GtSpotterDropdownButtonStencil>>extent:}$.
 	The block receives one argument [ :aSpotterElement | ]."
 	spotterElementAction := aOneArgBlock
+]
+
+{ #category : #'private - instantiation' }
+GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
+	| aSpotterModel aSpotterElement |
+
+	aSpotterModel := GtSpotter new initializeWith: self object.
+
+	aSpotterElement := GtSpotterElement new
+		spotterModel: aSpotterModel;
+		size: self extent.
+
+	spotterElementAction ifNotNil: [ :theAction | 
+		theAction cull: aSpotterElement ].
+
+	aSpotterModel announcer
+		when: GtSpotterExitAnnouncement
+		do: [ aButton fireEvent: (BrDropdownHideWish new anchor: aButton) ].
+
+	aSpotterModel announcer
+		when: GtSpotterActOn
+		do: (self actOnHandlerWithButton: aButton).
+
+	^ aSpotterElement
 ]
 
 { #category : #'api - accessing' }

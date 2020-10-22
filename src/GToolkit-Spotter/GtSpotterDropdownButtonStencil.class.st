@@ -135,7 +135,7 @@ GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
 
 	aSpotterModel announcer
 		when: GtSpotterExitAnnouncement
-		do: [ aButton fireEvent: (BrDropdownHideWish new anchor: aButton) ].
+		do: [ aButton dispatchEvent: (BrDropdownHideWish new) ].
 
 	aSpotterModel announcer
 		when: GtSpotterActOn

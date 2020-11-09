@@ -136,7 +136,7 @@ GtSpotterElement >> initialize [
 GtSpotterElement >> initializeListeners [
 	self bindingDictionnary
 		associationsDo: [ :anAssociation |
-			self addShortcut: (BlShortcut new combination: anAssociation key; action: anAssociation value).
+			self addShortcut: (BlShortcutWithAction new combination: anAssociation key; action: anAssociation value).
 			self searchField removeShortcutsWithCombination: anAssociation key ]
 ]
 

@@ -95,7 +95,7 @@ GtSpotterCandidateElement >> initializeActOnButton [
 GtSpotterCandidateElement >> initializeDiveInButton [
 	diveInButton := BrButton new
 		look: BrGlamorousButtonWithIconLook;
-		icon: BrGlamorousIcons right;
+		icon: BrGlamorousVectorIcons right;
 		label: 'Dive-In to Search Item Details';
 		action: [ self diveInDueTo: #buttonClick ];
 		visibility: BlVisibility hidden;

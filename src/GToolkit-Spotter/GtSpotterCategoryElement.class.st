@@ -104,7 +104,7 @@ GtSpotterCategoryElement >> initializeAmountElement [
 GtSpotterCategoryElement >> initializeDiveInButton [
 	diveInButton := BrButton new
 		look: BrGlamorousButtonWithIconLook;
-		icon: BrGlamorousIcons right;
+		icon: BrGlamorousVectorIcons right;
 		label: 'Dive-In Category to Refine Search Results';
 		visibility: BlVisibility hidden;
 		action: [ self diveInCategoryDueTo: #buttonClick ];

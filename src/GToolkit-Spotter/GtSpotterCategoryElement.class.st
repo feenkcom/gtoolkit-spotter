@@ -86,9 +86,9 @@ GtSpotterCategoryElement >> initializeActOnButton [
 		label: 'Select Category Items';
 		action: [ self actDueTo: #buttonClick ];
 		visibility: BlVisibility hidden;
-		beTiny;
+		beTinySize;
 		fitContent;
-		alignCenterLeft.
+		alignCenterLeft
 ]
 
 { #category : #initialization }
@@ -108,9 +108,9 @@ GtSpotterCategoryElement >> initializeDiveInButton [
 		label: 'Dive-In Category to Refine Search Results';
 		visibility: BlVisibility hidden;
 		action: [ self diveInCategoryDueTo: #buttonClick ];
-		beTiny;
+		beTinySize;
 		fitContent;
-		alignCenterLeft.
+		alignCenterLeft
 ]
 
 { #category : #initialization }

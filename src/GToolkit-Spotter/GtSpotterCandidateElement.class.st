@@ -86,9 +86,9 @@ GtSpotterCandidateElement >> initializeActOnButton [
 		label: 'Select Item';
 		action: [ self actDueTo: #buttonClick ];
 		visibility: BlVisibility hidden;
-		beTiny;
+		beTinySize;
 		fitContent;
-		alignCenterLeft.
+		alignCenterLeft
 ]
 
 { #category : #initialization }
@@ -99,9 +99,9 @@ GtSpotterCandidateElement >> initializeDiveInButton [
 		label: 'Dive-In to Search Item Details';
 		action: [ self diveInDueTo: #buttonClick ];
 		visibility: BlVisibility hidden;
-		beTiny;
+		beTinySize;
 		fitContent;
-		alignCenterLeft.
+		alignCenterLeft
 ]
 
 { #category : #initialization }

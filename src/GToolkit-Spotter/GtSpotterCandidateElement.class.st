@@ -85,10 +85,8 @@ GtSpotterCandidateElement >> initializeActOnButton [
 		icon: BrGlamorousVectorIcons accept;
 		label: 'Select Item';
 		action: [ self actDueTo: #buttonClick ];
-		visibility: BlVisibility hidden;
 		beTinySize;
-		fitContent;
-		alignCenterLeft
+		visibility: BlVisibility hidden
 ]
 
 { #category : #initialization }

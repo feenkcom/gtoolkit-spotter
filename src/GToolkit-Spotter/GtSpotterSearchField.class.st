@@ -37,11 +37,7 @@ GtSpotterSearchField >> spotterModel: aGtSpotter [
 	spotterModel := aGtSpotter.
 	
 	self editor
-		when: BrTextEditorInsertedEvent
-		do: [ :anEvent | self spotterModel search: anEvent currentTarget text asString ].
-	
-	self editor
-		when: BrTextEditorDeletedEvent
+		when: BrTextEditorModifiedEvent
 		do: [ :anEvent | self spotterModel search: anEvent currentTarget text asString ].
 
 	spotterModel announcer 

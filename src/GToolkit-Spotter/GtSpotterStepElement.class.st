@@ -29,12 +29,13 @@ GtSpotterStepElement >> initialize [
 	self removeShortcutsWithCombination: BlKeyCombination arrowDown.
 	self removeShortcutsWithCombination: BlKeyCombination arrowUp.
 	self removeShortcutsWithCombination: BlKeyCombination arrowLeft.
-	self removeShortcutsWithCombination: BlKeyCombination arrowRight
+	self removeShortcutsWithCombination: BlKeyCombination arrowRight.
+	self beInSeparateCompositionLayer
 ]
 
 { #category : #initialization }
 GtSpotterStepElement >> initializeColumn [
-
+	self rowStencil: BrGlamorousColumnedTreeSelectableRowElementStencilBuilder new.
 	self nodeType: [ :anItemTypeFactory :aTreeNode :aNodeIndex | 
 		aTreeNode value isCollection
 			ifFalse: [ GtSpotterCandidateElement ] 

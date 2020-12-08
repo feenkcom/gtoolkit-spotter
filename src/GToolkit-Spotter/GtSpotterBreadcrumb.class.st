@@ -54,7 +54,7 @@ GtSpotterBreadcrumb >> initialize [
 
 	self when: BrSelectionChanged do: [ :anEvent |
 		anEvent withIndexDo: [ :anIndex :isSelected |
-			(self itemAt: anIndex) dispatchEvent: (BrSelectedWish selected: isSelected) ] ]
+			 (self itemAt: anIndex) dispatchEvent: (BlElementSelectedStateWish selected: isSelected) ] ]
 ]
 
 { #category : #'event handling' }

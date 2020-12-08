@@ -35,7 +35,7 @@ GtSpotterStepElement >> initialize [
 
 { #category : #initialization }
 GtSpotterStepElement >> initializeColumn [
-
+	self rowStencil: BrGlamorousColumnedTreeSelectableRowElementStencilBuilder new.
 	self nodeType: [ :anItemTypeFactory :aTreeNode :aNodeIndex | 
 		aTreeNode value isCollection
 			ifFalse: [ GtSpotterCandidateElement ] 

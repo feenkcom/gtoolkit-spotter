@@ -152,11 +152,11 @@ GtSpotterElement >> initializeSpotterElements [
 	
 	header := self createHeaderElement.
 	
-	results := BrPager new.
+	results := BrPager new background: Color white.
 	results look: BrProportionalPagerLook new.
 	results hMatchParent; vMatchParent.
 
-	stepsPager := GtSpotterPager new.
+	stepsPager := GtSpotterPager new background: Color white.
 	results addPage: (BlElement new
 		viewModel: BrPagerPageModel new;
 		constraintsDo: [ :c |

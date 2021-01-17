@@ -108,25 +108,23 @@ GtSpotterElement >> initialize [
 			target: self;
 			beBottom;
 			look: (BrGlamorousResizerLook new);
-			when: BlResizerResizedEvent do: [ :anEvent | self fireEvent: (GtSpotterResizedEvent target: self) ];
-			constraintsDo: [ :c | 
+			when: BlResizerResizedEvent do: [ :anEvent | self fireEvent: GtSpotterResizedEvent new ];
+			constraintsDo: [ :c |
 				c ignoreByLayout.
 				c ignored horizontal weight: 0.2 ]).
 	self addChild: (BrResizer new
 			target: self;
 			beLeft;
 			look: BrGlamorousResizerLook;
-			when: BlResizerResizedEvent do: [ :anEvent | self fireEvent: (GtSpotterResizedEvent target: self) ];
+			when: BlResizerResizedEvent do: [ :anEvent | self fireEvent: GtSpotterResizedEvent new ];
 			constraintsDo: [ :c | 
 				c ignoreByLayout.
 				c ignored vertical weight: 0.2 ]).
 	self addChild: (BrResizer new
 			target: self;
-			"addEventHandlerOn: BlDoubleClickEvent do: [ :anEvent |
-				aResizableElement constraintsDo: [ :c | c vertical fitContent ] ]; "
 			beRight;
 			look: BrGlamorousResizerLook;
-			when: BlResizerResizedEvent do: [ :anEvent | self fireEvent: (GtSpotterResizedEvent target: self) ];
+			when: BlResizerResizedEvent do: [ :anEvent | self fireEvent: GtSpotterResizedEvent new ];
 			constraintsDo: [ :c | 
 				c ignoreByLayout.
 				c ignored vertical weight: 0.2 ])

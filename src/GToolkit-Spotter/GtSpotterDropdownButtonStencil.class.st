@@ -5,9 +5,9 @@ Class {
 		'actOn',
 		'tooltip',
 		'valuable',
-		'extent',
 		'spotterElementAction',
-		'icon'
+		'icon',
+		'extentComputation'
 	],
 	#category : #'GToolkit-Spotter-Stencils'
 }
@@ -61,15 +61,17 @@ GtSpotterDropdownButtonStencil >> create [
 { #category : #'api - accessing' }
 GtSpotterDropdownButtonStencil >> extent [
 	<return: #Point>
-	^ extent 
+
+	^ extentComputation value
 ]
 
 { #category : #'api - accessing' }
-GtSpotterDropdownButtonStencil >> extent: aPoint [
+GtSpotterDropdownButtonStencil >> extent: aPointOrBlock [
 	self 
-		assert: [ aPoint isNotNil ]
+		assert: [ aPointOrBlock isNotNil ]
 		description: [ 'Extent must be non-nil' ].
-	extent := aPoint
+
+	extentComputation := aPointOrBlock
 ]
 
 { #category : #'api - accessing' }
@@ -89,7 +91,11 @@ GtSpotterDropdownButtonStencil >> initialize [
 	actOn := [ :anActOnEvent :anItem :aButton | "do nothing" ].
 	icon := BrGlamorousVectorIcons search.
 	tooltip := 'Search'.
-	extent := 600 @ 400.
+	
+	"Extent should be a computation block, otherwise the size in the stencil
+	would only change after the recreation of the stencil.
+	see https://github.com/feenkcom/gtoolkit/issues/1745"
+	extentComputation := [ 600 @ 400 ].
 	self receiver: GtSpotterStart selector: #new.
 ]
 

@@ -362,7 +362,7 @@ GtSpotter >> initializeWith: anFoundationObject [
 { #category : #testing }
 GtSpotter >> isPreviewVisible [
 
-	^ isPreviewVisible ifNil: [ isPreviewVisible := false ]
+	^ isPreviewVisible ifNil: [ isPreviewVisible := self class isPreviewVisible ]
 ]
 
 { #category : #accessing }

@@ -188,6 +188,16 @@ GtSpotterElement >> onCloseSpotter [
 			ifFalse: [ self removeFromParent ]
 ]
 
+{ #category : #'private - event handling' }
+GtSpotterElement >> onHidePreview [
+	results removePage: preview
+]
+
+{ #category : #'private - event handling' }
+GtSpotterElement >> onShowPreview [
+	results addPage: preview
+]
+
 { #category : #'private - accessing elements' }
 GtSpotterElement >> searchField [
 	^ self header searchField
@@ -221,11 +231,13 @@ GtSpotterElement >> spotterModel: aSpotter [
 	preview spotterModel: aSpotter.
 	
 	aSpotter isPreviewVisible 
-		ifTrue: [ preview visibility: BlVisibility visible ] 
-		ifFalse: [ preview visibility: BlVisibility gone ].
-	
+		ifTrue: [ self onShowPreview ]
+		ifFalse: [ self onHidePreview ].
+		
 	spotterModel announcer when: GtSpotterExitAnnouncement send: #onCloseSpotter to: self.
 	spotterModel announcer when: GtSpotterSelectedCandidateChanged send: #onAsyncCandidateSelected: to: self.
+	spotterModel announcer when: GtSpotterShowPreview send: #onShowPreview to: self.
+	spotterModel announcer when: GtSpotterHidePreview send: #onHidePreview to: self.
 	
 	aSpotter search
 ]

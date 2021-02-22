@@ -172,9 +172,6 @@ GtSpotterPreviewElement >> spotterModel: aSpotterModel [
 	spotterModel announcer when: GtSpotterSelectedCandidateChanged send: #onAsyncCandidateSelected: to: self.
 	spotterModel announcer when: GtSpotterExitAnnouncement send: #onExit: to: self.
 	spotterModel announcer when: GtSpotterActOn send: #onActOn: to: self.
-	
-	spotterModel class isPreviewVisible
-		ifTrue: [ spotterModel showPreview ]
 ]
 
 { #category : #'private - accessing' }

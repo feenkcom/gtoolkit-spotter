@@ -7,7 +7,8 @@ Class {
 		'valuable',
 		'spotterElementAction',
 		'icon',
-		'extentComputation'
+		'extentComputation',
+		'spotterModelAction'
 	],
 	#category : #'GToolkit-Spotter-Stencils'
 }
@@ -131,6 +132,8 @@ GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
 	| aSpotterModel aSpotterElement |
 
 	aSpotterModel := GtSpotter new initializeWith: self object.
+	spotterModelAction ifNotNil: [ :theAction |
+		theAction cull: aSpotterModel ].
 
 	aSpotterElement := GtSpotterElement new
 		spotterModel: aSpotterModel;
@@ -148,6 +151,13 @@ GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
 		do: (self actOnHandlerWithButton: aButton).
 
 	^ aSpotterElement
+]
+
+{ #category : #'api - accessing' }
+GtSpotterDropdownButtonStencil >> spotterModelDo: aOneArgBlock [
+	"Configure a ${class:GtSpotter}$ instance.
+	The block receives one argument [ :aSpotter | ]."
+	spotterModelAction := aOneArgBlock
 ]
 
 { #category : #'api - accessing' }

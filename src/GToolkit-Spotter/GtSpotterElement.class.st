@@ -220,6 +220,10 @@ GtSpotterElement >> spotterModel: aSpotter [
 	stepsPager spotterModel: aSpotter.
 	preview spotterModel: aSpotter.
 	
+	aSpotter isPreviewVisible 
+		ifTrue: [ preview visibility: BlVisibility visible ] 
+		ifFalse: [ preview visibility: BlVisibility gone ].
+	
 	spotterModel announcer when: GtSpotterExitAnnouncement send: #onCloseSpotter to: self.
 	spotterModel announcer when: GtSpotterSelectedCandidateChanged send: #onAsyncCandidateSelected: to: self.
 	

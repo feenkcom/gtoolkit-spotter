@@ -36,6 +36,11 @@ GtSpotterSearchField >> spotterModel [
 GtSpotterSearchField >> spotterModel: aGtSpotter [
 	spotterModel := aGtSpotter.
 	
+	aGtSpotter text ifNotEmpty: [ 
+		self editor text: aGtSpotter text asRopedText.
+		self editor selecter all; select.
+	].
+
 	self editor
 		when: BrTextEditorModifiedEvent
 		do: [ :anEvent | self spotterModel search: anEvent currentTarget text asString ].

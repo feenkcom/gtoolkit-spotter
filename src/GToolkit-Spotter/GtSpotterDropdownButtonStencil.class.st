@@ -5,10 +5,10 @@ Class {
 		'actOn',
 		'tooltip',
 		'valuable',
-		'spotterElementAction',
 		'icon',
 		'extentComputation',
-		'spotterModelAction'
+		'spotterModelActions',
+		'spotterElementActions'
 	],
 	#category : #'GToolkit-Spotter-Stencils'
 }
@@ -28,14 +28,13 @@ GtSpotterDropdownButtonStencil >> actOn: aBlock [
 ]
 
 { #category : #'private - actions' }
-GtSpotterDropdownButtonStencil >> actOnHandlerWithButton: aButton [
-	^ [ :anEvent | 
-		self actOn cull: anEvent cull: anEvent realItem cull: aButton.
-		"hide Spotter in the next Space iteration 
-		to be able to open a new World tab if necessary"
+GtSpotterDropdownButtonStencil >> actOn: anAnnouncement button: aButton [
+	self actOn cull: anAnnouncement cull: anAnnouncement realItem cull: aButton.
 
-		aButton enqueueTask: (BlTaskAction new action: [
-			aButton fireEvent: (BrDropdownHideWish new anchor: aButton) ]) ].
+	"hide Spotter in the next Space iteration 
+	to be able to open a new World tab if necessary"
+	aButton enqueueTask: (BlTaskAction new action: [
+		aButton fireEvent: (BrDropdownHideWish new anchor: aButton) ]).
 ]
 
 { #category : #'api - instantiation' }
@@ -75,6 +74,11 @@ GtSpotterDropdownButtonStencil >> extent: aPointOrBlock [
 	extentComputation := aPointOrBlock
 ]
 
+{ #category : #'api - preview' }
+GtSpotterDropdownButtonStencil >> hidePreview [
+	self spotterModelDo: [ :aSpotter | aSpotter hidePreview ]
+]
+
 { #category : #'api - accessing' }
 GtSpotterDropdownButtonStencil >> icon [
 	^ icon
@@ -88,7 +92,8 @@ GtSpotterDropdownButtonStencil >> icon: anIcon [
 { #category : #initialization }
 GtSpotterDropdownButtonStencil >> initialize [
 	super initialize.
-	spotterElementAction := [ :aSpotterElement | "do nothing" ].
+	spotterModelActions := Array empty.
+	spotterElementActions := Array empty.
 	actOn := [ :anActOnEvent :anItem :aButton | "do nothing" ].
 	icon := BrGlamorousVectorIcons search.
 	tooltip := 'Search'.
@@ -112,6 +117,16 @@ GtSpotterDropdownButtonStencil >> object: anObject [
 	valuable := GtSpotterDropdownObjectSource object: anObject
 ]
 
+{ #category : #'api - preview' }
+GtSpotterDropdownButtonStencil >> onPreviewChangedDo: aBlock [
+	"Block is evaluated on preview satus changes.
+	It receives the status: [ :isDisplayed | ... ]"
+	self spotterModelDo: [ :aSpotter | 
+		aSpotter announcer
+			when: GtSpotterHidePreview, GtSpotterShowPreview
+			do: [ :anEvent | aBlock value: aSpotter isPreviewVisible ] ]
+]
+
 { #category : #'api - accessing' }
 GtSpotterDropdownButtonStencil >> receiver: aReceiver selector: aSelector [
 	valuable := GtSpotterDropdownValuableSource 
@@ -119,36 +134,53 @@ GtSpotterDropdownButtonStencil >> receiver: aReceiver selector: aSelector [
 		selector: aSelector
 ]
 
+{ #category : #'api - preview' }
+GtSpotterDropdownButtonStencil >> showPreview [
+	self spotterModelDo: [ :aSpotter | aSpotter showPreview ]
+]
+
+{ #category : #'api - preview' }
+GtSpotterDropdownButtonStencil >> showPreview: aValuable [
+	"Valuable must return a boolean value.
+	true  = show preview
+	false = hide preview"
+	self spotterModelDo: [ :aSpotter | aSpotter showPreview: aValuable value ]
+]
+
 { #category : #'api - accessing' }
 GtSpotterDropdownButtonStencil >> spotterElementDo: aOneArgBlock [
 	"Configure a ${class:GtSpotterElement}$ instance.
 	Remember that the element size can be set using ${method:GtSpotterDropdownButtonStencil>>extent:}$.
 	The block receives one argument [ :aSpotterElement | ]."
-	spotterElementAction := aOneArgBlock
+	spotterElementActions := spotterElementActions copyWith: aOneArgBlock
 ]
 
-{ #category : #'private - instantiation' }
+{ #category : #'api - instantiation' }
 GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
 	| aSpotterModel aSpotterElement |
 
 	aSpotterModel := GtSpotter new initializeWith: self object.
-	spotterModelAction ifNotNil: [ :theAction |
-		theAction cull: aSpotterModel ].
+	spotterModelActions do: [ :eachAction |
+		eachAction cull: aSpotterModel ].
 
 	aSpotterElement := GtSpotterElement new
 		spotterModel: aSpotterModel;
 		size: self extent.
 
-	spotterElementAction ifNotNil: [ :theAction | 
-		theAction cull: aSpotterElement ].
+	spotterElementActions do: [ :eachAction | 
+		eachAction cull: aSpotterElement ].
 
 	aSpotterModel announcer
 		when: GtSpotterExitAnnouncement
-		do: [ aButton dispatchEvent: (BrDropdownHideWish new) ].
+		do: [ 
+			aSpotterModel announcer unsubscribe: self.
+			aButton dispatchEvent: (BrDropdownHideWish new) ].
 
 	aSpotterModel announcer
 		when: GtSpotterActOn
-		do: (self actOnHandlerWithButton: aButton).
+		do: [ :anAnnouncement |
+			aSpotterModel announcer unsubscribe: self.
+			self actOn: anAnnouncement button: aButton ].
 
 	^ aSpotterElement
 ]
@@ -157,7 +189,7 @@ GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
 GtSpotterDropdownButtonStencil >> spotterModelDo: aOneArgBlock [
 	"Configure a ${class:GtSpotter}$ instance.
 	The block receives one argument [ :aSpotter | ]."
-	spotterModelAction := aOneArgBlock
+	spotterModelActions := spotterModelActions copyWith: aOneArgBlock
 ]
 
 { #category : #'api - accessing' }

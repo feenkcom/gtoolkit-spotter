@@ -27,7 +27,7 @@ GtSpotterElement >> bindingDictionnary [
 	^ {
 	BlKeyCombination escape -> [ self exitDueTo: #keyPressedEscape ].
 	BlKeyCombination primaryW -> [ self exitDueTo: #keyPressedW ].
-	"(BlKeyCombination primaryP -> [ self togglePreview ])."
+	BlKeyCombination primaryP -> [ self togglePreview ].
 
 	"(Character arrowUp -> [ self selectPreviousCandidateDueTo: #keyPressedArrowUp ])."
 	"(Character arrowDown -> [ self selectNextCandidateDueTo: #keyPressedArrowDown ])."
@@ -245,4 +245,10 @@ GtSpotterElement >> spotterModel: aSpotter [
 { #category : #'private - accessing' }
 GtSpotterElement >> spotterModelDo: aBlock [
 	spotterModel ifNotNil: aBlock
+]
+
+{ #category : #'private - event handling' }
+GtSpotterElement >> togglePreview [
+	self spotterModelDo: [ :aSpotter | 
+		aSpotter togglePreview ]
 ]

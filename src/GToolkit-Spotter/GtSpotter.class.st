@@ -16,7 +16,6 @@ Class {
 	],
 	#classInstVars : [
 		'history',
-		'isPreviewVisible',
 		'wasOpened'
 	],
 	#category : #'GToolkit-Spotter-Model'
@@ -26,12 +25,6 @@ Class {
 GtSpotter class >> cleanUp [
 	self resetHistory.
 	wasOpened := false
-]
-
-{ #category : #accessing }
-GtSpotter class >> dontShowPreview [
-
-	isPreviewVisible := false
 ]
 
 { #category : #accessing }
@@ -55,12 +48,6 @@ GtSpotter class >> history [
 	^ history ifNil: [ history := WeakOrderedCollection new ]
 ]
 
-{ #category : #testing }
-GtSpotter class >> isPreviewVisible [
-
-	^ isPreviewVisible ifNil: [ isPreviewVisible := true ]
-]
-
 { #category : #accessing }
 GtSpotter class >> markOpened [
 
@@ -79,12 +66,6 @@ GtSpotter class >> resetHistory [
 	self resetHistory
 	"
 	^ history := nil
-]
-
-{ #category : #accessing }
-GtSpotter class >> showPreview [
-
-	isPreviewVisible := true
 ]
 
 { #category : #inspecting }
@@ -312,7 +293,6 @@ GtSpotter >> hidePreview [
 		ifFalse: [ ^ self ].
 	isPreviewVisible := false.
 	
-	self class dontShowPreview.
 	self notifyHidePreview
 ]
 
@@ -362,7 +342,7 @@ GtSpotter >> initializeWith: anFoundationObject [
 { #category : #testing }
 GtSpotter >> isPreviewVisible [
 
-	^ isPreviewVisible ifNil: [ isPreviewVisible := self class isPreviewVisible ]
+	^ isPreviewVisible ifNil: [ isPreviewVisible := true ]
 ]
 
 { #category : #accessing }
@@ -669,8 +649,15 @@ GtSpotter >> showPreview [
 
 	isPreviewVisible := true.
 
-	self class showPreview.
 	self notifyShowPreview
+]
+
+{ #category : #'api - preview' }
+GtSpotter >> showPreview: aBoolean [
+
+	aBoolean
+		ifTrue: [ self showPreview ]
+		ifFalse: [ self hidePreview ]
 ]
 
 { #category : #accessing }

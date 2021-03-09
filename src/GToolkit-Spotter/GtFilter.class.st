@@ -65,6 +65,11 @@ GtFilter >> applyFilterInContext: aSpotterContext [
 
 { #category : #private }
 GtFilter >> applyFilterInContext: aSpotterContext error: anException [
+	GtSpotterExceptionFilterSignal new
+		filter: self;
+		exception: anException freeze;
+		emit.
+
 	('[Spotter] Exception in filter <' , self class name , '>: '
 		, anException asString) traceCr.
 	^ self defaultFilteredItems

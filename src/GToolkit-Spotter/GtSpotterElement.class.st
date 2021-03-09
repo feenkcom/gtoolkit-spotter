@@ -151,7 +151,7 @@ GtSpotterElement >> initializeSpotterElements [
 	header := self createHeaderElement.
 	
 	results := BrPager new background: Color white.
-	results look: BrProportionalPagerLook new.
+	results look: BrProportionalHorizontalPagerLook new.
 	results hMatchParent; vMatchParent.
 
 	stepsPager := GtSpotterPager new background: Color white.

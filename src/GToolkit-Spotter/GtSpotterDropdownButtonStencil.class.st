@@ -2,6 +2,7 @@ Class {
 	#name : #GtSpotterDropdownButtonStencil,
 	#superclass : #BrStencil,
 	#instVars : [
+		'id',
 		'actOn',
 		'tooltip',
 		'valuable',
@@ -43,6 +44,7 @@ GtSpotterDropdownButtonStencil >> create [
 
 	aButton := BrButton new.
 	aButton
+		id: id;
 		icon: icon;
 		label: self tooltip;
 		look: BrGlamorousButtonWithIconLook;
@@ -89,9 +91,23 @@ GtSpotterDropdownButtonStencil >> icon: anIcon [
 	icon := anIcon
 ]
 
+{ #category : #'api - accessing' }
+GtSpotterDropdownButtonStencil >> id [
+	<return: #BlElementId>
+
+	^ id
+]
+
+{ #category : #'api - accessing' }
+GtSpotterDropdownButtonStencil >> id: aBlElementId [
+	id := aBlElementId
+]
+
 { #category : #initialization }
 GtSpotterDropdownButtonStencil >> initialize [
 	super initialize.
+	
+	id := BlElementId noId.
 	spotterModelActions := Array empty.
 	spotterElementActions := Array empty.
 	actOn := [ :anActOnEvent :anItem :aButton | "do nothing" ].

@@ -34,9 +34,9 @@ BaselineOfGToolkitSpotter >> baseline: spec [
 	spec for: #'common' do: [
 		spec 
 			baseline: 'Brick' with: [
-				spec repository: 'github://feenkcom/Brick:v0.8.284/src' ];
+				spec repository: 'github://feenkcom/Brick:v0.8.285/src' ];
 			baseline: 'GToolkitExamples' with: [
-				spec repository: 'github://feenkcom/gtoolkit-examples:v0.8.17/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-examples:v0.8.18/src' ].
 		spec 
 			package: 'GToolkit-Spotter' with: [
 				spec requires: #('Brick' ). ];

@@ -11,7 +11,7 @@ Class {
 GtSpotterSearchField >> initialize [
 	super initialize.
 
-	self look: (BrGlamorousRegularEditorLook new fontSize: 18).
+	self aptitude: (BrGlamorousRegularEditorAptitude new fontSize: 18).
 	self requestFocus
 ]
 

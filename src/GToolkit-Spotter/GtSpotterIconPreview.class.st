@@ -145,7 +145,7 @@ GtSpotterIconPreview >> method [
 GtSpotterIconPreview >> newClipboardElement [
 	^ BrButton new
 		"look: BrGlamorousButtonRectangularLook + BrGlamorousButtonIconLook + BrGlamorousWithLabelTooltipLook;"
-		look: BrGlamorousButtonWithIconLook;
+		aptitude: BrGlamorousButtonWithIconAptitude;
 		icon: BrGlamorousVectorIcons clipboard;
 		label: 'Copy to clipboard' translated;
 		action: [ :aButton | 
@@ -157,7 +157,7 @@ GtSpotterIconPreview >> newClipboardElement [
 { #category : #'instance creation' }
 GtSpotterIconPreview >> newCodeEditor [
 	^ BrEditor new
-		look: BrGlamorousCodeEditorLook;
+		aptitude: BrGlamorousCodeEditorAptitude;
 		beReadOnlyWithSelection;
 		background: Color white;
 		margin: (BlInsets all: 5);

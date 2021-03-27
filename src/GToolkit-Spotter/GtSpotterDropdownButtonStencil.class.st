@@ -47,16 +47,16 @@ GtSpotterDropdownButtonStencil >> create [
 		id: id;
 		icon: icon;
 		label: self tooltip;
-		look: BrGlamorousButtonWithIconLook;
-		addLook: (BrGlamorousWithDropdownLook
+		aptitude: BrGlamorousButtonWithIconAptitude;
+		addAptitude: (BrGlamorousWithDropdownAptitude
 			handle: [ BrButton new
 				icon: self icon;
 				label: self tooltip;
-				look: BrGlamorousButtonWithIconLook 
-					- BrGlamorousButtonWithLabelTooltipLook
-					- BrGlamorousButtonExteriorLook ]
+				aptitude: BrGlamorousButtonWithIconAptitude 
+					- BrGlamorousButtonWithLabelTooltipAptitude
+					- BrGlamorousButtonExteriorAptitude ]
 			content: [ self spotterElementFor: aButton ]
-			lookDo: [ :aDropdownLook | aDropdownLook background: BrGlamorousColors secondaryHeaderBackgroundColor ]).
+			aptitudeDo: [ :aDropdownLook | aDropdownLook background: BrGlamorousColors secondaryHeaderBackgroundColor ]).
 	^ aButton
 ]
 

@@ -81,7 +81,7 @@ GtSpotterCategoryElement >> initialize [
 { #category : #initialization }
 GtSpotterCategoryElement >> initializeActOnButton [
 	actOnButton := BrButton new
-		look: BrGlamorousButtonWithIconLook;
+		aptitude: BrGlamorousButtonWithIconAptitude;
 		icon: BrGlamorousVectorIcons accept;
 		label: 'Select Category Items';
 		action: [ self actDueTo: #buttonClick ];
@@ -94,7 +94,7 @@ GtSpotterCategoryElement >> initializeActOnButton [
 { #category : #initialization }
 GtSpotterCategoryElement >> initializeAmountElement [
 	amountElement := GtSpotterAmountElement new
-		look: (BrGlamorousLabelLook new foreground: Color gray; glamorousRegularSmallSize);
+		aptitude: (BrGlamorousLabelAptitude new foreground: Color gray; glamorousRegularSmallSize);
 		hFitContent;
 		vFitContent;
 		alignCenterLeft
@@ -103,7 +103,7 @@ GtSpotterCategoryElement >> initializeAmountElement [
 { #category : #initialization }
 GtSpotterCategoryElement >> initializeDiveInButton [
 	diveInButton := BrButton new
-		look: BrGlamorousButtonWithIconLook;
+		aptitude: BrGlamorousButtonWithIconAptitude;
 		icon: BrGlamorousVectorIcons right;
 		label: 'Dive-In Category to Refine Search Results';
 		visibility: BlVisibility hidden;
@@ -116,7 +116,7 @@ GtSpotterCategoryElement >> initializeDiveInButton [
 { #category : #initialization }
 GtSpotterCategoryElement >> initializeLabel [
 	labelElement := BrLabel new
-		look: (BrGlamorousLabelLook new foreground: Color gray; glamorousRegularSmallSize);
+		aptitude: (BrGlamorousLabelAptitude new foreground: Color gray; glamorousRegularSmallSize);
 		hFitContent;
 		vFitContent;
 		alignCenterLeft

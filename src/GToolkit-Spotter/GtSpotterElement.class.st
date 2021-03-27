@@ -107,7 +107,7 @@ GtSpotterElement >> initialize [
 	self addChild: (BrResizer new
 			target: self;
 			beBottom;
-			look: (BrGlamorousResizerLook new);
+			aptitude: (BrGlamorousResizerAptitude new);
 			when: BlResizerResizedEvent do: [ :anEvent | self fireEvent: GtSpotterResizedEvent new ];
 			constraintsDo: [ :c |
 				c ignoreByLayout.
@@ -115,7 +115,7 @@ GtSpotterElement >> initialize [
 	self addChild: (BrResizer new
 			target: self;
 			beLeft;
-			look: BrGlamorousResizerLook;
+			aptitude: BrGlamorousResizerAptitude;
 			when: BlResizerResizedEvent do: [ :anEvent | self fireEvent: GtSpotterResizedEvent new ];
 			constraintsDo: [ :c | 
 				c ignoreByLayout.
@@ -123,7 +123,7 @@ GtSpotterElement >> initialize [
 	self addChild: (BrResizer new
 			target: self;
 			beRight;
-			look: BrGlamorousResizerLook;
+			aptitude: BrGlamorousResizerAptitude;
 			when: BlResizerResizedEvent do: [ :anEvent | self fireEvent: GtSpotterResizedEvent new ];
 			constraintsDo: [ :c | 
 				c ignoreByLayout.
@@ -151,7 +151,7 @@ GtSpotterElement >> initializeSpotterElements [
 	header := self createHeaderElement.
 	
 	results := BrPager new background: Color white.
-	results look: BrProportionalHorizontalPagerLook new.
+	results aptitude: BrProportionalHorizontalPagerAptitude new.
 	results hMatchParent; vMatchParent.
 
 	stepsPager := GtSpotterPager new background: Color white.

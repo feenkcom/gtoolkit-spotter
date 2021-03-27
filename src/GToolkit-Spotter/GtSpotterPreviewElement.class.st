@@ -43,7 +43,7 @@ GtSpotterPreviewElement >> initialize [
 	self padding: (BlInsets all: 10).
 	
 	labelElement := BrLabel new
-		look: (BrGlamorousLabelLook new foreground: Color gray);
+		aptitude: (BrGlamorousLabelAptitude new foreground: Color gray);
 		alignCenter;
 		hMatchParent;
 		vFitContent.

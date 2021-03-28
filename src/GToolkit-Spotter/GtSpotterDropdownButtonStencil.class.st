@@ -46,7 +46,7 @@ GtSpotterDropdownButtonStencil >> create [
 		id: id;
 		icon: icon;
 		label: self tooltip;
-		look: BrGlamorousButtonWithIconAptitude;
+		aptitude: BrGlamorousButtonWithIconAptitude;
 		addAptitude:
 			(BrGlamorousWithDropdownAptitude
 				handle: [ BrButton new

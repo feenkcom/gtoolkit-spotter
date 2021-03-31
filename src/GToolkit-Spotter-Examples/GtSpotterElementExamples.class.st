@@ -35,10 +35,10 @@ GtSpotterElementExamples >> elementOnSpotterInDropdown [
 	<gtExample>
 	| look |
 	^ BrButton new
-		look:
-			BrGlamorousButtonWithIconLook
+		aptitude:
+			BrGlamorousButtonWithIconAptitude
 				+
-					(look := BrGlamorousWithDropdownLook
+					(look := BrGlamorousWithDropdownAptitude
 						stencil: [ | aSpotterElement aSpotterModel |
 							aSpotterElement := self emptyElement.
 							aSpotterModel := self defaultSpotter.
@@ -48,13 +48,13 @@ GtSpotterElementExamples >> elementOnSpotterInDropdown [
 									(#(singleClick doubleClick keyPressed) includes: e eventType)
 										ifTrue: [ look hide ] ].
 							BlElement new
-								look:
-									(BrGlamorousDropdownLook new
+								aptitude:
+									(BrGlamorousDropdownAptitude new
 										handle:
 											(BrButton new
-												look:
-													BrGlamorousButtonWithIconLook - BrGlamorousButtonWithLabelTooltipLook
-														- BrGlamorousButtonExteriorLook;
+												aptitude:
+													BrGlamorousButtonWithIconAptitude - BrGlamorousButtonWithLabelTooltipAptitude
+														- BrGlamorousButtonExteriorAptitude;
 												icon: BrGlamorousVectorIcons search;
 												yourself);
 										content:

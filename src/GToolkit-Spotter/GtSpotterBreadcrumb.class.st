@@ -29,7 +29,7 @@ GtSpotterBreadcrumb >> addStep: aNewStep [
 					ifFalse: [ origin gtDisplayText ] ] ].
 
 	self addItem: (BrButton new
-		look: (BrGlamorousButtonRectangularLook + (BrGlamorousButtonLabelLook new selectedColor: Color black));
+		aptitude: (BrGlamorousButtonRectangularAptitude + (BrGlamorousButtonLabelAptitude new selectedColor: Color black));
 		action: [ self spotterModel currentStep: aNewStep ];
 		alignCenterLeft;
 		label: aText).
@@ -41,9 +41,9 @@ GtSpotterBreadcrumb >> initialize [
 	
 	self viewModel add: (selectionModel := BrSelectionModel new).
 
-	self look: (BrBreadcrumbLinearLook new separator: [
+	self aptitude: (BrBreadcrumbLinearAptitude new separator: [
 		BrLabel new
-			look: (BrGlamorousLabelLook new thin foreground: Color gray);
+			aptitude: (BrGlamorousLabelAptitude new thin foreground: Color gray);
 			text: '>';
 			margin: (BlInsets left: 5 right: 5) ]).
 

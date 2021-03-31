@@ -81,7 +81,7 @@ GtSpotterCandidateElement >> initialize [
 { #category : #initialization }
 GtSpotterCandidateElement >> initializeActOnButton [
 	actOnButton := BrButton new
-		look: BrGlamorousButtonWithIconLook;
+		aptitude: BrGlamorousButtonWithIconAptitude;
 		icon: BrGlamorousVectorIcons accept;
 		label: 'Select Item';
 		action: [ self actDueTo: #buttonClick ];
@@ -92,7 +92,7 @@ GtSpotterCandidateElement >> initializeActOnButton [
 { #category : #initialization }
 GtSpotterCandidateElement >> initializeDiveInButton [
 	diveInButton := BrButton new
-		look: BrGlamorousButtonWithIconLook;
+		aptitude: BrGlamorousButtonWithIconAptitude;
 		icon: BrGlamorousVectorIcons right;
 		label: 'Dive-In to Search Item Details';
 		action: [ self diveInDueTo: #buttonClick ];
@@ -105,7 +105,7 @@ GtSpotterCandidateElement >> initializeDiveInButton [
 { #category : #initialization }
 GtSpotterCandidateElement >> initializeLabel [
 	label := BrLabel new
-		look: (BrGlamorousLabelLook new);
+		aptitude: (BrGlamorousLabelAptitude new);
 		hMatchParent;
 		vFitContent;
 		alignCenterLeft.

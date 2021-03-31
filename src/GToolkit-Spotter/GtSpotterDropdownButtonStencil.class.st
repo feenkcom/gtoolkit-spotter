@@ -41,22 +41,25 @@ GtSpotterDropdownButtonStencil >> actOn: anAnnouncement button: aButton [
 { #category : #'api - instantiation' }
 GtSpotterDropdownButtonStencil >> create [
 	| aButton |
-
 	aButton := BrButton new.
 	aButton
 		id: id;
 		icon: icon;
 		label: self tooltip;
-		look: BrGlamorousButtonWithIconLook;
-		addLook: (BrGlamorousWithDropdownLook
-			handle: [ BrButton new
-				icon: self icon;
-				label: self tooltip;
-				look: BrGlamorousButtonWithIconLook 
-					- BrGlamorousButtonWithLabelTooltipLook
-					- BrGlamorousButtonExteriorLook ]
-			content: [ self spotterElementFor: aButton ]
-			lookDo: [ :aDropdownLook | aDropdownLook background: BrGlamorousColors secondaryHeaderBackgroundColor ]).
+		aptitude: BrGlamorousButtonWithIconAptitude;
+		addAptitude:
+			(BrGlamorousWithDropdownAptitude
+				handle: [ BrButton new
+						icon: self icon;
+						label: self tooltip;
+						aptitude:
+							BrGlamorousButtonWithIconAptitude
+								- BrGlamorousButtonWithLabelTooltipAptitude
+								- BrGlamorousButtonExteriorAptitude ]
+				content: [ self spotterElementFor: aButton ]
+				aptitudeDo: [ :aDropdownLook | 
+					aDropdownLook
+						background: BrGlamorousColors secondaryHeaderBackgroundColor ]).
 	^ aButton
 ]
 

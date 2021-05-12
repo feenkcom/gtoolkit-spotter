@@ -12,29 +12,27 @@ Class {
 { #category : #initialization }
 GtSpotterHeaderElement >> initialize [
 	super initialize.
-	
 	self layout: BlLinearLayout vertical.
-	self constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical fitContent ].
-	
+	self
+		constraintsDo: [ :c | 
+			c horizontal matchParent.
+			c vertical fitContent ].
 	breadcrumb := GtSpotterBreadcrumb new.
-	breadcrumb background: (BrGlamorousColors secondaryHeaderBackgroundColor).
-
+	breadcrumb background: self theme header secondaryBackgroundColor.
 	searchField := GtSpotterSearchField new.
-	searchField vFitContent; hMatchParent.
+	searchField
+		vFitContent;
+		hMatchParent.
 	searchField padding: (BlInsets all: 15).
-	
-	self addChildren: {
-		breadcrumb.
-		searchField.
-		
-		BlElement new
-			constraintsDo: [ :c |
-				c horizontal matchParent.
-				c vertical exact: 1 ];
-			background: BrGlamorousColors secondaryHeaderBackgroundColor
-	 }
+	self
+		addChildren:
+			{breadcrumb.
+			searchField.
+			(BlElement new
+				constraintsDo: [ :c | 
+					c horizontal matchParent.
+					c vertical exact: 1 ];
+				background: self theme header secondaryBackgroundColor)}
 ]
 
 { #category : #accessing }

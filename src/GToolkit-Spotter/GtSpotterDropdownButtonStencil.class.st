@@ -24,7 +24,7 @@ GtSpotterDropdownButtonStencil >> actOn [
 { #category : #'api - accessing' }
 GtSpotterDropdownButtonStencil >> actOn: aBlock [
 	"Set a block that receives a ${class:GtSpotterActOn}$, an acted on item, a button.
-	User should call ${method:aGtSpotterActOn>>#actedUpon:}$ when an action happens"
+	User should call ${method:GtSpotterActOn>>#actedUpon:}$ when an action happens"
 	actOn := aBlock
 ]
 

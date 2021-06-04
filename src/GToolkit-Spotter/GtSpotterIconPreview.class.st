@@ -2,6 +2,8 @@
 I am an abstract method.
 My subclasses know how to create an icon preview.
 My subclasses are used by Spotter to nicely display icon previews.
+
+
 "
 Class {
 	#name : #GtSpotterIconPreview,

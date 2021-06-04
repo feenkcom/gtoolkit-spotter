@@ -1,6 +1,8 @@
 "
-I create a preview for a given vertical icon, see ${class:BrGlamorousVectorIcons}$.
+I create a preview for a given vertical icon, see {{gtClass:BrGlamorousVectorIcons}}.
 I am used by Spotter to nicely display icon previews.
+
+
 "
 Class {
 	#name : #GtSpotterVectorIconPreview,

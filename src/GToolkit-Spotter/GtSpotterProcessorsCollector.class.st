@@ -1,11 +1,13 @@
 "
 I collect Spotter search pragmas.
-Each pragma is a Spotter extension for a given ${method:GtSpotterProcessorsCollector>>#object|label=#selector}$.
-By default, I look for ${example:GtSpotterProcessorsCollector>>#defaultPragmaSymbol|label=#yourself}$ pragmas. It can be changed by ${method:GtSpotterProcessorsCollector>>#pragmaName:|label=#selector}$.
-The ${method:GtSpotterProcessorsCollector>>#spotterStep|label=#selector}$ can decide whether or not an extension is enabled.
+Each pragma is a Spotter extension for a given {{gtMethod:GtSpotterProcessorsCollector>>#object|label=#selector}}.
+By default, I look for {{gtExample:GtSpotterProcessorsCollector>>#defaultPragmaSymbol|label=#yourself}} pragmas. It can be changed by {{gtMethod:GtSpotterProcessorsCollector>>#pragmaName:|label=#selector}}.
+The {{gtMethod:GtSpotterProcessorsCollector>>#spotterStep|label=#selector}} can decide whether or not an extension is enabled.
 It can also configure each extension, e.g., override any property.
 
-I am used by ${class:GtSpotterStep}$.
+I am used by {{gtClass:GtSpotterStep}}.
+
+
 "
 Class {
 	#name : #GtSpotterProcessorsCollector,

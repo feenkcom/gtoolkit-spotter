@@ -1,5 +1,7 @@
 "
 I represent a collection of candidates for some Spotter processor
+
+
 "
 Class {
 	#name : #GtSpotterProcessorCandidates,

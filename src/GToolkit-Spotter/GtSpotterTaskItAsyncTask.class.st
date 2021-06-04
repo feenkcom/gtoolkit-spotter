@@ -1,6 +1,8 @@
 "
 I am a asynchronous task adaptor.
 I use a Bloc TaskIt worker pool to schedule background tasks.
+
+
 "
 Class {
 	#name : #GtSpotterTaskItAsyncTask,

@@ -1,5 +1,7 @@
 "
 A small delay before actual searching makes spotter faster :)
+
+
 "
 Class {
 	#name : #GtSpotterTaskCommand,

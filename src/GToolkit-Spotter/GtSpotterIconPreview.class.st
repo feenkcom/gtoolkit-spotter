@@ -195,6 +195,11 @@ GtSpotterIconPreview >> newIconCreationCodeRope [
 ]
 
 { #category : #'instance creation' }
+GtSpotterIconPreview >> newIconPreviewElement [
+	^ self subclassResponsibility
+]
+
+{ #category : #'instance creation' }
 GtSpotterIconPreview >> printOn: aStream [
 	self isDefined ifFalse: [ ^ super printOn: aStream ].
 	aStream nextPutAll: self newIconCreationCode asString.

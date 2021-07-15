@@ -122,7 +122,7 @@ GtSpotterStart >> gtSpotterForPragmasFor: aStep [
 	<gtSearch>
 	aStep listProcessor
 		priority: 40;
-		allCandidates: [ PragmaType all ];
+		allCandidates: [ GtPragmaType all ];
 		title: 'Pragmas';
 		itemName: [ :pragma | pragma keyword ];
 		filter: GtFilterSubstring;

@@ -244,14 +244,14 @@ GtSpotterStart >> gtSpotterForResourcesUtilityFromStringFor: aStep [
 
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterForSendersFor: aStep [
+
 	<gtSearch>
 	aStep listProcessor
 		priority: 31;
 		title: 'Senders';
-		filter: GtNullFilter
-			item: [ :filter :context | 
+		filter: GtNullFilter item: [ :filter :context | 
 			SystemNavigation default
-				allSendersToString: context textTrimmed
+				allReferencesTo: context textTrimmed
 				do: filter ];
 		keyBinding: $n meta;
 		wantsToDisplayOnEmptyQuery: false

@@ -49,17 +49,3 @@ Object >> gtSpotterProcessorsFor: aSpotterStep [
 		spotterStep: aSpotterStep;
 		collect
 ]
-
-{ #category : #'*GToolkit-Spotter' }
-Object >> gtSpotterRePropertiesFor: aStep [
-	<gtSearch>
-	ReSettings spotterPlugin
-		ifFalse: [ ^ self ].
-	aStep listProcessor
-		priority: 0;
-		title: 'Renraku Properties';
-		items: [ self externalProperties asArray ];
-		itemName: #title;
-		itemIcon: #icon;
-		filter: GtFilterSubstring
-]

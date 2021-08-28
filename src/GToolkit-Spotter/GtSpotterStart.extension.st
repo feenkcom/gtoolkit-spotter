@@ -20,7 +20,7 @@ GtSpotterStart >> gtSpotterClipboardFor: aStep [
 GtSpotterStart >> gtSpotterForAllSubclassesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
-		priority: 12;
+		priority: 52;
 		filter: GtNullFilter
 			item: [ :filter :context | 
 				Smalltalk 
@@ -37,7 +37,7 @@ GtSpotterStart >> gtSpotterForAllSubclassesFor: aStep [
 GtSpotterStart >> gtSpotterForAllSuperclassesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
-		priority: 11;
+		priority: 51;
 		filter: GtNullFilter
 			item: [ :filter :context | 
 				Smalltalk 

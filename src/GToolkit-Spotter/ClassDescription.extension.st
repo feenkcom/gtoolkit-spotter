@@ -1,6 +1,6 @@
-Extension { #name : #ClassDescription }
+Extension { #name : 'ClassDescription' }
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 ClassDescription >> gtSpotterPackageFor: aStep [
 	<gtSearch>
 	aStep listProcessor

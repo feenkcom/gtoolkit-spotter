@@ -1,10 +1,10 @@
 Class {
-	#name : #GtSpotterClassWithNilInCandidates,
-	#superclass : #Object,
-	#category : #'GToolkit-Spotter-Examples-Exceptions'
+	#name : 'GtSpotterClassWithNilInCandidates',
+	#superclass : 'Object',
+	#category : 'GToolkit-Spotter-Examples-Exceptions'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 GtSpotterClassWithNilInCandidates >> gtMockProcessorFor: aSpotterStep [
 	<gtSearch>
 	aSpotterStep listProcessor

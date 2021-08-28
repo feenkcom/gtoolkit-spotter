@@ -1,6 +1,6 @@
 Class {
-	#name : #GtSpotter,
-	#superclass : #Object,
+	#name : 'GtSpotter',
+	#superclass : 'Object',
 	#instVars : [
 		'foundationOrigin',
 		'steps',
@@ -18,21 +18,21 @@ Class {
 		'history',
 		'wasOpened'
 	],
-	#category : #'GToolkit-Spotter-Model'
+	#category : 'GToolkit-Spotter-Model'
 }
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 GtSpotter class >> cleanUp [
 	self resetHistory.
 	wasOpened := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter class >> extensionsPragma [
 	^ #spotterOrder:
 ]
 
-{ #category : #inspecting }
+{ #category : 'inspecting' }
 GtSpotter class >> gtInspectorExtensionsIn: composite [
 	<gtInspectorPresentationOrder: 40>
 	composite list
@@ -43,24 +43,24 @@ GtSpotter class >> gtInspectorExtensionsIn: composite [
 		filterOn: [ :text :each | each gtDisplayString includesSubstring: text caseSensitive: false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter class >> history [
 	^ history ifNil: [ history := WeakOrderedCollection new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter class >> markOpened [
 
 	wasOpened := true
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtSpotter class >> on: anObject [
 	
 	^ self new initializeWith: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter class >> resetHistory [
 	"
 	self resetHistory
@@ -68,7 +68,7 @@ GtSpotter class >> resetHistory [
 	^ history := nil
 ]
 
-{ #category : #inspecting }
+{ #category : 'inspecting' }
 GtSpotter class >> spotterExtendingMethods [
 	^(SystemNavigation default allBehaviors
 		flatCollect: [ :each | 
@@ -77,13 +77,13 @@ GtSpotter class >> spotterExtendingMethods [
 		sorted
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtSpotter class >> wasOpened [
 
 	^ wasOpened ifNil: [ false ]
 ]
 
-{ #category : #'api - steps' }
+{ #category : 'api - steps' }
 GtSpotter >> addStep: aStepModel [
 	"I add a new step without changing the current step"
 
@@ -93,7 +93,7 @@ GtSpotter >> addStep: aStepModel [
 	self notifyStepAdded: aStepModel
 ]
 
-{ #category : #'api - steps' }
+{ #category : 'api - steps' }
 GtSpotter >> addStep: aSpotterStep during: aBlock [
 	"Adds aSpotterStep without announcements,
 	evaluates aBlock and removes previously added
@@ -110,7 +110,7 @@ GtSpotter >> addStep: aSpotterStep during: aBlock [
 		self steps remove: aSpotterStep ]
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 GtSpotter >> after: afterBlock do: doBlock ifTrue: conditionBlock [
 	|value|
 	value := conditionBlock brickValue: self.
@@ -118,7 +118,7 @@ GtSpotter >> after: afterBlock do: doBlock ifTrue: conditionBlock [
 	value ifTrue: [ doBlock brickValue: value ]
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 GtSpotter >> after: afterBlock do: doBlock with: withBlock [
 	|value|
 	value := withBlock brickValue: self.
@@ -126,19 +126,19 @@ GtSpotter >> after: afterBlock do: doBlock with: withBlock [
 	doBlock brickValue: value
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> announce: anAnnouncement [
 	
 	self announcer announce: anAnnouncement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter >> announcer [
 
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter >> attachedElementDo: aBlock [
 	"spotterElement is a weak reference"
 	spotterElement
@@ -146,23 +146,23 @@ GtSpotter >> attachedElementDo: aBlock [
 	(spotterElement at: 1) ifNotNil: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter >> attachedTo: anElement [
 	spotterElement := anElement asWeakReference.
 	self steps do: [ :eachStep | eachStep attachedTo: anElement ]
 ]
 
-{ #category : #'accessing-convenience' }
+{ #category : 'accessing-convenience' }
 GtSpotter >> beDebugging [
 	self exceptionHandler: GtSpotterDebuggingExceptionHandler new
 ]
 
-{ #category : #'accessing-convenience' }
+{ #category : 'accessing-convenience' }
 GtSpotter >> beDeployment [
 	self exceptionHandler: GtSpotterDeploymentExceptionHandler new
 ]
 
-{ #category : #'api - steps' }
+{ #category : 'api - steps' }
 GtSpotter >> currentStep [
 	self
 		assert: [ self hasSteps ]
@@ -175,7 +175,7 @@ GtSpotter >> currentStep [
 	^ currentStep
 ]
 
-{ #category : #'api - steps' }
+{ #category : 'api - steps' }
 GtSpotter >> currentStep: aStepModel [
 
 	self currentStep == aStepModel
@@ -185,49 +185,49 @@ GtSpotter >> currentStep: aStepModel [
 	self notifyCurrentStepChanged
 ]
 
-{ #category : #'api - steps' }
+{ #category : 'api - steps' }
 GtSpotter >> currentStepIndex [
 	^ self steps indexOf: self currentStep
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : 'accessing-defaults' }
 GtSpotter >> defaultExceptionHandler [
 	^ GtSpotterDeploymentExceptionHandler new
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : 'accessing-defaults' }
 GtSpotter >> defaultPagerModel [
 	^ GLMPagerModel new
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : 'accessing-defaults' }
 GtSpotter >> defaultStep [
 	^ GtSpotterStep new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter >> exceptionHandler [
 	^ exceptionHandler ifNil: [ exceptionHandler := self defaultExceptionHandler ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter >> exceptionHandler: anObject [
 	exceptionHandler := anObject
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 GtSpotter >> exit [
 
 	self exitDueTo: #unknown
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 GtSpotter >> exitDueTo: anEventType [
 
 	self notifySpotterExitFor: anEventType
 ]
 
-{ #category : #filtering }
+{ #category : 'filtering' }
 GtSpotter >> filterByMethods: aCollection [
 	| filter |
 	
@@ -238,7 +238,7 @@ GtSpotter >> filterByMethods: aCollection [
 		
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter >> foundationOrigin [
 	"Return an object on which this spotter is operating"
 	<return: #Object>
@@ -246,19 +246,19 @@ GtSpotter >> foundationOrigin [
 	^ foundationOrigin
 ]
 
-{ #category : #'model access' }
+{ #category : 'model access' }
 GtSpotter >> getText [
 
 	^ self text
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtSpotter >> gtDisplayOn: stream [
 
 	stream nextPutAll: 'Spotter'
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtSpotter >> gtStepsFor: aView [
 	<gtView>
 	^ aView list
@@ -266,28 +266,28 @@ GtSpotter >> gtStepsFor: aView [
 		items: [ self steps ]
 ]
 
-{ #category : #'api - testing' }
+{ #category : 'api - testing' }
 GtSpotter >> hasCandidates [
 	^ self hasSteps and: [ self currentStep hasCandidates ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtSpotter >> hasMultipleSteps [
 
 	^ self steps size > 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtSpotter >> hasSelected [
 	^ self hasSteps and: [ self currentStep hasSelected ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtSpotter >> hasSteps [
 	^ 	self steps isNotEmpty
 ]
 
-{ #category : #'api - preview' }
+{ #category : 'api - preview' }
 GtSpotter >> hidePreview [
 	self isPreviewVisible
 		ifFalse: [ ^ self ].
@@ -296,7 +296,7 @@ GtSpotter >> hidePreview [
 	self notifyHidePreview
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 GtSpotter >> historize: target [
 
 	(target = self or: [ target isNil ])
@@ -305,17 +305,17 @@ GtSpotter >> historize: target [
 			self history addFirst: target ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter >> history [
 	^ history ifNil: [ self class history ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter >> history: aWeakCollection [
 	history := aWeakCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtSpotter >> initialize [
 	super initialize.
 	
@@ -324,7 +324,7 @@ GtSpotter >> initialize [
 	self initializeWith: (GtSpotterStart new spotterModel: self)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtSpotter >> initializeWith: anFoundationObject [
 	"Initialize Spotter on a given foundation object and create a new first step"
 	| aDefaultStep |
@@ -339,32 +339,32 @@ GtSpotter >> initializeWith: anFoundationObject [
 	text := ''
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtSpotter >> isPreviewVisible [
 
 	^ isPreviewVisible ifNil: [ isPreviewVisible := true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter >> isShiftPressed [
 
 	^ isShiftPressed ifNil: [ isShiftPressed := false ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 GtSpotter >> menu [
 
 	^ nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtSpotter >> newStep [
 
 	^ self defaultStep
 		spotter: self
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifyActOn: anObject for: anEventType [
 	| anAnnouncement |
 	
@@ -377,7 +377,7 @@ GtSpotter >> notifyActOn: anObject for: anEventType [
 	^ anAnnouncement
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifyCandidateDeselected: aCandidate [
 	self
 		assert: [ aCandidate isNotNil ]
@@ -386,7 +386,7 @@ GtSpotter >> notifyCandidateDeselected: aCandidate [
 	self announce: (GtSpotterCandidateDeselected new candidate: aCandidate).
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifyCandidateSelected: anObject for: anEventType [
 
 	self announce: (GtSpotterSelectedCandidateChanged new 
@@ -394,13 +394,13 @@ GtSpotter >> notifyCandidateSelected: anObject for: anEventType [
 		eventType: anEventType)
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifyCategorySelected: aProcessor [
 
 	self announce: (GtSpotterCategorySelected new category: aProcessor)
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifyContextChangedFrom: aPreviousContext to: aCurrentContext [
 	self announce: (GtSpotterContextChanged new
 		previous: aPreviousContext;
@@ -408,7 +408,7 @@ GtSpotter >> notifyContextChangedFrom: aPreviousContext to: aCurrentContext [
 		yourself)
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifyCurrentStepChanged [
 
 	self announce: (GtSpotterCurrentStepChanged new
@@ -416,7 +416,7 @@ GtSpotter >> notifyCurrentStepChanged [
 		index: (self steps indexOf: self currentStep))
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifyDiveIn: anObject for: anEventType [
 
 	self announce: (GtSpotterDiveInElement new 
@@ -424,7 +424,7 @@ GtSpotter >> notifyDiveIn: anObject for: anEventType [
 		eventType: anEventType )
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifyDiveInCategory: aProcessor for: anEventType [
 
 	self announce: (GtSpotterDiveInCategory new 
@@ -432,31 +432,31 @@ GtSpotter >> notifyDiveInCategory: aProcessor for: anEventType [
 		eventType: anEventType)
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifyDiveOut: anObject [
 
 	self announce: (GtSpotterDiveOut new element: anObject)
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifyHideHints [
 
 	self announce: GtSpotterHideHints new
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifyHidePreview [
 
 	self announce: GtSpotterHidePreview new
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifyRevealHints [
 
 	self announce: GtSpotterRevealHints new
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifySearchFinishedFor: aString processors: aCollectionOfProcessors [
 
 	self announce: (GtSpotterSearchFinished new 
@@ -465,7 +465,7 @@ GtSpotter >> notifySearchFinishedFor: aString processors: aCollectionOfProcessor
 								yourself)
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifyShowPreview [
 
 	self announce: GtSpotterShowPreview new
@@ -473,32 +473,32 @@ GtSpotter >> notifyShowPreview [
 	
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifySpotterExitFor: anEventType [
 
 	self announce: (GtSpotterExitAnnouncement new
 		eventType: anEventType)
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifyStepAdded: aStep [
 
 	self announce: (GtSpotterStepAdded new stepModel: aStep)
 ]
 
-{ #category : #notifying }
+{ #category : 'notifying' }
 GtSpotter >> notifyStepRemoved: aSpotterStep at: anIndex [
 	self announce: (GtSpotterStepRemoved new stepModel: aSpotterStep; index: anIndex)
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 GtSpotter >> onPagePopped [
 	
 	self steps size > 0 ifTrue: [
 		self currentStep: self steps last ]
 ]
 
-{ #category : #'api - steps' }
+{ #category : 'api - steps' }
 GtSpotter >> popStep [
 	"Removes the last step"
 	| aStepToRemove aStepToRemoveIndex |
@@ -520,7 +520,7 @@ GtSpotter >> popStep [
 	self currentStep: self steps last
 ]
 
-{ #category : #'api - steps' }
+{ #category : 'api - steps' }
 GtSpotter >> popUntil: aStep [
 	"Remove steps until a given step does not become the last one"
 
@@ -530,20 +530,20 @@ GtSpotter >> popUntil: aStep [
 		whileFalse: [ self popStep ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter >> processorsFilter [
 
 	^ processorsFilter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter >> processorsFilter: aFilter [
    "Set the filter for determining whether or not processors get added to a step."
 
 	processorsFilter := aFilter
 ]
 
-{ #category : #'api - steps' }
+{ #category : 'api - steps' }
 GtSpotter >> pushStep: stepModel [
 	"Adds a new step and makes it current"
 	
@@ -552,7 +552,7 @@ GtSpotter >> pushStep: stepModel [
 	self currentStep: stepModel
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 GtSpotter >> requestNextCategoryStepWith: aProcessorLink for: anEventType [
 	|collection|
 	
@@ -562,7 +562,7 @@ GtSpotter >> requestNextCategoryStepWith: aProcessorLink for: anEventType [
 	self requestNextStepWith: collection for: anEventType
 ]
 
-{ #category : #'api - steps' }
+{ #category : 'api - steps' }
 GtSpotter >> requestNextStepWith: anOriginObject for: anEventType [
 
 	text := ''.
@@ -573,7 +573,7 @@ GtSpotter >> requestNextStepWith: anOriginObject for: anEventType [
 	self steps last process: ''
 ]
 
-{ #category : #'api - steps' }
+{ #category : 'api - steps' }
 GtSpotter >> requestPreviousStepFor: anEventType [
 	| aCurrentStepIndex |
 
@@ -581,7 +581,7 @@ GtSpotter >> requestPreviousStepFor: anEventType [
 	self currentStep: (self steps at: (aCurrentStepIndex - 1 max: 1))
 ]
 
-{ #category : #'api - search' }
+{ #category : 'api - search' }
 GtSpotter >> search [
 	"Trigger a search with the current string as a query"
 	
@@ -592,7 +592,7 @@ GtSpotter >> search [
 	self search: text
 ]
 
-{ #category : #'api - search' }
+{ #category : 'api - search' }
 GtSpotter >> search: aString [
 	"Trigger a search with the following string as a query"
 
@@ -608,7 +608,7 @@ GtSpotter >> search: aString [
 	text := aString
 ]
 
-{ #category : #'api - search' }
+{ #category : 'api - search' }
 GtSpotter >> searchSync: aString [
 	"Trigger a search with the following string as a query"
 
@@ -624,7 +624,7 @@ GtSpotter >> searchSync: aString [
 	self currentStep processSync: aString.
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 GtSpotter >> shiftPressed: aBoolean [
 
 	self isShiftPressed = aBoolean ifTrue: [ ^ self ].
@@ -641,7 +641,7 @@ GtSpotter >> shiftPressed: aBoolean [
 	
 ]
 
-{ #category : #'api - preview' }
+{ #category : 'api - preview' }
 GtSpotter >> showPreview [
 
 	self isPreviewVisible
@@ -652,7 +652,7 @@ GtSpotter >> showPreview [
 	self notifyShowPreview
 ]
 
-{ #category : #'api - preview' }
+{ #category : 'api - preview' }
 GtSpotter >> showPreview: aBoolean [
 
 	aBoolean
@@ -660,27 +660,27 @@ GtSpotter >> showPreview: aBoolean [
 		ifFalse: [ self hidePreview ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter >> steps [
 	<return: #Collection of: #GtSpotterStep>
 
 	^ steps
 ]
 
-{ #category : #'actions api' }
+{ #category : 'actions api' }
 GtSpotter >> terminateProcessors [
 
 	self steps do: [ :each | each terminateProcessors ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotter >> text [
 	<return: #String>
 
 	^ text ifNil: [ text := '' ]
 ]
 
-{ #category : #'api - preview' }
+{ #category : 'api - preview' }
 GtSpotter >> togglePreview [
 
 	self isPreviewVisible

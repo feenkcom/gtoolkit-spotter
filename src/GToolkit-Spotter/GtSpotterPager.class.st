@@ -1,13 +1,13 @@
 Class {
-	#name : #GtSpotterPager,
-	#superclass : #BrPager,
+	#name : 'GtSpotterPager',
+	#superclass : 'BrPager',
 	#instVars : [
 		'spotterModel'
 	],
-	#category : #'GToolkit-Spotter-UI'
+	#category : 'GToolkit-Spotter-UI'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtSpotterPager >> initialize [
 	super initialize.
 
@@ -18,26 +18,26 @@ GtSpotterPager >> initialize [
 		c vertical matchParent ]
 ]
 
-{ #category : #'private - event handling' }
+{ #category : 'private - event handling' }
 GtSpotterPager >> onCurrentStepChanged: anAnnouncement [
 	self smoothScrollTo: anAnnouncement index
 ]
 
-{ #category : #'private - event handling' }
+{ #category : 'private - event handling' }
 GtSpotterPager >> onStepAdded: anAnnouncement [
 	"as soon as step added we need to push it"
 	
 	self pushStep: anAnnouncement stepModel
 ]
 
-{ #category : #'private - event handling' }
+{ #category : 'private - event handling' }
 GtSpotterPager >> onStepRemoved: anAnnouncement [
 	"as soon as step added we need to push it"
 	
 	self removePageAt: anAnnouncement index
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 GtSpotterPager >> pushStep: aSpotterStep [
 	| aStepElement aPageModel aPageContainer |
 	
@@ -57,12 +57,12 @@ GtSpotterPager >> pushStep: aSpotterStep [
 	self addPage: aPageContainer
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 GtSpotterPager >> spotterModel [
 	^ spotterModel
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterPager >> spotterModel: aModel [ 
 	spotterModel := aModel.
 

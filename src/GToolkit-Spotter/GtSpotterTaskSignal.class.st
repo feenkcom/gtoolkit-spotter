@@ -1,34 +1,34 @@
 Class {
-	#name : #GtSpotterTaskSignal,
-	#superclass : #GtSpotterSignal,
+	#name : 'GtSpotterTaskSignal',
+	#superclass : 'GtSpotterSignal',
 	#instVars : [
 		'task',
 		'command'
 	],
-	#category : #'GToolkit-Spotter-Logging'
+	#category : 'GToolkit-Spotter-Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterTaskSignal >> command [
 	^ command
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterTaskSignal >> command: anObject [
 	command := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterTaskSignal >> context [
 	^ self command context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterTaskSignal >> name [
 	^ 'Spotter ', self signalName, ': ', self query asString
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtSpotterTaskSignal >> printOn: aStream [ 
 	self command ifNil: [ ^ super printOn: aStream ].
 	aStream
@@ -37,22 +37,22 @@ GtSpotterTaskSignal >> printOn: aStream [
 		print: self query
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterTaskSignal >> query [
 	^ self command query
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterTaskSignal >> signalName [
 	^ self className
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterTaskSignal >> task [
 	^ task
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterTaskSignal >> task: anObject [
 	task := anObject
 ]

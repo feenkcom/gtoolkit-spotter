@@ -1,6 +1,6 @@
-Extension { #name : #RPackageTag }
+Extension { #name : 'RPackageTag' }
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 RPackageTag >> gtSpotterClassesFor: aStep [
 	<gtSearch>
 	aStep listProcessor

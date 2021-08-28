@@ -1,6 +1,6 @@
-Extension { #name : #GTSpotter }
+Extension { #name : 'GTSpotter' }
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterAddressBookFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -13,7 +13,7 @@ GTSpotter >> gtSpotterAddressBookFor: aStep [
 		wantsToDisplayOnEmptyQuery: true
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterCatalogProjectsFor: aStep [
 	<gtSearch>
 	CatalogSettings displayCatalogProjectsInSpotter
@@ -34,7 +34,7 @@ GTSpotter >> gtSpotterCatalogProjectsFor: aStep [
 		wantsToDisplayOnEmptyQuery: true
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterClipboardFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor
@@ -50,7 +50,7 @@ GTSpotter >> gtSpotterClipboardFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterConcreteMethodFor: aStep [
 	<gtSearch>
 	self flag: #specialFilter.
@@ -63,7 +63,7 @@ GTSpotter >> gtSpotterConcreteMethodFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterDirtyMonticelloPackagesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -75,7 +75,7 @@ GTSpotter >> gtSpotterDirtyMonticelloPackagesFor: aStep [
 		wantsToDisplayOnEmptyQuery: true
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter class >> gtSpotterExtensionsFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -87,7 +87,7 @@ GTSpotter class >> gtSpotterExtensionsFor: aStep [
 		wantsToDisplayOnEmptyQuery: true
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterForCachedPlaygroundPagesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -98,7 +98,7 @@ GTSpotter >> gtSpotterForCachedPlaygroundPagesFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterForClassesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -111,7 +111,7 @@ GTSpotter >> gtSpotterForClassesFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterForDirectoriesFor: aStep [
 	<gtSearch>
 	self flag: #specialFilter.
@@ -129,7 +129,7 @@ GTSpotter >> gtSpotterForDirectoriesFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterForExpressionsFor: aStep [
 	<gtSearch>
 	self flag: #specialFilter.
@@ -142,7 +142,7 @@ GTSpotter >> gtSpotterForExpressionsFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterForFilesFor: aStep [
 	<gtSearch>
 	self flag: #specialFilter.
@@ -157,7 +157,7 @@ GTSpotter >> gtSpotterForFilesFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterForGlobalVarsFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -171,7 +171,7 @@ GTSpotter >> gtSpotterForGlobalVarsFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterForMessagesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -186,7 +186,7 @@ GTSpotter >> gtSpotterForMessagesFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterForMetacelloConfigurationsFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -204,7 +204,7 @@ GTSpotter >> gtSpotterForMetacelloConfigurationsFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterForPackagesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -217,7 +217,7 @@ GTSpotter >> gtSpotterForPackagesFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterForPragmasFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -229,7 +229,7 @@ GTSpotter >> gtSpotterForPragmasFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterForReferencesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -245,7 +245,7 @@ GTSpotter >> gtSpotterForReferencesFor: aStep [
 		itemName: [ :method | method gtDisplayString ]
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterForRepositoriesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -257,7 +257,7 @@ GTSpotter >> gtSpotterForRepositoriesFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterForSendersFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -272,7 +272,7 @@ GTSpotter >> gtSpotterForSendersFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterForStashedPlaygroundPagesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -289,7 +289,7 @@ GTSpotter >> gtSpotterForStashedPlaygroundPagesFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterHistoryFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -304,7 +304,7 @@ GTSpotter >> gtSpotterHistoryFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterImplementorsFor: aStep [
 	<gtSearch>
 	self flag: #specialFilter.
@@ -319,7 +319,7 @@ GTSpotter >> gtSpotterImplementorsFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterMooseModelsFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -331,7 +331,7 @@ GTSpotter >> gtSpotterMooseModelsFor: aStep [
 		wantsToDisplayOnEmptyQuery: true
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterStfxFor: aStep [
 	<gtSearch>
 	self flag: #specialFilter.
@@ -344,7 +344,7 @@ GTSpotter >> gtSpotterStfxFor: aStep [
 				ifTrue: [ GTPlayPage loadFromPublishUrl: context textTrimmed thenDo: filter ] ]
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotter >> gtSpotterXdocFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor

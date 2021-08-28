@@ -1,10 +1,10 @@
 Class {
-	#name : #GtSpotterElementExamples,
-	#superclass : #GtSpotterExamples,
-	#category : #'GToolkit-Spotter-Examples'
+	#name : 'GtSpotterElementExamples',
+	#superclass : 'GtSpotterExamples',
+	#category : 'GToolkit-Spotter-Examples'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 GtSpotterElementExamples >> elementOnDefaultSpotter [
 	<gtExample>
 	| aSpotterElement aSpotterModel |
@@ -17,7 +17,7 @@ GtSpotterElementExamples >> elementOnDefaultSpotter [
 	^ aSpotterElement
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 GtSpotterElementExamples >> elementOnDefaultSpotterInBorderlessWindow [
 	<script: 'self new elementOnDefaultSpotterInBorderlessWindow'>
 	| aSpotterElement aSpace |
@@ -30,7 +30,7 @@ GtSpotterElementExamples >> elementOnDefaultSpotterInBorderlessWindow [
 	aSpace show
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 GtSpotterElementExamples >> elementOnSpotterInDropdown [
 	<gtExample>
 	| look |
@@ -71,7 +71,7 @@ GtSpotterElementExamples >> elementOnSpotterInDropdown [
 		yourself
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 GtSpotterElementExamples >> elementOnSpotterWithOneStep [
 	<gtExample>
 	<noTest>
@@ -85,7 +85,7 @@ GtSpotterElementExamples >> elementOnSpotterWithOneStep [
 	^ aSpotterElement
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 GtSpotterElementExamples >> elementOnSpotterWithTwoSteps [
 	<gtExample>
 	| aSpotterElement aSpotterModel |
@@ -98,7 +98,7 @@ GtSpotterElementExamples >> elementOnSpotterWithTwoSteps [
 	^ aSpotterElement
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 GtSpotterElementExamples >> elementWithPreviewOnDefaultSpotter [
 	<gtExample>
 	| aSpotterElement aSpotterModel |
@@ -113,7 +113,7 @@ GtSpotterElementExamples >> elementWithPreviewOnDefaultSpotter [
 	^ aSpotterElement
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 GtSpotterElementExamples >> emptyElement [
 	<gtExample>
 	

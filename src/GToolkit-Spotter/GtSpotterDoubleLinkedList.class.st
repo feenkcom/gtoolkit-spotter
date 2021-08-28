@@ -1,22 +1,22 @@
 Class {
-	#name : #GtSpotterDoubleLinkedList,
-	#superclass : #DoubleLinkedList,
-	#category : #'GToolkit-Spotter-Utils'
+	#name : 'GtSpotterDoubleLinkedList',
+	#superclass : 'DoubleLinkedList',
+	#category : 'GToolkit-Spotter-Utils'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterDoubleLinkedList >> head [
 
 	^ head
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterDoubleLinkedList >> head: aDoubleLink [
 
 	head := aDoubleLink
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 GtSpotterDoubleLinkedList >> linksDo: aBlock [
 	| current |
 	current := head.
@@ -26,7 +26,7 @@ GtSpotterDoubleLinkedList >> linksDo: aBlock [
 			current := current nextLink ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 GtSpotterDoubleLinkedList >> removeCycledLink: link [
 	| predecessor successor |
 	predecessor := link previousLink.
@@ -48,13 +48,13 @@ GtSpotterDoubleLinkedList >> removeCycledLink: link [
 	^ link
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterDoubleLinkedList >> tail [
 
 	^ tail
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterDoubleLinkedList >> tail: aDoubleLink [
 
 	tail := aDoubleLink

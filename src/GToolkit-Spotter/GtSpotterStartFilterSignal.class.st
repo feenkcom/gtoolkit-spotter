@@ -1,10 +1,10 @@
 Class {
-	#name : #GtSpotterStartFilterSignal,
-	#superclass : #GtSpotterFilterSignal,
-	#category : #'GToolkit-Spotter-Logging'
+	#name : 'GtSpotterStartFilterSignal',
+	#superclass : 'GtSpotterFilterSignal',
+	#category : 'GToolkit-Spotter-Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterStartFilterSignal >> name [
 	^ 'Spotter Start Filter: ', self query asString
 ]

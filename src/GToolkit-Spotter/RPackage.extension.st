@@ -1,11 +1,11 @@
-Extension { #name : #RPackage }
+Extension { #name : 'RPackage' }
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 RPackage >> gtSpotterActDefaultFrom: anElement [
 	self gtBrowseFrom: anElement
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 RPackage >> gtSpotterClassesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -15,7 +15,7 @@ RPackage >> gtSpotterClassesFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 RPackage >> gtSpotterExtensionMethodsFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -25,7 +25,7 @@ RPackage >> gtSpotterExtensionMethodsFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 RPackage >> gtSpotterMonticelloPackageFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -38,7 +38,7 @@ RPackage >> gtSpotterMonticelloPackageFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 RPackage >> gtSpotterMonticelloWorkingCopyFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -51,7 +51,7 @@ RPackage >> gtSpotterMonticelloWorkingCopyFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 RPackage >> gtSpotterTagsFor: aStep [
 	<gtSearch>
 	self classTags size <= 1

@@ -1,17 +1,17 @@
 Class {
-	#name : #GtSpotterTask,
-	#superclass : #Object,
+	#name : 'GtSpotterTask',
+	#superclass : 'Object',
 	#traits : 'TBlDebug',
 	#classTraits : 'TBlDebug classTrait',
-	#category : #'GToolkit-Spotter-Utils'
+	#category : 'GToolkit-Spotter-Utils'
 }
 
-{ #category : #'api - execution' }
+{ #category : 'api - execution' }
 GtSpotterTask >> execute: aGtSpotterTaskCommand [
 	self subclassResponsibility
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 GtSpotterTask >> signalExecutionFinished: aGtSpotterTaskCommand withResult: aResult [
 	GtSpotterExecutionFinishedTaskSignal new
 		task: self;
@@ -20,7 +20,7 @@ GtSpotterTask >> signalExecutionFinished: aGtSpotterTaskCommand withResult: aRes
 		emit
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 GtSpotterTask >> signalExecutionStart: aGtSpotterTaskCommand [
 	GtSpotterExecutionStartTaskSignal new
 		task: self;
@@ -28,7 +28,7 @@ GtSpotterTask >> signalExecutionStart: aGtSpotterTaskCommand [
 		emit
 ]
 
-{ #category : #signaling }
+{ #category : 'signaling' }
 GtSpotterTask >> signalFailure: anException for: aGtSpotterTaskCommand [
 	GtSpotterExecutionFailureTaskSignal new
 		task: self;
@@ -37,7 +37,7 @@ GtSpotterTask >> signalFailure: anException for: aGtSpotterTaskCommand [
 		emit
 ]
 
-{ #category : #'api - execution' }
+{ #category : 'api - execution' }
 GtSpotterTask >> terminate [
 	"Terminate any task activity"
 	^ self subclassResponsibility

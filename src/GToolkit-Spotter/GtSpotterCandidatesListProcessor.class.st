@@ -1,6 +1,6 @@
 Class {
-	#name : #GtSpotterCandidatesListProcessor,
-	#superclass : #GtSpotterCandidatesProcessor,
+	#name : 'GtSpotterCandidatesListProcessor',
+	#superclass : 'GtSpotterCandidatesProcessor',
 	#instVars : [
 		'allCandidatesBlock',
 		'candidatesLimit',
@@ -18,21 +18,21 @@ Class {
 		'previewElementBlock',
 		'transformation'
 	],
-	#category : #'GToolkit-Spotter-Model - Processors'
+	#category : 'GToolkit-Spotter-Model - Processors'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesListProcessor >> actLogic [
 	^ actBlock
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 GtSpotterCandidatesListProcessor >> actLogic: aBlockWithTwoArguments [
 
 	actBlock := aBlockWithTwoArguments
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesListProcessor >> actOn: anObject for: aStep from: aSpotterElement [
 	
 	actBlock
@@ -40,65 +40,65 @@ GtSpotterCandidatesListProcessor >> actOn: anObject for: aStep from: aSpotterEle
 		ifNotNil: [ actBlock cull: anObject cull: aStep cull: aSpotterElement ]
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 GtSpotterCandidatesListProcessor >> allCandidates: aBlockWithOneArgument [
 	self items: aBlockWithOneArgument
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 GtSpotterCandidatesListProcessor >> candidatesLimit: anInteger [
 	self itemsLimit: anInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesListProcessor >> computeAllItemsIn: aContext [
 	^ allCandidatesBlock cull: aContext
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 GtSpotterCandidatesListProcessor >> defaultCandidatesLimit [
 	^ self defaultItemsLimit
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : 'accessing-defaults' }
 GtSpotterCandidatesListProcessor >> defaultContinueItemsLimit [
 	" Spotter becomes extraordenary slow when rendering too many results. So we set the maximum limit to 100. This is only a temporary solution until we have fixed the problem. Until then no spotter processor will ever generate more then 100 results. "
 	^ 100
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : 'accessing-defaults' }
 GtSpotterCandidatesListProcessor >> defaultItemsLimit [
 	^ 5
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesListProcessor >> doFilterInContext: aSpotterContext [
 	^ aSpotterContext doFilter: filterBlock gtFilter forProcessor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesListProcessor >> filter [
 	^ filterBlock
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 GtSpotterCandidatesListProcessor >> filter: aGTFilterOrBlockWithOneArgument [
 	filterBlock := aGTFilterOrBlockWithOneArgument 
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 GtSpotterCandidatesListProcessor >> filter: aGTFilter item: aGtSpotterIterator [ 
 	self filter: aGTFilter.
 	self items: aGtSpotterIterator gtIterator.
 	
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 GtSpotterCandidatesListProcessor >> filterUsing: aFilter [
 	self filter: aFilter
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtSpotterCandidatesListProcessor >> gtAllCandidatesFor: aView [
 	<gtView>
 	allCandidates ifNil: [ ^ aView empty ].
@@ -109,7 +109,7 @@ GtSpotterCandidatesListProcessor >> gtAllCandidatesFor: aView [
 		view: #gtItemsFor:
 ]
 
-{ #category : #'gt-extension' }
+{ #category : 'gt-extension' }
 GtSpotterCandidatesListProcessor >> gtAllFilteredCandidatesFor: aView [
 	<gtView>
 	allFilteredCandidates ifNil: [ ^ aView empty ].
@@ -118,7 +118,7 @@ GtSpotterCandidatesListProcessor >> gtAllFilteredCandidatesFor: aView [
 			priority: 2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesListProcessor >> gtDefiningMethodFor: aView [
 	<gtView>
 	self hasDefiningMethod ifFalse: [ ^ aView empty ].
@@ -129,120 +129,120 @@ GtSpotterCandidatesListProcessor >> gtDefiningMethodFor: aView [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtSpotterCandidatesListProcessor >> hasDynamicItems [
 	^ allCandidatesBlock hasDynamicItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesListProcessor >> itemFilterName [
 	^ itemFilterNameBlock
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 GtSpotterCandidatesListProcessor >> itemFilterName: aBlockWithOneArgument [
 	itemFilterNameBlock := aBlockWithOneArgument
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesListProcessor >> itemFilterNameFor: anObject [
 	^ itemFilterNameBlock isNil
 		ifTrue: [ super itemFilterNameFor: anObject ]
 		ifFalse: [ (itemFilterNameBlock cull: anObject) asString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesListProcessor >> itemIcon [
 	^ itemIconBlock
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 GtSpotterCandidatesListProcessor >> itemIcon: aBlockWithOneArgument [
 	itemIconBlock := aBlockWithOneArgument
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesListProcessor >> itemIconFor: anObject [
 	^ itemIconBlock isNil
 		ifTrue: [ super itemIconFor: anObject ]
 		ifFalse: [ itemIconBlock cull: anObject ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesListProcessor >> itemName [
 	^ itemNameBlock
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 GtSpotterCandidatesListProcessor >> itemName: aBlockWithOneArgument [
 	itemNameBlock := aBlockWithOneArgument
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesListProcessor >> itemNameFor: anObject [
 	^ itemNameBlock isNil
 		ifTrue: [ super itemNameFor: anObject ]
 		ifFalse: [ itemNameBlock cull: anObject ]
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 GtSpotterCandidatesListProcessor >> items: aBlock [
 	allCandidatesBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesListProcessor >> itemsLimit [
 	^ candidatesLimit ifNil: [ self defaultItemsLimit ]
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 GtSpotterCandidatesListProcessor >> itemsLimit: anInteger [
 	candidatesLimit := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesListProcessor >> keyBinding [
 	^ keyBinding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesListProcessor >> keyBinding: anObject [
 	keyBinding := anObject
 ]
 
-{ #category : #'scripting-convenience' }
+{ #category : 'scripting-convenience' }
 GtSpotterCandidatesListProcessor >> match: aBlockWithTwoArguments [
 	self filter: (GtFilterBlock new 
 		matcher: aBlockWithTwoArguments;
 		yourself)
 ]
 
-{ #category : #'scripting-convenience' }
+{ #category : 'scripting-convenience' }
 GtSpotterCandidatesListProcessor >> matchAlike [
 	self filter: GtFilterAlike
 ]
 
-{ #category : #'scripting-convenience' }
+{ #category : 'scripting-convenience' }
 GtSpotterCandidatesListProcessor >> matchRegex [
 	self filter: GtFilterRegex
 ]
 
-{ #category : #'scripting-convenience' }
+{ #category : 'scripting-convenience' }
 GtSpotterCandidatesListProcessor >> matchString [
 	self filter: GtFilterStringMatch
 ]
 
-{ #category : #'scripting-convenience' }
+{ #category : 'scripting-convenience' }
 GtSpotterCandidatesListProcessor >> matchSubstring [
 	self filter: GtFilterSubstring
 ]
 
-{ #category : #'scripting-convenience' }
+{ #category : 'scripting-convenience' }
 GtSpotterCandidatesListProcessor >> matchSubstrings [
 	self filter: GtFilterSubstrings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesListProcessor >> objectToActOn: anObject from: aStep [
 	"Return an object that should be acted upon from a given step"
 	<return: #Object>
@@ -252,12 +252,12 @@ GtSpotterCandidatesListProcessor >> objectToActOn: anObject from: aStep [
 		ifNotNil: [ transformation cull: anObject cull: aStep ].
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 GtSpotterCandidatesListProcessor >> previewElement: aBlockWithOneArgument [
 	previewElementBlock := aBlockWithOneArgument
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesListProcessor >> previewElementFor: anObject [
 	<return: #BlElement or: nil>
 	^ previewElementBlock isNil
@@ -265,19 +265,19 @@ GtSpotterCandidatesListProcessor >> previewElementFor: anObject [
 		ifFalse: [ previewElementBlock cull: anObject ]
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 GtSpotterCandidatesListProcessor >> previewObject: aBlockWithOneArgument [
 	previewObjectBlock := aBlockWithOneArgument
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesListProcessor >> previewObjectFor: anObject [
 	^ previewObjectBlock isNil
 		ifTrue: [ super previewObjectFor: anObject ]
 		ifFalse: [ previewObjectBlock cull: anObject ]
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 GtSpotterCandidatesListProcessor >> send: aBlock [
 	self
 		assert: [ aBlock notNil ]
@@ -294,37 +294,37 @@ GtSpotterCandidatesListProcessor >> send: aBlock [
 	transformation := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesListProcessor >> sort [
 	^ sortBlock
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 GtSpotterCandidatesListProcessor >> sort: aBlockWithTwoArguments [
 	sortBlock := aBlockWithTwoArguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesListProcessor >> title [
 	^ title ifNil: [ super title ]
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 GtSpotterCandidatesListProcessor >> title: aString [
 	title := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesListProcessor >> wantsToDisplayOnEmptyQuery [
 	^ wantsToDisplayOnEmptyQuery ifNil: [ super wantsToDisplayOnEmptyQuery ]
 ]
 
-{ #category : #scripting }
+{ #category : 'scripting' }
 GtSpotterCandidatesListProcessor >> wantsToDisplayOnEmptyQuery: anObject [
 	wantsToDisplayOnEmptyQuery := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesListProcessor >> withItemsLimit: aLimit do: aBlock [
 	| previousCandidatesLimit |
 	previousCandidatesLimit := candidatesLimit.

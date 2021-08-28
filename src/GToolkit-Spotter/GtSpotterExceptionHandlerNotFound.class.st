@@ -1,5 +1,5 @@
 Class {
-	#name : #GtSpotterExceptionHandlerNotFound,
-	#superclass : #Error,
-	#category : #'GToolkit-Spotter-Exceptions'
+	#name : 'GtSpotterExceptionHandlerNotFound',
+	#superclass : 'Error',
+	#category : 'GToolkit-Spotter-Exceptions'
 }

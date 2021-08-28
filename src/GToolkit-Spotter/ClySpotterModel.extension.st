@@ -1,13 +1,13 @@
-Extension { #name : #ClySpotterModel }
+Extension { #name : 'ClySpotterModel' }
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 ClySpotterModel >> gtSpotterForCommandsFor: aStep [
 	<gtSearch>
 	browser
 		allContextsDo: [ :each | self commandListProcessorForContext: each step: aStep ]
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 ClySpotterModel >> gtSpotterForGoToFor: aStep [
 	<gtSearch>
 	aStep listProcessor

@@ -1,15 +1,15 @@
 Class {
-	#name : #GtSpotterSignalAnalyzerPreview,
-	#superclass : #Object,
+	#name : 'GtSpotterSignalAnalyzerPreview',
+	#superclass : 'Object',
 	#traits : 'TGtSpotterSignalsView',
 	#classTraits : 'TGtSpotterSignalsView classTrait',
 	#instVars : [
 		'signals'
 	],
-	#category : #'GToolkit-Spotter-Logging'
+	#category : 'GToolkit-Spotter-Logging'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtSpotterSignalAnalyzerPreview class >> fromSignals: aCollection [
 	<return: #Array of: #GtSpotterSignalAnalyzerProcessor>
 	| theGroups aFilteredCollection thePreviews |
@@ -24,27 +24,27 @@ GtSpotterSignalAnalyzerPreview class >> fromSignals: aCollection [
 	^ thePreviews
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterSignalAnalyzerPreview >> candidate [
 	^ self signals anyOne candidate
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterSignalAnalyzerPreview >> numberOfCandidates [
 	^ 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterSignalAnalyzerPreview >> signals [
 	^ signals
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterSignalAnalyzerPreview >> signals: anObject [
 	signals := anObject
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterSignalAnalyzerPreview >> title [
 	^ 'Preview for: ', self candidate item asString
 ]

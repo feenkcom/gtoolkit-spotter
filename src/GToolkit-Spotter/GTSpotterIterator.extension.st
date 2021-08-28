@@ -1,6 +1,6 @@
-Extension { #name : #GTSpotterIterator }
+Extension { #name : 'GTSpotterIterator' }
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GTSpotterIterator >> gtItemsFor: aView [
 	<gtView>
 	items ifNil: [ ^ aView empty ].

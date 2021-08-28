@@ -1,5 +1,5 @@
 Class {
-	#name : #GtOrderedFilter,
-	#superclass : #GtStringFilter,
-	#category : #'GToolkit-Spotter-Filters'
+	#name : 'GtOrderedFilter',
+	#superclass : 'GtStringFilter',
+	#category : 'GToolkit-Spotter-Filters'
 }

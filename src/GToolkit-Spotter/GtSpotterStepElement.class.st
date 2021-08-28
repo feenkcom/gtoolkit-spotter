@@ -1,25 +1,25 @@
 Class {
-	#name : #GtSpotterStepElement,
-	#superclass : #BrColumnedTree,
+	#name : 'GtSpotterStepElement',
+	#superclass : 'BrColumnedTree',
 	#instVars : [
 		'stepModel'
 	],
-	#category : #'GToolkit-Spotter-UI'
+	#category : 'GToolkit-Spotter-UI'
 }
 
-{ #category : #'private - updating' }
+{ #category : 'private - updating' }
 GtSpotterStepElement >> asyncUpdateCandidates [
 	self enqueueTask: (BlTaskAction new action: [ 
 		self updateCandidates ])
 ]
 
-{ #category : #'private - updating' }
+{ #category : 'private - updating' }
 GtSpotterStepElement >> asyncUpdateSelection [
 	self enqueueTask: (BlTaskAction new action: [ 
 		self updateSelection ])
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtSpotterStepElement >> initialize [
 	super initialize.
 	self
@@ -33,7 +33,7 @@ GtSpotterStepElement >> initialize [
 	self beInSeparateCompositionLayer
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtSpotterStepElement >> initializeColumn [
 	self rowStencil: BrGlamorousColumnedTreeSelectableRowElementStencilBuilder new.
 	self nodeType: [ :anItemTypeFactory :aTreeNode :aNodeIndex | 
@@ -49,34 +49,34 @@ GtSpotterStepElement >> initializeColumn [
 			anItemElement bindData: anItemObject ].
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 GtSpotterStepElement >> isCandidateSelected: aCandidate [
 	self stepModelDo: [ :aModel |
 		^ aModel isSelected: aCandidate ].
 	^ false
 ]
 
-{ #category : #'private - event handling' }
+{ #category : 'private - event handling' }
 GtSpotterStepElement >> onAsyncAllCandidatesAdded: anAnnouncement [
 	self asyncUpdateCandidates
 ]
 
-{ #category : #'private - event handling' }
+{ #category : 'private - event handling' }
 GtSpotterStepElement >> onAsyncAllCandidatesRemoved: anAnnouncement [
 	self asyncUpdateCandidates
 ]
 
-{ #category : #'private - event handling' }
+{ #category : 'private - event handling' }
 GtSpotterStepElement >> onAsyncCandidateAdded: anAnnouncement [
 	self asyncUpdateCandidates
 ]
 
-{ #category : #'private - event handling' }
+{ #category : 'private - event handling' }
 GtSpotterStepElement >> onAsyncCandidateSelected: anAnnouncement [	
 	self asyncUpdateSelection 
 ]
 
-{ #category : #'private - event handling' }
+{ #category : 'private - event handling' }
 GtSpotterStepElement >> onItemSelectionChanged: anEvent [
 	"This ${class:BrSelectionChanged}$ event comes from the UI process"
 	self selectedNodeDo: [ :aTreeNode |
@@ -87,12 +87,12 @@ GtSpotterStepElement >> onItemSelectionChanged: anEvent [
 				aSpotterStep select: aCandidate dueTo: #singleClick ] ] ]
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 GtSpotterStepElement >> stepModel [
 	^ stepModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterStepElement >> stepModel: aSpotterStepModel [
 	self unsubscribeFromStepModel.
 	stepModel := aSpotterStepModel.
@@ -101,12 +101,12 @@ GtSpotterStepElement >> stepModel: aSpotterStepModel [
 	self updateSelection
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 GtSpotterStepElement >> stepModelDo: aBlock [
 	self stepModel ifNotNil: aBlock
 ]
 
-{ #category : #'private - subscriptions' }
+{ #category : 'private - subscriptions' }
 GtSpotterStepElement >> subscribeToStepModel [
 	self stepModelDo: [ :aStepModel |
 		aStepModel candidates announcer
@@ -123,14 +123,14 @@ GtSpotterStepElement >> subscribeToStepModel [
 			to: self ]
 ]
 
-{ #category : #'private - subscriptions' }
+{ #category : 'private - subscriptions' }
 GtSpotterStepElement >> unsubscribeFromStepModel [
 	self stepModelDo: [ :aStepModel |
 		aStepModel candidates announcer unsubscribe: self.
 		aStepModel announcer unsubscribe: self ].
 ]
 
-{ #category : #'private - updating' }
+{ #category : 'private - updating' }
 GtSpotterStepElement >> updateCandidates [
 	self
 		stepModelDo: [ :aSpotterStep | 
@@ -139,7 +139,7 @@ GtSpotterStepElement >> updateCandidates [
 				expandAll ]
 ]
 
-{ #category : #'private - updating' }
+{ #category : 'private - updating' }
 GtSpotterStepElement >> updateSelection [
 
 	self stepModelDo: [ :aSpotterStep |		

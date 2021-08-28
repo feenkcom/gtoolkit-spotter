@@ -1,26 +1,26 @@
 Class {
-	#name : #GtSpotterExceptionHandler,
-	#superclass : #Object,
-	#category : #'GToolkit-Spotter-Exceptions'
+	#name : 'GtSpotterExceptionHandler',
+	#superclass : 'Object',
+	#category : 'GToolkit-Spotter-Exceptions'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 GtSpotterExceptionHandler >> handleException: anException [
 	^ self handleException: anException do: [ 
 		('[Spotter] Exception: ', anException asString) logCr ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 GtSpotterExceptionHandler >> handleException: anException do: aBlock [
 	^ aBlock value
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 GtSpotterExceptionHandler >> handleException: anException with: anObject [
 	^ self handleException: anException do: [ anObject ]
 ]
 
-{ #category : #handling }
+{ #category : 'handling' }
 GtSpotterExceptionHandler >> handleExceptionsDuring: aBlock [
 	[ GtCurrentSpotterExceptionHandler use: self during: aBlock ] 
 		on: self 
@@ -30,7 +30,7 @@ GtSpotterExceptionHandler >> handleExceptionsDuring: aBlock [
 				do: [ :fatalException | self handleFatalException: fatalException ] ] " handle exception caused while handling an exception "
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterExceptionHandler >> handleFatalException: anException [
 	('[Spotter] Fatal Exception: ', anException asString) logCr
 ]

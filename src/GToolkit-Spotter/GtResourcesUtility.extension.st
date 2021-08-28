@@ -1,6 +1,6 @@
-Extension { #name : #GtResourcesUtility }
+Extension { #name : 'GtResourcesUtility' }
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GtResourcesUtility >> spotterForPathResourcesFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor
@@ -19,7 +19,7 @@ GtResourcesUtility >> spotterForPathResourcesFor: aStep [
 					aFile exists ifTrue: [ aFilter value: aFile ] ] ] ]
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GtResourcesUtility >> spotterForStringResourcesFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor
@@ -34,7 +34,7 @@ GtResourcesUtility >> spotterForStringResourcesFor: aStep [
 				aFilter value: aFile ] ]
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GtResourcesUtility >> spotterPathResourceAtLocationsFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor
@@ -55,7 +55,7 @@ GtResourcesUtility >> spotterPathResourceAtLocationsFor: aStep [
 				ifFalse: [ false ] ])
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 GtResourcesUtility >> spotterStringResourcesAtLocationsFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor

@@ -1,6 +1,6 @@
 Class {
-	#name : #GtSpotterStream,
-	#superclass : #Object,
+	#name : 'GtSpotterStream',
+	#superclass : 'Object',
 	#instVars : [
 		'timestamp',
 		'onAddedSelector',
@@ -8,10 +8,10 @@ Class {
 		'onRemoveSelector',
 		'receiver'
 	],
-	#category : #'GToolkit-Spotter-Utils'
+	#category : 'GToolkit-Spotter-Utils'
 }
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 GtSpotterStream >> addObject: firstObject inProcessor: secondObject [
 	| aCandidate |
 	
@@ -22,7 +22,7 @@ GtSpotterStream >> addObject: firstObject inProcessor: secondObject [
 	self performSymbol: self onAddedSelector withArguments: { aCandidate }
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 GtSpotterStream >> addObjects: aCollection inProcessor: aProcessor [
 	| theCandidates |
 	
@@ -34,85 +34,85 @@ GtSpotterStream >> addObjects: aCollection inProcessor: aProcessor [
 	self performSymbol: self onAddedAllSelector withArguments: { theCandidates }.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterStream >> attachedTo: anElement [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterStream >> onAddedAllSelector [
 	^ onAddedAllSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterStream >> onAddedAllSelector: anObject [
 	onAddedAllSelector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterStream >> onAddedSelector [
 	^ onAddedSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterStream >> onAddedSelector: anObject [
 	onAddedSelector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterStream >> onRemoveSelector [
 	^ onRemoveSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterStream >> onRemoveSelector: anObject [
 	onRemoveSelector := anObject
 ]
 
-{ #category : #performing }
+{ #category : 'performing' }
 GtSpotterStream >> performCallback: aBlock [
 	
 	self performSymbol: #value withArguments: #() receiver: aBlock
 ]
 
-{ #category : #performing }
+{ #category : 'performing' }
 GtSpotterStream >> performSymbol: aSymbol withArguments: aCollection [
 	
 	self performSymbol: aSymbol withArguments: aCollection receiver: self receiver
 ]
 
-{ #category : #performing }
+{ #category : 'performing' }
 GtSpotterStream >> performSymbol: aSymbol withArguments: aCollection receiver: aReceiver [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterStream >> receiver [
 	^ receiver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterStream >> receiver: anObject [
 	receiver := anObject
 ]
 
-{ #category : #'adding/removing' }
+{ #category : 'adding/removing' }
 GtSpotterStream >> removeAllCandidates [
 
 	self performSymbol: #removeAllCandidates withArguments: { }.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterStream >> timestamp [
 	^ timestamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterStream >> timestamp: anObject [
 	timestamp := anObject
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 GtSpotterStream >> updateTimestamp [
 
 	self timestamp: Time microsecondClockValue

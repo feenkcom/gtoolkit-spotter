@@ -4,70 +4,70 @@ I represent one search candidate produced by a spotter processor
 
 "
 Class {
-	#name : #GtSpotterCandidate,
-	#superclass : #Object,
+	#name : 'GtSpotterCandidate',
+	#superclass : 'Object',
 	#instVars : [
 		'processor',
 		'item',
 		'renderingProcessor'
 	],
-	#category : #'GToolkit-Spotter-Model - Candidates'
+	#category : 'GToolkit-Spotter-Model - Candidates'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidate >> children [
 	^ {  }
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtSpotterCandidate >> gtDisplayOn: aStream [
 	self item gtDisplayOn: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtSpotterCandidate >> gtDisplayText [
 	^ (self renderingProcessor itemNameFor: self item) gtDisplayText.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidate >> item [
 	^ item
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidate >> item: anObject [
 	item := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtSpotterCandidate >> previewElement [
 	<return: #BlElement>
 	^ self renderingProcessor previewElementFor: self previewObject.
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtSpotterCandidate >> previewObject [
 	^ self renderingProcessor previewObjectFor: self item.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidate >> processor [
 	^ processor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidate >> processor: anObject [
 	processor ifNil: [ self renderingProcessor: anObject ].
 	processor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidate >> renderingProcessor [
 	renderingProcessor ifNil: [ self renderingProcessor: processor ].
 	^ renderingProcessor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidate >> renderingProcessor: anObject [
 	renderingProcessor := anObject
 ]

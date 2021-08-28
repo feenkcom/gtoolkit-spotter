@@ -1,15 +1,15 @@
 Class {
-	#name : #GtSpotterSignal,
-	#superclass : #BeaconSignal,
-	#category : #'GToolkit-Spotter-Logging'
+	#name : 'GtSpotterSignal',
+	#superclass : 'BeaconSignal',
+	#category : 'GToolkit-Spotter-Logging'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtSpotterSignal >> isFilterSignal [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtSpotterSignal >> isPreviewSignal [
 	^ false
 ]

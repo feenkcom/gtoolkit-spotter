@@ -1,6 +1,6 @@
-Extension { #name : #BrGlamorousIcons }
+Extension { #name : 'BrGlamorousIcons' }
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 BrGlamorousIcons class >> spotterForPixelIconFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor

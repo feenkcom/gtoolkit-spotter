@@ -1,17 +1,17 @@
 Class {
-	#name : #GtSpotterModelExamples,
-	#superclass : #Object,
-	#category : #'GToolkit-Spotter-Examples'
+	#name : 'GtSpotterModelExamples',
+	#superclass : 'Object',
+	#category : 'GToolkit-Spotter-Examples'
 }
 
-{ #category : #'examples - basic' }
+{ #category : 'examples - basic' }
 GtSpotterModelExamples class >> gtExampleBasic [
 	<gtExample>
 	<label: 'Basic Spotter object'>
 	^ GTSpotter new
 ]
 
-{ #category : #'examples - filtering' }
+{ #category : 'examples - filtering' }
 GtSpotterModelExamples class >> gtExampleCustomImplementorsSearchOn: aSpotter [
 	<gtExample>
 	<label: 'Custom implementors search'>
@@ -29,7 +29,7 @@ GtSpotterModelExamples class >> gtExampleCustomImplementorsSearchOn: aSpotter [
 				candidatesLimit: 50 ])
 ]
 
-{ #category : #'examples - filtering' }
+{ #category : 'examples - filtering' }
 GtSpotterModelExamples class >> gtExampleCustomImplementorsSearchWithNavigationOn: aSpotter [
 	<gtExample>
 	<label: 'Custom implementors search with navigation'>
@@ -49,7 +49,7 @@ GtSpotterModelExamples class >> gtExampleCustomImplementorsSearchWithNavigationO
 				candidatesLimit: 50 ])
 ]
 
-{ #category : #'examples - filtering' }
+{ #category : 'examples - filtering' }
 GtSpotterModelExamples class >> gtExampleHelpSearchOn: aSpotter [
 	<gtExample>
 	<label: 'Help search'>
@@ -62,7 +62,7 @@ GtSpotterModelExamples class >> gtExampleHelpSearchOn: aSpotter [
 			HelpTopic>>#spotterForHelpTopicFor:}
 ]
 
-{ #category : #'examples - filtering' }
+{ #category : 'examples - filtering' }
 GtSpotterModelExamples class >> gtExampleImplementorsSearchOn: aSpotter [
 	<gtExample>
 	<label: 'Implementors search on single method'>
@@ -74,14 +74,14 @@ GtSpotterModelExamples class >> gtExampleImplementorsSearchOn: aSpotter [
 			CompiledMethod>>#spotterForImplementorsFor:}
 ]
 
-{ #category : #'examples - basic' }
+{ #category : 'examples - basic' }
 GtSpotterModelExamples class >> gtExampleOnCompliedMethod [
 	<gtExample>
 	<label: 'Spotter on compiled method'>
 	^ GTSpotter on: Object>>#copy
 ]
 
-{ #category : #'examples - basic' }
+{ #category : 'examples - basic' }
 GtSpotterModelExamples class >> gtExampleWithOneStepFrom: aSpotter [
 	<gtExample>
 	<label: 'Spotter object with one step'>
@@ -93,7 +93,7 @@ GtSpotterModelExamples class >> gtExampleWithOneStepFrom: aSpotter [
 	^ aSpotter
 ]
 
-{ #category : #'examples - filtering' }
+{ #category : 'examples - filtering' }
 GtSpotterModelExamples class >> gtExampleWorldMenuSearchOn: aSpotter [
 	<gtExample>
 	<label: 'World menu search'>

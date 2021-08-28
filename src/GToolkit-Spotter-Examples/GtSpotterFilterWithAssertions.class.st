@@ -1,10 +1,10 @@
 Class {
-	#name : #GtSpotterFilterWithAssertions,
-	#superclass : #GtFilter,
-	#category : #'GToolkit-Spotter-Examples-Exceptions'
+	#name : 'GtSpotterFilterWithAssertions',
+	#superclass : 'GtFilter',
+	#category : 'GToolkit-Spotter-Examples-Exceptions'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 GtSpotterFilterWithAssertions >> value: aSpotterContext [
 	" No Exceptions expected ! "
 	| currentExceptionHandler |

@@ -1,6 +1,6 @@
 Class {
-	#name : #GtSpotterSignalAnalyzerQuery,
-	#superclass : #Object,
+	#name : 'GtSpotterSignalAnalyzerQuery',
+	#superclass : 'Object',
 	#traits : 'TGtSpotterSignalsView',
 	#classTraits : 'TGtSpotterSignalsView classTrait',
 	#instVars : [
@@ -9,10 +9,10 @@ Class {
 		'previews',
 		'processorsAndPreviews'
 	],
-	#category : #'GToolkit-Spotter-Logging'
+	#category : 'GToolkit-Spotter-Logging'
 }
 
-{ #category : #factory }
+{ #category : 'factory' }
 GtSpotterSignalAnalyzerQuery class >> fromSignals: aCollection [
 	<return: #Array of: #GtSpotterSignalAnalyzerQuery>
 	| theGroups theQueries |
@@ -27,7 +27,7 @@ GtSpotterSignalAnalyzerQuery class >> fromSignals: aCollection [
 	
 ]
 
-{ #category : #'gt-extensions' }
+{ #category : 'gt-extensions' }
 GtSpotterSignalAnalyzerQuery >> gtProcessorsFor: aView [
 	<gtView>
 	self signals ifNil: [ ^ aView empty ].
@@ -44,13 +44,13 @@ GtSpotterSignalAnalyzerQuery >> gtProcessorsFor: aView [
 		column: 'Candidates' item: #numberOfCandidates width: 50
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterSignalAnalyzerQuery >> previews [
 	<return: #Array of: #GtSpotterSignalAnalyzerPreview>
 	^ previews
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtSpotterSignalAnalyzerQuery >> printOn: aStream [
 	self signals ifNil: [ ^ super printOn: aStream ].
 	aStream
@@ -60,34 +60,34 @@ GtSpotterSignalAnalyzerQuery >> printOn: aStream [
 		print: self duration
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterSignalAnalyzerQuery >> processors [
 	<return: #Array of: #GtSpotterSignalAnalyzerProcessor>
 	^ processors
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterSignalAnalyzerQuery >> processorsAndPreviews [
 	^ processorsAndPreviews
 ]
 
-{ #category : #'api - time' }
+{ #category : 'api - time' }
 GtSpotterSignalAnalyzerQuery >> processorsAndPreviewsDuration [
 	self processorsAndPreviews ifEmpty: [ ^ 0 seconds ].
 	^ self processorsAndPreviews sum: #duration
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterSignalAnalyzerQuery >> query [
 	^ self signals anyOne query
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterSignalAnalyzerQuery >> signals [
 	^ signals
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterSignalAnalyzerQuery >> signals: aCollection [
 	signals := aCollection.
 	processors := GtSpotterSignalAnalyzerProcessor fromSignals: self signals.

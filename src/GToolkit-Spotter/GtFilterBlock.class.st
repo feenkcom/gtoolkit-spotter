@@ -1,13 +1,13 @@
 Class {
-	#name : #GtFilterBlock,
-	#superclass : #GtUnorderedFilter,
+	#name : 'GtFilterBlock',
+	#superclass : 'GtUnorderedFilter',
 	#instVars : [
 		'matcher'
 	],
-	#category : #'GToolkit-Spotter-Filters'
+	#category : 'GToolkit-Spotter-Filters'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 GtFilterBlock >> isMatchedItem: anItem [
 	^ self matcher 
 		ifNotNil: [ self matcher value: anItem value: self context ]
@@ -15,12 +15,12 @@ GtFilterBlock >> isMatchedItem: anItem [
 		
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtFilterBlock >> matcher [
 	^ matcher
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtFilterBlock >> matcher: anObject [
 	matcher := anObject
 ]

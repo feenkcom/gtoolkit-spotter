@@ -1,6 +1,6 @@
-Extension { #name : #MetacelloProject }
+Extension { #name : 'MetacelloProject' }
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 MetacelloProject >> gtSpotterForVersionsFor: aStep [
 	<gtSearch>
 	self flag: #maybeRewriteForDirectStreaming.

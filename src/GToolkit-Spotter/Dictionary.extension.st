@@ -1,6 +1,6 @@
-Extension { #name : #Dictionary }
+Extension { #name : 'Dictionary' }
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 Dictionary >> gtSpotterForKeysFor: aStep [
 	<gtSearch>
 	aStep listProcessor

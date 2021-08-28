@@ -1,21 +1,21 @@
 Class {
-	#name : #GtSpotterStepExamples,
-	#superclass : #Object,
-	#category : #'GToolkit-Spotter-Examples'
+	#name : 'GtSpotterStepExamples',
+	#superclass : 'Object',
+	#category : 'GToolkit-Spotter-Examples'
 }
 
-{ #category : #'step - examples' }
+{ #category : 'step - examples' }
 GtSpotterStepExamples >> defaultStep [
 	<gtExample>
 	| aStep |
 
 	aStep := self emptyStep.
-	aStep origin: GtSpotterStart new.
-
+	aStep origin: GtWorldSpotterSearchStart new.
+	self assert: aStep processors notEmpty.
 	^ aStep
 ]
 
-{ #category : #'step - examples' }
+{ #category : 'step - examples' }
 GtSpotterStepExamples >> emptyQueryOnStepWithProcessors [
 	<gtExample>
 	| aStep |
@@ -26,7 +26,7 @@ GtSpotterStepExamples >> emptyQueryOnStepWithProcessors [
 	^ aStep
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : 'accessing-defaults' }
 GtSpotterStepExamples >> emptyStep [
 	<gtExample>
 	| aStep |
@@ -37,7 +37,7 @@ GtSpotterStepExamples >> emptyStep [
 	^ aStep
 ]
 
-{ #category : #'step - examples' }
+{ #category : 'step - examples' }
 GtSpotterStepExamples >> stepWithProcessors [
 	<gtExample>
 	| aStep theProcessors |

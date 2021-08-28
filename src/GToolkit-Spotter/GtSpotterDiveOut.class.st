@@ -1,18 +1,18 @@
 Class {
-	#name : #GtSpotterDiveOut,
-	#superclass : #Announcement,
+	#name : 'GtSpotterDiveOut',
+	#superclass : 'Announcement',
 	#instVars : [
 		'element'
 	],
-	#category : #'GToolkit-Spotter-Announcements'
+	#category : 'GToolkit-Spotter-Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterDiveOut >> element [
 	^ element
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterDiveOut >> element: anObject [
 	element := anObject
 ]

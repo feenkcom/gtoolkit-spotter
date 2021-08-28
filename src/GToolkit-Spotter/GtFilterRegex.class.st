@@ -1,13 +1,13 @@
 Class {
-	#name : #GtFilterRegex,
-	#superclass : #GtUnorderedFilter,
+	#name : 'GtFilterRegex',
+	#superclass : 'GtUnorderedFilter',
 	#instVars : [
 		'regex'
 	],
-	#category : #'GToolkit-Spotter-Filters'
+	#category : 'GToolkit-Spotter-Filters'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 GtFilterRegex >> applyFilterInContext: aSpotterContext error: exception [
 	super applyFilterInContext: aSpotterContext error: exception.
 	^ (GtFilterSubstrings new
@@ -15,12 +15,12 @@ GtFilterRegex >> applyFilterInContext: aSpotterContext error: exception [
 		yourself) value: aSpotterContext
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtFilterRegex >> isMatchedItem: anItem [
 	^ self regex matches: (self itemFilterNameFor: anItem)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtFilterRegex >> prepareFilterInContext: aSpotterContext [
 	super prepareFilterInContext: aSpotterContext.
 	
@@ -29,12 +29,12 @@ GtFilterRegex >> prepareFilterInContext: aSpotterContext [
 		ifFalse: [ self query asRegexIgnoringCase ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtFilterRegex >> regex [
 	^ regex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtFilterRegex >> regex: anObject [
 	regex := anObject
 ]

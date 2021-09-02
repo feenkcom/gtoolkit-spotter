@@ -1,20 +1,20 @@
 Class {
-	#name : #GtSelector,
-	#superclass : #Object,
+	#name : 'GtSelector',
+	#superclass : 'Object',
 	#instVars : [
 		'name',
 		'methods'
 	],
-	#category : #'GToolkit-Spotter-Utils'
+	#category : 'GToolkit-Spotter-Utils'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 GtSelector class >> gtExampleNew [
 	<gtExample>
 	^ self new name: #new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSelector class >> substring: aString filter: aFilter [
 	| selectors |
 	aString isEmptyOrNil ifTrue: [ ^ self ].
@@ -29,7 +29,7 @@ GtSelector class >> substring: aString filter: aFilter [
 				group addMethod: method ] ] ] 
 ]
 
-{ #category : #'private accessing' }
+{ #category : 'private accessing' }
 GtSelector >> addMethod: aCompiledMethod [
 	"this is a private method that can be used by the constructor on the class side
 	exclusively within the context of Spotter"
@@ -37,12 +37,12 @@ GtSelector >> addMethod: aCompiledMethod [
 	methods add: aCompiledMethod
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtSelector >> gtDisplayOn: stream [
 	stream nextPutAll: self name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSelector >> gtMethodsFor: aView [
 	<gtView>
 	methods ifNil: [ ^ aView empty ].
@@ -50,11 +50,11 @@ GtSelector >> gtMethodsFor: aView [
 		title: 'Methods';
 		priority: 1;
 		items: [ methods ];
-		column: 'Class' item: #methodClass;
-		column: 'Method' item: #selector.
+		column: 'Class' text: #methodClass;
+		column: 'Method' text: #selector.
 ]
 
-{ #category : #'gt-extensions' }
+{ #category : 'gt-extensions' }
 GtSelector >> gtSpotterImplementorsFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor
@@ -65,7 +65,7 @@ GtSelector >> gtSpotterImplementorsFor: aStep [
 		keyBinding: $m meta
 ]
 
-{ #category : #'gt-extensions' }
+{ #category : 'gt-extensions' }
 GtSelector >> gtSpotterUsersFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor
@@ -77,29 +77,29 @@ GtSelector >> gtSpotterUsersFor: aStep [
 		keyBinding: $n meta
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 GtSelector >> implementors [
 	^ methods ifNil: [ 
 		methods := (SystemNavigation default allImplementorsOf: self name) 
 			collect: [ :each | each compiledMethod ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSelector >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSelector >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 GtSelector >> senders [
 	^ SystemNavigation default allSendersOf: self name
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 GtSelector >> spotterImplementorsFor: aStep [
 	<spotterOrder: 40>
 	^ aStep listProcessor
@@ -108,7 +108,7 @@ GtSelector >> spotterImplementorsFor: aStep [
 		keyBinding: $m meta
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 GtSelector >> spotterUsersFor: aStep [
 	<spotterOrder: 50>
 	^ aStep listProcessor

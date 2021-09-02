@@ -6,22 +6,22 @@ My subclasses are used by Spotter to nicely display icon previews.
 
 "
 Class {
-	#name : #GtSpotterIconPreview,
-	#superclass : #Object,
+	#name : 'GtSpotterIconPreview',
+	#superclass : 'Object',
 	#instVars : [
 		'iconLibrary',
 		'iconSelector',
 		'iconStencil'
 	],
-	#category : #'GToolkit-Spotter-Utils'
+	#category : 'GToolkit-Spotter-Utils'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtSpotterIconPreview class >> isAbstract [
 	^ self name = #GtSpotterIconPreview 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtSpotterIconPreview class >> library: aClass allForms: aCollection [
 	"aCollection includes associations with 
 		- key: a selector
@@ -35,7 +35,7 @@ GtSpotterIconPreview class >> library: aClass allForms: aCollection [
 			iconAssotiation: withStencil ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtSpotterIconPreview class >> library: aClass allIcons: aCollection [
 	"aCollection includes associations with 
 		- key: a selector
@@ -44,7 +44,7 @@ GtSpotterIconPreview class >> library: aClass allIcons: aCollection [
 		self library: aClass iconAssotiation: eachAssociation ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtSpotterIconPreview class >> library: aClass iconAssotiation: anAssociation [
 	"anAssociation has the following values: 
 		- key: a selector
@@ -55,7 +55,7 @@ GtSpotterIconPreview class >> library: aClass iconAssotiation: anAssociation [
 		iconStencil: anAssociation value
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GtSpotterIconPreview >> asElement [
 	<return: #BlElement>
 	^ BrVerticalPane new matchParent
@@ -64,13 +64,13 @@ GtSpotterIconPreview >> asElement [
 		margin: (BlInsets all: 5)
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 GtSpotterIconPreview >> classThatIncludesSelector [ 
 	<return: #Behavior or: nil>
 	^ self iconLibrary class whichClassIncludesSelector: self iconSelector.
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 GtSpotterIconPreview >> gtLiveFor: aView [
 	<gtView>
 	self isDefined ifFalse: [ ^ aView empty ].
@@ -80,7 +80,7 @@ GtSpotterIconPreview >> gtLiveFor: aView [
 		stencil: self
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 GtSpotterIconPreview >> gtMethodFor: aView [
 	<gtView>
 	self isDefined ifFalse: [ ^ aView empty ].
@@ -91,37 +91,37 @@ GtSpotterIconPreview >> gtMethodFor: aView [
 		view: #gtSourceFor:
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterIconPreview >> iconLibrary [
 	^ iconLibrary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterIconPreview >> iconLibrary: anObject [
 	iconLibrary := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterIconPreview >> iconSelector [
 	^ iconSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterIconPreview >> iconSelector: anObject [
 	iconSelector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterIconPreview >> iconStencil [
 	^ iconStencil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterIconPreview >> iconStencil: anObject [
 	iconStencil := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtSpotterIconPreview >> isDefined [
 	<return: #Boolean>
 	^ self class isAbstract not and: [ 
@@ -129,13 +129,13 @@ GtSpotterIconPreview >> isDefined [
 				self iconStencil isNotNil ] ].
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtSpotterIconPreview >> isMethodDefined [
 	<return: #Boolean>
 	^ self method isNotNil
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 GtSpotterIconPreview >> method [
 	<return: #CompiledMethod or: nil>
 	^ self classThatIncludesSelector 
@@ -143,7 +143,7 @@ GtSpotterIconPreview >> method [
 		ifNil: [ nil ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtSpotterIconPreview >> newClipboardElement [
 	^ BrButton new
 		"look: BrGlamorousButtonRectangularLook + BrGlamorousButtonIconLook + BrGlamorousWithLabelTooltipLook;"
@@ -156,7 +156,7 @@ GtSpotterIconPreview >> newClipboardElement [
 			c linear vertical alignCenter ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtSpotterIconPreview >> newCodeEditor [
 	^ BrEditor new
 		aptitude: BrGlamorousCodeEditorAptitude;
@@ -170,7 +170,7 @@ GtSpotterIconPreview >> newCodeEditor [
 			c linear vertical alignCenter ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtSpotterIconPreview >> newEditorAndClipboardElement [
 	^ BrHorizontalPane new fitContent
 		addChild: self newCodeEditor;
@@ -179,13 +179,13 @@ GtSpotterIconPreview >> newEditorAndClipboardElement [
 			c linear horizontal alignCenter ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtSpotterIconPreview >> newIconCreationCode [
 	<return: #String>
 	^ self iconLibrary asString , ' ' , self iconSelector asString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtSpotterIconPreview >> newIconCreationCodeRope [
 	<return: #BlRope>
 	^ self newIconCreationCode asRopedText 
@@ -194,12 +194,12 @@ GtSpotterIconPreview >> newIconCreationCodeRope [
 			stencil: [ self newClipboardElement])
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtSpotterIconPreview >> newIconPreviewElement [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtSpotterIconPreview >> printOn: aStream [
 	self isDefined ifFalse: [ ^ super printOn: aStream ].
 	aStream nextPutAll: self newIconCreationCode asString.

@@ -1,13 +1,13 @@
 Class {
-	#name : #GtSpotterExtensionSettings,
-	#superclass : #Object,
+	#name : 'GtSpotterExtensionSettings',
+	#superclass : 'Object',
 	#classInstVars : [
 		'disabledExtensions'
 	],
-	#category : #'GToolkit-Spotter-Model'
+	#category : 'GToolkit-Spotter-Model'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 GtSpotterExtensionSettings class >> catalogSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #gtspotter)
@@ -37,17 +37,17 @@ GtSpotterExtensionSettings class >> catalogSettingsOn: aBuilder [
 				
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 GtSpotterExtensionSettings class >> disableProcessorDefinedInMethod: aMethod [
 	self disabledExtensions add: (self internalKeyForMethod: aMethod)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterExtensionSettings class >> disabledExtensions [
 	^ disabledExtensions ifNil: [ disabledExtensions := Set new ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterExtensionSettings class >> doesNotUnderstand: aMessage [
 	aMessage arguments isEmpty
 		ifTrue: [ ^ (self disabledExtensions includes: aMessage selector) not ].
@@ -63,12 +63,12 @@ GtSpotterExtensionSettings class >> doesNotUnderstand: aMessage [
 	^ super doesNotUnderstand: aMessage
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 GtSpotterExtensionSettings class >> enableProcessorDefinedInMethod: aMethod [
 	self disabledExtensions remove: (self internalKeyForMethod: aMethod)
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 GtSpotterExtensionSettings class >> groupedAndSortedSpotterExtensions [
 	"Return a list of associations in which:
 		the key is a class
@@ -81,12 +81,12 @@ GtSpotterExtensionSettings class >> groupedAndSortedSpotterExtensions [
 	^ groupedExtensions asSortedCollection: [ :a1 :a2 | a1 key name < a2 key name ]. 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterExtensionSettings class >> internalKeyForMethod: each [
 	^ (each methodClass name , '_' , each selector allButLast) asSymbol
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 GtSpotterExtensionSettings class >> shouldSpotterIgnoreProcessorDefinedInMethod: aCompiledMethod [
 	"
 	Return a boolean value indicating if the spotter extension method, provided as argument, has to be disabled or not
@@ -96,7 +96,7 @@ GtSpotterExtensionSettings class >> shouldSpotterIgnoreProcessorDefinedInMethod:
 	^ self disabledExtensions includes: aCompiledMethod methodClass name, '_', aCompiledMethod selector allButLast
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 GtSpotterExtensionSettings class >> spotterExtensionTitleOf: extensionAsCompiledMethod [
 	"
 	Return an approximation of a description of the extension provided as argument.

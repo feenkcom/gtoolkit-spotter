@@ -1,15 +1,15 @@
 Class {
-	#name : #GtSpotterHeaderElement,
-	#superclass : #BlElement,
+	#name : 'GtSpotterHeaderElement',
+	#superclass : 'BlElement',
 	#instVars : [
 		'spotterModel',
 		'searchField',
 		'breadcrumb'
 	],
-	#category : #'GToolkit-Spotter-UI'
+	#category : 'GToolkit-Spotter-UI'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtSpotterHeaderElement >> initialize [
 	super initialize.
 	self layout: BlLinearLayout vertical.
@@ -35,17 +35,17 @@ GtSpotterHeaderElement >> initialize [
 				background: self theme header secondaryBackgroundColor)}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterHeaderElement >> searchField [
 	^ searchField
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterHeaderElement >> spotterModel [
 	^ spotterModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterHeaderElement >> spotterModel: aSpotter [
 
 	spotterModel := aSpotter.

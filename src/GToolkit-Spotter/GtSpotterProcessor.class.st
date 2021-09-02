@@ -1,42 +1,42 @@
 Class {
-	#name : #GtSpotterProcessor,
-	#superclass : #Object,
+	#name : 'GtSpotterProcessor',
+	#superclass : 'Object',
 	#instVars : [
 		'allFilteredCandidates',
 		'priority',
 		'definingMethod'
 	],
-	#category : #'GToolkit-Spotter-Model - Processors'
+	#category : 'GToolkit-Spotter-Model - Processors'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 GtSpotterProcessor >> < anOtherProcessor [ 
 	"Answer whether the receiver is less than the argument."
 	
 	^ self priority < anOtherProcessor priority
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 GtSpotterProcessor >> actOn: anObject for: aStep from: aSpotterElement [
 	anObject gtSpotterActDefault: aStep from: aSpotterElement
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 GtSpotterProcessor >> actOnCategory: anObject for: aStep from: aSpotterElement [
 	anObject gtSpotterActDefault: aStep from: aSpotterElement
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 GtSpotterProcessor >> allFilteredCandidates [
 	^ allFilteredCandidates ifNil: [ allFilteredCandidates := OrderedCollection new ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 GtSpotterProcessor >> allFilteredCandidatesDo: aBlock [
 	allFilteredCandidates ifNotNil: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterProcessor >> basicContinueFilterInContext: aSpotterContext [
 
 	" We DO NOT prepare the context since we could no longer continue producing filtered candidates. "
@@ -48,7 +48,7 @@ GtSpotterProcessor >> basicContinueFilterInContext: aSpotterContext [
 		withArguments: { self allFilteredCandidates size . self }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterProcessor >> basicFilterInContext: aSpotterContext [
 	
 	self prepareProcessorInContext: aSpotterContext.
@@ -59,7 +59,7 @@ GtSpotterProcessor >> basicFilterInContext: aSpotterContext [
 		withArguments: { self allFilteredCandidates size . self }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterProcessor >> continueFilterInContext: aSpotterContext [
 	[ self basicContinueFilterInContext: aSpotterContext ]
 		on: Error 
@@ -69,22 +69,22 @@ GtSpotterProcessor >> continueFilterInContext: aSpotterContext [
 				do: [ ('[Spotter] Exception in continuing processor <', self title asString, '>: ', exception asString) logCr ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterProcessor >> definingMethod [
 	^ definingMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterProcessor >> definingMethod: anObject [
 	definingMethod := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterProcessor >> doContinueFilterInContext: aSpotterContext [
 	^ aSpotterContext doContinueFilterForProcessor: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterProcessor >> doFilterInContext: aSpotterContext [
 	"override this method to:
 	- add items to the stream
@@ -92,13 +92,13 @@ GtSpotterProcessor >> doFilterInContext: aSpotterContext [
 	self subclassResponsibility
 ]
 
-{ #category : #'accessing-dynamic' }
+{ #category : 'accessing-dynamic' }
 GtSpotterProcessor >> exceptionHandler [
 	self flag: 'Bloc -> overrides doesNotUnderstand discarding the current exception context'.
 	^ GtCurrentSpotterExceptionHandler value ifNil: [ GtSpotterExceptionHandlerNotFound signal ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterProcessor >> filterInContext: aSpotterContext [
 	[ self basicFilterInContext: aSpotterContext ]
 		on: Error 
@@ -108,31 +108,31 @@ GtSpotterProcessor >> filterInContext: aSpotterContext [
 				do: [ ('[Spotter] Exception in processor <', self title asString, '>: ', exception asString) traceCr ] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 GtSpotterProcessor >> gtDisplayOn: stream [
 	stream 
 		nextPutAll: 'Processor: ';
 		nextPutAll: self title asString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtSpotterProcessor >> hasDefiningMethod [
 	<return: #Boolean>
 	^ self definingMethod isNotNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtSpotterProcessor >> hasFilteredCandidates [
 	^ self allFilteredCandidates notEmpty
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtSpotterProcessor >> initialize [
 	super initialize.
 	priority := 100
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterProcessor >> order [
 	"Return assigned spotter order used to arrange categories in spotter UI"
 	<return: #Number>
@@ -140,7 +140,7 @@ GtSpotterProcessor >> order [
 	^ self priority
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterProcessor >> order: aNumber [
 	"Assign to processor its spotter order to arrange categories
 	within spotter ui"
@@ -148,12 +148,12 @@ GtSpotterProcessor >> order: aNumber [
 	self priority: aNumber
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterProcessor >> prepareProcessorInContext: aContext [
 	allFilteredCandidates := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterProcessor >> priority [
 	"Return assigned spotter order used to arrange categories in spotter UI"
 	<return: #Number>
@@ -161,30 +161,30 @@ GtSpotterProcessor >> priority [
 	^ priority
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterProcessor >> priority: aNumber [
 	"Assign to processor its spotter order to arrange categories
 	within spotter ui"
 	priority := aNumber
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtSpotterProcessor >> shouldFilterInContext: aSpotterContext [
 	^ aSpotterContext notEmpty 
 		or: [ self wantsToDisplayOnEmptyQuery ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterProcessor >> title [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterProcessor >> wantsToDisplayOnEmptyQuery [
 	^ true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterProcessor >> withItemsLimit: aLimit do: aBlock [
 	^ aBlock value
 ]

@@ -1,29 +1,29 @@
 Class {
-	#name : #GtSpotterDiveInElement,
-	#superclass : #Announcement,
+	#name : 'GtSpotterDiveInElement',
+	#superclass : 'Announcement',
 	#instVars : [
 		'element',
 		'eventType'
 	],
-	#category : #'GToolkit-Spotter-Announcements'
+	#category : 'GToolkit-Spotter-Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterDiveInElement >> element [
 	^ element
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterDiveInElement >> element: anObject [
 	element := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterDiveInElement >> eventType [
 	^ eventType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterDiveInElement >> eventType: anObject [
 	eventType := anObject
 ]

@@ -1,10 +1,10 @@
 Class {
-	#name : #GtSpotterHelp,
-	#superclass : #CustomHelp,
-	#category : #'GToolkit-Spotter-Help'
+	#name : 'GtSpotterHelp',
+	#superclass : 'CustomHelp',
+	#category : 'GToolkit-Spotter-Help'
 }
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 GtSpotterHelp class >> basicExamples [
 	^ HelpTopic 
 		title: 'Basic Examples'
@@ -28,12 +28,12 @@ Searching for a published playground page:
 '
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterHelp class >> bookName [ 
 	^'GT Spotter'
 ]
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 GtSpotterHelp class >> categoryFilterExamples [
 	^ HelpTopic 
 		title: 'Category Filter Examples'
@@ -68,7 +68,7 @@ In this situation, it is possible to specify the scoping by ignoring the whitesp
 	#playgrounds'
 ]
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 GtSpotterHelp class >> diveInCategoryExamples [
 	^ HelpTopic 
 		title: 'Dive-in Category Examples'
@@ -89,7 +89,7 @@ Then you dive-in category (Meta+Shift+ArrowRight, or click on the arrow button n
 '
 ]
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 GtSpotterHelp class >> diveInExamples [
 	^ HelpTopic 
 		title: 'Dive-in Examples'
@@ -109,7 +109,7 @@ We then ensure that the preview is open (Meta+p), and we can browse the methods 
 The dive-in activity is useful when the search involves multiple steps.'
 ]
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 GtSpotterHelp class >> extensionExamples [
 
 	^ HelpTopic 
@@ -153,7 +153,7 @@ Now, imagine that you want to search methods inside a known class. To achieve th
 To understand the option of specifying search processors in more details, take a look at the extentions present in the image and at the API of GtSpotterCandidatesListProcessor.'
 ]
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 GtSpotterHelp class >> extensions [
 		
 	^ HelpTopic 
@@ -167,7 +167,7 @@ The list is computed automatically. You can also browse it by inspecting:
 ', self extensionsString
 ]
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 GtSpotterHelp class >> extensionsString [
 	| methods title |
 	^ String streamContents: [ :s |
@@ -192,12 +192,12 @@ GtSpotterHelp class >> extensionsString [
 			s cr ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterHelp class >> key [
 	^ self name
 ]
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 GtSpotterHelp class >> keybindings [
 	^ HelpTopic 
 		title: 'Keybindings'
@@ -219,7 +219,7 @@ Cmd+Left / Cmd+Shift+Left - dive out from an object into the previous step
 Cmd+Shift+Right - dive in a category to see its elements'
 ]
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 GtSpotterHelp class >> overview [
 	^ HelpTopic 
 		title: 'Overview'
@@ -229,12 +229,12 @@ GtSpotterHelp class >> overview [
 Its goal is to help developers find and navigate through all sorts of objects, including packages, classes, methods, code snippets, or menus.'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterHelp class >> pages [
 	^#(overview keybindings basicExamples categoryFilterExamples diveInExamples diveInCategoryExamples extensionExamples extensions resettingSpotter)
 ]
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 GtSpotterHelp class >> resettingSpotter [
 
 	^ HelpTopic 

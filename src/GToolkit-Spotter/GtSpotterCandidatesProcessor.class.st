@@ -1,105 +1,105 @@
 Class {
-	#name : #GtSpotterCandidatesProcessor,
-	#superclass : #GtSpotterProcessor,
+	#name : 'GtSpotterCandidatesProcessor',
+	#superclass : 'GtSpotterProcessor',
 	#instVars : [
 		'origin',
 		'allCandidates'
 	],
-	#category : #'GToolkit-Spotter-Model - Processors'
+	#category : 'GToolkit-Spotter-Model - Processors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtSpotterCandidatesProcessor class >> on: anObject [
 
 	^ self new origin: anObject
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 GtSpotterCandidatesProcessor >> allCandidatesIn: aContext [
 	^ self allItemsIn: aContext
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 GtSpotterCandidatesProcessor >> allItemsIn: aContext [
 
 	^ allCandidates ifNil: [ allCandidates := (self computeAllItemsIn: aContext) copy ].
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 GtSpotterCandidatesProcessor >> candidatesLimit [
 	^ self itemsLimit
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesProcessor >> computeAllItemsIn: aContext [
 
 	^ OrderedCollection new
 	
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 GtSpotterCandidatesProcessor >> computeCandidatesIn: aContext [
 
 	^ self computeAllItemsIn: aContext
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesProcessor >> continueItemsLimit [
 	^ (self defaultContinueItemsLimit - self itemsLimit) max: 0
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : 'accessing-defaults' }
 GtSpotterCandidatesProcessor >> defaultContinueItemsLimit [
 	^ self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesProcessor >> doFilterInContext: aSpotterContext [
 	^ aSpotterContext doFilter: GtFilterBlock gtFilter forProcessor: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesProcessor >> itemFilterNameFor: anObject [
 	^ (self itemNameFor: anObject) asString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesProcessor >> itemIconFor: anObject [
 	^ nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesProcessor >> itemNameFor: anObject [
 	^ anObject gtDisplayString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesProcessor >> itemsLimit [
 	"Return the maximal number of elements that can be found during search.
 	Default implementation returns infinity, so the number of element is not limited."
 	^ Float infinity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesProcessor >> origin [
 
 	^ origin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesProcessor >> origin: anObject [
 
 	origin := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesProcessor >> prepareProcessorInContext: aContext [
 	super prepareProcessorInContext: aContext.
 	
 	self hasDynamicItems ifTrue: [ allCandidates := nil ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesProcessor >> previewElementFor: anObject [
 	<return: #BlElement or: nil>
 	| aPreviewElement |
@@ -109,12 +109,12 @@ GtSpotterCandidatesProcessor >> previewElementFor: anObject [
 	^ aPreviewElement
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtSpotterCandidatesProcessor >> previewObjectFor: anObject [
 	^ anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterCandidatesProcessor >> title [
 	^ 'undefined'
 ]

@@ -1,57 +1,57 @@
 Class {
-	#name : #GtSpotterActOn,
-	#superclass : #Announcement,
+	#name : 'GtSpotterActOn',
+	#superclass : 'Announcement',
 	#instVars : [
 		'element',
 		'eventType',
 		'isActedUpon'
 	],
-	#category : #'GToolkit-Spotter-Announcements'
+	#category : 'GToolkit-Spotter-Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterActOn >> actedUpon: aBoolean [
 	isActedUpon := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterActOn >> beActed [
 	self actedUpon: true.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterActOn >> element [
 	^ element
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterActOn >> element: anObject [
 	element := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterActOn >> eventType [
 	^ eventType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterActOn >> eventType: anObject [
 	eventType := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtSpotterActOn >> initialize [
 	super initialize.
 	
 	isActedUpon := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterActOn >> isActedUpon [
 	^ isActedUpon
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterActOn >> realItem [
 	| anItem |
 	anItem := self element.

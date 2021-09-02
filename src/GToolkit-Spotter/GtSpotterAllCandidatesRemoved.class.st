@@ -1,5 +1,5 @@
 Class {
-	#name : #GtSpotterAllCandidatesRemoved,
-	#superclass : #Announcement,
-	#category : #'GToolkit-Spotter-Announcements'
+	#name : 'GtSpotterAllCandidatesRemoved',
+	#superclass : 'Announcement',
+	#category : 'GToolkit-Spotter-Announcements'
 }

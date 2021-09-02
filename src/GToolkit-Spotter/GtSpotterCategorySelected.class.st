@@ -1,5 +1,5 @@
 Class {
-	#name : #GtSpotterCategorySelected,
-	#superclass : #GlamorousAuthor,
-	#category : #'GToolkit-Spotter-Announcements'
+	#name : 'GtSpotterCategorySelected',
+	#superclass : 'GlamorousAuthor',
+	#category : 'GToolkit-Spotter-Announcements'
 }

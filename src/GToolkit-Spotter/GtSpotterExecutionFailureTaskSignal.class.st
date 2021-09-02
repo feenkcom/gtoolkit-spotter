@@ -1,18 +1,18 @@
 Class {
-	#name : #GtSpotterExecutionFailureTaskSignal,
-	#superclass : #GtSpotterTaskSignal,
+	#name : 'GtSpotterExecutionFailureTaskSignal',
+	#superclass : 'GtSpotterTaskSignal',
 	#instVars : [
 		'exception'
 	],
-	#category : #'GToolkit-Spotter-Logging'
+	#category : 'GToolkit-Spotter-Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterExecutionFailureTaskSignal >> exception: anException [
 	exception := anException
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterExecutionFailureTaskSignal >> signalName [
 	^ 'Failure'
 ]

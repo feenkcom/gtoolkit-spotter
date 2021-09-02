@@ -1,26 +1,26 @@
 Class {
-	#name : #GtSpotterSignalAnalyzer,
-	#superclass : #Object,
+	#name : 'GtSpotterSignalAnalyzer',
+	#superclass : 'Object',
 	#traits : 'TGtSpotterSignalsView',
 	#classTraits : 'TGtSpotterSignalsView classTrait',
 	#instVars : [
 		'signals',
 		'queries'
 	],
-	#category : #'GToolkit-Spotter-Logging'
+	#category : 'GToolkit-Spotter-Logging'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtSpotterSignalAnalyzer class >> fromMemoryLogger: aMemoryLogger [
 	^ self signals: aMemoryLogger recordings
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GtSpotterSignalAnalyzer class >> signals: aCollection [
 	^ self new signals: aCollection
 ]
 
-{ #category : #'gt-extensions' }
+{ #category : 'gt-extensions' }
 GtSpotterSignalAnalyzer >> gtQueriesFor: aView [
 	<gtView>
 	self queries ifNil: [ ^ aView empty ].
@@ -28,23 +28,23 @@ GtSpotterSignalAnalyzer >> gtQueriesFor: aView [
 		title: 'Queries';
 		priority: 1;
 		items: [ self queries ];
-		column: 'Query' item: #query width: 150;
-		column: 'Duration' item: #duration format: #humanReadablePrintString;
-		column: 'Processors + Previews Duration' item: #processorsAndPreviewsDuration format: #humanReadablePrintString
+		column: 'Query' text: #query width: 150;
+		column: 'Duration' text: [ :each | each duration humanReadablePrintString ];
+		column: 'Processors + Previews Duration' text: [ :each | each processorsAndPreviewsDuration humanReadablePrintString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterSignalAnalyzer >> queries [
 	<return: #Collection of: #GtSpotterSignalAnalyzerQuery>
 	^ queries
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterSignalAnalyzer >> signals [
 	^ signals
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterSignalAnalyzer >> signals: aCollection [
 	signals := aCollection.
 	queries := GtSpotterSignalAnalyzerQuery fromSignals: aCollection.

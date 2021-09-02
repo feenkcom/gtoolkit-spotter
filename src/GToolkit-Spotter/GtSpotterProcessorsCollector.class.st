@@ -10,8 +10,8 @@ I am used by {{gtClass:GtSpotterStep}}.
 
 "
 Class {
-	#name : #GtSpotterProcessorsCollector,
-	#superclass : #Object,
+	#name : 'GtSpotterProcessorsCollector',
+	#superclass : 'Object',
 	#instVars : [
 		'spotterStep',
 		'object',
@@ -19,17 +19,17 @@ Class {
 		'to',
 		'pragmaName'
 	],
-	#category : #'GToolkit-Spotter-Collectors'
+	#category : 'GToolkit-Spotter-Collectors'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 GtSpotterProcessorsCollector >> basicProcessorsForPragma: aPragma [
 	self object
 		perform: aPragma methodSelector
 		with: self spotterStep
 ]
 
-{ #category : #'api - collect' }
+{ #category : 'api - collect' }
 GtSpotterProcessorsCollector >> collect [
 	<return: #Collection of: #Pragma>
 
@@ -37,29 +37,29 @@ GtSpotterProcessorsCollector >> collect [
 		self doPragma: pragma ]
 ]
 
-{ #category : #'api - collect' }
+{ #category : 'api - collect' }
 GtSpotterProcessorsCollector >> collectPragmas [
 	<return: #Collection of: #Pragma>
 	^ Pragma allNamed: self pragmaName from: self from to: self to
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 GtSpotterProcessorsCollector >> defaultFromClass [
 	^ nil class
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 GtSpotterProcessorsCollector >> defaultPragmaSymbol [
 	<gtExample>
 	^ #gtSearch
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 GtSpotterProcessorsCollector >> defaultToClass [
 	^ Object
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 GtSpotterProcessorsCollector >> doPragma: aPragma [
 	| currentSize |
 	currentSize := self spotterStep processors size.
@@ -72,28 +72,28 @@ GtSpotterProcessorsCollector >> doPragma: aPragma [
 				configurationBlockForProcessorsCreatedBy: aPragma method)
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterProcessorsCollector >> exceptionHandler [
 	^ self spotterStep exceptionHandler
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterProcessorsCollector >> from [
 	^ from
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterProcessorsCollector >> from: anObject [
 	from := anObject
 ]
 
-{ #category : #'api - initialization' }
+{ #category : 'api - initialization' }
 GtSpotterProcessorsCollector >> fromObject: anObject [
 	self object: anObject.
 	self from: anObject class.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GtSpotterProcessorsCollector >> initialize [
 	super initialize.
 	pragmaName := self defaultPragmaSymbol.
@@ -101,27 +101,27 @@ GtSpotterProcessorsCollector >> initialize [
 	to := self defaultToClass
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterProcessorsCollector >> object [
 	^ object
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterProcessorsCollector >> object: anObject [
 	object := anObject
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterProcessorsCollector >> pragmaName [
 	^ pragmaName
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterProcessorsCollector >> pragmaName: anObject [
 	pragmaName := anObject
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 GtSpotterProcessorsCollector >> processorsForPragma: aPragma [
 	"if there is a problem with the definition of one or more processors, 
 	let the other processors continue to work"
@@ -136,7 +136,7 @@ GtSpotterProcessorsCollector >> processorsForPragma: aPragma [
 						, anException asString) ] ]
 ]
 
-{ #category : #'api - collect' }
+{ #category : 'api - collect' }
 GtSpotterProcessorsCollector >> selectPragmas [
 	<return: #Collection of: #Pragma>
 	^ self collectPragmas
@@ -144,29 +144,29 @@ GtSpotterProcessorsCollector >> selectPragmas [
 			self shouldEnableProcessorsCreateBy: eachPragma ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtSpotterProcessorsCollector >> shouldEnableProcessorsCreateBy: aPragma [
 	<return: #Boolean>
 	^ self spotterStep processorsFilter
 			shouldEnableProcessorsCreateBy: aPragma method
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterProcessorsCollector >> spotterStep [
 	^ spotterStep
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterProcessorsCollector >> spotterStep: anObject [
 	spotterStep := anObject
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterProcessorsCollector >> to [
 	^ to
 ]
 
-{ #category : #'api - accessing' }
+{ #category : 'api - accessing' }
 GtSpotterProcessorsCollector >> to: anObject [
 	to := anObject
 ]

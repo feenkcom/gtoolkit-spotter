@@ -1,10 +1,10 @@
 Class {
-	#name : #GtSpotterSyncTask,
-	#superclass : #GtSpotterTask,
-	#category : #'GToolkit-Spotter-Utils'
+	#name : 'GtSpotterSyncTask',
+	#superclass : 'GtSpotterTask',
+	#category : 'GToolkit-Spotter-Utils'
 }
 
-{ #category : #'api - execution' }
+{ #category : 'api - execution' }
 GtSpotterSyncTask >> execute: aGtSpotterTaskCommand [
 	self signalExecutionStart: aGtSpotterTaskCommand.
 	[ 
@@ -18,7 +18,7 @@ GtSpotterSyncTask >> execute: aGtSpotterTaskCommand [
 		anException pass ].
 ]
 
-{ #category : #'api - execution' }
+{ #category : 'api - execution' }
 GtSpotterSyncTask >> terminate [
 	"do nothing"
 ]

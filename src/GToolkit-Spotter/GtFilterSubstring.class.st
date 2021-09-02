@@ -1,10 +1,10 @@
 Class {
-	#name : #GtFilterSubstring,
-	#superclass : #GtOrderedFilter,
-	#category : #'GToolkit-Spotter-Filters'
+	#name : 'GtFilterSubstring',
+	#superclass : 'GtOrderedFilter',
+	#category : 'GToolkit-Spotter-Filters'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 GtFilterSubstring >> applyFilterWithQuery [
 	| exactMatches prefixMatches otherMatches nonExactMatches |
 	"we want to distinguish between exact matches"
@@ -37,7 +37,7 @@ GtFilterSubstring >> applyFilterWithQuery [
 	self filteredItems: exactMatches, nonExactMatches
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtFilterSubstring >> indexForItemName: aString andQuery: aQueryString [
 	^ aString 
 		findString: aQueryString
@@ -45,7 +45,7 @@ GtFilterSubstring >> indexForItemName: aString andQuery: aQueryString [
 		caseSensitive: self caseSensitive
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GtFilterSubstring >> queryForItem: each [
 	^ query " performance optimization "
 ]

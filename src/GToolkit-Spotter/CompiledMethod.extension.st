@@ -1,11 +1,11 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 CompiledMethod >> gtSpotterActDefaultFrom: anElement [
 	self gtBrowseFrom: anElement
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 CompiledMethod >> gtSpotterForBytecodesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -16,7 +16,7 @@ CompiledMethod >> gtSpotterForBytecodesFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 CompiledMethod >> gtSpotterForImplementorsFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -27,7 +27,7 @@ CompiledMethod >> gtSpotterForImplementorsFor: aStep [
 		keyBinding: $m command
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 CompiledMethod >> gtSpotterForMessagesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -38,7 +38,7 @@ CompiledMethod >> gtSpotterForMessagesFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 CompiledMethod >> gtSpotterForSendersFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -49,7 +49,7 @@ CompiledMethod >> gtSpotterForSendersFor: aStep [
 		keyBinding: $n command
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : '*GToolkit-Spotter' }
 CompiledMethod >> gtSpotterMethodClassFor: aStep [
 	<gtSearch>
 	aStep listProcessor

@@ -1,36 +1,36 @@
 Class {
-	#name : #GtSpotterFilterSignal,
-	#superclass : #GtSpotterSignal,
+	#name : 'GtSpotterFilterSignal',
+	#superclass : 'GtSpotterSignal',
 	#instVars : [
 		'context',
 		'processor',
 		'filter',
 		'streamed'
 	],
-	#category : #'GToolkit-Spotter-Logging'
+	#category : 'GToolkit-Spotter-Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterFilterSignal >> context [
 	^ context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterFilterSignal >> context: anObject [
 	context := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterFilterSignal >> filter [
 	^ filter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterFilterSignal >> filter: anObject [
 	filter := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterFilterSignal >> gtDefiningMethodFor: aView [
 	<gtView>
 	self processor ifNil: [ ^ aView empty ].
@@ -41,32 +41,32 @@ GtSpotterFilterSignal >> gtDefiningMethodFor: aView [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GtSpotterFilterSignal >> isFilterSignal [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterFilterSignal >> processor [
 	^ processor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterFilterSignal >> processor: anObject [
 	processor := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterFilterSignal >> query [
 	^ self context search
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterFilterSignal >> streamed [
 	^ streamed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GtSpotterFilterSignal >> streamed: anObject [
 	streamed := anObject
 ]

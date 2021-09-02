@@ -90,6 +90,40 @@ GtSpotterStart >> gtSpotterConcreteMethodFor: aStep [
 ]
 
 { #category : '*GToolkit-Spotter' }
+GtSpotterStart >> gtSpotterForAllSubclassesFor: aStep [
+	<gtSearch>
+	aStep listProcessor
+		priority: 52;
+		filter: GtNullFilter
+			item: [ :filter :context | 
+				Smalltalk 
+					at: context textTrimmed asSymbol 
+					ifPresent: [:class | 
+						class withAllSubclasses do: [:c |
+							filter value: c ] ] ];
+		title: 'All Subclasses';
+		itemIcon: #systemIcon;
+		wantsToDisplayOnEmptyQuery: false
+]
+
+{ #category : '*GToolkit-Spotter' }
+GtSpotterStart >> gtSpotterForAllSuperclassesFor: aStep [
+	<gtSearch>
+	aStep listProcessor
+		priority: 51;
+		filter: GtNullFilter
+			item: [ :filter :context | 
+				Smalltalk 
+					at: context textTrimmed asSymbol 
+					ifPresent: [:class | 
+						class withAllSuperclasses do: [:c |
+							filter value: c ] ] ];
+		title: 'All Superclasses';
+		itemIcon: #systemIcon;
+		wantsToDisplayOnEmptyQuery: false
+]
+
+{ #category : '*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterForClassesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -109,7 +143,7 @@ GtSpotterStart >> gtSpotterForDirectoriesFor: aStep [
 	aStep listProcessor
 		priority: 50;
 		title: 'Directories';
-		itemIcon: [ GLMUIThemeExtraIcons glamorousFolder ];
+		itemIcon: [ BrGlamorousIcons folder ];
 		itemFilterName: [ :reference | reference basename ];
 		filter: GtFilterFileReference
 			item: [ :filter :context | 
@@ -127,7 +161,7 @@ GtSpotterStart >> gtSpotterForFilesFor: aStep [
 	aStep listProcessor
 		priority: 40;
 		title: 'Files';
-		itemIcon: [ GLMUIThemeExtraIcons glamorousBrowse ];
+		itemIcon: [ BrGlamorousIcons file ];
 		itemFilterName: [ :reference | reference basename ];
 		filter: GtFilterFileReference
 			item:

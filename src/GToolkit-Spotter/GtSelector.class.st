@@ -50,8 +50,8 @@ GtSelector >> gtMethodsFor: aView [
 		title: 'Methods';
 		priority: 1;
 		items: [ methods ];
-		column: 'Class' item: #methodClass;
-		column: 'Method' item: #selector.
+		column: 'Class' text: #methodClass;
+		column: 'Method' text: #selector.
 ]
 
 { #category : 'gt-extensions' }

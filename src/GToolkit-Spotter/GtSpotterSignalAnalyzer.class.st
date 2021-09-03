@@ -28,9 +28,9 @@ GtSpotterSignalAnalyzer >> gtQueriesFor: aView [
 		title: 'Queries';
 		priority: 1;
 		items: [ self queries ];
-		column: 'Query' item: #query width: 150;
-		column: 'Duration' item: #duration format: #humanReadablePrintString;
-		column: 'Processors + Previews Duration' item: #processorsAndPreviewsDuration format: #humanReadablePrintString
+		column: 'Query' text: #query width: 150;
+		column: 'Duration' text: [ :each | each duration humanReadablePrintString ];
+		column: 'Processors + Previews Duration' text: [ :each | each processorsAndPreviewsDuration humanReadablePrintString ]
 ]
 
 { #category : 'accessing' }

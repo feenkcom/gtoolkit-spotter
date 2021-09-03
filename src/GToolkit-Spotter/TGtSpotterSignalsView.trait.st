@@ -16,9 +16,9 @@ TGtSpotterSignalsView >> gtSignalsFor: aView [
 		title: 'Signals';
 		priority: 10;
 		items: [ self signals ];
-		column: 'Timestamp' item: [ :each | each timestamp ];
-		column: 'Process' item: [ :each | each processId ];
-		column: 'Type' item: [ :each | each name ]
+		column: 'Timestamp' text: [ :each | each timestamp ];
+		column: 'Process' text: [ :each | each processId ];
+		column: 'Type' text: [ :each | each name ]
 ]
 
 { #category : 'accessing' }

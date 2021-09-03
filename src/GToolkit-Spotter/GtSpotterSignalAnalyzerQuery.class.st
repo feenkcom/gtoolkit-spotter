@@ -35,13 +35,14 @@ GtSpotterSignalAnalyzerQuery >> gtProcessorsFor: aView [
 		title: 'Procesors + Previews';
 		priority: 1;
 		items: [ self processorsAndPreviews ];
-		column: 'Title' item: #title;
-		column: 'Duration' item: #duration format: [ :each | 
+		column: 'Title' text: #title;
+		column: 'Duration' text: [ :each | 
 			| aText |
-			aText := each humanReadablePrintString asRopedText.
-			each < 1 milliSecond ifTrue: [ aText foreground: BrGlamorousColors disabledButtonTextColor ].
+			aText := each duration humanReadablePrintString asRopedText.
+			each duration < 1 milliSecond
+				ifTrue: [ aText foreground: BrGlamorousColors disabledButtonTextColor ].
 			aText ];
-		column: 'Candidates' item: #numberOfCandidates width: 50
+		column: 'Candidates' text: #numberOfCandidates width: 50
 ]
 
 { #category : 'api - accessing' }

@@ -1,1 +1,1 @@
-Package { #name : 'BaselineOfGToolkitSpotter' }
+Package { #name : #BaselineOfGToolkitSpotter }

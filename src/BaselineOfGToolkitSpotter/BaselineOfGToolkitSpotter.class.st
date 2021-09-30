@@ -24,18 +24,18 @@ To learn from similar methods, you can {{gtClass:GtWorkWithQueriesHowToGuide|lab
 
 "
 Class {
-	#name : 'BaselineOfGToolkitSpotter',
-	#superclass : 'BaselineOf',
-	#category : 'BaselineOfGToolkitSpotter'
+	#name : #BaselineOfGToolkitSpotter,
+	#superclass : #BaselineOf,
+	#category : #BaselineOfGToolkitSpotter
 }
 
-{ #category : 'baseline' }
+{ #category : #baseline }
 BaselineOfGToolkitSpotter >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [
 		spec
 			baseline: 'Brick' with: [
-				spec repository: 'github://feenkcom/Brick:v0.8.391/src' ].
+				spec repository: 'github://feenkcom/Brick:v0.8.392/src' ].
 		spec
 			baseline: 'GToolkitExamples' with: [
 				spec repository: 'github://feenkcom/gtoolkit-examples:v0.8.33/src' ].

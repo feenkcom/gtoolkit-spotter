@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterSearchFinished',
-	#superclass : 'Announcement',
+	#name : #GtSpotterSearchFinished,
+	#superclass : #Announcement,
 	#instVars : [
 		'processors',
 		'query'
@@ -8,22 +8,22 @@ Class {
 	#category : 'GToolkit-Spotter-Announcements'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterSearchFinished >> processors [
 	^ processors
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterSearchFinished >> processors: anObject [
 	processors := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterSearchFinished >> query [
 	^ query
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterSearchFinished >> query: anObject [
 	query := anObject
 ]

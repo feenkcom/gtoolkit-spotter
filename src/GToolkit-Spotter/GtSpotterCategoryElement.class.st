@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterCategoryElement',
-	#superclass : 'GtSpotterStepItemElement',
+	#name : #GtSpotterCategoryElement,
+	#superclass : #GtSpotterStepItemElement,
 	#instVars : [
 		'category',
 		'diveInButton',
@@ -11,14 +11,14 @@ Class {
 	#category : 'GToolkit-Spotter-UI'
 }
 
-{ #category : 'private - actions' }
+{ #category : #'private - actions' }
 GtSpotterCategoryElement >> actDueTo: anEventType [
 
 	self stepModelDo: [ :aStepModel |
 		aStepModel actOnCategory: self category dueTo: anEventType from: self ]
 ]
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 GtSpotterCategoryElement >> bindData: anObject [
 	"Bind data to this element"
 	self 
@@ -27,13 +27,13 @@ GtSpotterCategoryElement >> bindData: anObject [
 	self category: anObject
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 GtSpotterCategoryElement >> category [
 	<return: #GtSpotterProcessorCandidates>
 	^ category
 ]
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 GtSpotterCategoryElement >> category: aGtSpotterProcessorCandidates [
 	self category == aGtSpotterProcessorCandidates ifTrue: [ ^ self ].
 	self 
@@ -43,25 +43,25 @@ GtSpotterCategoryElement >> category: aGtSpotterProcessorCandidates [
 	self onCategoryChanged.
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 GtSpotterCategoryElement >> categoryDo: aBlock [
 	self category ifNotNil: aBlock
 ]
 
-{ #category : 'private - actions' }
+{ #category : #'private - actions' }
 GtSpotterCategoryElement >> diveInCategoryDueTo: anEventType [
 
 	self stepModelDo: [ :aStepModel |
 		aStepModel diveInCategory: self processor dueTo: anEventType ]
 ]
 
-{ #category : 'private - actions' }
+{ #category : #'private - actions' }
 GtSpotterCategoryElement >> hideActions [
 	actOnButton visibility: BlVisibility hidden.
 	diveInButton visibility: BlVisibility hidden.
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterCategoryElement >> initialize [
 	super initialize.
 	self initializeLabel.
@@ -78,7 +78,7 @@ GtSpotterCategoryElement >> initialize [
 	self addChild: diveInButton as: #diveInButton.
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterCategoryElement >> initializeActOnButton [
 	actOnButton := BrButton new
 		aptitude: BrGlamorousButtonWithIconAptitude;
@@ -91,7 +91,7 @@ GtSpotterCategoryElement >> initializeActOnButton [
 		alignCenterLeft
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterCategoryElement >> initializeAmountElement [
 	amountElement := GtSpotterAmountElement new
 		aptitude: (BrGlamorousLabelAptitude new foreground: Color gray; glamorousRegularSmallSize);
@@ -100,7 +100,7 @@ GtSpotterCategoryElement >> initializeAmountElement [
 		alignCenterLeft
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterCategoryElement >> initializeDiveInButton [
 	diveInButton := BrButton new
 		aptitude: BrGlamorousButtonWithIconAptitude;
@@ -113,7 +113,7 @@ GtSpotterCategoryElement >> initializeDiveInButton [
 		alignCenterLeft
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterCategoryElement >> initializeLabel [
 	labelElement := BrLabel new
 		aptitude: (BrGlamorousLabelAptitude new foreground: Color gray; glamorousRegularSmallSize);
@@ -122,28 +122,28 @@ GtSpotterCategoryElement >> initializeLabel [
 		alignCenterLeft
 ]
 
-{ #category : 'private - testing' }
+{ #category : #'private - testing' }
 GtSpotterCategoryElement >> isCategorySelected [
 	self stepModelDo: [ :aModel |
 		^ aModel isCategorySelected: self category processor ].
 	^ false
 ]
 
-{ #category : 'private - actions' }
+{ #category : #'private - actions' }
 GtSpotterCategoryElement >> mayHideActions [
 	self isCategorySelected ifTrue: [ ^ self ].
 	self isMouseHovering ifTrue: [ ^ self ].
 	self hideActions.
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 GtSpotterCategoryElement >> numberOfVisibleChildren [
 	<return: #Integer>
 	self categoryDo: [ :aCategory | ^ aCategory size ].
 	^ 0
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterCategoryElement >> onAsyncCandidatesAmountChanged: aGtSpotterCandidatesAmountChanged [
 	
 	| aProcessor anAmount |
@@ -154,7 +154,7 @@ GtSpotterCategoryElement >> onAsyncCandidatesAmountChanged: aGtSpotterCandidates
 		self onProcessor: aProcessor candidatesAmountChangedTo: anAmount ]).
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterCategoryElement >> onCandidateSelected: aGtSpotterSelectedCandidateChanged [
 	super onCandidateSelected: aGtSpotterSelectedCandidateChanged.
 	(aGtSpotterSelectedCandidateChanged selected processor = self processor)
@@ -162,26 +162,26 @@ GtSpotterCategoryElement >> onCandidateSelected: aGtSpotterSelectedCandidateChan
 		ifFalse: [ self mayHideActions ]
 ]
 
-{ #category : 'private - hooks' }
+{ #category : #'private - hooks' }
 GtSpotterCategoryElement >> onCategoryChanged [
 	self updateLabel.
 	self updateVisibleAndTotalAmount.
 	self updateActions
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterCategoryElement >> onMouseEnter [
 	super onMouseEnter.
 	self showActions.
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterCategoryElement >> onMouseLeave [
 	super onMouseLeave.
 	self mayHideActions.
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterCategoryElement >> onProcessor: aProcessor candidatesAmountChangedTo: anAmount [
 
 	aProcessor = self processor ifFalse: [ ^ self ].
@@ -189,19 +189,19 @@ GtSpotterCategoryElement >> onProcessor: aProcessor candidatesAmountChangedTo: a
 	self updateTotalAmount: anAmount.
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 GtSpotterCategoryElement >> processor [
 	<return: #GtSpotterProcessorCandidates>
 	^ self category processor
 ]
 
-{ #category : 'private - actions' }
+{ #category : #'private - actions' }
 GtSpotterCategoryElement >> showActions [
 	actOnButton visibility: BlVisibility visible.
 	diveInButton visibility: BlVisibility visible.
 ]
 
-{ #category : 'private - subscriptions' }
+{ #category : #'private - subscriptions' }
 GtSpotterCategoryElement >> subscribeToSpotterStep [
 	super subscribeToSpotterStep.
 	self stepModel candidates announcer
@@ -210,29 +210,29 @@ GtSpotterCategoryElement >> subscribeToSpotterStep [
 		to: self.
 ]
 
-{ #category : 'private - updating' }
+{ #category : #'private - updating' }
 GtSpotterCategoryElement >> updateActions [
 	self isCategorySelected
 		ifTrue: [ self showActions ]
 		ifFalse: [ self hideActions ]
 ]
 
-{ #category : 'private - updating' }
+{ #category : #'private - updating' }
 GtSpotterCategoryElement >> updateLabel [
 	labelElement text: '#' , self category processor title asString
 ]
 
-{ #category : 'private - updating' }
+{ #category : #'private - updating' }
 GtSpotterCategoryElement >> updateTotalAmount: anInteger [ 
 	amountElement total: anInteger
 ]
 
-{ #category : 'private - updating' }
+{ #category : #'private - updating' }
 GtSpotterCategoryElement >> updateVisibleAmount: anInteger [ 
 	amountElement visible: anInteger
 ]
 
-{ #category : 'private - updating' }
+{ #category : #'private - updating' }
 GtSpotterCategoryElement >> updateVisibleAndTotalAmount [
 	self updateVisibleAmount: self numberOfVisibleChildren.
 	self processor allFilteredCandidatesDo: [ :aCollection | 

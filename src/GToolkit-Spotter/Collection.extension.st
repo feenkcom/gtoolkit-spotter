@@ -1,6 +1,6 @@
-Extension { #name : 'Collection' }
+Extension { #name : #Collection }
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Collection >> gtSpotterItemsFor: aStep [
 	<gtSearch>
 	| processor |

@@ -1,6 +1,6 @@
-Extension { #name : 'Slot' }
+Extension { #name : #Slot }
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Slot >> gtSpotterAccessesFor: aStep [
 	<gtSearch>
 	(aStep hasPreviousStep

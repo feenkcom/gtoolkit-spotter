@@ -1,6 +1,6 @@
-Extension { #name : 'AbstractFileReference' }
+Extension { #name : #AbstractFileReference }
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 AbstractFileReference >> gtSpotterForAddressFileFor: aStep [
 	<gtSearch>
 	self isAddressBookFile
@@ -14,7 +14,7 @@ AbstractFileReference >> gtSpotterForAddressFileFor: aStep [
 		wantsToDisplayOnEmptyQuery: true
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 AbstractFileReference >> gtSpotterForDirectoriesFor: aStep [
 	<gtSearch>
 	^ self isDirectory
@@ -28,7 +28,7 @@ AbstractFileReference >> gtSpotterForDirectoriesFor: aStep [
 				filter: GtFilterSubstring ]
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 AbstractFileReference >> gtSpotterForFilesFor: aStep [
 	<gtSearch>
 	^ self isDirectory
@@ -42,7 +42,7 @@ AbstractFileReference >> gtSpotterForFilesFor: aStep [
 				filter: GtFilterSubstring ]
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 AbstractFileReference >> gtSpotterForXMLFileFor: aStep [
 	<gtSearch>
 	| xmlFileHandle |
@@ -59,7 +59,7 @@ AbstractFileReference >> gtSpotterForXMLFileFor: aStep [
 		wantsToDisplayOnEmptyQuery: true
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 AbstractFileReference >> gtSpotterForZipDirectoriesFor: aStep [
 	<gtSearch>
 	| zipFileSystem |
@@ -76,7 +76,7 @@ AbstractFileReference >> gtSpotterForZipDirectoriesFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 AbstractFileReference >> gtSpotterForZipFilesFor: aStep [
 	<gtSearch>
 	| zipFileSystem |

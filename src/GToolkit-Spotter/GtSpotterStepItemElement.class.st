@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterStepItemElement',
-	#superclass : 'BrHorizontalPane',
+	#name : #GtSpotterStepItemElement,
+	#superclass : #BrHorizontalPane,
 	#instVars : [
 		'stepModel',
 		'isMouseHovering'
@@ -8,25 +8,25 @@ Class {
 	#category : 'GToolkit-Spotter-UI'
 }
 
-{ #category : 'api - instance creation' }
+{ #category : #'api - instance creation' }
 GtSpotterStepItemElement class >> asElement [
 	^ self new
 ]
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 GtSpotterStepItemElement >> bindData: aObject [
 	"Bind data to this element"
 	self subclassResponsibility
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterStepItemElement >> initialize [
 	super initialize.
 	self unmarkMouseIsHovering.
 	self initializeActionsVisibility.
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterStepItemElement >> initializeActionsVisibility [
 	self
 		when: BlMouseEnterEvent
@@ -36,43 +36,43 @@ GtSpotterStepItemElement >> initializeActionsVisibility [
 		do: [ :anEvent | self onMouseLeave ].
 ]
 
-{ #category : 'private - testing' }
+{ #category : #'private - testing' }
 GtSpotterStepItemElement >> isMouseHovering [
 	<return: #Boolean>
 	^ isMouseHovering
 ]
 
-{ #category : 'private - actions' }
+{ #category : #'private - actions' }
 GtSpotterStepItemElement >> markMouseIsHovering [
 	isMouseHovering := true
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterStepItemElement >> onAsyncCandidateSelected: aGtSpotterSelectedCandidateChanged [
 	self enqueueTask: (BlTaskAction new action: [
 		self onCandidateSelected: aGtSpotterSelectedCandidateChanged ])
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterStepItemElement >> onCandidateSelected: aGtSpotterSelectedCandidateChanged [
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterStepItemElement >> onMouseEnter [
 	self markMouseIsHovering.
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterStepItemElement >> onMouseLeave [
 	self unmarkMouseIsHovering.
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 GtSpotterStepItemElement >> stepModel [
 	^ stepModel
 ]
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 GtSpotterStepItemElement >> stepModel: aGtSpotterStep [
 	self stepModel == aGtSpotterStep ifTrue: [ ^ self ].
 	self unsubscribeFromSpotterStep.
@@ -80,12 +80,12 @@ GtSpotterStepItemElement >> stepModel: aGtSpotterStep [
 	self subscribeToSpotterStep.
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 GtSpotterStepItemElement >> stepModelDo: aBlock [
 	self stepModel ifNotNil: aBlock
 ]
 
-{ #category : 'private - subscriptions' }
+{ #category : #'private - subscriptions' }
 GtSpotterStepItemElement >> subscribeToSpotterStep [
 	self stepModel announcer
 		when: GtSpotterSelectedCandidateChanged
@@ -93,12 +93,12 @@ GtSpotterStepItemElement >> subscribeToSpotterStep [
 		to: self.
 ]
 
-{ #category : 'private - actions' }
+{ #category : #'private - actions' }
 GtSpotterStepItemElement >> unmarkMouseIsHovering [
 	isMouseHovering := false
 ]
 
-{ #category : 'private - subscriptions' }
+{ #category : #'private - subscriptions' }
 GtSpotterStepItemElement >> unsubscribeFromSpotterStep [
 	self stepModelDo: [ :aModel | aModel announcer unsubscribe: self ].
 ]

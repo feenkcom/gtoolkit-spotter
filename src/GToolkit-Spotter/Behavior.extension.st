@@ -1,6 +1,6 @@
-Extension { #name : 'Behavior' }
+Extension { #name : #Behavior }
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Behavior >> gtSpotterClassInstanceVariablesFor: aStep [
 	<gtSearch>
 	self isTrait
@@ -13,7 +13,7 @@ Behavior >> gtSpotterClassInstanceVariablesFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Behavior >> gtSpotterCompositionFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor
@@ -24,7 +24,7 @@ Behavior >> gtSpotterCompositionFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Behavior >> gtSpotterInstanceVariablesFor: aStep [
 	<gtSearch>
 	self isTrait
@@ -37,7 +37,7 @@ Behavior >> gtSpotterInstanceVariablesFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Behavior >> gtSpotterSubclassesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -48,7 +48,7 @@ Behavior >> gtSpotterSubclassesFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Behavior >> gtSpotterSuperclassesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -59,7 +59,7 @@ Behavior >> gtSpotterSuperclassesFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Behavior >> gtSpotterTraitUsersFor: aStep [
 	<gtSearch>
 	self isTrait
@@ -72,7 +72,7 @@ Behavior >> gtSpotterTraitUsersFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Behavior >> gtSpotterUsedSlotsFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -83,7 +83,7 @@ Behavior >> gtSpotterUsedSlotsFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Behavior >> gtSpotterUsedTraitsFor: aStep [
 	<gtSearch>
 	aStep listProcessor

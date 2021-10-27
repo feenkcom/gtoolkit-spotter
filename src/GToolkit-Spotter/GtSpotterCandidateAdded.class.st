@@ -1,24 +1,24 @@
 Class {
-	#name : 'GtSpotterCandidateAdded',
-	#superclass : 'GlamorousAuthor',
+	#name : #GtSpotterCandidateAdded,
+	#superclass : #GlamorousAuthor,
 	#instVars : [
 		'candidate'
 	],
 	#category : 'GToolkit-Spotter-Announcements'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidateAdded >> candidate [
 	^ candidate value
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidateAdded >> candidateLink [
 
 	^ candidate
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidateAdded >> candidateLink: anObject [
 	candidate := anObject
 ]

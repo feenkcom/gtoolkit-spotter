@@ -1,6 +1,6 @@
-Extension { #name : 'GTInspector' }
+Extension { #name : #GTInspector }
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 GTInspector class >> gtSpotterExtensionsFor: aStep [
 	<gtSearch>
 	aStep listProcessor

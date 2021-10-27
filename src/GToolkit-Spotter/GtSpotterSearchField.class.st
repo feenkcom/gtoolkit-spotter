@@ -1,13 +1,13 @@
 Class {
-	#name : 'GtSpotterSearchField',
-	#superclass : 'BrEditor',
+	#name : #GtSpotterSearchField,
+	#superclass : #BrEditor,
 	#instVars : [
 		'spotterModel'
 	],
 	#category : 'GToolkit-Spotter-UI'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterSearchField >> initialize [
 	super initialize.
 
@@ -15,7 +15,7 @@ GtSpotterSearchField >> initialize [
 	self requestFocus
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterSearchField >> onCurrentStepChanged: anAnnouncement [
 	self text: anAnnouncement stepModel searchQuery asRopedText.
 	self navigator
@@ -25,14 +25,14 @@ GtSpotterSearchField >> onCurrentStepChanged: anAnnouncement [
 	self requestFocus
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 GtSpotterSearchField >> spotterModel [
 	<return: #GtSpotter>
 
 	^ spotterModel
 ]
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 GtSpotterSearchField >> spotterModel: aGtSpotter [
 	spotterModel := aGtSpotter.
 	

@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterPreviewSignal',
-	#superclass : 'GtSpotterSignal',
+	#name : #GtSpotterPreviewSignal,
+	#superclass : #GtSpotterSignal,
 	#instVars : [
 		'context',
 		'candidate'
@@ -8,32 +8,32 @@ Class {
 	#category : 'GToolkit-Spotter-Logging'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterPreviewSignal >> candidate [
 	^ candidate
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterPreviewSignal >> candidate: anObject [
 	candidate := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterPreviewSignal >> context [
 	^ context
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterPreviewSignal >> context: anObject [
 	context := anObject
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtSpotterPreviewSignal >> isPreviewSignal [
 	^ true
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterPreviewSignal >> item [
 	^ self candidate item
 ]

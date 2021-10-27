@@ -1,6 +1,6 @@
-Extension { #name : 'SettingTree' }
+Extension { #name : #SettingTree }
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 SettingTree >> gtSpotterForSettingsFor: aStep [
 	<gtSearch>
 	aStep listProcessor

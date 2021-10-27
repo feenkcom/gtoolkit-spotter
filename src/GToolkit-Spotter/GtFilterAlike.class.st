@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtFilterAlike',
-	#superclass : 'GtOrderedFilter',
+	#name : #GtFilterAlike,
+	#superclass : #GtOrderedFilter,
 	#instVars : [
 		'lowerThreshold',
 		'upperThreshold'
@@ -8,7 +8,7 @@ Class {
 	#category : 'GToolkit-Spotter-Filters'
 }
 
-{ #category : 'private' }
+{ #category : #private }
 GtFilterAlike >> applyFilterWithQuery [
 	| allItemsPrepocessed allItemsPrepocessedAndSorted alikeMatches otherMatches upper lower |
 	alikeMatches := OrderedCollection  new.
@@ -41,29 +41,29 @@ GtFilterAlike >> applyFilterWithQuery [
 	self filteredItems: alikeMatches , otherMatches 
 ]
 
-{ #category : 'accessing-defaults' }
+{ #category : #'accessing-defaults' }
 GtFilterAlike >> defaultLowerThreshold [
 	" lower threshold: to cut off the large irrelevent chunk before sorting/filtering is appplied "
 	^ 0.33
 ]
 
-{ #category : 'accessing-defaults' }
+{ #category : #'accessing-defaults' }
 GtFilterAlike >> defaultUpperThreshold [
 	" upper threshold: to keep a reasonably sized set of interesting matches "
 	^ 0.45
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtFilterAlike >> lowerThreshold [
 	^ lowerThreshold
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtFilterAlike >> lowerThreshold: anObject [
 	lowerThreshold := anObject
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtFilterAlike >> prepareFilterInContext: aSpotterContext [
 	super prepareFilterInContext: aSpotterContext.
 	
@@ -71,12 +71,12 @@ GtFilterAlike >> prepareFilterInContext: aSpotterContext [
 	upperThreshold ifNil: [ upperThreshold := self defaultUpperThreshold ]. " performance optimization "
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtFilterAlike >> upperThreshold [
 	^ upperThreshold
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtFilterAlike >> upperThreshold: anObject [
 	upperThreshold := anObject
 ]

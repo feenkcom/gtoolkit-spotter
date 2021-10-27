@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtSpotterPreviewPreparationSignal',
-	#superclass : 'GtSpotterPreviewSignal',
+	#name : #GtSpotterPreviewPreparationSignal,
+	#superclass : #GtSpotterPreviewSignal,
 	#category : 'GToolkit-Spotter-Logging'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterPreviewPreparationSignal >> name [
 	^ 'Preview preparation: ', self item asString
 ]

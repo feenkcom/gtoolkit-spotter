@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterSignalAnalyzerProcessor',
-	#superclass : 'Object',
+	#name : #GtSpotterSignalAnalyzerProcessor,
+	#superclass : #Object,
 	#traits : 'TGtSpotterSignalsView',
 	#classTraits : 'TGtSpotterSignalsView classTrait',
 	#instVars : [
@@ -9,7 +9,7 @@ Class {
 	#category : 'GToolkit-Spotter-Logging'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtSpotterSignalAnalyzerProcessor class >> fromSignals: aCollection [
 	<return: #Array of: #GtSpotterSignalAnalyzerProcessor>
 	| theGroups aFilteredCollection theProcessors |
@@ -24,12 +24,12 @@ GtSpotterSignalAnalyzerProcessor class >> fromSignals: aCollection [
 	^ theProcessors
 ]
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 GtSpotterSignalAnalyzerProcessor >> candidates [
 	^ self processor allFilteredCandidates
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtSpotterSignalAnalyzerProcessor >> gtCandidatesFor: aView [
 	<gtView>
 	self processor ifNil: [ ^ aView empty ].
@@ -40,7 +40,7 @@ GtSpotterSignalAnalyzerProcessor >> gtCandidatesFor: aView [
 		view: #gtAllFilteredCandidatesFor:
 ]
 
-{ #category : 'gt-extensions' }
+{ #category : #'gt-extensions' }
 GtSpotterSignalAnalyzerProcessor >> gtDefiningMethodFor: aView [
 	<gtView>
 	self signals ifNil: [ ^ aView empty ].
@@ -53,34 +53,34 @@ GtSpotterSignalAnalyzerProcessor >> gtDefiningMethodFor: aView [
 
 ]
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 GtSpotterSignalAnalyzerProcessor >> numberOfCandidates [
 	^ self candidates size
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 GtSpotterSignalAnalyzerProcessor >> printOn: aStream [
 	self signals ifNil: [ ^ super printOn: aStream ].
 	aStream
 		nextPutAll: self title asString
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterSignalAnalyzerProcessor >> processor [
 	^ self signals anyOne processor
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterSignalAnalyzerProcessor >> signals [
 	^ signals
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterSignalAnalyzerProcessor >> signals: anObject [
 	signals := anObject
 ]
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 GtSpotterSignalAnalyzerProcessor >> title [
 	^ self processor title
 ]

@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterElement',
-	#superclass : 'BlElement',
+	#name : #GtSpotterElement,
+	#superclass : #BlElement,
 	#instVars : [
 		'spotterModel',
 		'stepsPager',
@@ -11,7 +11,7 @@ Class {
 	#category : 'GToolkit-Spotter-UI'
 }
 
-{ #category : 'private - actions' }
+{ #category : #'private - actions' }
 GtSpotterElement >> actDueTo: anEventType [
 	self
 		spotterModelDo: [ :aSpotter | 
@@ -22,7 +22,7 @@ GtSpotterElement >> actDueTo: anEventType [
 			aSpotter currentStep actDueTo: anEventType from: self ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterElement >> bindingDictionnary [
 	^ {
 	BlKeyCombination escape -> [ self exitDueTo: #keyPressedEscape ].
@@ -54,17 +54,17 @@ GtSpotterElement >> bindingDictionnary [
 	"($p meta shift -> [ self exportAsPNGSilently ])"}
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterElement >> createHeaderElement [
 	^ GtSpotterHeaderElement new
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterElement >> createPreviewElement [
 	^ GtSpotterPreviewElement new
 ]
 
-{ #category : 'private - actions' }
+{ #category : #'private - actions' }
 GtSpotterElement >> diveInCategoryDueTo: anEventType [
 
 	self spotterModelDo: [ :aSpotter |
@@ -72,7 +72,7 @@ GtSpotterElement >> diveInCategoryDueTo: anEventType [
 			ifTrue: [ aSpotter currentStep diveInCategoryDueTo: anEventType ] ]
 ]
 
-{ #category : 'private - actions' }
+{ #category : #'private - actions' }
 GtSpotterElement >> diveInDueTo: anEventType [
 
 	self spotterModelDo: [ :aSpotter |
@@ -80,7 +80,7 @@ GtSpotterElement >> diveInDueTo: anEventType [
 			ifTrue: [ aSpotter currentStep diveInDueTo: anEventType ] ]
 ]
 
-{ #category : 'private - actions' }
+{ #category : #'private - actions' }
 GtSpotterElement >> diveOutDueTo: anEventType [
 
 	self spotterModelDo: [ :aSpotter |
@@ -88,17 +88,17 @@ GtSpotterElement >> diveOutDueTo: anEventType [
 			ifTrue: [ aSpotter currentStep diveOutDueTo: anEventType ] ]
 ]
 
-{ #category : 'private - actions' }
+{ #category : #'private - actions' }
 GtSpotterElement >> exitDueTo: anEventType [
 	self spotterModelDo: [ :aSpotter | aSpotter exitDueTo: anEventType ]
 ]
 
-{ #category : 'private - accessing elements' }
+{ #category : #'private - accessing elements' }
 GtSpotterElement >> header [
 	^ header
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterElement >> initialize [
 	super initialize.
 
@@ -130,7 +130,7 @@ GtSpotterElement >> initialize [
 				c ignored vertical weight: 0.2 ])
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterElement >> initializeListeners [
 	self bindingDictionnary
 		associationsDo: [ :anAssociation |
@@ -138,7 +138,7 @@ GtSpotterElement >> initializeListeners [
 			self searchField removeShortcutsWithCombination: anAssociation key ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterElement >> initializeSpotterElements [
 	self layout: BlLinearLayout vertical.
 	self constraintsDo: [ :c |
@@ -168,18 +168,18 @@ GtSpotterElement >> initializeSpotterElements [
 	self addChildren: { header . results }.
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterElement >> onAsyncCandidateSelected: anAnnouncement [
 	self enqueueTask: (BlTaskAction new action: [
 		self onCandidateSelected: anAnnouncement ])
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterElement >> onCandidateSelected: anAnnouncement [
 	self phlow selectObject: anAnnouncement selected item
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterElement >> onCloseSpotter [
 	"Check if I am opened in a separate window, then close that window otherwise just remove me from the space"
 	(self isAttachedToSceneGraph
@@ -188,22 +188,22 @@ GtSpotterElement >> onCloseSpotter [
 			ifFalse: [ self removeFromParent ]
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterElement >> onHidePreview [
 	results removePage: preview
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterElement >> onShowPreview [
 	results addPage: preview
 ]
 
-{ #category : 'private - accessing elements' }
+{ #category : #'private - accessing elements' }
 GtSpotterElement >> searchField [
 	^ self header searchField
 ]
 
-{ #category : 'private - actions' }
+{ #category : #'private - actions' }
 GtSpotterElement >> selectNextCandidateDueTo: anEventType [
 
 	self spotterModelDo: [ :aSpotter |
@@ -212,7 +212,7 @@ GtSpotterElement >> selectNextCandidateDueTo: anEventType [
 				aSpotter currentStep selectNextDueTo: anEventType ] ]
 ]
 
-{ #category : 'private - actions' }
+{ #category : #'private - actions' }
 GtSpotterElement >> selectPreviousCandidateDueTo: anEventType [
 
 	self spotterModelDo: [ :aSpotter |
@@ -220,7 +220,7 @@ GtSpotterElement >> selectPreviousCandidateDueTo: anEventType [
 			ifTrue: [ aSpotter currentStep selectPreviousDueTo: anEventType ] ]
 ]
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 GtSpotterElement >> spotterModel: aSpotter [
 
 	spotterModel := aSpotter.
@@ -242,12 +242,12 @@ GtSpotterElement >> spotterModel: aSpotter [
 	aSpotter search
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 GtSpotterElement >> spotterModelDo: aBlock [
 	spotterModel ifNotNil: aBlock
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterElement >> togglePreview [
 	self spotterModelDo: [ :aSpotter | 
 		aSpotter togglePreview ]

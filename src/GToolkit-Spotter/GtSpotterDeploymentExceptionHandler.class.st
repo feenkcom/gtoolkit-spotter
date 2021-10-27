@@ -1,5 +1,5 @@
 Class {
-	#name : 'GtSpotterDeploymentExceptionHandler',
-	#superclass : 'GtSpotterExceptionHandler',
+	#name : #GtSpotterDeploymentExceptionHandler,
+	#superclass : #GtSpotterExceptionHandler,
 	#category : 'GToolkit-Spotter-Exceptions'
 }

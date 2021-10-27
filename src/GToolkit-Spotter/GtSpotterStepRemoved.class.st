@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterStepRemoved',
-	#superclass : 'Announcement',
+	#name : #GtSpotterStepRemoved,
+	#superclass : #Announcement,
 	#instVars : [
 		'stepModel',
 		'index'
@@ -8,22 +8,22 @@ Class {
 	#category : 'GToolkit-Spotter-Announcements'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStepRemoved >> index [
 	^ index
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStepRemoved >> index: anObject [
 	index := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStepRemoved >> stepModel [
 	^ stepModel
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStepRemoved >> stepModel: anObject [
 	stepModel := anObject
 ]

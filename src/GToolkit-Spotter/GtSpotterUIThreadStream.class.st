@@ -1,13 +1,13 @@
 Class {
-	#name : 'GtSpotterUIThreadStream',
-	#superclass : 'GtSpotterStream',
+	#name : #GtSpotterUIThreadStream,
+	#superclass : #GtSpotterStream,
 	#instVars : [
 		'spotterElement'
 	],
 	#category : 'GToolkit-Spotter-Utils'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterUIThreadStream >> attachedElementDo: aBlock [
 	"spotterElement is a weak reference"
 	spotterElement
@@ -15,7 +15,7 @@ GtSpotterUIThreadStream >> attachedElementDo: aBlock [
 	(spotterElement at: 1) ifNotNil: aBlock
 ]
 
-{ #category : 'gt-extensions' }
+{ #category : #'gt-extensions' }
 GtSpotterUIThreadStream >> attachedElementPreviewFor: aView [
 	<gtView>
 	^ aView forward
@@ -30,12 +30,12 @@ GtSpotterUIThreadStream >> attachedElementPreviewFor: aView [
 		actionUpdateButtonTooltip: 'Refresh attached element preview'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterUIThreadStream >> attachedTo: anElement [
 	spotterElement := anElement asWeakReference
 ]
 
-{ #category : 'performing' }
+{ #category : #performing }
 GtSpotterUIThreadStream >> performSymbol: aSymbol withArguments: aCollection receiver: aReceiver [
 	| time |
 

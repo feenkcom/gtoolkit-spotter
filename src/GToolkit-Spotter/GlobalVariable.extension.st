@@ -1,11 +1,11 @@
-Extension { #name : 'GlobalVariable' }
+Extension { #name : #GlobalVariable }
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 GlobalVariable >> gtSpotterActDefaultFrom: aSpotterElement [
 	GtInspector openOn: self value from: aSpotterElement
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 GlobalVariable >> gtSpotterClassFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -16,7 +16,7 @@ GlobalVariable >> gtSpotterClassFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 GlobalVariable >> gtSpotterForReferencesFor: aStep [
 	<gtSearch>
 	aStep listProcessor

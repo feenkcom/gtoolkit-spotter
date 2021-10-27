@@ -5,8 +5,8 @@ I use a Bloc TaskIt worker pool to schedule background tasks.
 
 "
 Class {
-	#name : 'GtSpotterTaskItAsyncTask',
-	#superclass : 'GtSpotterTask',
+	#name : #GtSpotterTaskItAsyncTask,
+	#superclass : #GtSpotterTask,
 	#instVars : [
 		'command',
 		'mutex',
@@ -15,7 +15,7 @@ Class {
 	#category : 'GToolkit-Spotter-Utils'
 }
 
-{ #category : 'api - execution' }
+{ #category : #'api - execution' }
 GtSpotterTaskItAsyncTask >> execute: aGtSpotterTaskCommand [
 	BlUseAsyncFeatures 
 		ifEnabledDo: [
@@ -26,13 +26,13 @@ GtSpotterTaskItAsyncTask >> execute: aGtSpotterTaskCommand [
 			GtSpotterSyncTask new execute: aGtSpotterTaskCommand ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterTaskItAsyncTask >> initialize [
 	super initialize.
 	mutex := Mutex new.
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtSpotterTaskItAsyncTask >> newSearchCommandFor: aGtSpotterTaskCommand [
 	| aCommand |
 	spotterCommand := aGtSpotterTaskCommand.
@@ -46,7 +46,7 @@ GtSpotterTaskItAsyncTask >> newSearchCommandFor: aGtSpotterTaskCommand [
 	^ aCommand
 ]
 
-{ #category : 'execution' }
+{ #category : #execution }
 GtSpotterTaskItAsyncTask >> postpone: aGtSpotterTaskCommand [
 	"Must be called withing monitor critical code"
 	| aCommand |
@@ -62,7 +62,7 @@ GtSpotterTaskItAsyncTask >> postpone: aGtSpotterTaskCommand [
 	BlTaskAtQueue default schedule: command
 ]
 
-{ #category : 'signaling' }
+{ #category : #signaling }
 GtSpotterTaskItAsyncTask >> signalTerminationOf: aCurrentCommand becauseOf: aNewCommand [
 	GtSpotterExecutionTerminatingTaskSignal new
 		task: self;
@@ -71,13 +71,13 @@ GtSpotterTaskItAsyncTask >> signalTerminationOf: aCurrentCommand becauseOf: aNew
 		emit
 ]
 
-{ #category : 'execution' }
+{ #category : #execution }
 GtSpotterTaskItAsyncTask >> terminate [
 	"Must be called withing monitor critical code"
 	command ifNotNil: [ :aCommand | aCommand terminate ]
 ]
 
-{ #category : 'execution' }
+{ #category : #execution }
 GtSpotterTaskItAsyncTask >> terminateBecauseOf: aNewCommand [
 	"Must be called withing monitor critical code"
 	command ifNotNil: [ :aCurrentCommand | 

@@ -1,6 +1,6 @@
-Extension { #name : 'MetacelloVersion' }
+Extension { #name : #MetacelloVersion }
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 MetacelloVersion >> gtSpotterForGroupsFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -12,7 +12,7 @@ MetacelloVersion >> gtSpotterForGroupsFor: aStep [
 		wantsToDisplayOnEmptyQuery: true
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 MetacelloVersion >> gtSpotterForPackagesFor: aStep [
 	<gtSearch>
 	aStep listProcessor

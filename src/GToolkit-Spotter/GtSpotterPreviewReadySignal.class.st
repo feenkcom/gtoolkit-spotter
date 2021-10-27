@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterPreviewReadySignal',
-	#superclass : 'GtSpotterPreviewSignal',
+	#name : #GtSpotterPreviewReadySignal,
+	#superclass : #GtSpotterPreviewSignal,
 	#instVars : [
 		'previewElement',
 		'text'
@@ -8,27 +8,27 @@ Class {
 	#category : 'GToolkit-Spotter-Logging'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterPreviewReadySignal >> name [
 	^ 'Preview ready: ', self item asString
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterPreviewReadySignal >> previewElement [
 	^ previewElement
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterPreviewReadySignal >> previewElement: anObject [
 	previewElement := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterPreviewReadySignal >> text [
 	^ text
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterPreviewReadySignal >> text: anObject [
 	text := anObject
 ]

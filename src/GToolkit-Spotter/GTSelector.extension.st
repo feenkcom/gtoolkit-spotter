@@ -1,6 +1,6 @@
-Extension { #name : 'GTSelector' }
+Extension { #name : #GTSelector }
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 GTSelector >> gtSpotterImplementorsFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor
@@ -11,7 +11,7 @@ GTSelector >> gtSpotterImplementorsFor: aStep [
 		keyBinding: $m meta
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 GTSelector >> gtSpotterUsersFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor

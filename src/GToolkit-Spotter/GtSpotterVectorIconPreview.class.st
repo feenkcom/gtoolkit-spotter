@@ -5,12 +5,12 @@ I am used by Spotter to nicely display icon previews.
 
 "
 Class {
-	#name : 'GtSpotterVectorIconPreview',
-	#superclass : 'GtSpotterIconPreview',
+	#name : #GtSpotterVectorIconPreview,
+	#superclass : #GtSpotterIconPreview,
 	#category : 'GToolkit-Spotter-Utils'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtSpotterVectorIconPreview >> newIconPreviewElement [
 	^ self iconStencil create asElement asScalableElement
 		margin: (BlInsets all: 5);

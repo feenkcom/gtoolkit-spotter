@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterPreviewElement',
-	#superclass : 'BlElement',
+	#name : #GtSpotterPreviewElement,
+	#superclass : #BlElement,
 	#instVars : [
 		'spotterModel',
 		'previewObject',
@@ -10,7 +10,7 @@ Class {
 	#category : 'GToolkit-Spotter-UI'
 }
 
-{ #category : 'updating' }
+{ #category : #updating }
 GtSpotterPreviewElement >> generatePreviewFor: aSpotterCandidate in: aPreviewContainer [
 
 	| aChildElement aText |
@@ -31,7 +31,7 @@ GtSpotterPreviewElement >> generatePreviewFor: aSpotterCandidate in: aPreviewCon
 				self signalPreviewCanceledFor: aSpotterCandidate dueTo: previewObject ] ]).
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterPreviewElement >> initialize [
 	super initialize.
 	
@@ -57,23 +57,23 @@ GtSpotterPreviewElement >> initialize [
 	self visibility: BlVisibility gone.
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterPreviewElement >> onActOn: anAnnouncement [ 
 	self terminatePreviewTask
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterPreviewElement >> onAsyncCandidateSelected: anAnnouncement [
 	self enqueueTask: (BlTaskAction new action: [
 		self onCandidateSelected: anAnnouncement ])
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterPreviewElement >> onCandidateSelected: anAnnouncement [
 	self updatePreview: anAnnouncement selected
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterPreviewElement >> onCurrentStepChanged: anAnnouncement [
 
 	self spotterModelDo: [ :aSpotter | aSpotter hasSelected
@@ -83,23 +83,23 @@ GtSpotterPreviewElement >> onCurrentStepChanged: anAnnouncement [
 			previewObject := nil. ] ]
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterPreviewElement >> onExit: anAnnouncement [ 
 	self terminatePreviewTask
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterPreviewElement >> onHidePreview [
 	self visibility: BlVisibility gone.
 ]
 
-{ #category : 'hooks - children' }
+{ #category : #'hooks - children' }
 GtSpotterPreviewElement >> onRemovedFromSceneGraph [
 	super onRemovedFromSceneGraph.
 	self terminatePreviewTask.
 ]
 
-{ #category : 'private - event handling' }
+{ #category : #'private - event handling' }
 GtSpotterPreviewElement >> onShowPreview [
 
 	self spotterModel hasSelected
@@ -109,7 +109,7 @@ GtSpotterPreviewElement >> onShowPreview [
 	
 ]
 
-{ #category : 'signaling' }
+{ #category : #signaling }
 GtSpotterPreviewElement >> signalPreviewCanceledFor: anOriginalSpotterCandidate dueTo: aNewSpotterCandidate [
 	self spotterModelDo: [ :aSpotter | 
 		GtSpotterPreviewCanceledSignal new
@@ -119,7 +119,7 @@ GtSpotterPreviewElement >> signalPreviewCanceledFor: anOriginalSpotterCandidate 
 			emit ]
 ]
 
-{ #category : 'signaling' }
+{ #category : #signaling }
 GtSpotterPreviewElement >> signalPreviewFinishedFor: aSpotterCandidate [
 	self spotterModelDo: [ :aSpotter | 
 		GtSpotterPreviewFinishedSignal new
@@ -128,7 +128,7 @@ GtSpotterPreviewElement >> signalPreviewFinishedFor: aSpotterCandidate [
 			emit ]
 ]
 
-{ #category : 'signaling' }
+{ #category : #signaling }
 GtSpotterPreviewElement >> signalPreviewPreparationFor: aSpotterCandidate [
 	self spotterModelDo: [ :aSpotter | 
 		GtSpotterPreviewPreparationSignal new
@@ -137,7 +137,7 @@ GtSpotterPreviewElement >> signalPreviewPreparationFor: aSpotterCandidate [
 			emit ]
 ]
 
-{ #category : 'signaling' }
+{ #category : #signaling }
 GtSpotterPreviewElement >> signalPreviewReadyFor: aSpotterCandidate element: aChildElement text: aText [
 	self spotterModelDo: [ :aSpotter | 
 		GtSpotterPreviewReadySignal new
@@ -148,7 +148,7 @@ GtSpotterPreviewElement >> signalPreviewReadyFor: aSpotterCandidate element: aCh
 			emit ]
 ]
 
-{ #category : 'signaling' }
+{ #category : #signaling }
 GtSpotterPreviewElement >> signalPreviewStartFor: aSpotterCandidate [
 	self spotterModelDo: [ :aSpotter | 
 		GtSpotterPreviewStartSignal new
@@ -157,12 +157,12 @@ GtSpotterPreviewElement >> signalPreviewStartFor: aSpotterCandidate [
 			emit ]
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 GtSpotterPreviewElement >> spotterModel [
 	^ spotterModel
 ]
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 GtSpotterPreviewElement >> spotterModel: aSpotterModel [
 	spotterModel := aSpotterModel.
 	self when: GtPhlowObjectToSelect do: [ :anEvent | anEvent consumed: anEvent sourceElement == self ].
@@ -174,17 +174,17 @@ GtSpotterPreviewElement >> spotterModel: aSpotterModel [
 	spotterModel announcer when: GtSpotterActOn send: #onActOn: to: self.
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 GtSpotterPreviewElement >> spotterModelDo: aBlock [
 	self spotterModel ifNotNil: aBlock
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtSpotterPreviewElement >> terminatePreviewTask [
 	previewTask ifNotNil: [ :aTask | aTask terminate ]
 ]
 
-{ #category : 'updating' }
+{ #category : #updating }
 GtSpotterPreviewElement >> updatePreview: aSpotterCandidate [
 	| aPreviewContainer |
 	previewObject = aSpotterCandidate item

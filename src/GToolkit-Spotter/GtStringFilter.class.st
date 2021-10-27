@@ -6,8 +6,8 @@ I return the list of all items that match the filter but my subclasses should on
 
 "
 Class {
-	#name : 'GtStringFilter',
-	#superclass : 'GtFilter',
+	#name : #GtStringFilter,
+	#superclass : #GtFilter,
 	#instVars : [
 		'caseSensitive',
 		'query'
@@ -15,7 +15,7 @@ Class {
 	#category : 'GToolkit-Spotter-Filters'
 }
 
-{ #category : 'private' }
+{ #category : #private }
 GtStringFilter >> applyFilter [
 	self hasQuery ifFalse: [ 
 		self applyFilterWithoutQuery.
@@ -24,12 +24,12 @@ GtStringFilter >> applyFilter [
 	^ self filteredItems " return the filtered items only "
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtStringFilter >> applyFilterWithQuery [
 	
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtStringFilter >> applyFilterWithoutQuery [
 	" WARNING: this is not a copy of GTNullFilter>>#applyFilterWithoutQuery !!! "
 	self streamed 
@@ -47,27 +47,27 @@ GtStringFilter >> applyFilterWithoutQuery [
 			self addItems: self filteredItems ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtStringFilter >> caseSensitive [
 	^ caseSensitive
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtStringFilter >> caseSensitive: anObject [
 	caseSensitive := anObject
 ]
 
-{ #category : 'accessing-defaults' }
+{ #category : #'accessing-defaults' }
 GtStringFilter >> defaultCaseSensitive [
 	^ false
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtStringFilter >> hasQuery [
 	^ self query isEmptyOrNil not
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtStringFilter >> prepareFilterInContext: aSpotterContext [
 	super prepareFilterInContext: aSpotterContext.
 	
@@ -77,12 +77,12 @@ GtStringFilter >> prepareFilterInContext: aSpotterContext [
 		ifFalse: [ self context textLowercase ])
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtStringFilter >> query [
 	^ query
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtStringFilter >> query: anObject [
 	query := anObject
 ]

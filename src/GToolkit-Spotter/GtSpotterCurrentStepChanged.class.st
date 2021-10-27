@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterCurrentStepChanged',
-	#superclass : 'Announcement',
+	#name : #GtSpotterCurrentStepChanged,
+	#superclass : #Announcement,
 	#instVars : [
 		'stepModel',
 		'index'
@@ -8,12 +8,12 @@ Class {
 	#category : 'GToolkit-Spotter-Announcements'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCurrentStepChanged >> index [
 	^ index
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCurrentStepChanged >> index: aNumber [
 
 	self
@@ -23,14 +23,14 @@ GtSpotterCurrentStepChanged >> index: aNumber [
 	index := aNumber
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCurrentStepChanged >> stepModel [
 	<return: #GtSpotterStep>
 
 	^ stepModel
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCurrentStepChanged >> stepModel: aStepModel [
 	stepModel := aStepModel
 ]

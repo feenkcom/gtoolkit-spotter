@@ -1,23 +1,23 @@
-Extension { #name : 'Pragma' }
+Extension { #name : #Pragma }
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Pragma >> gtSpotterActDefaultFrom: aSpotterElement [
     ^ super gtSpotterActDefaultFrom: aSpotterElement
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Pragma >> gtSpotterForBytecodesFor: aStep [
 	<gtSearch>
 	self method spotterForBytecodesFor: aStep
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Pragma >> gtSpotterForImplementorsFor: aStep [
 	<gtSearch>
 	self method spotterForImplementorsFor: aStep
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Pragma >> gtSpotterForSendersFor: aStep [
 	<gtSearch>
 	self method spotterForSendersFor: aStep

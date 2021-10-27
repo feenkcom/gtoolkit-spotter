@@ -1,11 +1,11 @@
-Extension { #name : 'Class' }
+Extension { #name : #Class }
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Class >> gtSpotterActDefaultFrom: aSpotterElement [
 	self gtBrowseFrom: aSpotterElement
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Class >> gtSpotterClassMethodsFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -16,7 +16,7 @@ Class >> gtSpotterClassMethodsFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Class >> gtSpotterMethodsFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -27,7 +27,7 @@ Class >> gtSpotterMethodsFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Class >> gtSpotterReferenceFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -39,7 +39,7 @@ Class >> gtSpotterReferenceFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Class >> gtSpotterSuperClassMethodsFor: aStep [
 	<gtSearch>
 	| superclasses |
@@ -54,7 +54,7 @@ Class >> gtSpotterSuperClassMethodsFor: aStep [
 		filter: GtFilterSubstring
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Class >> gtSpotterSuperMethodsFor: aStep [
 	<gtSearch>
 	aStep listProcessor

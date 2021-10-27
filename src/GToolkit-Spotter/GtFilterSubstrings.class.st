@@ -1,18 +1,18 @@
 Class {
-	#name : 'GtFilterSubstrings',
-	#superclass : 'GtUnorderedFilter',
+	#name : #GtFilterSubstrings,
+	#superclass : #GtUnorderedFilter,
 	#instVars : [
 		'separators'
 	],
 	#category : 'GToolkit-Spotter-Filters'
 }
 
-{ #category : 'accessing-defaults' }
+{ #category : #'accessing-defaults' }
 GtFilterSubstrings >> defaultSeparators [
 	^ ' '
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtFilterSubstrings >> isMatchedItem: anItem [
 	| itemName |
 	itemName := self itemFilterNameFor: anItem.
@@ -20,7 +20,7 @@ GtFilterSubstrings >> isMatchedItem: anItem [
 		itemName includesSubstring: fragment caseSensitive: self caseSensitive ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtFilterSubstrings >> prepareFilterInContext: aSpotterContext [
 	super prepareFilterInContext: aSpotterContext.
 	
@@ -28,12 +28,12 @@ GtFilterSubstrings >> prepareFilterInContext: aSpotterContext [
 	self query: (self query substrings: self separators) asSet asArray
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtFilterSubstrings >> separators [
 	^ separators
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtFilterSubstrings >> separators: anObject [
 	separators := anObject
 ]

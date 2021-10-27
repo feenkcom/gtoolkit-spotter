@@ -1,6 +1,6 @@
-Extension { #name : 'MetacelloAbstractPackageSpec' }
+Extension { #name : #MetacelloAbstractPackageSpec }
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 MetacelloAbstractPackageSpec >> gtSpotterForIncludesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -12,7 +12,7 @@ MetacelloAbstractPackageSpec >> gtSpotterForIncludesFor: aStep [
 		wantsToDisplayOnEmptyQuery: true
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 MetacelloAbstractPackageSpec >> gtSpotterForRequiresFor: aStep [
 	<gtSearch>
 	aStep listProcessor

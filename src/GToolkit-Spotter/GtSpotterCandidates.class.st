@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterCandidates',
-	#superclass : 'Collection',
+	#name : #GtSpotterCandidates,
+	#superclass : #Collection,
 	#instVars : [
 		'announcer',
 		'processorCandidates',
@@ -10,7 +10,7 @@ Class {
 	#category : 'GToolkit-Spotter-Model - Candidates'
 }
 
-{ #category : 'adding' }
+{ #category : #adding }
 GtSpotterCandidates >> add: aGtSpotterCandidate [ 
 	"Add a spotter candidate to a collection of all candidates"
 	| theProcessorCandidates |
@@ -24,7 +24,7 @@ GtSpotterCandidates >> add: aGtSpotterCandidate [
 	self notifyCandidateAdded: aGtSpotterCandidate
 ]
 
-{ #category : 'adding/removing' }
+{ #category : #'adding/removing' }
 GtSpotterCandidates >> addProcessor: aProcessor [
 	|processorLink|
 	
@@ -36,17 +36,17 @@ GtSpotterCandidates >> addProcessor: aProcessor [
 	^ processorLink
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidates >> allCandidates [
 	^ Array streamContents: [ :aStream | self do: [ :eachCandidate | aStream nextPut: eachCandidate ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidates >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidates >> at: anIndex [
 	| currentIndex |	
 
@@ -60,19 +60,19 @@ GtSpotterCandidates >> at: anIndex [
 	self error: ('{1} is out of bounds' format: { anIndex })
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidates >> children [
 	^ processorCandidates
 ]
 
-{ #category : 'enumerating' }
+{ #category : #enumerating }
 GtSpotterCandidates >> do: aBlock [ 
 	"Evaluate aBlock with each of the receiver's elements as the argument."
 
 	processorCandidates do: [ :eachProcessorCandidates | eachProcessorCandidates do: aBlock ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidates >> first [
 	"Returns the first spotter candidate out of all candidates"
 	<return: #GtSpotterCandidate>
@@ -80,13 +80,13 @@ GtSpotterCandidates >> first [
 	self do: [ :aCandidate | ^ aCandidate ]
 ]
 
-{ #category : 'processors' }
+{ #category : #processors }
 GtSpotterCandidates >> getProcessorLink: aProcessor [
 
 	^ self processorLinksMap at: aProcessor ifAbsentPut: [ self addProcessor: aProcessor ]
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtSpotterCandidates >> gtCandidatesFor: aView [
 	<gtView>
 
@@ -99,7 +99,7 @@ GtSpotterCandidates >> gtCandidatesFor: aView [
 		actionUpdateButtonTooltip: 'Update candidate list'
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidates >> indexOf: aCandidate [
 	| anIndex |
 	
@@ -111,29 +111,29 @@ GtSpotterCandidates >> indexOf: aCandidate [
 	^ 0
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterCandidates >> initialize [
 	super initialize.
 	
 	processorCandidates := SortedCollection sortBlock: [ :a :b | a < b ]
 ]
 
-{ #category : 'notifying' }
+{ #category : #notifying }
 GtSpotterCandidates >> notifyAllCandidatesRemoved [
 	self announcer announce: GtSpotterAllCandidatesRemoved new
 ]
 
-{ #category : 'notifying' }
+{ #category : #notifying }
 GtSpotterCandidates >> notifyCandidateAdded: aCandidate [
 	self announcer announce: (GtSpotterCandidateAdded new candidateLink: aCandidate; category: aCandidate processor; yourself).
 ]
 
-{ #category : 'notifying' }
+{ #category : #notifying }
 GtSpotterCandidates >> notifyCandidateRemoved: aCandidate [
 	self announcer announce: (GtSpotterCandidateAdded new candidateLink: aCandidate; category: aCandidate processor; yourself).
 ]
 
-{ #category : 'notifying' }
+{ #category : #notifying }
 GtSpotterCandidates >> onAmountChanged: anInteger in: aProcessor [
 	self
 		assert: [ anInteger >= 0 ]
@@ -146,20 +146,20 @@ GtSpotterCandidates >> onAmountChanged: anInteger in: aProcessor [
 	self announcer announce: (GtSpotterCandidatesAmountChanged new amount: anInteger; category: aProcessor; yourself)
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidates >> processorLinksMap [
 
 	^ processorLinksMap ifNil: [ processorLinksMap := Dictionary new ]
 	
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidates >> processors [
 
 	^ categories ifNil: [ categories := DoubleLinkedList new ].
 ]
 
-{ #category : 'removing' }
+{ #category : #removing }
 GtSpotterCandidates >> remove: aGtSpotterCandidate ifAbsent: anExceptionBlock [ 
 	"Remove oldObject from the receiver's elements. If several of the 
 	elements are equal to oldObject, only one is removed. If no element is 
@@ -172,19 +172,19 @@ GtSpotterCandidates >> remove: aGtSpotterCandidate ifAbsent: anExceptionBlock [
 	self shouldNotImplement
 ]
 
-{ #category : 'removing' }
+{ #category : #removing }
 GtSpotterCandidates >> removeAllCandidates [
 	processorCandidates removeAll.
 
 	self notifyAllCandidatesRemoved
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidates >> size [
 	^ self children inject: 0 into: [ :sum :each | sum + each size ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidates >> treeIndexOf: aCandidate [
 	| anIndex |
 	

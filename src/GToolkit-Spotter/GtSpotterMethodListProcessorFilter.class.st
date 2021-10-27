@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterMethodListProcessorFilter',
-	#superclass : 'GtSpotterProcessorFilter',
+	#name : #GtSpotterMethodListProcessorFilter,
+	#superclass : #GtSpotterProcessorFilter,
 	#instVars : [
 		'selectedMethodSignatures',
 		'configurationBlocks'
@@ -8,7 +8,7 @@ Class {
 	#category : 'GToolkit-Spotter-Model'
 }
 
-{ #category : 'adding' }
+{ #category : #adding }
 GtSpotterMethodListProcessorFilter >> allowProcessorsFrom: aMethod [
 	|signature|
 	
@@ -17,7 +17,7 @@ GtSpotterMethodListProcessorFilter >> allowProcessorsFrom: aMethod [
 	
 ]
 
-{ #category : 'adding' }
+{ #category : #adding }
 GtSpotterMethodListProcessorFilter >> allowProcessorsFrom: aMethod configuredWith: aBlock [
 	
 	self allowProcessorsFrom: aMethod.
@@ -25,13 +25,13 @@ GtSpotterMethodListProcessorFilter >> allowProcessorsFrom: aMethod configuredWit
 	
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterMethodListProcessorFilter >> configurationBlockForProcessorsCreatedBy: aMethod [
 	
 	^ configurationBlocks at: aMethod printString ifAbsent: [ self nullConfigurationBlock ]
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterMethodListProcessorFilter >> initialize [
 	super initialize.
 
@@ -39,26 +39,26 @@ GtSpotterMethodListProcessorFilter >> initialize [
 	configurationBlocks := Dictionary new.
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterMethodListProcessorFilter >> nullConfigurationBlock [
 
 	^ [ :processor | ]
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 GtSpotterMethodListProcessorFilter >> printSignature: aSignature [
 
 	^ aSignature first name, '>>', aSignature second asString
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtSpotterMethodListProcessorFilter >> shouldEnableProcessorsCreateBy: aMethod [
 
 	^ selectedMethodSignatures anySatisfy: [ :aSignature | 
 		aSignature first = aMethod methodClass and: [ aSignature second = aMethod selector ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterMethodListProcessorFilter >> signatureFor: aMethod [
 
 	^ {aMethod methodClass . aMethod selector}

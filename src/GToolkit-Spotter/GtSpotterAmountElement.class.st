@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterAmountElement',
-	#superclass : 'BrLabel',
+	#name : #GtSpotterAmountElement,
+	#superclass : #BrLabel,
 	#instVars : [
 		'visible',
 		'total'
@@ -8,7 +8,7 @@ Class {
 	#category : 'GToolkit-Spotter-UI'
 }
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 GtSpotterAmountElement >> assertInteger: anInteger [
 	self 
 		assert: [ anInteger isNotNil ] 
@@ -21,7 +21,7 @@ GtSpotterAmountElement >> assertInteger: anInteger [
 		description: [ 'Amount must be zero or positive number' ].
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterAmountElement >> initialize [
 	super initialize.
 	visible := 0.
@@ -30,26 +30,26 @@ GtSpotterAmountElement >> initialize [
 	self visibility: BlVisibility hidden.
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 GtSpotterAmountElement >> total [
 	<return: #Integer>
 	^ total
 ]
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 GtSpotterAmountElement >> total: anInteger [
 	self assertInteger: anInteger.
 	total := anInteger.
 	self updateText.
 ]
 
-{ #category : 'private - updating' }
+{ #category : #'private - updating' }
 GtSpotterAmountElement >> updateText [
 	"I must be called in a UI processs"
 	self updateVisible: self visible total: self total.
 ]
 
-{ #category : 'private - updating' }
+{ #category : #'private - updating' }
 GtSpotterAmountElement >> updateVisible: aVisible total: aTotal [
 	| aTotalString |
 	aTotalString := aTotal < aVisible
@@ -58,13 +58,13 @@ GtSpotterAmountElement >> updateVisible: aVisible total: aTotal [
 	self visibility: BlVisibility visible.
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 GtSpotterAmountElement >> visible [
 	<return: #Integer>
 	^ visible
 ]
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 GtSpotterAmountElement >> visible: anInteger [
 	self assertInteger: anInteger.
 	visible := anInteger.

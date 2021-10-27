@@ -1,25 +1,25 @@
 Class {
-	#name : 'GtSpotterBlockIterator',
-	#superclass : 'GtSpotterIterator',
+	#name : #GtSpotterBlockIterator,
+	#superclass : #GtSpotterIterator,
 	#instVars : [
 		'onDo'
 	],
 	#category : 'GToolkit-Spotter-Iterators'
 }
 
-{ #category : 'private' }
+{ #category : #private }
 GtSpotterBlockIterator >> itemDo: aBlock [ 
 	self onDo 
 		cull: aBlock
 		cull: self context 
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterBlockIterator >> onDo [
 	^ onDo ifNil: [ onDo := [ :anItemBlock :aContext | " do nothing " ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterBlockIterator >> onDo: anObject [
 	onDo := anObject
 ]

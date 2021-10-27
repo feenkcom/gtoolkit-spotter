@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterBreadcrumb',
-	#superclass : 'BrBreadcrumb',
+	#name : #GtSpotterBreadcrumb,
+	#superclass : #BrBreadcrumb,
 	#traits : 'TBrSelectable',
 	#classTraits : 'TBrSelectable classTrait',
 	#instVars : [
@@ -9,7 +9,7 @@ Class {
 	#category : 'GToolkit-Spotter-UI'
 }
 
-{ #category : 'private' }
+{ #category : #private }
 GtSpotterBreadcrumb >> addStep: aNewStep [
 	| aText  |
 
@@ -35,7 +35,7 @@ GtSpotterBreadcrumb >> addStep: aNewStep [
 		label: aText).
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterBreadcrumb >> initialize [
 	super initialize.
 	
@@ -57,27 +57,27 @@ GtSpotterBreadcrumb >> initialize [
 			 (self itemAt: anIndex) dispatchEvent: (BlElementSelectedStateWish selected: isSelected) ] ]
 ]
 
-{ #category : 'event handling' }
+{ #category : #'event handling' }
 GtSpotterBreadcrumb >> onCurrentStepChanged: anAnnouncement [
 	self selectOne: anAnnouncement index
 ]
 
-{ #category : 'event handling' }
+{ #category : #'event handling' }
 GtSpotterBreadcrumb >> onStepAdded: anAnnouncement [
 	self addStep: anAnnouncement stepModel
 ]
 
-{ #category : 'event handling' }
+{ #category : #'event handling' }
 GtSpotterBreadcrumb >> onStepRemoved: anAnnouncement [
 	self removeItemAt: anAnnouncement index
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterBreadcrumb >> spotterModel [
 	^ spotterModel
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterBreadcrumb >> spotterModel: aSpotterModel [
 
 	spotterModel := aSpotterModel.

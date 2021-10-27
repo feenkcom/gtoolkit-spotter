@@ -1,5 +1,5 @@
 Class {
-	#name : 'GtSpotterHidePreview',
-	#superclass : 'Announcement',
+	#name : #GtSpotterHidePreview,
+	#superclass : #Announcement,
 	#category : 'GToolkit-Spotter-Announcements'
 }

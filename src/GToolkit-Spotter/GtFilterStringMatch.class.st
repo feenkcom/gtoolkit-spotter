@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtFilterStringMatch',
-	#superclass : 'GtUnorderedFilter',
+	#name : #GtFilterStringMatch,
+	#superclass : #GtUnorderedFilter,
 	#category : 'GToolkit-Spotter-Filters'
 }
 
-{ #category : 'private' }
+{ #category : #private }
 GtFilterStringMatch >> isMatchedItem: anItem [
 	^ query match: (self itemFilterNameFor: anItem)
 ]

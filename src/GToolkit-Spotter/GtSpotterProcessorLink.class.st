@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterProcessorLink',
-	#superclass : 'DoubleLink',
+	#name : #GtSpotterProcessorLink,
+	#superclass : #DoubleLink,
 	#instVars : [
 		'headLink',
 		'tailLink',
@@ -9,19 +9,19 @@ Class {
 	#category : 'GToolkit-Spotter-Utils'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterProcessorLink class >> from: aDoubleLink [
 
 	
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterProcessorLink >> asGtSpotterProcessorLink [
 
 	^ self
 ]
 
-{ #category : 'actions' }
+{ #category : #actions }
 GtSpotterProcessorLink >> clear [
 
 	self
@@ -31,59 +31,59 @@ GtSpotterProcessorLink >> clear [
 	size := 0.
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 GtSpotterProcessorLink >> gtDisplayOn: stream [
 	stream 
 		nextPutAll: 'Processor link: ';
 		nextPutAll: self processor title asString
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterProcessorLink >> headLink [
 	^ headLink
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterProcessorLink >> headLink: anObject [
 	headLink := anObject
 ]
 
-{ #category : 'actions' }
+{ #category : #actions }
 GtSpotterProcessorLink >> incrementSize [
 
 	size := self size + 1
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtSpotterProcessorLink >> isEmpty [
 
 	^ self headLink isNil
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtSpotterProcessorLink >> isFull [
 
 	^ self size = self processor itemsLimit
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterProcessorLink >> processor [
 
 	^ self value
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterProcessorLink >> size [
 
 	^ size ifNil: [ size := 0 ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterProcessorLink >> tailLink [
 	^ tailLink
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterProcessorLink >> tailLink: anObject [
 	tailLink := anObject
 ]

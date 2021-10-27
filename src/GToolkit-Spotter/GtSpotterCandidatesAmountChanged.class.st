@@ -1,18 +1,18 @@
 Class {
-	#name : 'GtSpotterCandidatesAmountChanged',
-	#superclass : 'GlamorousAuthor',
+	#name : #GtSpotterCandidatesAmountChanged,
+	#superclass : #GlamorousAuthor,
 	#instVars : [
 		'amount'
 	],
 	#category : 'GToolkit-Spotter-Announcements'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidatesAmountChanged >> amount [
 	^ amount
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidatesAmountChanged >> amount: anObject [
 	amount := anObject
 ]

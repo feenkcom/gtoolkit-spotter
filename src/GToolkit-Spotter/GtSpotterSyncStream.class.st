@@ -1,14 +1,14 @@
 Class {
-	#name : 'GtSpotterSyncStream',
-	#superclass : 'GtSpotterStream',
+	#name : #GtSpotterSyncStream,
+	#superclass : #GtSpotterStream,
 	#category : 'GToolkit-Spotter-Utils'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterSyncStream >> attachedTo: anElement [
 ]
 
-{ #category : 'performing' }
+{ #category : #performing }
 GtSpotterSyncStream >> performSymbol: aSymbol withArguments: aCollection receiver: aReceiver [
 	aReceiver
 		perform: aSymbol

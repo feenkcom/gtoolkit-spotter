@@ -1,6 +1,6 @@
-Extension { #name : 'SettingNode' }
+Extension { #name : #SettingNode }
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 SettingNode >> gtSpotterForSettingsFor: aStep [
 	<gtSearch>
 	self allChildren isEmpty

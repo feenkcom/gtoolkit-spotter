@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtUnorderedFilter',
-	#superclass : 'GtStringFilter',
+	#name : #GtUnorderedFilter,
+	#superclass : #GtStringFilter,
 	#category : 'GToolkit-Spotter-Filters'
 }
 
-{ #category : 'private' }
+{ #category : #private }
 GtUnorderedFilter >> applyFilterWithQuery [
 	| unorderedMatchedItems |
 	unorderedMatchedItems := OrderedCollection new.
@@ -24,7 +24,7 @@ GtUnorderedFilter >> applyFilterWithQuery [
 	self filteredItems: unorderedMatchedItems
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtUnorderedFilter >> isMatchedItem: anItem [
 	^ false
 ]

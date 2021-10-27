@@ -1,18 +1,18 @@
-Extension { #name : 'Object' }
+Extension { #name : #Object }
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Object >> asGtSpotterCandidateLink [
 
 	^ GtSpotterCandidateLink value: self
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Object >> asGtSpotterProcessorLink [
 
 	^ GtSpotterProcessorLink value: self
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Object >> gtActionSearchFor: anAction [
 	<gtAction>
 	| fakeStep |
@@ -28,7 +28,7 @@ Object >> gtActionSearchFor: anAction [
 				anActOnEvent beActed ] ]
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Object >> gtSpotterActDefault: aStep from: aSpotterElement [
 	self gtSpotterActDefaultFrom: aSpotterElement.
 	"if we exit spotter before default action we will not be able to dispatch opening of new spaces
@@ -36,12 +36,12 @@ Object >> gtSpotterActDefault: aStep from: aSpotterElement [
 	aStep exit
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Object >> gtSpotterActDefaultFrom: aSpotterElement [
 	^ GtInspector openOn: self from: aSpotterElement
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 Object >> gtSpotterProcessorsFor: aSpotterStep [
 	<return: #Collection of: #Pragma>
 	^ GtSpotterProcessorsCollector new 

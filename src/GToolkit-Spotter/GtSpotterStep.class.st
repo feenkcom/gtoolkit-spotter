@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterStep',
-	#superclass : 'Object',
+	#name : #GtSpotterStep,
+	#superclass : #Object,
 	#instVars : [
 		'announcer',
 		'processors',
@@ -18,13 +18,13 @@ Class {
 	#category : 'GToolkit-Spotter-Model'
 }
 
-{ #category : 'example' }
+{ #category : #example }
 GtSpotterStep class >> gtExampleBasic [
 	<gtExample>
 	^ self new
 ]
 
-{ #category : 'api - actions' }
+{ #category : #'api - actions' }
 GtSpotterStep >> actDueTo: anEventType from: aSpotterElement [
 	"Perform an action associated with currently selected item.
 	(can be triggered by doubleClick: or keyboard Enter press)"
@@ -35,7 +35,7 @@ GtSpotterStep >> actDueTo: anEventType from: aSpotterElement [
 	self actOn: self selected dueTo: anEventType from: aSpotterElement
 ]
 
-{ #category : 'api - actions' }
+{ #category : #'api - actions' }
 GtSpotterStep >> actOn: aCandidate dueTo: anEventType from: aSpotterElement [
 	"Perform an action associated with the given candidate item.
 	(can be triggered by doubleClick: or keyboard Enter press)"
@@ -59,7 +59,7 @@ GtSpotterStep >> actOn: aCandidate dueTo: anEventType from: aSpotterElement [
 		ifFalse: [ aCantidateProcessor actOn: anObjectToActOn for: self from: aSpotterElement ]
 ]
 
-{ #category : 'api - actions' }
+{ #category : #'api - actions' }
 GtSpotterStep >> actOnCategory: aProcessorCadidates dueTo: anEventType from: aSpotterElement [
 	"Perform an action associated with currently selected item.
 	(can be triggered by doubleClick: or keyboard Enter press)"
@@ -88,39 +88,39 @@ GtSpotterStep >> actOnCategory: aProcessorCadidates dueTo: anEventType from: aSp
 		ifFalse: [ aProcessorCadidates processor actOnCategory: anObjectToActOn for: self from: aSpotterElement ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> addProcessor: aProcessor [
 	self processors add: aProcessor
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> announcer [
 
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtSpotterStep >> asElement [
 	^ GtSpotterStepElement new stepModel: self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> asyncTask [
 
 	^ asyncTask
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> asyncTask: anAsyncTask [
 	asyncTask := anAsyncTask
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> attachedTo: anElement [
 	stream attachedTo: anElement
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtSpotterStep >> basicRelevantProcessorsProcess: aSpotterContext [
 	self basicRelevantProcessorsProcess: aSpotterContext do: [ :eachProcessor | 
 		self hasActedOn ifFalse: [ 
@@ -128,7 +128,7 @@ GtSpotterStep >> basicRelevantProcessorsProcess: aSpotterContext [
 	aSpotterContext continueFilter
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtSpotterStep >> basicRelevantProcessorsProcess: aSpotterContext do: aBlock [
 	| theSortedProcessors |
 	
@@ -150,7 +150,7 @@ GtSpotterStep >> basicRelevantProcessorsProcess: aSpotterContext do: aBlock [
 			theSortedProcessors do: aBlock ]
 ]
 
-{ #category : 'api - actions' }
+{ #category : #'api - actions' }
 GtSpotterStep >> canDiveIn: aCandidate [
 	| newFakeStep canDiveIn|
 	canDiveIn := false.
@@ -162,12 +162,12 @@ GtSpotterStep >> canDiveIn: aCandidate [
 	^ canDiveIn
 ]
 
-{ #category : 'api - accessing' }
+{ #category : #'api - accessing' }
 GtSpotterStep >> candidates [
 	^ candidates
 ]
 
-{ #category : 'processing' }
+{ #category : #processing }
 GtSpotterStep >> configureProcessorsStartingAt: anIndex pragma: aPragma with: aConfigurationBlock [
 	"Execute aConfigurationBlock with all processors starting at anIndex.
 	(this assumes processors are stored in an OrderedCollection that captures the
@@ -181,29 +181,29 @@ GtSpotterStep >> configureProcessorsStartingAt: anIndex pragma: aPragma with: aC
 		aConfigurationBlock value: aProcessor ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> context [
 	<return: #GtSpotterContext>
 
 	^ context
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> context: aGtSpotterContext [
 	context := aGtSpotterContext
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterStep >> defaultStream [
 	^ GtSpotterUIThreadStream new
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterStep >> defaultTask [
 	^ GtSpotterTaskItAsyncTask new
 ]
 
-{ #category : 'selecting' }
+{ #category : #selecting }
 GtSpotterStep >> deselect [
 	| anAlreadySelected |
 	
@@ -215,12 +215,12 @@ GtSpotterStep >> deselect [
 	self notifyCandidateDeselected: anAlreadySelected
 ]
 
-{ #category : 'api - actions' }
+{ #category : #'api - actions' }
 GtSpotterStep >> diveIn [
 	self diveInDueTo: #undefined
 ]
 
-{ #category : 'api - actions' }
+{ #category : #'api - actions' }
 GtSpotterStep >> diveIn: aCandidate dueTo: anEventType [
 	(self canDiveIn: aCandidate) ifTrue: [ 
 		self spotter
@@ -229,14 +229,14 @@ GtSpotterStep >> diveIn: aCandidate dueTo: anEventType [
 			notifyDiveIn: aCandidate item for: anEventType ]
 ]
 
-{ #category : 'api - actions' }
+{ #category : #'api - actions' }
 GtSpotterStep >> diveInCategory [
 	"dive in category of selected candidate"
 	^ self diveInCategoryDueTo: #unknown
 	
 ]
 
-{ #category : 'api - actions' }
+{ #category : #'api - actions' }
 GtSpotterStep >> diveInCategory: aProcessor dueTo: anEventType [
 	"dive in specified aCategory"
 
@@ -245,36 +245,36 @@ GtSpotterStep >> diveInCategory: aProcessor dueTo: anEventType [
 		notifyDiveInCategory: aProcessor for: anEventType
 ]
 
-{ #category : 'api - actions' }
+{ #category : #'api - actions' }
 GtSpotterStep >> diveInCategoryDueTo: anEventType [
 	"dive in category of selected candidate"
 
 	self diveInCategory: self selected processor dueTo: anEventType
 ]
 
-{ #category : 'api - actions' }
+{ #category : #'api - actions' }
 GtSpotterStep >> diveInDueTo: anEventType [
 	self diveIn: self selected dueTo: anEventType
 ]
 
-{ #category : 'api - actions' }
+{ #category : #'api - actions' }
 GtSpotterStep >> diveOutDueTo: anEventType [
 	self spotter
 		requestPreviousStepFor: #diveOut;
 		notifyDiveOut: self selected item
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> event [
 	^ event
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> event: anObject [
 	event := anObject
 ]
 
-{ #category : 'accessing - dynamic' }
+{ #category : #'accessing - dynamic' }
 GtSpotterStep >> exceptionHandler [
 
 	" #ifNil: is necessary because the sender chain of #spotterProcessorsFor:pragma: may have multiple callees outside of the exception handler (async) ... so we have to provide a global but yet easy fallback "
@@ -284,25 +284,25 @@ GtSpotterStep >> exceptionHandler [
 			ifFalse: [ GtSpotterDebuggingExceptionHandler new ] ]
 ]
 
-{ #category : 'api - actions' }
+{ #category : #'api - actions' }
 GtSpotterStep >> exit [
 
 	self spotter exit
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtSpotterStep >> gtCandidatesFor: aView [
 	<gtView>
 
 	^ self candidates gtCandidatesFor: aView
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 GtSpotterStep >> gtDisplayText [
 	^ self origin gtDisplayText
 ]
 
-{ #category : 'inspecting' }
+{ #category : #inspecting }
 GtSpotterStep >> gtInspectorProcessorsIn: composite [
 	<gtInspectorPresentationOrder: 40>
 	composite list
@@ -312,7 +312,7 @@ GtSpotterStep >> gtInspectorProcessorsIn: composite [
 		when: [ self spotter notNil ]
 ]
 
-{ #category : 'gt-extension' }
+{ #category : #'gt-extension' }
 GtSpotterStep >> gtProcessorsFor: aView [
 	<gtView>
 	^ aView columnedList
@@ -323,17 +323,17 @@ GtSpotterStep >> gtProcessorsFor: aView [
 		column: 'Visible by default' text: [:each | each wantsToDisplayOnEmptyQuery ]
 ]
 
-{ #category : 'error handling' }
+{ #category : #'error handling' }
 GtSpotterStep >> handleExceptionsDuring: aBlock [
 	self exceptionHandler handleExceptionsDuring: aBlock
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtSpotterStep >> hasActedOn [
 	^ hasActedOn
 ]
 
-{ #category : 'api - testing' }
+{ #category : #'api - testing' }
 GtSpotterStep >> hasCandidates [
 	"Return true if there are any candidates in all categories,
 	false otherwise"
@@ -342,7 +342,7 @@ GtSpotterStep >> hasCandidates [
 	^ self candidates isNotEmpty
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtSpotterStep >> hasPreviousNavigationFromClass: aClass [
 	"Return true if origin of the previous step is kind of aClass.
 	Return false if there is no previous step or if origin is not a kind of aClass"
@@ -352,7 +352,7 @@ GtSpotterStep >> hasPreviousNavigationFromClass: aClass [
 		self previousStep origin isKindOf: aClass ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtSpotterStep >> hasPreviousStep [
 	"Return true if there is previous step,
 	meaning that I am not a first step in spotter,
@@ -363,7 +363,7 @@ GtSpotterStep >> hasPreviousStep [
 		and: [ self spotter steps first ~= self ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtSpotterStep >> hasSelected [
 	"Return true if there is a selected candidate, false otherwise"
 	<return: #Boolean>
@@ -371,14 +371,14 @@ GtSpotterStep >> hasSelected [
 	^ selected isNotNil
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtSpotterStep >> hasSpotter [
 	<return: #Boolean>
 	
 	^ spotter isNotNil
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 GtSpotterStep >> initialize [
 	super initialize.
 
@@ -411,7 +411,7 @@ GtSpotterStep >> initialize [
 	context := self newContextForQuery: ''
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtSpotterStep >> isCategorySelected: aProcessor [
 	"Return true if a category assigned to aProcessor is currently selected,
 	false otherwise"
@@ -420,7 +420,7 @@ GtSpotterStep >> isCategorySelected: aProcessor [
 	^ self hasSelected and: [ self selected processor == aProcessor ]
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtSpotterStep >> isSelected: aCandidate [
 	"Return true if aCandidate is currently selected,
 	false otherwise"
@@ -429,7 +429,7 @@ GtSpotterStep >> isSelected: aCandidate [
 	^ self hasSelected and: [ self selected == aCandidate ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> listProcessor [
 	| processor |
 	processor := GtSpotterCandidatesListProcessor new.
@@ -437,7 +437,7 @@ GtSpotterStep >> listProcessor [
 	^ processor
 ]
 
-{ #category : 'processing' }
+{ #category : #processing }
 GtSpotterStep >> newContextForQuery: aString [
 	self
 		assert: [ aString isNotNil ]
@@ -451,7 +451,7 @@ GtSpotterStep >> newContextForQuery: aString [
 		yourself
 ]
 
-{ #category : 'notifying' }
+{ #category : #notifying }
 GtSpotterStep >> notifyCandidateDeselected: aCandidate [
 	self
 		assert: [ aCandidate isNotNil ]
@@ -463,31 +463,31 @@ GtSpotterStep >> notifyCandidateDeselected: aCandidate [
 		ifTrue: [ self spotter notifyCandidateDeselected: aCandidate ]
 ]
 
-{ #category : 'notifying' }
+{ #category : #notifying }
 GtSpotterStep >> notifyCategorySelected: aProcessor [
 	self hasSpotter
 		ifTrue: [ self spotter notifyCategorySelected: aProcessor ]
 ]
 
-{ #category : 'notifying' }
+{ #category : #notifying }
 GtSpotterStep >> notifyContextChangedFrom: aPreviousContext to: aCurrentContext [
 	self hasSpotter
 		ifTrue: [ self spotter notifyContextChangedFrom: aPreviousContext to: aCurrentContext ]
 ]
 
-{ #category : 'notifying' }
+{ #category : #notifying }
 GtSpotterStep >> notifySearchFinishedFor: aString processors: aCollectionOfProcessors [
 	self hasSpotter
 		ifTrue: [ self spotter notifySearchFinishedFor: aString processors: aCollectionOfProcessors ]
 ]
 
-{ #category : 'notifying' }
+{ #category : #notifying }
 GtSpotterStep >> notifySelectedCandidateChanged: aCandidate [
 	
 	self notifySelectedCandidateChanged: aCandidate for: #unknown
 ]
 
-{ #category : 'notifying' }
+{ #category : #notifying }
 GtSpotterStep >> notifySelectedCandidateChanged: aCandidate for: anEventType [
 	self
 		assert: [ aCandidate isNotNil ]
@@ -499,12 +499,12 @@ GtSpotterStep >> notifySelectedCandidateChanged: aCandidate for: anEventType [
 		ifTrue: [ self spotter notifyCandidateSelected: aCandidate for: anEventType ]
 ]
 
-{ #category : 'event processing' }
+{ #category : #'event processing' }
 GtSpotterStep >> onAllCandidateRemoved [
 	self deselect
 ]
 
-{ #category : 'event processing' }
+{ #category : #'event processing' }
 GtSpotterStep >> onCandidateAdded [
 	"Select first candidate item in the list if there is no already selected
 	candidate and candidate list has at least one candidate"
@@ -513,19 +513,19 @@ GtSpotterStep >> onCandidateAdded [
 		ifTrue: [ self selectFirst ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> origin [
 
 	^ origin
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> origin: anObject [
 
 	origin := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> previousProcessorFrom: aCollection [
 	aCollection do: [ :each | 
 		each asGtSpotterCandidateLink processor ifNotNil: [ ^ each processor ] ]. " we assume they are all identical "
@@ -535,7 +535,7 @@ GtSpotterStep >> previousProcessorFrom: aCollection [
 		yourself
 ]
 
-{ #category : 'accessing - dynamic' }
+{ #category : #'accessing - dynamic' }
 GtSpotterStep >> previousStep [
 	"Return a spotter step before me which must exist,
 	otherwise behavior is undefined."
@@ -546,7 +546,7 @@ GtSpotterStep >> previousStep [
 			(self spotter steps indexOf: self) - 1
 ]
 
-{ #category : 'processing' }
+{ #category : #processing }
 GtSpotterStep >> process: aString [
 	"I do not accept empty queries or the same queries as before.
 	If nil is passed, than an empty string will be processed. This approach is used to
@@ -573,7 +573,7 @@ GtSpotterStep >> process: aString [
 			onSuccessDo: [ self processCallback: aString ])
 ]
 
-{ #category : 'processing' }
+{ #category : #processing }
 GtSpotterStep >> processCallback: aString [
 	"Process callback is called from another process. We need to execute it from here"
 	self stream performCallback: [ 
@@ -581,14 +581,14 @@ GtSpotterStep >> processCallback: aString [
 		self notifySearchFinishedFor: aString processors: self processors ]
 ]
 
-{ #category : 'processing' }
+{ #category : #processing }
 GtSpotterStep >> processContext: aSpotterContext [
 	self handleExceptionsDuring: [ 
 		self stream removeAllCandidates.
 		self relevantProcessorsProcess: aSpotterContext ]
 ]
 
-{ #category : 'processing' }
+{ #category : #processing }
 GtSpotterStep >> processSync: aString [
 	"I do not accept empty queries or the same queries as before.
 	If nil is passed, than an empty string will be processed. This approach is used to
@@ -611,7 +611,7 @@ GtSpotterStep >> processSync: aString [
 	self notifySearchFinishedFor: aString processors: self processors
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtSpotterStep >> processor: aProcessor isRelevantForQuery: aString [
 	| trimmedProcessorTitle |
 	trimmedProcessorTitle := aProcessor title asLowercase 
@@ -620,7 +620,7 @@ GtSpotterStep >> processor: aProcessor isRelevantForQuery: aString [
 	^ trimmedProcessorTitle beginsWith: aString
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> processors [
 
 	^ processors ifNil: [ 
@@ -629,13 +629,13 @@ GtSpotterStep >> processors [
 		processors ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> processors: aCollection [
 
 	processors := aCollection
 ]
 
-{ #category : 'accessing - dynamic' }
+{ #category : #'accessing - dynamic' }
 GtSpotterStep >> processorsFilter [
 	<return: #GtSpotterProcessorFilter>
 
@@ -644,7 +644,7 @@ GtSpotterStep >> processorsFilter [
 		ifFalse: [ GtSpotterNullProcessorFilter new ]
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtSpotterStep >> relevantProcessorsProcess: aSpotterContext [
 	[ self basicRelevantProcessorsProcess: aSpotterContext ]
 		on: Error
@@ -654,14 +654,14 @@ GtSpotterStep >> relevantProcessorsProcess: aSpotterContext [
 				do: [ ('[Spotter] Exception in process: ', exception asString) traceCr ] ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> searchQuery [
 	<return: #String>
 	
 	^ self context search
 ]
 
-{ #category : 'selecting' }
+{ #category : #selecting }
 GtSpotterStep >> select: aCandidate [
 	"Select a given candidate due to unknown reason.
 	It is not recommended to use this method, unless you really need to.
@@ -670,7 +670,7 @@ GtSpotterStep >> select: aCandidate [
 	self select: aCandidate dueTo: #unknown
 ]
 
-{ #category : 'selecting' }
+{ #category : #selecting }
 GtSpotterStep >> select: aCandidate dueTo: anEventType [
 	"Select a given candidate due to provided event type.
 	A selection reason is used for statistical purposes and helps us
@@ -697,7 +697,7 @@ GtSpotterStep >> select: aCandidate dueTo: anEventType [
 		ifFalse: [ self notifyCategorySelected: aCandidate processor ]
 ]
 
-{ #category : 'selecting' }
+{ #category : #selecting }
 GtSpotterStep >> selectFirst [
 	"Select the first candidate.
 	Note: there must be at least one candidate in order to select first,
@@ -709,7 +709,7 @@ GtSpotterStep >> selectFirst [
 	self select: self candidates first
 ]
 
-{ #category : 'selecting' }
+{ #category : #selecting }
 GtSpotterStep >> selectNextCategory [
 	| currentCategory nextCategory |
 
@@ -721,7 +721,7 @@ GtSpotterStep >> selectNextCategory [
 		ifFalse: [ nextCategory headLink ])
 ]
 
-{ #category : 'selecting' }
+{ #category : #selecting }
 GtSpotterStep >> selectNextDueTo: anEventType [
 	| anIndex aNextCandidate |
 
@@ -739,7 +739,7 @@ GtSpotterStep >> selectNextDueTo: anEventType [
 	self select: aNextCandidate dueTo: anEventType
 ]
 
-{ #category : 'selecting' }
+{ #category : #selecting }
 GtSpotterStep >> selectPreviousCategory [
 	|currentCategory previousCategory|
 	self selected ifNil: [ ^ self ].
@@ -750,7 +750,7 @@ GtSpotterStep >> selectPreviousCategory [
 	self select: previousCategory headLink
 ]
 
-{ #category : 'selecting' }
+{ #category : #selecting }
 GtSpotterStep >> selectPreviousDueTo: anEventType [
 	| anIndex aPreviousCandidate |
 	
@@ -768,7 +768,7 @@ GtSpotterStep >> selectPreviousDueTo: anEventType [
 	self select: aPreviousCandidate dueTo: anEventType
 ]
 
-{ #category : 'accessing - selected' }
+{ #category : #'accessing - selected' }
 GtSpotterStep >> selected [
 	"Return a candidate link (represented by double link) to allow fast access to
 	next and previous candidate. In order to get actual candidate object behind
@@ -782,7 +782,7 @@ GtSpotterStep >> selected [
 	^ selected
 ]
 
-{ #category : 'private - accessing' }
+{ #category : #'private - accessing' }
 GtSpotterStep >> selected: aCandidate [
 	self 
 		assert: [ aCandidate class = GtSpotterCandidate ] 
@@ -790,7 +790,7 @@ GtSpotterStep >> selected: aCandidate [
 	selected := aCandidate
 ]
 
-{ #category : 'accessing - selected' }
+{ #category : #'accessing - selected' }
 GtSpotterStep >> selectedCandidate [
 	"Return an actual candidate object behind candidate link. 
 	Note: Since selected link can not be accessed if there is no selected one,
@@ -800,7 +800,7 @@ GtSpotterStep >> selectedCandidate [
 	^ self selected item
 ]
 
-{ #category : 'accessing - selected' }
+{ #category : #'accessing - selected' }
 GtSpotterStep >> selectedCategory [
 	"Return a category processor that produced a currently selected candidate.
 	Note: Since selected link can not be accessed if there is no selected one,
@@ -810,26 +810,26 @@ GtSpotterStep >> selectedCategory [
 	^ self selected processor
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> spotter [
 
 	^ spotter
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> spotter: aSpotter [
 	spotter := aSpotter.
 	spotter attachedElementDo: [ :anElement | self attachedTo: anElement ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterStep >> stream [
 	<return: #GtSpotterStream>
 
 	^ stream
 ]
 
-{ #category : 'api - actions' }
+{ #category : #'api - actions' }
 GtSpotterStep >> terminateProcessors [
 
 	self asyncTask terminate

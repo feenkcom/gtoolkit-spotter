@@ -42,7 +42,7 @@ Execute the {{gtClass:MessageTally}} instance that will stop when you {{gtClass:
 
 "
 Class {
-	#name : 'GtSpotterProfilingScript',
-	#superclass : 'Object',
+	#name : #GtSpotterProfilingScript,
+	#superclass : #Object,
 	#category : 'GToolkit-Spotter-Profiling'
 }

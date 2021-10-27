@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterSignalAnalyzer',
-	#superclass : 'Object',
+	#name : #GtSpotterSignalAnalyzer,
+	#superclass : #Object,
 	#traits : 'TGtSpotterSignalsView',
 	#classTraits : 'TGtSpotterSignalsView classTrait',
 	#instVars : [
@@ -10,17 +10,17 @@ Class {
 	#category : 'GToolkit-Spotter-Logging'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtSpotterSignalAnalyzer class >> fromMemoryLogger: aMemoryLogger [
 	^ self signals: aMemoryLogger recordings
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtSpotterSignalAnalyzer class >> signals: aCollection [
 	^ self new signals: aCollection
 ]
 
-{ #category : 'gt-extensions' }
+{ #category : #'gt-extensions' }
 GtSpotterSignalAnalyzer >> gtQueriesFor: aView [
 	<gtView>
 	self queries ifNil: [ ^ aView empty ].
@@ -33,18 +33,18 @@ GtSpotterSignalAnalyzer >> gtQueriesFor: aView [
 		column: 'Processors + Previews Duration' text: [ :each | each processorsAndPreviewsDuration humanReadablePrintString ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterSignalAnalyzer >> queries [
 	<return: #Collection of: #GtSpotterSignalAnalyzerQuery>
 	^ queries
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterSignalAnalyzer >> signals [
 	^ signals
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterSignalAnalyzer >> signals: aCollection [
 	signals := aCollection.
 	queries := GtSpotterSignalAnalyzerQuery fromSignals: aCollection.

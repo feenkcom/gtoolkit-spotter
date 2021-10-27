@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterCandidateLink',
-	#superclass : 'DoubleLink',
+	#name : #GtSpotterCandidateLink,
+	#superclass : #DoubleLink,
 	#instVars : [
 		'processorLink',
 		'weight',
@@ -9,30 +9,30 @@ Class {
 	#category : 'GToolkit-Spotter-Utils'
 }
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 GtSpotterCandidateLink >> < anotherCandidateLink [
 
 	^ self weight < anotherCandidateLink weight
 ]
 
-{ #category : 'comparing' }
+{ #category : #comparing }
 GtSpotterCandidateLink >> > anotherCandidateLink [
 
 	^ self weight > anotherCandidateLink weight
 ]
 
-{ #category : 'converting' }
+{ #category : #converting }
 GtSpotterCandidateLink >> asGtSpotterCandidateLink [
 
 	^ self
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidateLink >> candidate [
 	^ self value
 ]
 
-{ #category : 'copying' }
+{ #category : #copying }
 GtSpotterCandidateLink >> copy [
 	|link|
 	link := self class value: self value.
@@ -42,52 +42,52 @@ GtSpotterCandidateLink >> copy [
 	^ link
 ]
 
-{ #category : 'printing' }
+{ #category : #printing }
 GtSpotterCandidateLink >> gtDisplayOn: stream [
 	stream nextPutAll: 'Candidate link: '.
 	self value gtDisplayOn: stream 
 ]
 
-{ #category : 'testing' }
+{ #category : #testing }
 GtSpotterCandidateLink >> isFirst [
 
 	^ (self previousLink processorLink = self processorLink) not
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidateLink >> next [
 	^ self nextLink
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidateLink >> previous [
 	^ self previousLink
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtSpotterCandidateLink >> privateProcessorLink: aLink [
 
 	processorLink := aLink
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtSpotterCandidateLink >> privateRenderingProcessorLink: aLink [
 
 	renderingProcessorLink := aLink
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidateLink >> processor [
 
 	^ self processorLink value
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidateLink >> processorLink [
 	^ processorLink
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidateLink >> processorLink: anObject [
 
 	"we set rendering processor only if one is not set. it allows to have a collection of items,
@@ -98,27 +98,27 @@ GtSpotterCandidateLink >> processorLink: anObject [
 	
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidateLink >> renderingProcessor [
 
 	renderingProcessorLink ifNil: [ self renderingProcessor: processorLink ].
 	^ renderingProcessorLink value
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidateLink >> renderingProcessor: aProcessorLink [
 
 	renderingProcessorLink ifNil: [ renderingProcessorLink := aProcessorLink processor asGtSpotterProcessorLink ].
 	processorLink ifNil: [ processorLink := aProcessorLink ]
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidateLink >> weight [
 
 	^ weight
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidateLink >> weight: anObject [ 
 
 	weight := anObject

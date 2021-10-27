@@ -1,6 +1,6 @@
 Class {
-	#name : 'GtSpotterSelectedCandidateChanged',
-	#superclass : 'Announcement',
+	#name : #GtSpotterSelectedCandidateChanged,
+	#superclass : #Announcement,
 	#instVars : [
 		'eventType',
 		'selected'
@@ -8,22 +8,22 @@ Class {
 	#category : 'GToolkit-Spotter-Announcements'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterSelectedCandidateChanged >> eventType [
 	^ eventType
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterSelectedCandidateChanged >> eventType: anObject [
 	eventType := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterSelectedCandidateChanged >> select: anObject [
 	selected := anObject
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterSelectedCandidateChanged >> selected [
 	^ selected
 ]

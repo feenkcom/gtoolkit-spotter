@@ -1,6 +1,6 @@
-Extension { #name : 'BlElement' }
+Extension { #name : #BlElement }
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 BlElement >> gtSpotterForChildrenFor: aStep [
 	<gtSearch>
 	^ self hasChildren

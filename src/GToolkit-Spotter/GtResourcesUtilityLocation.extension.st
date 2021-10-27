@@ -1,6 +1,6 @@
-Extension { #name : 'GtResourcesUtilityLocation' }
+Extension { #name : #GtResourcesUtilityLocation }
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 GtResourcesUtilityLocation >> spotterForPathResourcesFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor
@@ -17,7 +17,7 @@ GtResourcesUtilityLocation >> spotterForPathResourcesFor: aStep [
 					aFilter value: aResult ] ] ]
 ]
 
-{ #category : '*GToolkit-Spotter' }
+{ #category : #'*GToolkit-Spotter' }
 GtResourcesUtilityLocation >> spotterForStringResourcesFor: aStep [
 	<gtSearch>
 	^ aStep listProcessor

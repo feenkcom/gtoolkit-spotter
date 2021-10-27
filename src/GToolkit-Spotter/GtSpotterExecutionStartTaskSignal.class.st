@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtSpotterExecutionStartTaskSignal',
-	#superclass : 'GtSpotterTaskSignal',
+	#name : #GtSpotterExecutionStartTaskSignal,
+	#superclass : #GtSpotterTaskSignal,
 	#category : 'GToolkit-Spotter-Logging'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterExecutionStartTaskSignal >> signalName [
 	^ 'Start'
 ]

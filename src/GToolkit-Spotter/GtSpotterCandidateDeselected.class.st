@@ -1,18 +1,18 @@
 Class {
-	#name : 'GtSpotterCandidateDeselected',
-	#superclass : 'Announcement',
+	#name : #GtSpotterCandidateDeselected,
+	#superclass : #Announcement,
 	#instVars : [
 		'candidate'
 	],
 	#category : 'GToolkit-Spotter-Announcements'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidateDeselected >> candidate [
 	^ candidate
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterCandidateDeselected >> candidate: anObject [
 	candidate := anObject
 ]

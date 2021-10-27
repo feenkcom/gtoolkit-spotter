@@ -1,15 +1,15 @@
 Class {
-	#name : 'GtNullFilter',
-	#superclass : 'GtStringFilter',
+	#name : #GtNullFilter,
+	#superclass : #GtStringFilter,
 	#category : 'GToolkit-Spotter-Filters'
 }
 
-{ #category : 'public' }
+{ #category : #public }
 GtNullFilter class >> gtListFilter [
 	^ GtFilterSubstring new
 ]
 
-{ #category : 'private' }
+{ #category : #private }
 GtNullFilter >> applyFilterWithQuery [
 	self streamed 
 		ifTrue: [
@@ -26,7 +26,7 @@ GtNullFilter >> applyFilterWithQuery [
 			self addItems: (self allItems first: (self itemsLimit min: self allItems size)) ]
 ]
 
-{ #category : 'public' }
+{ #category : #public }
 GtNullFilter >> gtListFilter [
 	^ GtFilterSubstring new
 ]

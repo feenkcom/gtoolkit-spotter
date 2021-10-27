@@ -1,17 +1,17 @@
 Class {
-	#name : 'GtSpotterPixelIconPreview',
-	#superclass : 'GtSpotterIconPreview',
+	#name : #GtSpotterPixelIconPreview,
+	#superclass : #GtSpotterIconPreview,
 	#category : 'GToolkit-Spotter-Utils'
 }
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtSpotterPixelIconPreview >> newIconPreviewElement [
 	^ BrFrame new matchParent
 		addChild: self newIconPreviewElementOfStandardSize;
 		constraintsDo: [ :c | c linear horizontal alignCenter ]
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtSpotterPixelIconPreview >> newIconPreviewElementOfDoubleSize [
 	^ BlElement new
 		size: 32@32;
@@ -22,7 +22,7 @@ GtSpotterPixelIconPreview >> newIconPreviewElementOfDoubleSize [
 			c frame vertical alignCenter ]
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtSpotterPixelIconPreview >> newIconPreviewElementOfStandardSize [
 	^ self iconStencil create asElement
 		margin: (BlInsets all: 5);

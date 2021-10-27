@@ -1,18 +1,18 @@
 Class {
-	#name : 'GtSpotterDiveInCategory',
-	#superclass : 'GlamorousAuthor',
+	#name : #GtSpotterDiveInCategory,
+	#superclass : #GlamorousAuthor,
 	#instVars : [
 		'eventType'
 	],
 	#category : 'GToolkit-Spotter-Announcements'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterDiveInCategory >> eventType [
 	^ eventType
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterDiveInCategory >> eventType: anObject [
 	eventType := anObject
 ]

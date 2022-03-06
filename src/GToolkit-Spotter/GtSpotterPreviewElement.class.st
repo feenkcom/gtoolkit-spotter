@@ -5,56 +5,67 @@ Class {
 		'spotterModel',
 		'previewObject',
 		'previewTask',
-		'labelElement'
+		'labelElement',
+		'previewContainer'
 	],
-	#category : 'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI'
 }
 
 { #category : #updating }
-GtSpotterPreviewElement >> generatePreviewFor: aSpotterCandidate in: aPreviewContainer [
-
+GtSpotterPreviewElement >> generatePreviewFor: aSpotterCandidate [
 	| aChildElement aText |
+
 	self signalPreviewStartFor: aSpotterCandidate.
-	aChildElement := aSpotterCandidate previewElement.
-	aChildElement ifNil: [ ^ self ].
+
+	aChildElement := aSpotterCandidate previewElement ifNil: [ BlElement new size: 0@0 ].
 	aText := aSpotterCandidate gtDisplayText.
 	self signalPreviewReadyFor: aSpotterCandidate element: aChildElement text: aText.
 
-	self enqueueTask: (BlTaskAction new action: [
-		previewObject = aSpotterCandidate item 
-			ifTrue: [ 
-				aPreviewContainer addChild: aChildElement.
-				labelElement text: aText.
-				self visibility: BlVisibility visible.
-				self signalPreviewFinishedFor: aSpotterCandidate ]
-			ifFalse: [ 
-				self signalPreviewCanceledFor: aSpotterCandidate dueTo: previewObject ] ]).
+	^ aText -> aChildElement
 ]
 
 { #category : #initialization }
 GtSpotterPreviewElement >> initialize [
 	super initialize.
-	
+
 	self viewModel: BrPagerPageModel new.
 	self layout: BlLinearLayout vertical.
 	self constraintsDo: [ :c |
 		c horizontal matchParent.
 		c vertical matchParent ].
 	self padding: (BlInsets all: 10).
-	
+
 	labelElement := BrLabel new
 		aptitude: (BrGlamorousLabelAptitude new foreground: Color gray);
 		alignCenter;
 		hMatchParent;
 		vFitContent.
-	
-	self addChild: labelElement.
-	self addChild: (BlElement new
+
+	previewContainer := BlElement new
 		margin: (BlInsets all: 5);
 		constraintsDo: [ :c |
 			c horizontal matchParent.
-			c vertical matchParent ]) as: #previewContent.
+			c vertical matchParent ].
+
+	self addChild: labelElement.
+	self addChild: previewContainer.
 	self visibility: BlVisibility gone.
+
+	self withAsyncFutureDo: [ :anAsyncElementFuture |
+		anAsyncElementFuture executionConfiguration: (AsyncFutureExecutionConfiguration new customGroup: #Spotter; lowPriority).
+		anAsyncElementFuture whenPending: [
+			self visibility: BlVisibility visible.
+			labelElement text: 'Rendering...'.
+			previewContainer removeChildren ].
+		anAsyncElementFuture whenSuccess: [ :aPreviewElement :aPreviewAssociation |
+			self visibility: BlVisibility visible.
+			previewContainer removeChildren.
+			labelElement text: aPreviewAssociation key.
+			previewContainer addChild: aPreviewAssociation value ].
+		anAsyncElementFuture whenError: [ :aPreviewElement :anError |
+			self visibility: BlVisibility visible.
+			previewContainer removeChildren.
+			previewContainer addChild: anError asDebuggableElement ] ]
 ]
 
 { #category : #'private - event handling' }
@@ -90,7 +101,7 @@ GtSpotterPreviewElement >> onExit: anAnnouncement [
 
 { #category : #'private - event handling' }
 GtSpotterPreviewElement >> onHidePreview [
-	self visibility: BlVisibility gone.
+	self visibility: BlVisibility gone
 ]
 
 { #category : #'hooks - children' }
@@ -106,7 +117,7 @@ GtSpotterPreviewElement >> onShowPreview [
 			ifFalse: [ ^ self ].
 
 	self visibility: BlVisibility visible.
-	
+	self updatePreview: self spotterModel selected
 ]
 
 { #category : #signaling }
@@ -181,31 +192,17 @@ GtSpotterPreviewElement >> spotterModelDo: aBlock [
 
 { #category : #private }
 GtSpotterPreviewElement >> terminatePreviewTask [
-	previewTask ifNotNil: [ :aTask | aTask terminate ]
+	"Terminate the preview computation task"
 ]
 
 { #category : #updating }
 GtSpotterPreviewElement >> updatePreview: aSpotterCandidate [
-	| aPreviewContainer |
 	previewObject = aSpotterCandidate item
 		ifTrue: [ ^ self ].
-	aPreviewContainer := self
-		childNamed: #previewContent
-		ifFound: #yourself
-		ifNone: [ self ].
-	aPreviewContainer removeChildren.
+
 	previewObject := aSpotterCandidate item.
-	self terminatePreviewTask.
-	BlUseAsyncFeatures
-		ifEnabledDo: [ 
-			self signalPreviewPreparationFor: aSpotterCandidate.
-			previewTask := [ 
-				self
-					generatePreviewFor: aSpotterCandidate
-					in: aPreviewContainer ] 
-						asBlTktTerminableCommand asBlTktLoggingCommand.
-			previewTask
-				name: 'Spotter update ' , aSpotterCandidate item gtDisplayString.
-			BlTktWorkerProvider highUICPUBoundPool schedule: previewTask ]
-		otherwise: [ self generatePreviewFor: aSpotterCandidate in: aPreviewContainer ]
+	
+	self spotterModelDo: [ :aSpotterModel |
+		aSpotterModel isPreviewVisible
+			ifTrue: [ self asyncFuture future: [ self generatePreviewFor: aSpotterCandidate ] asAsyncFuture ] ]
 ]

@@ -15,7 +15,7 @@ Class {
 		'event',
 		'hasActedOn'
 	],
-	#category : 'GToolkit-Spotter-Model'
+	#category : #'GToolkit-Spotter-Model'
 }
 
 { #category : #example }
@@ -200,7 +200,7 @@ GtSpotterStep >> defaultStream [
 
 { #category : #initialization }
 GtSpotterStep >> defaultTask [
-	^ GtSpotterTaskItAsyncTask new
+	^ GtSpotterAsyncTask new
 ]
 
 { #category : #selecting }

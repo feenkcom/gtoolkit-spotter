@@ -9,9 +9,10 @@ Class {
 		'icon',
 		'extentComputation',
 		'spotterModelActions',
-		'spotterElementActions'
+		'spotterElementActions',
+		'label'
 	],
-	#category : 'GToolkit-Spotter-Stencils'
+	#category : #'GToolkit-Spotter-Stencils'
 }
 
 { #category : #'api - accessing' }
@@ -40,26 +41,61 @@ GtSpotterDropdownButtonStencil >> actOn: anAnnouncement button: aButton [
 
 { #category : #'api - instantiation' }
 GtSpotterDropdownButtonStencil >> create [
+
 	| aButton |
-	aButton := BrButton new.
+	aButton := self createButtonWithTooltip.
 	aButton
 		id: id;
-		icon: icon;
-		label: self tooltip;
-		aptitude: BrGlamorousButtonWithIconAptitude;
-		addAptitude:
-			(BrGlamorousWithDropdownAptitude
-				handle: [ BrButton new
-						icon: self icon;
-						label: self tooltip;
-						aptitude:
-							BrGlamorousButtonWithIconAptitude
-								- BrGlamorousButtonWithLabelTooltipAptitude
-								- BrGlamorousButtonExteriorAptitude ]
-				content: [ self spotterElementFor: aButton ]
-				aptitudeDo: [ :aDropdownLook | 
-					aDropdownLook
-						background: BrGlamorousColors secondaryHeaderBackgroundColor ]).
+		addAptitude: (BrGlamorousWithDropdownAptitude
+				 handle: [ self createHandleButton ]
+				 content: [ self spotterElementFor: aButton ]
+				 aptitudeDo: [ :aDropdownLook | 
+					 aDropdownLook background:
+							 BrGlamorousColors secondaryHeaderBackgroundColor ]).
+	^ aButton
+]
+
+{ #category : #'api - instantiation' }
+GtSpotterDropdownButtonStencil >> createBasicButton [
+
+	| aButton |
+	aButton := BrButton new icon: icon.
+
+	self label
+		ifNotNil: [ 
+			aButton
+				label: self label;
+				aptitude: BrGlamorousButtonWithIconAndLabelAptitude ]
+		ifNil: [ 
+			aButton
+				label: self tooltip;
+				aptitude: BrGlamorousButtonWithIconAptitude ].
+
+	^ aButton
+]
+
+{ #category : #'api - instantiation' }
+GtSpotterDropdownButtonStencil >> createButtonWithTooltip [
+
+	| aButton |
+	aButton := self createBasicButton.
+
+	self label ifNotNil: [ 
+		aButton addAptitude:
+			(BrGlamorousWithLabelTooltipAptitude new text: self tooltip) ].
+
+	^ aButton
+]
+
+{ #category : #'api - instantiation' }
+GtSpotterDropdownButtonStencil >> createHandleButton [
+
+	| aButton |
+	aButton := self createBasicButton.
+
+	aButton aptitude - BrGlamorousButtonWithLabelTooltipAptitude
+	- BrGlamorousButtonExteriorAptitude.
+
 	^ aButton
 ]
 
@@ -122,6 +158,18 @@ GtSpotterDropdownButtonStencil >> initialize [
 	see https://github.com/feenkcom/gtoolkit/issues/1745"
 	extentComputation := [ 600 @ 400 ].
 	self receiver: GtSpotterStart selector: #new.
+]
+
+{ #category : #accessing }
+GtSpotterDropdownButtonStencil >> label [
+
+	^ label
+]
+
+{ #category : #'api - accessing' }
+GtSpotterDropdownButtonStencil >> label: aString [
+
+	label := aString
 ]
 
 { #category : #'private - accessing' }

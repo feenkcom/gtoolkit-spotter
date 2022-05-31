@@ -189,14 +189,15 @@ GTSpotter >> gtSpotterForMessagesFor: aStep [
 { #category : #'*GToolkit-Spotter' }
 GTSpotter >> gtSpotterForMetacelloConfigurationsFor: aStep [
 	<gtSearch>
+	
 	aStep listProcessor
 		priority: 86;
 		title: 'Metacello Configurations';
 		allCandidates: [ Smalltalk allClasses
 				select: [ :each | 
-					(each respondsTo: #isMetacelloConfig)
-						and: [ each isMetacelloConfig
-								and: [ each name beginsWith: 'ConfigurationOf' ] ] ]
+					[ each isMetacelloConfig and: [ each name beginsWith: 'ConfigurationOf' ] ]
+						onDNU: #isMetacelloConfig
+						do: [ :ex | false ] ]
 				thenCollect: #project ];
 		itemName: [ :each | each configuration class name ];
 		itemIcon: [ Smalltalk ui icons iconNamed: #config ];

@@ -166,15 +166,20 @@ GtSpotterStart >> gtSpotterForPragmasFor: aStep [
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterForReferencesFor: aStep [
 	<gtSearch>
+	
 	aStep listProcessor
 		priority: 32;
 		title: 'References';
 		filter: GtNullFilter
 			item: [ :filter :context | 
-			self class environment
-				at: context textTrimmed
-				ifPresent:
-					[ :class | SystemNavigation default allReferencesTo: class binding do: filter ] ];
+				self class environment
+					at: context textTrimmed asSymbol
+					ifPresent: [ :class | 
+						| binding |
+						binding := class binding.
+						(binding isKindOf: GlobalVariable)
+							ifTrue: [ (GtPharoCompletionStrategy globalVariableReferencesTo: binding) do: filter ]
+							ifFalse: [ SystemNavigation default allReferencesTo: binding do: filter ] ] ];
 		keyBinding: $n shift meta;
 		itemName: [ :method | method gtDisplayString ];
 		wantsToDisplayOnEmptyQuery: false
@@ -205,15 +210,18 @@ GtSpotterStart >> gtSpotterForResourcesUtilityFromStringFor: aStep [
 
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterForSendersFor: aStep [
-
 	<gtSearch>
+	
 	aStep listProcessor
 		priority: 31;
 		title: 'Senders';
-		filter: GtNullFilter item: [ :filter :context | 
-			SystemNavigation default
-				allReferencesTo: context textTrimmed
-				do: filter ];
+		filter: GtNullFilter
+			item: [ :filter :context | 
+				| search |
+				search := context textTrimmed.
+				search numArgs >= 0
+					ifTrue: [ (GtPharoCompletionStrategy sendersOf: search) do: filter ]
+					ifFalse: [ SystemNavigation default allReferencesTo: search do: filter ] ];
 		keyBinding: $n meta;
 		wantsToDisplayOnEmptyQuery: false
 ]

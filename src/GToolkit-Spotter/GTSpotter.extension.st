@@ -1,19 +1,6 @@
 Extension { #name : #GTSpotter }
 
 { #category : #'*GToolkit-Spotter' }
-GTSpotter >> gtSpotterAddressBookFor: aStep [
-	<gtSearch>
-	aStep listProcessor
-		priority:  -1;
-		allCandidates: [ :x | {GtABAddressBook default} ];
-		title: 'Address books';
-		itemName: [ :addressBook | addressBook label ];
-		matchSubstring;
-		candidatesLimit: 5;
-		wantsToDisplayOnEmptyQuery: true
-]
-
-{ #category : #'*GToolkit-Spotter' }
 GTSpotter >> gtSpotterCatalogProjectsFor: aStep [
 	<gtSearch>
 	CatalogSettings displayCatalogProjectsInSpotter

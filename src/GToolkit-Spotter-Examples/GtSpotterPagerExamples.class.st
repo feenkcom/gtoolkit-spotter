@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtSpotterPagerExamples',
-	#superclass : 'GtSpotterExamples',
+	#name : #GtSpotterPagerExamples,
+	#superclass : #GtSpotterExamples,
 	#category : 'GToolkit-Spotter-Examples'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : #'as yet unclassified' }
 GtSpotterPagerExamples >> emptyPager [
 	<gtExample>
 	| aPager |
@@ -13,7 +13,7 @@ GtSpotterPagerExamples >> emptyPager [
 	^ aPager
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : #'as yet unclassified' }
 GtSpotterPagerExamples >> pagerOnSpotterStep [
 	<gtExample>
 	| aSpotter aPager |
@@ -26,7 +26,7 @@ GtSpotterPagerExamples >> pagerOnSpotterStep [
 	^ aPager
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : #'as yet unclassified' }
 GtSpotterPagerExamples >> pagerOnSpotterWithTwoSteps [
 	<gtExample>
 	| aSpotter aPager |

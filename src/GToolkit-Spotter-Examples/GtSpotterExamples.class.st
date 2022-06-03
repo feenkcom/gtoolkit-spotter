@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtSpotterExamples',
-	#superclass : 'Object',
+	#name : #GtSpotterExamples,
+	#superclass : #Object,
 	#category : 'GToolkit-Spotter-Examples'
 }
 
-{ #category : 'instance creation examples' }
+{ #category : #'instance creation examples' }
 GtSpotterExamples >> defaultSpotter [
 	<gtExample>
 	| aSpotter |
@@ -20,12 +20,12 @@ GtSpotterExamples >> defaultSpotter [
 	^ aSpotter
 ]
 
-{ #category : 'instance creation' }
+{ #category : #'instance creation' }
 GtSpotterExamples >> processorWithName: aString [
 	^ GtSpotterCandidatesListProcessor new title: aString
 ]
 
-{ #category : 'instance creation examples' }
+{ #category : #'instance creation examples' }
 GtSpotterExamples >> spotterWithOneStep [
 	<gtExample>
 	| aSpotter aStep implementorsProcessor classesProcessor pseudoVariablesProcesspr |
@@ -54,7 +54,7 @@ GtSpotterExamples >> spotterWithOneStep [
 	^ aSpotter
 ]
 
-{ #category : 'instance creation examples' }
+{ #category : #'instance creation examples' }
 GtSpotterExamples >> spotterWithTwoSteps [
 	<gtExample>
 	| aSpotter aStep collectionProcessor |

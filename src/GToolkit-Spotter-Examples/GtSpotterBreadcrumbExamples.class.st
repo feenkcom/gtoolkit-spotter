@@ -1,5 +1,5 @@
 Class {
-	#name : 'GtSpotterBreadcrumbExamples',
-	#superclass : 'GtSpotterExamples',
+	#name : #GtSpotterBreadcrumbExamples,
+	#superclass : #GtSpotterExamples,
 	#category : 'GToolkit-Spotter-Examples'
 }

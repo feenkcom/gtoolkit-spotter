@@ -1,12 +1,12 @@
 Class {
-	#name : 'GtSpotterExceptionHandlingExamples',
-	#superclass : 'Object',
+	#name : #GtSpotterExceptionHandlingExamples,
+	#superclass : #Object,
 	#traits : 'TGtExampleAssertable',
 	#classTraits : 'TGtExampleAssertable classTrait',
 	#category : 'GToolkit-Spotter-Examples-Exceptions'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterExceptionHandlingExamples >> spotterForExceptionInProcessor [
 	<gtExample>
 	| spotter step |
@@ -21,7 +21,7 @@ GtSpotterExceptionHandlingExamples >> spotterForExceptionInProcessor [
 		raise: AssertionFailure
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterExceptionHandlingExamples >> spotterForNilInCandidates [
 	<gtExample>
 	| spotter step |
@@ -36,7 +36,7 @@ GtSpotterExceptionHandlingExamples >> spotterForNilInCandidates [
 		raise: MessageNotUnderstood
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterExceptionHandlingExamples >> spotterForProcessorWithExceptionInFilter [
 	<gtExample>
 	| spotter step |
@@ -51,7 +51,7 @@ GtSpotterExceptionHandlingExamples >> spotterForProcessorWithExceptionInFilter [
 		raise: ArithmeticError
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterExceptionHandlingExamples >> spotterForProcessorWithExceptionInItemName [
 	<gtExample>
 	| spotter step |
@@ -66,7 +66,7 @@ GtSpotterExceptionHandlingExamples >> spotterForProcessorWithExceptionInItemName
 		raise: ZeroDivide
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 GtSpotterExceptionHandlingExamples >> spotterWithAssertionsInProcessor [
 	<gtExample>
 	| spotter step |

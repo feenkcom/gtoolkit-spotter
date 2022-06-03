@@ -1,10 +1,10 @@
 Class {
-	#name : 'GtSpotterStartSample',
-	#superclass : 'Object',
-	#category : 'GToolkit-Spotter-Examples'
+	#name : #GtSpotterStartSample,
+	#superclass : #Object,
+	#category : #'GToolkit-Spotter-Examples'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : #'spotter-extensions' }
 GtSpotterStartSample >> gtSpotterSearch_10: aStep [
 	<gtSearch>
 
@@ -17,7 +17,7 @@ GtSpotterStartSample >> gtSpotterSearch_10: aStep [
 		wantsToDisplayOnEmptyQuery: true
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : #'spotter-extensions' }
 GtSpotterStartSample >> gtSpotterSearch_20: aStep [
 	<gtSearch>
 
@@ -30,7 +30,7 @@ GtSpotterStartSample >> gtSpotterSearch_20: aStep [
 		wantsToDisplayOnEmptyQuery: true
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : #'spotter-extensions' }
 GtSpotterStartSample >> gtSpotterSearch_30: aStep [
 	<gtSearch>
 

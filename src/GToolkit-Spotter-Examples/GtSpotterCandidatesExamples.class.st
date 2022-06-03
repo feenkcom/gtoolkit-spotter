@@ -1,17 +1,17 @@
 Class {
-	#name : 'GtSpotterCandidatesExamples',
-	#superclass : 'Object',
+	#name : #GtSpotterCandidatesExamples,
+	#superclass : #Object,
 	#category : 'GToolkit-Spotter-Examples'
 }
 
-{ #category : 'requirements' }
+{ #category : #requirements }
 GtSpotterCandidatesExamples >> empty [
 	<gtExample>
 	
 	^ GtSpotterCandidates new
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : #'as yet unclassified' }
 GtSpotterCandidatesExamples >> processorA_item_1 [
 	<gtExample>
 	| theCandidates |
@@ -22,7 +22,7 @@ GtSpotterCandidatesExamples >> processorA_item_1 [
 	^ theCandidates
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : #'as yet unclassified' }
 GtSpotterCandidatesExamples >> processorA_item_2 [
 	<gtExample>
 	| theCandidates |
@@ -33,7 +33,7 @@ GtSpotterCandidatesExamples >> processorA_item_2 [
 	^ theCandidates
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : #'as yet unclassified' }
 GtSpotterCandidatesExamples >> processorB_item_1 [
 	<gtExample>
 	| theCandidates |

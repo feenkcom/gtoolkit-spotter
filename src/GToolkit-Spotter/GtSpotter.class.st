@@ -209,11 +209,6 @@ GtSpotter >> defaultExceptionHandler [
 ]
 
 { #category : #'accessing-defaults' }
-GtSpotter >> defaultPagerModel [
-	^ GLMPagerModel new
-]
-
-{ #category : #'accessing-defaults' }
 GtSpotter >> defaultStep [
 	^ GtSpotterStep new
 ]

@@ -24,7 +24,7 @@ AbstractFileReference >> gtSpotterForDirectoriesFor: aStep [
 				title: 'Directories';
 				candidatesLimit: Float infinity;
 				itemName: #basename;
-				itemIcon: [ GLMUIThemeExtraIcons glamorousFolder ];
+				itemIcon: [ BrGlamorousIcons folder ];
 				filter: GtFilterSubstring ]
 ]
 
@@ -38,7 +38,7 @@ AbstractFileReference >> gtSpotterForFilesFor: aStep [
 				title: 'Files';
 				candidatesLimit: Float infinity;
 				itemName: #basename;
-				itemIcon: [ GLMUIThemeExtraIcons glamorousBrowse ];
+				itemIcon: [ BrGlamorousIcons browse ];
 				filter: GtFilterSubstring ]
 ]
 
@@ -72,7 +72,7 @@ AbstractFileReference >> gtSpotterForZipDirectoriesFor: aStep [
 		title: 'Directories';
 		candidatesLimit: Float infinity;
 		itemName: #basename;
-		itemIcon: [ GLMUIThemeExtraIcons glamorousFolder ];
+		itemIcon: [ BrGlamorousIcons folder ];
 		filter: GtFilterSubstring
 ]
 
@@ -89,6 +89,6 @@ AbstractFileReference >> gtSpotterForZipFilesFor: aStep [
 		title: 'Files';
 		candidatesLimit: Float infinity;
 		itemName: #basename;
-		itemIcon: [ GLMUIThemeExtraIcons glamorousBrowse ];
+		itemIcon: [ BrGlamorousIcons browse ];
 		filter: GtFilterSubstring
 ]

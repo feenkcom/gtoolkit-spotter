@@ -5,7 +5,7 @@ BlockClosure >> gtIterator [
 	" 1:filter 2:context[optional] "
 	self assert: (self numArgs between: 1 and: 2). 
 	
-	^ GTSpotterBlockIterator new 
+	^ GtSpotterBlockIterator new 
 		onDo: self;
 		yourself
 ]

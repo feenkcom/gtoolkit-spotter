@@ -108,10 +108,24 @@ GtSpotterProcessor >> filterInContext: aSpotterContext [
 				do: [ ('[Spotter] Exception in processor <', self title asString, '>: ', exception asString) traceCr ] ]
 ]
 
+{ #category : #accessing }
+GtSpotterProcessor >> gtDefiningMethodFor: aView [
+	<gtView>
+	self hasDefiningMethod ifFalse: [ ^ aView empty ].
+
+	^ aView forward
+		title: 'Method';
+		priority: 2;
+		object: [ self definingMethod ];
+		view: #gtSourceFor:
+]
+
 { #category : #printing }
 GtSpotterProcessor >> gtDisplayOn: stream [
 	stream 
-		nextPutAll: 'Processor: ';
+		nextPutAll: 'Processor (';
+		print: priority;
+		nextPutAll: '): ';
 		nextPutAll: self title asString
 ]
 

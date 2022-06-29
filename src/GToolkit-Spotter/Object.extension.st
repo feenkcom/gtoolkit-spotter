@@ -41,7 +41,7 @@ Object >> gtIterator [
 
 { #category : #'*GToolkit-Spotter' }
 Object >> gtListFilter [
-	^ GTFilterSubstring new
+	^ GtFilterSubstring new
 ]
 
 { #category : #'*GToolkit-Spotter' }

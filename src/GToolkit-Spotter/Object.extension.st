@@ -29,6 +29,22 @@ Object >> gtActionSearchFor: anAction [
 ]
 
 { #category : #'*GToolkit-Spotter' }
+Object >> gtFilter [
+	^ GtFilterBlock gtFilter
+		
+]
+
+{ #category : #'*GToolkit-Spotter' }
+Object >> gtIterator [
+	^ Error signal: 'This is not a spotter iterator'
+]
+
+{ #category : #'*GToolkit-Spotter' }
+Object >> gtListFilter [
+	^ GTFilterSubstring new
+]
+
+{ #category : #'*GToolkit-Spotter' }
 Object >> gtSpotterActDefault: aStep from: aSpotterElement [
 	self gtSpotterActDefaultFrom: aSpotterElement.
 	"if we exit spotter before default action we will not be able to dispatch opening of new spaces
@@ -48,4 +64,9 @@ Object >> gtSpotterProcessorsFor: aSpotterStep [
 		fromObject: self;
 		spotterStep: aSpotterStep;
 		collect
+]
+
+{ #category : #'*GToolkit-Spotter' }
+Object >> hasDynamicItems [
+	^ false
 ]

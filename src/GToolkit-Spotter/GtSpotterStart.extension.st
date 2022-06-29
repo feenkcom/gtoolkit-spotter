@@ -111,6 +111,23 @@ GtSpotterStart >> gtSpotterForGlobalVarsFor: aStep [
 ]
 
 { #category : #'*GToolkit-Spotter' }
+GtSpotterStart >> gtSpotterForIcebergRepositoriesFor: aStep [
+	<gtSearch>
+	
+	aStep listProcessor
+		priority: 88;
+		title: 'Iceberg Repositories';
+		allCandidates: [ IceRepository registry ];
+		itemName: [ :aRepository | aRepository name ];
+		wantsToDisplayOnEmptyQuery: false;
+		filter: GtFilterSubstring;
+		actLogic: [ :anIcebergRepository :step :spotterElement | 
+			anIcebergRepository
+				gtSpotterActDefault: step 
+				from: spotterElement ]
+]
+
+{ #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterForMessagesFor: aStep [
 	<gtSearch>
 	aStep listProcessor

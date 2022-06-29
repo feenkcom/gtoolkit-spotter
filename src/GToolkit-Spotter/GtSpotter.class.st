@@ -18,7 +18,7 @@ Class {
 		'history',
 		'wasOpened'
 	],
-	#category : 'GToolkit-Spotter-Model'
+	#category : #'GToolkit-Spotter-Model'
 }
 
 { #category : #cleanup }
@@ -29,18 +29,30 @@ GtSpotter class >> cleanUp [
 
 { #category : #accessing }
 GtSpotter class >> extensionsPragma [
-	^ #spotterOrder:
+	^ #gtSearch
 ]
 
 { #category : #inspecting }
-GtSpotter class >> gtInspectorExtensionsIn: composite [
-	<gtInspectorPresentationOrder: 40>
-	composite list
+GtSpotter class >> gtInspectorExtensionsIn: aView [
+	<gtView>
+	<gtClassView>
+	
+	^ (self extensionsPragma gtPragmas gtItemsFor: aView)
 		title: 'Extensions';
-		display: [ self spotterExtendingMethods ];
-		showOnly: 50;
-		format: [ :each | each gtDisplayString ];
-		filterOn: [ :text :each | each gtDisplayString includesSubstring: text caseSensitive: false ]
+		priority: 34
+]
+
+{ #category : #inspecting }
+GtSpotter class >> gtSpotterExtensionsFor: aStep [
+	<gtSearch>
+	
+	aStep listProcessor
+		priority: 50;
+		allCandidates: [ self spotterExtendingMethods ];
+		title: 'Extensions';
+		itemName: [ :each | each gtDisplayString ];
+		filter: GtFilterSubstring;
+		wantsToDisplayOnEmptyQuery: true
 ]
 
 { #category : #accessing }
@@ -70,7 +82,8 @@ GtSpotter class >> resetHistory [
 
 { #category : #inspecting }
 GtSpotter class >> spotterExtendingMethods [
-	^(SystemNavigation default allBehaviors
+
+	^ (SystemNavigation default allBehaviors
 		flatCollect: [ :each | 
 			(Pragma allNamed: self extensionsPragma in: each) 
 				collect: [ :p | p method asRingDefinition ] ])
@@ -193,11 +206,6 @@ GtSpotter >> currentStepIndex [
 { #category : #'accessing-defaults' }
 GtSpotter >> defaultExceptionHandler [
 	^ GtSpotterDeploymentExceptionHandler new
-]
-
-{ #category : #'accessing-defaults' }
-GtSpotter >> defaultPagerModel [
-	^ GLMPagerModel new
 ]
 
 { #category : #'accessing-defaults' }

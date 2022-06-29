@@ -18,7 +18,7 @@ Class {
 		'previewElementBlock',
 		'transformation'
 	],
-	#category : 'GToolkit-Spotter-Model - Processors'
+	#category : #'GToolkit-Spotter-Model - Processors'
 }
 
 { #category : #accessing }
@@ -116,17 +116,6 @@ GtSpotterCandidatesListProcessor >> gtAllFilteredCandidatesFor: aView [
 	^ (allFilteredCandidates gtItemsFor: aView)
 			title: 'All Filtered Candidates';
 			priority: 2
-]
-
-{ #category : #accessing }
-GtSpotterCandidatesListProcessor >> gtDefiningMethodFor: aView [
-	<gtView>
-	self hasDefiningMethod ifFalse: [ ^ aView empty ].
-	^ aView forward
-		title: 'Method';
-		object: [ self definingMethod ];
-		view: #gtSourceFor:
-
 ]
 
 { #category : #testing }

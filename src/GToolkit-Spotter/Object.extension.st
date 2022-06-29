@@ -29,8 +29,19 @@ Object >> gtActionSearchFor: anAction [
 ]
 
 { #category : #'*GToolkit-Spotter' }
+Object >> gtFilter [
+	^ GtFilterBlock gtFilter
+		
+]
+
+{ #category : #'*GToolkit-Spotter' }
 Object >> gtIterator [
 	^ Error signal: 'This is not a spotter iterator'
+]
+
+{ #category : #'*GToolkit-Spotter' }
+Object >> gtListFilter [
+	^ GTFilterSubstring new
 ]
 
 { #category : #'*GToolkit-Spotter' }

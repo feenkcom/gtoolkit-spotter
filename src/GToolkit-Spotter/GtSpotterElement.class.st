@@ -1,6 +1,8 @@
 Class {
 	#name : #GtSpotterElement,
 	#superclass : #BlElement,
+	#traits : 'TBrLayoutResizable',
+	#classTraits : 'TBrLayoutResizable classTrait',
 	#instVars : [
 		'spotterModel',
 		'stepsPager',
@@ -8,7 +10,7 @@ Class {
 		'header',
 		'preview'
 	],
-	#category : 'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI'
 }
 
 { #category : #'private - actions' }

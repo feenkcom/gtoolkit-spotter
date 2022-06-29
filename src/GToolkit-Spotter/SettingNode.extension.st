@@ -12,3 +12,11 @@ SettingNode >> gtSpotterForSettingsFor: aStep [
 		itemName: [ :each | each spotterLabel ];
 		filter: GtFilterSubstring
 ]
+
+{ #category : #'*GToolkit-Spotter' }
+SettingNode >> spotterLabel [
+
+	| label |
+	label := self settingDeclaration label.
+	^ self parentNode ifNil: [ label ] ifNotNil: [ self parentNode spotterLabel , '/' , label ]
+]

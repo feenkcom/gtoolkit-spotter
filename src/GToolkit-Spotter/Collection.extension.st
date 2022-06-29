@@ -1,6 +1,11 @@
 Extension { #name : #Collection }
 
 { #category : #'*GToolkit-Spotter' }
+Collection >> gtIterator [
+	^ [ :filter | self do: filter ] gtIterator
+]
+
+{ #category : #'*GToolkit-Spotter' }
 Collection >> gtSpotterItemsFor: aStep [
 	<gtSearch>
 	| processor |

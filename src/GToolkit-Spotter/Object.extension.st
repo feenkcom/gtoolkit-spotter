@@ -49,3 +49,8 @@ Object >> gtSpotterProcessorsFor: aSpotterStep [
 		spotterStep: aSpotterStep;
 		collect
 ]
+
+{ #category : #'*GToolkit-Spotter' }
+Object >> hasDynamicItems [
+	^ false
+]

@@ -30,11 +30,10 @@ Class >> gtSpotterMethodsFor: aStep [
 { #category : #'*GToolkit-Spotter' }
 Class >> gtSpotterReferenceFor: aStep [
 	<gtSearch>
-	
 	aStep listProcessor
 		priority: 30;
 		title: 'References';
-		allCandidates: [ GtPharoCompletionStrategy globalVariableReferencesTo: self binding ];
+		allCandidates: [ GtPharoIndex current globalVariableReferencesTo: self binding ];
 		itemName: [ :method | method gtDisplayString ];
 		filter: GtFilterSubstring
 ]

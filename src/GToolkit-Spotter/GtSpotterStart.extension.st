@@ -195,7 +195,7 @@ GtSpotterStart >> gtSpotterForReferencesFor: aStep [
 						| binding |
 						binding := class binding.
 						(binding isKindOf: GlobalVariable)
-							ifTrue: [ (GtPharoCompletionStrategy globalVariableReferencesTo: binding) do: filter ]
+							ifTrue: [ (GtPharoIndex current globalVariableReferencesTo: binding) do: filter ]
 							ifFalse: [ SystemNavigation default allReferencesTo: binding do: filter ] ] ];
 		keyBinding: $n shift meta;
 		itemName: [ :method | method gtDisplayString ];
@@ -237,7 +237,7 @@ GtSpotterStart >> gtSpotterForSendersFor: aStep [
 				| search |
 				search := context textTrimmed.
 				search numArgs >= 0
-					ifTrue: [ (GtPharoCompletionStrategy sendersOf: search) do: filter ]
+					ifTrue: [ (GtPharoIndex current sendersOf: search) do: filter ]
 					ifFalse: [ SystemNavigation default allReferencesTo: search do: filter ] ];
 		keyBinding: $n meta;
 		wantsToDisplayOnEmptyQuery: false

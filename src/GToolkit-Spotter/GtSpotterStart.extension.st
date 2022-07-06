@@ -2,7 +2,7 @@ Extension { #name : #GtSpotterStart }
 
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterClipboardFor: aStep [
-	<gtSearch>
+	"<gtSearch>"
 	aStep listProcessor
 		priority: 90;
 		title: 'Clipboard History';
@@ -65,7 +65,7 @@ GtSpotterStart >> gtSpotterForClassesFor: aStep [
 
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterForDirectoriesFor: aStep [
-	<gtSearch>
+	"<gtSearch>"
 	self flag: #specialFilter.
 	aStep listProcessor
 		priority: 50;
@@ -83,7 +83,7 @@ GtSpotterStart >> gtSpotterForDirectoriesFor: aStep [
 
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterForFilesFor: aStep [
-	<gtSearch>
+	"<gtSearch>"
 	self flag: #specialFilter.
 	aStep listProcessor
 		priority: 40;

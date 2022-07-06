@@ -18,7 +18,7 @@ GtSpotterStart >> gtSpotterClipboardFor: aStep [
 
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterForAllSubclassesFor: aStep [
-	<gtSearch>
+	"<gtSearch>"
 	aStep listProcessor
 		priority: 52;
 		filter: GtNullFilter
@@ -35,7 +35,7 @@ GtSpotterStart >> gtSpotterForAllSubclassesFor: aStep [
 
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterForAllSuperclassesFor: aStep [
-	<gtSearch>
+	"<gtSearch>"
 	aStep listProcessor
 		priority: 51;
 		filter: GtNullFilter
@@ -129,7 +129,7 @@ GtSpotterStart >> gtSpotterForIcebergRepositoriesFor: aStep [
 
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterForMessagesFor: aStep [
-	<gtSearch>
+	"<gtSearch>"
 	aStep listProcessor
 		priority: 35;
 		title: 'Messages';
@@ -145,7 +145,7 @@ GtSpotterStart >> gtSpotterForMessagesFor: aStep [
 
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterForMetacelloBaselinesFor: aStep [
-	<gtSearch>
+	"<gtSearch>"
 	aStep listProcessor
 		priority: 86;
 		title: 'Metacello baselines';
@@ -182,7 +182,7 @@ GtSpotterStart >> gtSpotterForPragmasFor: aStep [
 
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterForReferencesFor: aStep [
-	<gtSearch>
+	"<gtSearch>"
 	
 	aStep listProcessor
 		priority: 32;
@@ -204,7 +204,7 @@ GtSpotterStart >> gtSpotterForReferencesFor: aStep [
 
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterForResourcesUtilityFromPathFor: aStep [
-	<gtSearch>
+	"<gtSearch>"
 	^ (GtResourcesUtility default spotterForPathResourcesFor: aStep)
 		priority: 40;
 		wantsToDisplayOnEmptyQuery: false
@@ -212,7 +212,7 @@ GtSpotterStart >> gtSpotterForResourcesUtilityFromPathFor: aStep [
 
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterForResourcesUtilityFromStringFor: aStep [
-	<gtSearch>
+	"<gtSearch>"
 	^ aStep listProcessor
 		title: 'Resource from file or directory name';
 		priority: 2;
@@ -227,7 +227,7 @@ GtSpotterStart >> gtSpotterForResourcesUtilityFromStringFor: aStep [
 
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> gtSpotterForSendersFor: aStep [
-	<gtSearch>
+	"<gtSearch>"
 	
 	aStep listProcessor
 		priority: 31;
@@ -260,7 +260,7 @@ GtSpotterStart >> gtSpotterImplementorsFor: aStep [
 
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> spotterForPixelIconFor: aStep [
-	<gtSearch>
+	"<gtSearch>"
 	^ aStep listProcessor
 		title: 'Icon - Pixeled';
 		priority: 101;
@@ -273,7 +273,7 @@ GtSpotterStart >> spotterForPixelIconFor: aStep [
 
 { #category : #'*GToolkit-Spotter' }
 GtSpotterStart >> spotterForVectorIconFor: aStep [
-	<gtSearch>
+	"<gtSearch>"
 	^ aStep listProcessor
 		title: 'Icons - Vectorized';
 		priority: 100;

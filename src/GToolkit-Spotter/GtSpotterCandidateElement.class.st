@@ -7,7 +7,7 @@ Class {
 		'actOnButton',
 		'diveInButton'
 	],
-	#category : 'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI'
 }
 
 { #category : #'private - actions' }
@@ -105,10 +105,9 @@ GtSpotterCandidateElement >> initializeDiveInButton [
 { #category : #initialization }
 GtSpotterCandidateElement >> initializeLabel [
 	label := BrLabel new
-		aptitude: (BrGlamorousLabelAptitude new);
-		hMatchParent;
-		vFitContent;
-		alignCenterLeft.
+			hMatchParent;
+			vFitContent;
+			alignCenterLeft
 ]
 
 { #category : #'private - testing' }

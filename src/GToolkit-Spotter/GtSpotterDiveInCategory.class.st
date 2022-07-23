@@ -1,10 +1,10 @@
 Class {
 	#name : #GtSpotterDiveInCategory,
-	#superclass : #GlamorousAuthor,
+	#superclass : #GtSpotterAnnouncement,
 	#instVars : [
 		'eventType'
 	],
-	#category : 'GToolkit-Spotter-Announcements'
+	#category : #'GToolkit-Spotter-Announcements'
 }
 
 { #category : #accessing }

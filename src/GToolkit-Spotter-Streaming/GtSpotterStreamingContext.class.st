@@ -15,6 +15,5 @@ GtSpotterStreamingContext >> searchQuery [
 
 { #category : #accessing }
 GtSpotterStreamingContext >> searchQuery: anObject [
-
 	searchQuery := anObject
 ]

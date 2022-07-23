@@ -1,10 +1,10 @@
 Class {
 	#name : #GtSpotterCandidateAdded,
-	#superclass : #GlamorousAuthor,
+	#superclass : #GtSpotterAnnouncement,
 	#instVars : [
 		'candidate'
 	],
-	#category : 'GToolkit-Spotter-Announcements'
+	#category : #'GToolkit-Spotter-Announcements'
 }
 
 { #category : #accessing }

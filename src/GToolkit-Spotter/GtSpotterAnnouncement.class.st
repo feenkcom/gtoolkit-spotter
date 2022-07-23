@@ -1,20 +1,20 @@
 Class {
-	#name : #GlamorousAuthor,
+	#name : #GtSpotterAnnouncement,
 	#superclass : #Announcement,
 	#instVars : [
 		'category'
 	],
-	#category : 'GToolkit-Spotter-Announcements'
+	#category : #'GToolkit-Spotter-Announcements'
 }
 
 { #category : #accessing }
-GlamorousAuthor >> category [
+GtSpotterAnnouncement >> category [
 	"Return the category (ie the kind of group of elements). This has nothing to do with class category."
 	^ category
 ]
 
 { #category : #accessing }
-GlamorousAuthor >> category: anObject [
+GtSpotterAnnouncement >> category: anObject [
 	"Set the category (ie the kind of group of elements). This has nothing to do with class category."
 	category := anObject
 ]

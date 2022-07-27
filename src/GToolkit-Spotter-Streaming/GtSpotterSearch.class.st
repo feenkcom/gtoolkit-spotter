@@ -3,7 +3,8 @@ Class {
 	#superclass : #GtSpotterProtoSearch,
 	#instVars : [
 		'title',
-		'priority'
+		'priority',
+		'definingMethod'
 	],
 	#category : #'GToolkit-Spotter-Streaming-Searches'
 }
@@ -13,6 +14,11 @@ GtSpotterSearch >> asStreamFor: aSpotterContext [
 	<return: #TAsyncStream>
 	
 	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
+GtSpotterSearch >> definingMethod: anObject [
+	definingMethod := anObject
 ]
 
 { #category : #initialization }

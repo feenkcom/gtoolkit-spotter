@@ -1,5 +1,5 @@
 Class {
-	#name : #GtSpotterStreamingContext,
+	#name : #GtStreamingSpotterContext,
 	#superclass : #Object,
 	#instVars : [
 		'searchQuery'
@@ -8,12 +8,12 @@ Class {
 }
 
 { #category : #accessing }
-GtSpotterStreamingContext >> searchQuery [
+GtStreamingSpotterContext >> searchQuery [
 
 	^ searchQuery
 ]
 
 { #category : #accessing }
-GtSpotterStreamingContext >> searchQuery: anObject [
+GtStreamingSpotterContext >> searchQuery: anObject [
 	searchQuery := anObject
 ]

@@ -1,5 +1,5 @@
 Class {
-	#name : #GtSpotterOrderedProcessorsStream,
+	#name : #GtSpotterUnorderedSearchesStream,
 	#superclass : #Object,
 	#traits : 'TAsyncStream',
 	#classTraits : 'TAsyncStream classTrait',
@@ -11,25 +11,42 @@ Class {
 }
 
 { #category : #'instance creation' }
-GtSpotterOrderedProcessorsStream class >> forOriginObject: anObject [
+GtSpotterUnorderedSearchesStream class >> forOriginObject: anObject [
 	^ self new forOriginObject: anObject
 ]
 
-{ #category : #initialization }
-GtSpotterOrderedProcessorsStream >> buildProcessorsStream [
-	^ (((GtSpotterUnorderedProcessorsStream forOriginObject: origin) toArray
-		map: [ :anArrayOfProcessors | (anArrayOfProcessors sorted: [ :a :b | a priority < b priority ]) asAsyncStream ]))
-			asAsyncStream flatten
+{ #category : #private }
+GtSpotterUnorderedSearchesStream >> basicProcessorForPragma: aPragma [
+	| aProtoSearch aSearch |
+	self flag: 'handle errors and return a "broken" processor'.
+
+	aProtoSearch := GtSpotterProtoSearch new.
+	
+	"Some #gtSearch extensions do not actually return a processor...
+	we have to do a builder hack for now. We will rewrite the extensions!"
+	aSearch := origin
+		perform: aPragma methodSelector
+		with: aProtoSearch.
+
+	aSearch definingMethod: aPragma method.
+
+	^ aSearch
 ]
 
 { #category : #initialization }
-GtSpotterOrderedProcessorsStream >> forOriginObject: anObject [
+GtSpotterUnorderedSearchesStream >> buildProcessorsStream [
+	^ (GtSpotterSearchPragmasFuture forOriginObject: origin) asAsyncStream flatten
+		map: [ :eachPragma | self basicProcessorForPragma: eachPragma ]
+]
+
+{ #category : #initialization }
+GtSpotterUnorderedSearchesStream >> forOriginObject: anObject [
 	origin := anObject.
 	stream := self buildProcessorsStream
 ]
 
 { #category : #'api - stream' }
-GtSpotterOrderedProcessorsStream >> pollNext: anAsynchronousContext [
+GtSpotterUnorderedSearchesStream >> pollNext: anAsynchronousContext [
 	"Attempt to pull out the next value of this stream, registering the current task for wakeup if the value is not yet available, and returning None if the stream is exhausted.
 	There are several possible return values, each indicating a distinct stream state:
 	 - Poll::Pending means that this stream's next value is not ready yet. Implementations will ensure that the current task will be notified when the next value may be ready.
@@ -41,7 +58,7 @@ GtSpotterOrderedProcessorsStream >> pollNext: anAsynchronousContext [
 ]
 
 { #category : #'api - stream copy' }
-GtSpotterOrderedProcessorsStream >> postSimilarCopy [
+GtSpotterUnorderedSearchesStream >> postSimilarCopy [
 	"Is called by similarCopy. self is a shallow copy, implementors should set the fields as necessary to complete the similar copy"
 	
 	stream := self buildProcessorsStream

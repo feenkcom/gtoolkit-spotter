@@ -68,7 +68,6 @@ GtSpotter class >> markOpened [
 
 { #category : #'instance creation' }
 GtSpotter class >> on: anObject [
-	
 	^ self new initializeWith: anObject
 ]
 

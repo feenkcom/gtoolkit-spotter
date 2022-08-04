@@ -52,7 +52,7 @@ GtSpotterElement >> bindingDictionnary [
 	(Character arrowDown alt -> [ self stepScrollPageDown ]).
 	(Character pageUp -> [ self stepScrollPageUp ]).
 	(Character pageDown -> [ self stepScrollPageDown ])."
-	(BlKeyCombination return -> [ self actDueTo: #keyPressedReturn ]).
+	(BlKeyCombination enter -> [ self actDueTo: #keyPressedReturn ]).
 	"($p meta shift -> [ self exportAsPNGSilently ])"}
 ]
 

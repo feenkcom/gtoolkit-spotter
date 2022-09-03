@@ -20,11 +20,7 @@ GtStreamingSpotterSearchField >> initialize [
 
 { #category : #'private - event handling' }
 GtStreamingSpotterSearchField >> onCurrentStepChanged: anAnnouncement [
-	self text: anAnnouncement stepModel searchQuery asRopedText.
-	self navigator
-		moveTo: self text size;
-		apply.
-
+	self text: anAnnouncement spotterStep searchQuery asRopedText.
 	self requestFocus
 ]
 
@@ -48,10 +44,7 @@ GtStreamingSpotterSearchField >> subscribeToSpotter [
 	<modelSubscriber: #spotter>
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#subscribeToObjectTemplate'>
 	
-	spotter 
-		when: GtSpotterCurrentStepChanged
-			send: #onCurrentStepChanged:
-			to: self
+	spotter when: GtStreamingSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self
 ]
 
 { #category : #'api - spotter' }

@@ -122,22 +122,6 @@ GtSpotter >> addStep: aSpotterStep during: aBlock [
 		self steps remove: aSpotterStep ]
 ]
 
-{ #category : #'actions api' }
-GtSpotter >> after: afterBlock do: doBlock ifTrue: conditionBlock [
-	|value|
-	value := conditionBlock brickValue: self.
-	afterBlock brickValue: self.
-	value ifTrue: [ doBlock brickValue: value ]
-]
-
-{ #category : #'actions api' }
-GtSpotter >> after: afterBlock do: doBlock with: withBlock [
-	|value|
-	value := withBlock brickValue: self.
-	afterBlock brickValue: self.
-	doBlock brickValue: value
-]
-
 { #category : #notifying }
 GtSpotter >> announce: anAnnouncement [
 	

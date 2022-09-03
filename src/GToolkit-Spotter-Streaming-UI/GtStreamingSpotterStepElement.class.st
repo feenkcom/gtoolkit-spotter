@@ -8,7 +8,10 @@ Class {
 	#traits : 'TGtStreamingWithSpotterStep',
 	#classTraits : 'TGtStreamingWithSpotterStep classTrait',
 	#instVars : [
-		'resultsElement'
+		'resultsElement',
+		'startedItemsProviders',
+		'loadedItemsProviders',
+		'loadingItemsProviders'
 	],
 	#category : #'GToolkit-Spotter-Streaming-UI'
 }
@@ -16,43 +19,155 @@ Class {
 { #category : #initialization }
 GtStreamingSpotterStepElement >> initialize [
 	super initialize.
-	
+
 	self matchParent.
-	
+
+	startedItemsProviders := AsyncMutex for: IdentitySet new.
+	loadedItemsProviders := AsyncMutex for: IdentitySet new.
+	loadingItemsProviders := AsyncMutex for: IdentitySet new.
+
 	resultsElement := BrGroupedList new.
 	resultsElement
 		matchParent;
-		headerElementStencil: [
-			BrLabel new
+		headerElementStencil: [ BrLabel new
 				hMatchParent;
 				margin: (BlInsets top: 10);
 				aptitude: (BrGlamorousLabelAptitude new foreground: Color gray) ];
-		headerDataBinder: [ :aLabel :eachGroup |
-			aLabel text: eachGroup domainObject title ].
+		headerDataBinder: [ :aLabel :eachGroup | 
+			self updateLabel: aLabel forGroup: eachGroup.
+			aLabel
+				withAsyncSinkDo: [ :anElementSink |
+					anElementSink
+						whenUpdate: [ :aLabelElement | self updateLabel: aLabel forGroup: eachGroup. ] ].
+			eachGroup itemsProvider sinks first sink: aLabel asyncSink.
+			aLabel ].
 
 	self addChild: resultsElement
+]
+
+{ #category : #'private - instance creation' }
+GtStreamingSpotterStepElement >> newCandidateElement [
+	^ GtStreamingSpotterCandidateElement new
+]
+
+{ #category : #'private - event handling' }
+GtStreamingSpotterStepElement >> onItemsLoaded: anItemsProviderNewItemsLoadedEvent [
+	| anItemsProvider aGroup |
+
+	anItemsProvider := anItemsProviderNewItemsLoadedEvent itemsProvider.
+	aGroup := anItemsProvider userData at: #group.
+	
+	NonInteractiveTranscript stdout nextPutAll: 'Loaded ', anItemsProvider itemCount asString; cr.
+
+	"the items provider didn't yet load enough items"
+	anItemsProvider itemCount >= aGroup itemsLimit
+		ifFalse: [ ^ self ].
+	
+	"Remove an items provider from a set of started items providers, exit if it does not exist there"
+	startedItemsProviders lock: [ :aSet | (aSet remove: anItemsProvider ifAbsent: [ ^ self ]) ].
+	loadedItemsProviders lock: [ :aSet |
+		(aSet includes: anItemsProvider)
+			ifFalse: [
+				NonInteractiveTranscript stdout
+					nextPutAll: 'Add ';
+					nextPutAll: aGroup domainObject title;
+					nextPutAll:' to #loadedItemsProviders';
+					cr.
+				
+				aSet add: anItemsProvider ] ].
+	
+	"if all item providers loaded their initial batch, we can start taking item providers and finish their searches one by one"
+	loadingItemsProviders lock: [ :theAlreadyLoadingProviders |
+		NonInteractiveTranscript stdout
+			nextPutAll: '#loadingItemsProviders: ';
+			print: theAlreadyLoadingProviders;
+			cr.
+		
+		theAlreadyLoadingProviders ifEmpty: [
+			startedItemsProviders lock: [ :theStartedItemsProviders | theStartedItemsProviders ifEmpty: [
+				loadedItemsProviders lock: [ :theLoadedItemsProviders |
+				theLoadedItemsProviders isNotEmpty
+					ifTrue: [
+						| anItemsProviderToFinish |
+						
+						anItemsProviderToFinish := theLoadedItemsProviders anyOne.
+						theLoadedItemsProviders remove: anItemsProviderToFinish.
+						theAlreadyLoadingProviders add: anItemsProviderToFinish.
+						NonInteractiveTranscript stdout nextPutAll: 'Load the rest of the items: ', aGroup domainObject title asString; cr.
+						(anItemsProviderToFinish preloadUntilFoundSuchThat: [ :each | false ])
+							then: [ loadingItemsProviders lock: [ :aSet | aSet remove: anItemsProviderToFinish ifAbsent: [  ] ] ]
+							otherwise: [ loadingItemsProviders lock: [ :aSet | aSet remove: anItemsProviderToFinish ifAbsent: [  ] ] ] ] ] ] ] ] ].
+]
+
+{ #category : #'private - event handling' }
+GtStreamingSpotterStepElement >> onLoadingStarted: anItemsProviderStartedLoadingEvent [
+	| anItemsProvider aGroup |
+
+	anItemsProvider := anItemsProviderStartedLoadingEvent itemsProvider.
+	aGroup := anItemsProvider userData at: #group.
+
+	NonInteractiveTranscript stdout
+		nextPutAll: 'Started loading ';
+		nextPutAll: aGroup domainObject title;
+		nextPutAll:' (';
+		print: anItemsProviderStartedLoadingEvent initialAmountOfItems;
+		nextPutAll: ')';
+		cr.
+
+	anItemsProviderStartedLoadingEvent initialAmountOfItems < aGroup itemsLimit
+		ifTrue: [ startedItemsProviders lock: [ :aCollection |
+			(aCollection includes: anItemsProvider)
+				ifFalse: [
+					NonInteractiveTranscript stdout
+						nextPutAll: 'Add ';
+						nextPutAll: aGroup domainObject title;
+						nextPutAll:' to #startedItemsProviders';
+						cr.
+					aCollection add: anItemsProvider ] ] ]
 ]
 
 { #category : #'private - event handling' }
 GtStreamingSpotterStepElement >> onSearchQueryChanged [
 	| aGroupesStream |
 	
+	startedItemsProviders lock: [ :aSet | aSet removeAll ].
+	loadedItemsProviders lock: [ :aSet | aSet removeAll ].
+	loadingItemsProviders lock: [ :aSet | aSet removeAll ].
+	
 	aGroupesStream := spotterStep createSearchResultsStream collect: [ :eachSearchAndResults |
-		| aSearch aSearchStream |
+		| aSearch aSearchStream aStreamItemsProvider aGroup |
 		
 		aSearch := eachSearchAndResults key.
 		aSearchStream := eachSearchAndResults value.
 		
-		BrGroup new
-			stream: aSearchStream;
+		aStreamItemsProvider := BrStreamItemsProvider new
+			stream: aSearchStream
+			sinks: { AsyncForwardSink new . AsyncCounterSink new };
+			preloadAmount: 5.
+
+		aStreamItemsProvider
+			when: BrItemsProviderNewItemsLoadedEvent
+			send: #onItemsLoaded:
+			to: self.
+			
+		aStreamItemsProvider
+			when: BrItemsProviderStartedLoadingEvent
+			send: #onLoadingStarted:
+			to: self.
+		
+		aGroup := BrGroup new
+			itemsProvider: aStreamItemsProvider;
 			domainObject: aSearch;
-			itemStencil: [
-				BrLabel new
-					hMatchParent;
-					aptitude: BrGlamorousLabelAptitude + BrGlamorousListItemAptitude ];
-			itemDataBinder: [ :aLabel :eachItem |
-				aLabel text: eachItem asString ];
-			itemsLimit: 5 ].
+			itemStencil: [ self newCandidateElement ];
+			itemDataBinder: [ :aCandidateElement :eachItem |
+				aCandidateElement
+					spotterStep: self spotterStep;
+					candidate: eachItem search: aSearch ];
+			itemsLimit: 5.
+			
+		aStreamItemsProvider userData at: #group put: aGroup.
+
+		aGroup ].
 
 	resultsElement groupsProvider: aGroupesStream
 ]
@@ -91,4 +206,27 @@ GtStreamingSpotterStepElement >> unsubscribeFromSpotterStep [
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#unsubscribeFromObjectTemplate'>
 	
 	spotterStep unsubscribe: self
+]
+
+{ #category : #'private - event handling' }
+GtStreamingSpotterStepElement >> updateLabel: aLabelElement forGroup: eachGroup [
+	| groupTitle currentAmountOfItems isDone |
+
+	currentAmountOfItems := eachGroup itemsProvider sinks second count.
+	isDone := eachGroup itemsProvider isDone.
+	
+	groupTitle := String
+			streamContents: [ :aStream | 
+				aStream
+					nextPutAll: eachGroup domainObject title;
+					space;
+					nextPut: $(;
+					print: (currentAmountOfItems min: eachGroup itemsLimit);
+					space;
+					nextPut: $/;
+					space;
+					nextPutAll: (isDone ifTrue: [ currentAmountOfItems asString ] ifFalse: [ '...' ]);
+					nextPut: $) ].
+
+	aLabelElement text: groupTitle
 ]

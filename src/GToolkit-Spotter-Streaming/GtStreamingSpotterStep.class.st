@@ -10,6 +10,33 @@ Class {
 	#category : #'GToolkit-Spotter-Streaming-Model'
 }
 
+{ #category : #'api - step' }
+GtStreamingSpotterStep >> actOn: anItemObject search: aSpotterSearch dueTo: anEventType from: anElement [
+	"Perform an action associated with the given candidate item.
+	(can be triggered by doubleClick: or keyboard Enter press)"
+	| anAnnouncement anObjectToActOn |
+	
+	self
+		assert: [ anItemObject isNotNil ]
+		description: [ 'Spotter can not perform an action due to ', 
+			anEventType asString, 
+			' if there is no candidate' ].
+	
+	anObjectToActOn := aSpotterSearch objectToActOn: anItemObject from: self.
+	
+	anAnnouncement := spotter
+		notifyActOn: anObjectToActOn
+		for: anEventType.
+	
+	anAnnouncement isActedUpon
+		ifTrue: [ ^ self ].
+	
+	aSpotterSearch
+		actOn: anObjectToActOn
+		for: self
+		from: anElement
+]
+
 { #category : #'api - announcer' }
 GtStreamingSpotterStep >> announce: anAnnouncement [
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#announceTemplate'>
@@ -31,6 +58,19 @@ GtStreamingSpotterStep >> createSearchesStream [
 	^ GtSpotterOrderedSearchesStream forOriginObject: origin
 ]
 
+{ #category : #'api - step' }
+GtStreamingSpotterStep >> diveIn: anOriginObject dueTo: anEventType [
+	| aNewStep |
+
+	aNewStep := self requestNextStepWith: anOriginObject.
+	spotter currentStep: aNewStep
+]
+
+{ #category : #'api - step' }
+GtStreamingSpotterStep >> exit [
+	self flag: #TODO.
+]
+
 { #category : #initialization }
 GtStreamingSpotterStep >> initializeWithSpotter: aStreamingSpotter origin: anObject [
 	spotter := aStreamingSpotter.
@@ -41,6 +81,20 @@ GtStreamingSpotterStep >> initializeWithSpotter: aStreamingSpotter origin: anObj
 { #category : #'api - accessing' }
 GtStreamingSpotterStep >> origin [
 	^ origin
+]
+
+{ #category : #initialization }
+GtStreamingSpotterStep >> removeFromSpotter [
+	spotter := nil.
+]
+
+{ #category : #'api - step' }
+GtStreamingSpotterStep >> requestNextStepWith: anOriginObject [
+	<return: #GtStreamingSpotterStep>
+
+	^ spotter
+		popUntil: self;
+		pushStep: anOriginObject
 ]
 
 { #category : #'api - accessing' }

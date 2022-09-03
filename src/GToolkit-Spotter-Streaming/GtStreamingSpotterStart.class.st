@@ -14,3 +14,19 @@ GtStreamingSpotterStart >> gtClassesFor: aSearch [
 		items: [ AsyncImageBehaviorsStream new ];
 		filter: [ GtSpotterSubstringFilter new ]
 ]
+
+{ #category : #printing }
+GtStreamingSpotterStart >> gtDisplayOn: aStream [
+	aStream nextPutAll: 'Spotter'
+]
+
+{ #category : #accessing }
+GtStreamingSpotterStart >> gtPackagesFor: aSearch [
+	<gtSpotterSearch>
+	
+	^ GtSpotterCollectionSearch new
+		title: 'Packages';
+		priority: 6;
+		items: [ RPackageOrganizer default packages ];
+		filter: [ GtSpotterSubstringFilter new ]
+]

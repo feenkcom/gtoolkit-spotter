@@ -4,10 +4,25 @@ Class {
 	#instVars : [
 		'title',
 		'priority',
-		'definingMethod'
+		'definingMethod',
+		'itemNameComputation',
+		'objectToActOnComputation',
+		'actOnLogicComputation'
 	],
 	#category : #'GToolkit-Spotter-Streaming-Searches'
 }
+
+{ #category : #'api - configuration' }
+GtSpotterSearch >> actLogic: aBlockWithTwoArguments [
+	actOnLogicComputation := aBlockWithTwoArguments
+]
+
+{ #category : #'private - computation' }
+GtSpotterSearch >> actOn: anObject for: aSpotterStep from: anElement [
+	actOnLogicComputation
+		ifNil: [ anObject gtSpotterActDefault: aSpotterStep from: anElement ]
+		ifNotNil: [ actOnLogicComputation cull: anObject cull: aSpotterStep cull: anElement ]
+]
 
 { #category : #converting }
 GtSpotterSearch >> asStreamFor: aSpotterContext [
@@ -16,9 +31,9 @@ GtSpotterSearch >> asStreamFor: aSpotterContext [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
-GtSpotterSearch >> definingMethod: anObject [
-	definingMethod := anObject
+{ #category : #initialization }
+GtSpotterSearch >> definingMethod: aCompiledMethod [
+	definingMethod := aCompiledMethod
 ]
 
 { #category : #initialization }
@@ -29,13 +44,37 @@ GtSpotterSearch >> initialize [
 	priority := 10
 ]
 
+{ #category : #'api - configuration' }
+GtSpotterSearch >> itemName: aBlockWithOneArgument [
+	itemNameComputation := aBlockWithOneArgument
+]
+
+{ #category : #'private - computation' }
+GtSpotterSearch >> itemNameFor: anObject [
+	<return: #String or: #BlText>
+
+	^ itemNameComputation 
+		ifNil: [ anObject gtDisplayText ]
+		ifNotNil: [ :aBlock | aBlock cull: anObject ]
+]
+
+{ #category : #'private - computation' }
+GtSpotterSearch >> objectToActOn: anObject from: aSpotterStep [
+	"Return an object that should be acted upon from a given step"
+	<return: #Object>
+	
+	^ objectToActOnComputation
+		ifNil: [ anObject ]
+		ifNotNil: [ objectToActOnComputation cull: anObject cull: aSpotterStep ]
+]
+
 { #category : #accessing }
 GtSpotterSearch >> priority [
 
 	^ priority
 ]
 
-{ #category : #accessing }
+{ #category : #'api - configuration' }
 GtSpotterSearch >> priority: aNumber [
 	priority := aNumber
 ]
@@ -46,7 +85,7 @@ GtSpotterSearch >> title [
 	^ title
 ]
 
-{ #category : #accessing }
+{ #category : #'api - configuration' }
 GtSpotterSearch >> title: aString [
 	title := aString
 ]

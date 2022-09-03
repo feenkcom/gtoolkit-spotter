@@ -3,9 +3,6 @@ Class {
 	#superclass : #Object,
 	#traits : 'TGtSpotterFilter',
 	#classTraits : 'TGtSpotterFilter classTrait',
-	#instVars : [
-		'caseSensitive'
-	],
 	#category : #'GToolkit-Spotter-Streaming-Filters'
 }
 

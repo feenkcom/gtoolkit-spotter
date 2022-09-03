@@ -19,7 +19,7 @@ GtStreamingSpotterPager >> initialize [
 
 { #category : #'private - event handling' }
 GtStreamingSpotterPager >> onCurrentStepChanged: anAnnouncement [
-	self smoothScrollTo: anAnnouncement index
+	self smoothScrollTo: anAnnouncement stepIndex
 ]
 
 { #category : #'api - spotter' }
@@ -38,14 +38,14 @@ GtStreamingSpotterPager >> onSpotterChanged [
 GtStreamingSpotterPager >> onStepAdded: anAnnouncement [
 	"as soon as step added we need to push it"
 	
-	self pushStep: anAnnouncement stepModel
+	self pushStep: anAnnouncement spotterStep
 ]
 
 { #category : #'private - event handling' }
 GtStreamingSpotterPager >> onStepRemoved: anAnnouncement [
 	"as soon as step added we need to push it"
 	
-	self removePageAt: anAnnouncement index
+	self removePageAt: anAnnouncement stepIndex
 ]
 
 { #category : #'private - actions' }
@@ -77,9 +77,9 @@ GtStreamingSpotterPager >> subscribeToSpotter [
 	<modelSubscriber: #spotter>
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#subscribeToObjectTemplate'>
 	
-	spotter when: GtSpotterStepAdded send: #onStepAdded: to: self.
-	spotter when: GtSpotterStepRemoved send: #onStepRemoved: to: self.
-	spotter when: GtSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self
+	spotter when: GtStreamingSpotterStepPushed send: #onStepAdded: to: self.
+	spotter when: GtStreamingSpotterStepPopped send: #onStepRemoved: to: self.
+	spotter when: GtStreamingSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self
 ]
 
 { #category : #'api - spotter' }

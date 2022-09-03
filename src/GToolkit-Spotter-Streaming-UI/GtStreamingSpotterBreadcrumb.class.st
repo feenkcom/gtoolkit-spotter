@@ -8,22 +8,9 @@ Class {
 
 { #category : #private }
 GtStreamingSpotterBreadcrumb >> addStep: aNewStep [
-	| aText  |
+	| aText |
 
-	aText := spotter amountOfSteps <= 1
-		ifTrue: [ spotter steps first origin gtDisplayText ]
-		ifFalse: [
-			| aPreviousStep selectedItem origin |
-			aPreviousStep := (aNewStep spotter steps at: aNewStep spotter steps size - 1).
-
-			selectedItem := aPreviousStep selected item.
-			origin := aNewStep origin.
-			
-			(selectedItem = origin)
-				ifTrue: [ aPreviousStep selected renderingProcessor itemNameFor: selectedItem ]
-				ifFalse: [ (origin isKindOf: Collection)
-					ifTrue: [ aNewStep processors first title ]
-					ifFalse: [ origin gtDisplayText ] ] ].
+	aText := aNewStep origin gtDisplayText.
 
 	self addItem: (BrButton new
 		aptitude: (BrGlamorousButtonRectangularAptitude + (BrGlamorousButtonLabelAptitude new selectedColor: Color black));
@@ -63,7 +50,7 @@ GtStreamingSpotterBreadcrumb >> maxSelectionIndex [
 
 { #category : #'event handling' }
 GtStreamingSpotterBreadcrumb >> onCurrentStepChanged: anAnnouncement [
-	self selectOne: anAnnouncement index
+	self selectOne: anAnnouncement stepIndex
 ]
 
 { #category : #'api - spotter' }
@@ -84,12 +71,12 @@ GtStreamingSpotterBreadcrumb >> onSpotterChanged [
 
 { #category : #'event handling' }
 GtStreamingSpotterBreadcrumb >> onStepAdded: anAnnouncement [
-	self addStep: anAnnouncement stepModel
+	self addStep: anAnnouncement spotterStep
 ]
 
 { #category : #'event handling' }
 GtStreamingSpotterBreadcrumb >> onStepRemoved: anAnnouncement [
-	self removeItemAt: anAnnouncement index
+	self removeItemAt: anAnnouncement stepIndex
 ]
 
 { #category : #'api - spotter' }
@@ -101,12 +88,9 @@ GtStreamingSpotterBreadcrumb >> subscribeToSpotter [
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#subscribeToObjectTemplate'>
 	
 	spotter
-		when: GtSpotterStepAdded
-			send: #onStepAdded: to: self;
-		when: GtSpotterStepRemoved
-			send: #onStepRemoved: to: self;
-		when: GtSpotterCurrentStepChanged
-			send: #onCurrentStepChanged: to: self
+		when: GtStreamingSpotterStepPushed send: #onStepAdded: to: self;
+		when: GtStreamingSpotterStepPopped send: #onStepRemoved: to: self;
+		when: GtStreamingSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self
 ]
 
 { #category : #'api - spotter' }

@@ -22,7 +22,11 @@ GtStreamingSpotterElement >> initialize [
 	headerElement := GtStreamingSpotterHeaderElement new.
 	stepsPager := GtStreamingSpotterPager new.
 	
-	self addChildren: { headerElement . stepsPager }
+	self addChildren: { headerElement . stepsPager }.
+	
+	self addShortcut: (BlShortcutWithAction new
+		combination: (BlKeyCombination builder meta; key: BlKeyboardKey arrowRight; build);
+		action: [ :anEvent :aShortcut | self halt ])
 ]
 
 { #category : #'api - spotter' }

@@ -29,6 +29,7 @@ GtStreamingSpotterStepElement >> initialize [
 	resultsElement := BrGroupedList new.
 	resultsElement
 		matchParent;
+		when: BrSelectionChanged do: [ :anEvent | self onItemSelectionChanged: anEvent ];
 		headerElementStencil: [ BrLabel new
 				hMatchParent;
 				margin: (BlInsets top: 10);
@@ -48,6 +49,21 @@ GtStreamingSpotterStepElement >> initialize [
 { #category : #'private - instance creation' }
 GtStreamingSpotterStepElement >> newCandidateElement [
 	^ GtStreamingSpotterCandidateElement new
+]
+
+{ #category : #'private - event handling' }
+GtStreamingSpotterStepElement >> onItemSelectionChanged: anEvent [
+	| anEntity aSelectedItem |
+	
+	anEvent selectedInterval ifNil: [ ^ self ].
+	
+	anEntity := resultsElement viewModel entityAt: anEvent selectedInterval first.
+
+	anEntity isItem
+		ifFalse: [ ^ self ].
+		
+	aSelectedItem := anEntity object.
+	self spotterStep select: aSelectedItem dueTo: #singleClick.
 ]
 
 { #category : #'private - event handling' }

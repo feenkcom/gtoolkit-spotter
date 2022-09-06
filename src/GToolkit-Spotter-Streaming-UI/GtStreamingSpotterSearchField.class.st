@@ -20,7 +20,7 @@ GtStreamingSpotterSearchField >> initialize [
 
 { #category : #'private - event handling' }
 GtStreamingSpotterSearchField >> onCurrentStepChanged: anAnnouncement [
-	self text: anAnnouncement spotterStep searchQuery asRopedText.
+	self text: anAnnouncement spotterStep searchQuery.
 	self requestFocus
 ]
 

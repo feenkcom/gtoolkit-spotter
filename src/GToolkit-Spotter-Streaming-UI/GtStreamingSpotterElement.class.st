@@ -5,7 +5,8 @@ Class {
 	#classTraits : 'TGtStreamingWithSpotter classTrait',
 	#instVars : [
 		'headerElement',
-		'stepsPager'
+		'stepsPager',
+		'previewElement'
 	],
 	#category : #'GToolkit-Spotter-Streaming-UI'
 }
@@ -21,8 +22,13 @@ GtStreamingSpotterElement >> initialize [
 	
 	headerElement := GtStreamingSpotterHeaderElement new.
 	stepsPager := GtStreamingSpotterPager new.
+	previewElement := GtStreamingSpotterPreviewElement new.
 	
-	self addChildren: { headerElement . stepsPager }.
+	self addChildren: {
+		headerElement.
+		BrHorizontalPane new
+			matchParent;
+			addChildren: { stepsPager . previewElement } }.
 	
 	self addShortcut: (BlShortcutWithAction new
 		combination: (BlKeyCombination builder meta; key: BlKeyboardKey arrowRight; build);

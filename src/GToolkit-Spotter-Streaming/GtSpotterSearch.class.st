@@ -68,6 +68,24 @@ GtSpotterSearch >> objectToActOn: anObject from: aSpotterStep [
 		ifNotNil: [ objectToActOnComputation cull: anObject cull: aSpotterStep ]
 ]
 
+{ #category : #'private - computation' }
+GtSpotterSearch >> previewElementFor: anObject [
+	<return: #BlElement or: nil>
+	| aPreviewElement |
+	
+	aPreviewElement := nil.
+
+	(anObject gtViewsFor: GtPhlowView empty) originalView
+		asElementDo: [ :anElement | aPreviewElement := anElement ].
+
+	^ aPreviewElement
+]
+
+{ #category : #'private - computation' }
+GtSpotterSearch >> previewObjectFor: anObject [
+	^ anObject
+]
+
 { #category : #accessing }
 GtSpotterSearch >> priority [
 

@@ -85,12 +85,18 @@ GtStreamingSpotterStep >> initializeWithSpotter: aStreamingSpotter origin: anObj
 ]
 
 { #category : #'private - notifying' }
-GtStreamingSpotterStep >> notifySelectedCandidateChanged: aObject for: anEventType [
+GtStreamingSpotterStep >> notifySelectedCandidateChanged: aObject search: aSearch for: anEventType [
+	| anAnnouncement |
 	self
 		assert: [ aObject isNotNil ]
 		description: [ 'aCandidate must not be nil' ].
 
-	self announce: (GtSpotterSelectedCandidateChanged new select: aObject)
+	anAnnouncement := GtSpotterSelectedCandidateChanged new
+		select: aObject;
+		search: aSearch.
+
+	self announce: anAnnouncement.
+	spotter announce: anAnnouncement
 ]
 
 { #category : #'api - accessing' }
@@ -125,28 +131,39 @@ GtStreamingSpotterStep >> searchQuery: aString [
 ]
 
 { #category : #'api - step' }
-GtStreamingSpotterStep >> select: anObject dueTo: anEventType [
+GtStreamingSpotterStep >> select: anObject search: aSearch dueTo: anEventType [
 	"Select a given candidate due to provided event type.
 	A selection reason is used for statistical purposes and helps us
 	better understand how users use spotter and as result improve it.
 	aCandidate must not be nil.
 	anEventType must not be nil"
+	| aSelectedCandidate |
 
 	self
 		assert: [ anObject isNotNil ]
 		description: [ 'Candidate must not be nil' ].
 	
+	aSelectedCandidate := aSearch -> anObject.
+	
 	"A given candidate is already selected, do nothing"
-	anObject == selectedItem
+	selectedItem = aSelectedCandidate
 		ifTrue: [ ^ self ].
 
-	selectedItem := anObject.
-	self notifySelectedCandidateChanged: anObject for: anEventType
+	selectedItem := aSelectedCandidate.
+	self
+		notifySelectedCandidateChanged: anObject
+		search: aSearch
+		for: anEventType
 ]
 
 { #category : #'api - accessing' }
 GtStreamingSpotterStep >> selectedItem [
-	^ selectedItem
+	^ selectedItem value
+]
+
+{ #category : #'api - accessing' }
+GtStreamingSpotterStep >> selectedSearch [
+	^ selectedItem key
 ]
 
 { #category : #'api - announcer' }

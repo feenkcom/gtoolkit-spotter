@@ -3,9 +3,10 @@ Class {
 	#superclass : #Announcement,
 	#instVars : [
 		'eventType',
-		'selected'
+		'selected',
+		'search'
 	],
-	#category : 'GToolkit-Spotter-Announcements'
+	#category : #'GToolkit-Spotter-Announcements'
 }
 
 { #category : #accessing }
@@ -16,6 +17,18 @@ GtSpotterSelectedCandidateChanged >> eventType [
 { #category : #accessing }
 GtSpotterSelectedCandidateChanged >> eventType: anObject [
 	eventType := anObject
+]
+
+{ #category : #accessing }
+GtSpotterSelectedCandidateChanged >> search [
+
+	^ search
+]
+
+{ #category : #accessing }
+GtSpotterSelectedCandidateChanged >> search: anObject [
+
+	search := anObject
 ]
 
 { #category : #accessing }

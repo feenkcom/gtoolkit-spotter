@@ -53,7 +53,7 @@ GtStreamingSpotterStepElement >> newCandidateElement [
 
 { #category : #'private - event handling' }
 GtStreamingSpotterStepElement >> onItemSelectionChanged: anEvent [
-	| anEntity aSelectedItem |
+	| anEntity aSelectedItem aSearch |
 	
 	anEvent selectedInterval ifNil: [ ^ self ].
 	
@@ -63,7 +63,12 @@ GtStreamingSpotterStepElement >> onItemSelectionChanged: anEvent [
 		ifFalse: [ ^ self ].
 		
 	aSelectedItem := anEntity object.
-	self spotterStep select: aSelectedItem dueTo: #singleClick.
+	aSearch := anEntity group domainObject.
+	
+	self spotterStep
+		select: aSelectedItem
+		search: aSearch
+		dueTo: #singleClick
 ]
 
 { #category : #'private - event handling' }

@@ -35,6 +35,13 @@ GtStreamingSpotterElement >> initialize [
 		action: [ :anEvent :aShortcut | self halt ])
 ]
 
+{ #category : #'private - event handling' }
+GtStreamingSpotterElement >> onItemSelected: anAnnouncement [
+	previewElement
+		updatePreviewOf: anAnnouncement selected
+		forSearch: anAnnouncement search
+]
+
 { #category : #'api - spotter' }
 GtStreamingSpotterElement >> onSpotterChanged [
 	"Is sent when a new spotter is assigned to the receiver.
@@ -46,4 +53,25 @@ GtStreamingSpotterElement >> onSpotterChanged [
 	
 	headerElement spotter: spotter.
 	stepsPager spotter: spotter
+]
+
+{ #category : #'api - spotter' }
+GtStreamingSpotterElement >> subscribeToSpotter [
+	"Is sent after a new spotter is assigned to the receiver.
+	It is required to unsubscribe from the previously subscribed objects by implementing
+	#unsubscribeFromSpotter if the receiver subscribes to them"
+	<modelSubscriber: #spotter>
+	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#subscribeToObjectTemplate'>
+	
+	spotter when: GtSpotterSelectedCandidateChanged send: #onItemSelected: to: self
+]
+
+{ #category : #'api - spotter' }
+GtStreamingSpotterElement >> unsubscribeFromSpotter [
+	"Is sent before a new spotter is assigned to the receiver.
+	Objects that subscribe to spotter are required to implement this method."
+	<modelUnsubscriber: #spotter>
+	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#unsubscribeFromObjectTemplate'>
+	
+	spotter unsubscribe: self
 ]

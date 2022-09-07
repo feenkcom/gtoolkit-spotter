@@ -24,8 +24,8 @@ GtStreamingSpotterHeaderElement >> initialize [
 	searchField
 		vFitContent;
 		hMatchParent;
-		padding: (BlInsets all: 15).
-	
+		padding: (BlInsets all: 10).
+
 	self addChildren: {
 		breadcrumb.
 		searchField.

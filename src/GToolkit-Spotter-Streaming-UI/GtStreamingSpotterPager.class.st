@@ -10,11 +10,11 @@ Class {
 GtStreamingSpotterPager >> initialize [
 	super initialize.
 
-	self aptitude: BrScrollablePagerAptitude new.
-	self layout: BlLinearLayout vertical.
-	self constraintsDo: [ :c |
-		c horizontal matchParent.
-		c vertical matchParent ]
+	self
+		matchParent;
+		background: Color white;
+		layout: BlLinearLayout vertical;
+		aptitude: BrScrollablePagerAptitude new
 ]
 
 { #category : #'private - event handling' }

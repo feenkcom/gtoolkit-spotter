@@ -28,7 +28,14 @@ GtStreamingSpotterElement >> initialize [
 		headerElement.
 		BrHorizontalPane new
 			matchParent;
-			addChildren: { stepsPager . previewElement } }.
+			addChildren: {
+				stepsPager .
+				BlElement new
+					background: self theme header secondaryBackgroundColor;
+					constraintsDo: [ :c |
+						c horizontal exact: 1.
+						c vertical matchParent ].
+				previewElement } }.
 	
 	self addShortcut: (BlShortcutWithAction new
 		combination: (BlKeyCombination builder meta; key: BlKeyboardKey arrowRight; build);

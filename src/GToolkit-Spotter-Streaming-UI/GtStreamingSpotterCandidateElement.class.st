@@ -46,7 +46,7 @@ GtStreamingSpotterCandidateElement >> initialize [
 		hMatchParent;
 		vFitContent;
 		alignCenterLeft;
-		padding: (BlInsets all: 5).
+		padding: (BlInsets top: 5 right: 10 bottom: 5 left: 10).
 	
 	label := self newCandidateLabel.
 	actOnButton := self newActOnButton.

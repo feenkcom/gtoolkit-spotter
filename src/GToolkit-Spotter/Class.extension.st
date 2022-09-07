@@ -1,17 +1,6 @@
 Extension { #name : #Class }
 
 { #category : #'*GToolkit-Spotter' }
-Class >> gtSearchMethodsFor: aStep [
-	<gtSpotterSearch>
-	
-	^ GtSpotterCollectionSearch new
-		priority: 10;
-		title: 'Instance methods';
-		items: [ self methods ];
-		filter: [ GtSpotterSubstringFilter new ]
-]
-
-{ #category : #'*GToolkit-Spotter' }
 Class >> gtSpotterActDefaultFrom: aSpotterElement [
 	self gtBrowseFrom: aSpotterElement
 ]

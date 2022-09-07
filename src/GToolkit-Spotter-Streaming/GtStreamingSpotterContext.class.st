@@ -7,6 +7,11 @@ Class {
 	#category : #'GToolkit-Spotter-Streaming-Model'
 }
 
+{ #category : #testing }
+GtStreamingSpotterContext >> isEmptySearchQuery [
+	^ searchQuery isEmpty
+]
+
 { #category : #accessing }
 GtStreamingSpotterContext >> searchQuery [
 

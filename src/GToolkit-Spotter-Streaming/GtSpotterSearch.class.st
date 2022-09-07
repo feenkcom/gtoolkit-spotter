@@ -7,7 +7,8 @@ Class {
 		'definingMethod',
 		'itemNameComputation',
 		'objectToActOnComputation',
-		'actOnLogicComputation'
+		'actOnLogicComputation',
+		'wantsToDisplayOnEmptyQuery'
 	],
 	#category : #'GToolkit-Spotter-Streaming-Searches'
 }
@@ -41,7 +42,8 @@ GtSpotterSearch >> initialize [
 	super initialize.
 	
 	title := 'Untitled'.
-	priority := 10
+	priority := 10.
+	wantsToDisplayOnEmptyQuery := true
 ]
 
 { #category : #'api - configuration' }
@@ -106,4 +108,14 @@ GtSpotterSearch >> title [
 { #category : #'api - configuration' }
 GtSpotterSearch >> title: aString [
 	title := aString
+]
+
+{ #category : #accessing }
+GtSpotterSearch >> wantsToDisplayOnEmptyQuery [
+	^ wantsToDisplayOnEmptyQuery
+]
+
+{ #category : #'api - configuration' }
+GtSpotterSearch >> wantsToDisplayOnEmptyQuery: aBoolean [
+	wantsToDisplayOnEmptyQuery := aBoolean
 ]

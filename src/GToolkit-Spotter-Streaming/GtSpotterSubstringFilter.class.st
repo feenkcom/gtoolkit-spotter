@@ -3,12 +3,34 @@ Class {
 	#superclass : #Object,
 	#traits : 'TGtSpotterFilter',
 	#classTraits : 'TGtSpotterFilter classTrait',
+	#instVars : [
+		'itemStringComputation'
+	],
 	#category : #'GToolkit-Spotter-Streaming-Filters'
 }
 
 { #category : #evaluating }
 GtSpotterSubstringFilter >> applyInScope: aStream context: aSpotterContext [
-	^ GtSpotterSubstringFilterStream
+	^ (GtSpotterSubstringFilterStream
 		forStream: aStream
-		search: aSpotterContext searchQuery
+		search: aSpotterContext searchQuery)
+			itemString: itemStringComputation
+]
+
+{ #category : #initialization }
+GtSpotterSubstringFilter >> initialize [
+	super initialize.
+	
+	itemStringComputation := [ :anObject | anObject printString ]
+]
+
+{ #category : #accessing }
+GtSpotterSubstringFilter >> itemString: aBlock [
+	itemStringComputation := aBlock
+]
+
+{ #category : #accessing }
+GtSpotterSubstringFilter >> itemStringComputation [
+
+	^ itemStringComputation
 ]

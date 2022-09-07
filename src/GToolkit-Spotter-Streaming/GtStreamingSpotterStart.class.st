@@ -55,3 +55,15 @@ GtStreamingSpotterStart >> gtSpotterForToolsFor: aSearch [
 		filter: [ GtSpotterSubstringFilter new ];
 		wantsToDisplayOnEmptyQuery: true
 ]
+
+{ #category : #searches }
+GtStreamingSpotterStart >> gtSpotterImplementorsFor: aSearch [
+	<gtSpotterSearch>
+
+	^ aSearch list
+		priority: 30;
+		title: 'Implementors';
+		items: [ AsyncImageMethodsStream new ];
+		filter: [ GtSpotterSubstringFilter new itemString: [ :each | each selector asString ] ];
+		wantsToDisplayOnEmptyQuery: false
+]

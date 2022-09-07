@@ -3,3 +3,8 @@ Class {
 	#superclass : #Object,
 	#category : #'GToolkit-Spotter-Streaming-Searches'
 }
+
+{ #category : #accessing }
+GtSpotterProtoSearch >> list [
+	^ GtSpotterListSearch new
+]

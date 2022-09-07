@@ -4,15 +4,16 @@ Class {
 	#category : #'GToolkit-Spotter-Streaming-Model'
 }
 
-{ #category : #accessing }
+{ #category : #searches }
 GtStreamingSpotterStart >> gtClassesFor: aSearch [
 	<gtSpotterSearch>
 	
-	^ GtSpotterCollectionSearch new
+	^ aSearch list
 		title: 'Classes';
-		priority: 5;
+		priority: 10;
 		items: [ AsyncImageBehaviorsStream new ];
-		filter: [ GtSpotterSubstringFilter new ]
+		filter: [ GtSpotterSubstringFilter new ];
+		wantsToDisplayOnEmptyQuery: false
 ]
 
 { #category : #printing }
@@ -20,13 +21,37 @@ GtStreamingSpotterStart >> gtDisplayOn: aStream [
 	aStream nextPutAll: 'Spotter'
 ]
 
-{ #category : #accessing }
+{ #category : #searches }
 GtStreamingSpotterStart >> gtPackagesFor: aSearch [
 	<gtSpotterSearch>
 	
-	^ GtSpotterCollectionSearch new
+	^ aSearch list
 		title: 'Packages';
-		priority: 6;
+		priority: 20;
 		items: [ RPackageOrganizer default packages ];
-		filter: [ GtSpotterSubstringFilter new ]
+		itemName: [ :package | package name ];
+		filter: [ GtSpotterSubstringFilter new ];
+		wantsToDisplayOnEmptyQuery: false
+]
+
+{ #category : #searches }
+GtStreamingSpotterStart >> gtSpotterForToolsFor: aSearch [
+	<gtSpotterSearch>
+
+	^ aSearch list
+		priority: 1;
+		items: [ 
+			{
+				GtCoderStencil new . 
+				GtMonitorStencil new . 
+				GtRlGToolkitExamplesExplorer buildForGToolkitProject . 
+				GtGitStencil new . 
+				GtEpiceaStencil new . 
+				GtTranscriptStencil new .
+				GtFileSystemStencil new
+			} ];
+		"previewElement: [ :aStencil | aStencil asPreviewElement asElement ];"
+		title: 'Tools';
+		filter: [ GtSpotterSubstringFilter new ];
+		wantsToDisplayOnEmptyQuery: true
 ]

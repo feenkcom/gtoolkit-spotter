@@ -1,17 +1,6 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*GToolkit-Spotter' }
-CompiledMethod >> gtSearchForImplementorsFor: aStep [
-	<gtSpotterSearch>
-
-	^ GtSpotterCollectionSearch new
-		priority: 10;
-		title: 'Implementors';
-		items: [ self implementors collect: #compiledMethod ];
-		filter: [ GtSpotterSubstringFilter new ]
-]
-
-{ #category : #'*GToolkit-Spotter' }
 CompiledMethod >> gtSpotterActDefaultFrom: anElement [
 	self gtBrowseFrom: anElement
 ]

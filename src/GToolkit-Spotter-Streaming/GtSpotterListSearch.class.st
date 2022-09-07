@@ -1,5 +1,5 @@
 Class {
-	#name : #GtSpotterCollectionSearch,
+	#name : #GtSpotterListSearch,
 	#superclass : #GtSpotterSearch,
 	#instVars : [
 		'filterComputation',
@@ -9,29 +9,32 @@ Class {
 }
 
 { #category : #converting }
-GtSpotterCollectionSearch >> asStreamFor: aSpotterContext [
+GtSpotterListSearch >> asStreamFor: aSpotterContext [
 	<return: #TAsyncStream>
 	| theScopeStream theSearchFilter |
 	
 	theScopeStream := (itemsComputation gtValue: aSpotterContext) asAsyncStream.
+	(aSpotterContext isEmptySearchQuery and: [ self wantsToDisplayOnEmptyQuery ])
+		ifTrue: [ ^ theScopeStream ].
+	
 	theSearchFilter := filterComputation gtValue: aSpotterContext.
 	
 	^ theSearchFilter applyInScope: theScopeStream context: aSpotterContext
 ]
 
 { #category : #accessing }
-GtSpotterCollectionSearch >> filter: aFilterOrBlock [
+GtSpotterListSearch >> filter: aFilterOrBlock [
 	filterComputation := aFilterOrBlock
 ]
 
 { #category : #initialization }
-GtSpotterCollectionSearch >> initialize [
+GtSpotterListSearch >> initialize [
 	super initialize.
 	
 	filterComputation := [ :aSpotterContext |  ]
 ]
 
 { #category : #accessing }
-GtSpotterCollectionSearch >> items: aBlock [
+GtSpotterListSearch >> items: aBlock [
 	itemsComputation := aBlock
 ]

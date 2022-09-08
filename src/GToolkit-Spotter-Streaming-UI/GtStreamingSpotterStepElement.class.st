@@ -33,7 +33,7 @@ GtStreamingSpotterStepElement >> initialize [
 		headerElementStencil: [
 			BrLabel new
 				hMatchParent;
-				margin: (BlInsets top: 10 right: 10 bottom: 5 left: 10);
+				margin: (BlInsets top: 15 right: 10 bottom: 5 left: 10);
 				aptitude: (BrGlamorousLabelAptitude new foreground: Color gray) ];
 		headerDataBinder: [ :aLabel :eachGroup | 
 			self updateLabel: aLabel forGroup: eachGroup.

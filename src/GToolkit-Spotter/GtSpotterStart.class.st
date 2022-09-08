@@ -65,12 +65,10 @@ GtSpotterStart >> gtDisplayOn: stream [
 GtSpotterStart >> gtSearchForClassesFor: aSearch [
 	<gtSpotterSearch>
 	
-	^ aSearch list
-		title: 'Classes';
+	^ aSearch explicit
 		priority: 10;
-		items: [ AsyncImageBehaviorsStream new ];
-		filter: GtSpotterSubstringFilter new;
-		wantsToDisplayOnEmptyQuery: false
+		title: 'Classes';
+		search: [ :aContext | GtPharoIndex current asyncClassNamesForWord: aContext searchQuery ]
 ]
 
 { #category : #searches }

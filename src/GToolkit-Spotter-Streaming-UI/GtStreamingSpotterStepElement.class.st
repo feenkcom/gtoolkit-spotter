@@ -135,10 +135,12 @@ GtStreamingSpotterStepElement >> onSearchQueryChanged [
 		aSearchStream := eachSearchAndResults value.
 		
 		aStreamItemsProvider := BrStreamItemsProvider new
+			preloadAmount: 1;
+			preloadDuration: 1 minutes;
+			executionConfiguration: (AsyncFutureExecutionConfiguration new
+				customGroup: #Spotter);
 			stream: aSearchStream
-			sinks: { AsyncForwardSink new . AsyncCounterSink new };
-			preloadAmount: 5;
-			preloadDuration: 1 minutes.
+			sinks: { AsyncForwardSink new . AsyncCounterSink new }.
 
 		aStreamItemsProvider
 			when: BrItemsProviderNewItemsLoadedEvent

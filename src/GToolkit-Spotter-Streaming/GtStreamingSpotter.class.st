@@ -9,6 +9,35 @@ Class {
 	#category : #'GToolkit-Spotter-Streaming-Model'
 }
 
+{ #category : #accessing }
+GtStreamingSpotter class >> enable: aBoolean [
+	aBoolean
+		ifTrue: [ self enabledNotification markAsViewsAndSaveStatus ]
+		ifFalse: [ self enabledNotification markAsDismissedAndSaveStatus ]
+]
+
+{ #category : #accessing }
+GtStreamingSpotter class >> enabledNotification [
+	| aNotification |
+
+	aNotification := GtNotification new
+		id: 'notification/try-new-spotter'.
+		
+	aNotification status: (aNotification statusRegistry statusForId: aNotification id).
+
+	^ aNotification
+]
+
+{ #category : #accessing }
+GtStreamingSpotter class >> isEnabled [
+	^ self enabledNotification status isViewed 
+]
+
+{ #category : #accessing }
+GtStreamingSpotter class >> isEnabledChoiceMade [
+	^ self enabledNotification status isViewed or: [ self enabledNotification status isDismissed ]
+]
+
 { #category : #'instance creation' }
 GtStreamingSpotter class >> on: anObject [
 	^ self new initializeWith: anObject
@@ -23,6 +52,11 @@ GtStreamingSpotter >> amountOfSteps [
 GtStreamingSpotter >> announce: anAnnouncement [
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#announceTemplate'>
 	announcer ifNotNil: [ :anAnnouncer | anAnnouncer announce: anAnnouncement ].
+]
+
+{ #category : #'api - announcer' }
+GtStreamingSpotter >> announcer [
+	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : #'api - steps' }
@@ -164,6 +198,10 @@ GtStreamingSpotter >> pushStep: anOriginObject [
 	shouldAsssignCurrentStep ifTrue: [ self notifyCurrentStepChanged: aNewStep at: steps size ].
 	
 	^ aNewStep
+]
+
+{ #category : #'api - accessing' }
+GtStreamingSpotter >> showPreview: aBoolean [
 ]
 
 { #category : #'api - accessing' }

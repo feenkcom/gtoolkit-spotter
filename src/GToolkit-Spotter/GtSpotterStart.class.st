@@ -34,7 +34,7 @@ GtSpotterStart >> concreteMethodsInContext: aContext usingFilter: aFilter [
 		aFilter value: ([ aClass compiledMethodAt: selector ] on: Error do: [ ^ self ]) ]
 ]
 
-{ #category : #spotter }
+{ #category : #accessing }
 GtSpotterStart >> fileReferencesBy: aSelector inContext: aSpotterContext usingFilter: aBlock [
 	| split rootDirectory query |
 	split := aSpotterContext textLowercase piecesCutWhere: [ :a :b | a = FileSystem disk delimiter ].
@@ -61,7 +61,44 @@ GtSpotterStart >> gtDisplayOn: stream [
 	stream nextPutAll: 'Spotter'
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #searches }
+GtSpotterStart >> gtSearchForClassesFor: aSearch [
+	<gtSpotterSearch>
+	
+	^ aSearch list
+		title: 'Classes';
+		priority: 10;
+		items: [ AsyncImageBehaviorsStream new ];
+		filter: GtSpotterSubstringFilter new;
+		wantsToDisplayOnEmptyQuery: false
+]
+
+{ #category : #searches }
+GtSpotterStart >> gtSearchForPragmasFor: aSearch [
+	<gtSpotterSearch>
+
+	^ aSearch list
+		priority: 40;
+		items: [ GtPragmaType all ];
+		title: 'Pragmas';
+		itemName: [ :pragma | pragma keyword ];
+		filter: GtSpotterSubstringFilter new;
+		wantsToDisplayOnEmptyQuery: false
+]
+
+{ #category : #searches }
+GtSpotterStart >> gtSearchImplementorsFor: aSearch [
+	<gtSpotterSearch>
+
+	^ aSearch list
+		priority: 30;
+		title: 'Implementors';
+		items: [ AsyncImageMethodsStream new ];
+		filter: [ GtSpotterSubstringFilter new itemString: [ :each | each selector asString ] ];
+		wantsToDisplayOnEmptyQuery: false
+]
+
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterClipboardFor: aStep [
 	"<gtSearch>"
 	aStep listProcessor
@@ -77,7 +114,7 @@ GtSpotterStart >> gtSpotterClipboardFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #accessing }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterConcreteMethodFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -89,7 +126,7 @@ GtSpotterStart >> gtSpotterConcreteMethodFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterForAllSubclassesFor: aStep [
 	"<gtSearch>"
 	aStep listProcessor
@@ -106,7 +143,7 @@ GtSpotterStart >> gtSpotterForAllSubclassesFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterForAllSuperclassesFor: aStep [
 	"<gtSearch>"
 	aStep listProcessor
@@ -123,7 +160,7 @@ GtSpotterStart >> gtSpotterForAllSuperclassesFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterForClassesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -136,7 +173,7 @@ GtSpotterStart >> gtSpotterForClassesFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterForDirectoriesFor: aStep [
 	"<gtSearch>"
 	self flag: #specialFilter.
@@ -154,7 +191,7 @@ GtSpotterStart >> gtSpotterForDirectoriesFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterForFilesFor: aStep [
 	"<gtSearch>"
 	self flag: #specialFilter.
@@ -169,7 +206,7 @@ GtSpotterStart >> gtSpotterForFilesFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterForGlobalVarsFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -183,7 +220,7 @@ GtSpotterStart >> gtSpotterForGlobalVarsFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterForIcebergRepositoriesFor: aStep [
 	<gtSearch>
 	
@@ -200,7 +237,7 @@ GtSpotterStart >> gtSpotterForIcebergRepositoriesFor: aStep [
 				from: spotterElement ]
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterForMessagesFor: aStep [
 	"<gtSearch>"
 	aStep listProcessor
@@ -216,7 +253,7 @@ GtSpotterStart >> gtSpotterForMessagesFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterForMetacelloBaselinesFor: aStep [
 	"<gtSearch>"
 	aStep listProcessor
@@ -228,7 +265,7 @@ GtSpotterStart >> gtSpotterForMetacelloBaselinesFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterForPackagesFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -241,7 +278,7 @@ GtSpotterStart >> gtSpotterForPackagesFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterForPragmasFor: aStep [
 	<gtSearch>
 	aStep listProcessor
@@ -253,7 +290,7 @@ GtSpotterStart >> gtSpotterForPragmasFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterForReferencesFor: aStep [
 	"<gtSearch>"
 	
@@ -275,7 +312,7 @@ GtSpotterStart >> gtSpotterForReferencesFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterForResourcesUtilityFromPathFor: aStep [
 	"<gtSearch>"
 	^ (GtResourcesUtility default spotterForPathResourcesFor: aStep)
@@ -283,7 +320,7 @@ GtSpotterStart >> gtSpotterForResourcesUtilityFromPathFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterForResourcesUtilityFromStringFor: aStep [
 	"<gtSearch>"
 	^ aStep listProcessor
@@ -298,7 +335,7 @@ GtSpotterStart >> gtSpotterForResourcesUtilityFromStringFor: aStep [
 				aFile exists ifTrue: [ aFilter value: aFile ] ] ]
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterForSendersFor: aStep [
 	"<gtSearch>"
 	
@@ -316,7 +353,7 @@ GtSpotterStart >> gtSpotterForSendersFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> gtSpotterImplementorsFor: aStep [
 	<gtSearch>
 	self flag: #specialFilter.
@@ -331,7 +368,7 @@ GtSpotterStart >> gtSpotterImplementorsFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> spotterForPixelIconFor: aStep [
 	"<gtSearch>"
 	^ aStep listProcessor
@@ -344,7 +381,7 @@ GtSpotterStart >> spotterForPixelIconFor: aStep [
 		wantsToDisplayOnEmptyQuery: false
 ]
 
-{ #category : #'*GToolkit-Spotter' }
+{ #category : #spotter }
 GtSpotterStart >> spotterForVectorIconFor: aStep [
 	"<gtSearch>"
 	^ aStep listProcessor

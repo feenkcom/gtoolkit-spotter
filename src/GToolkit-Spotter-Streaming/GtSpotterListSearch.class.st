@@ -38,3 +38,10 @@ GtSpotterListSearch >> initialize [
 GtSpotterListSearch >> items: aBlock [
 	itemsComputation := aBlock
 ]
+
+{ #category : #printing }
+GtSpotterListSearch >> printOn: aStream [
+	aStream
+		nextPutAll: 'List Search: ';
+		nextPutAll: title
+]

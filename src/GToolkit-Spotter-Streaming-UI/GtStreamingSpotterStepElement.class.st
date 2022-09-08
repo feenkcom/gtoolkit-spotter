@@ -78,47 +78,33 @@ GtStreamingSpotterStepElement >> onItemsLoaded: anItemsProviderNewItemsLoadedEve
 
 	anItemsProvider := anItemsProviderNewItemsLoadedEvent itemsProvider.
 	aGroup := anItemsProvider userData at: #group.
-	
-	NonInteractiveTranscript stdout nextPutAll: 'Loaded ', anItemsProvider itemCount asString; cr.
 
 	"the items provider didn't yet load enough items"
-	anItemsProvider itemCount >= aGroup itemsLimit
+	(anItemsProvider isDone or: [ anItemsProvider itemCount >= aGroup itemsLimit ])
 		ifFalse: [ ^ self ].
 	
 	"Remove an items provider from a set of started items providers, exit if it does not exist there"
-	startedItemsProviders lock: [ :aSet | (aSet remove: anItemsProvider ifAbsent: [ ^ self ]) ].
+	startedItemsProviders lock: [ :aSet |
+		(aSet remove: anItemsProvider ifAbsent: [ ^ self ]) ].
+
 	loadedItemsProviders lock: [ :aSet |
 		(aSet includes: anItemsProvider)
-			ifFalse: [
-				NonInteractiveTranscript stdout
-					nextPutAll: 'Add ';
-					nextPutAll: aGroup domainObject title;
-					nextPutAll:' to #loadedItemsProviders';
-					cr.
-				
-				aSet add: anItemsProvider ] ].
-	
-	"if all item providers loaded their initial batch, we can start taking item providers and finish their searches one by one"
-	loadingItemsProviders lock: [ :theAlreadyLoadingProviders |
-		NonInteractiveTranscript stdout
-			nextPutAll: '#loadingItemsProviders: ';
-			print: theAlreadyLoadingProviders;
-			cr.
-		
-		theAlreadyLoadingProviders ifEmpty: [
-			startedItemsProviders lock: [ :theStartedItemsProviders | theStartedItemsProviders ifEmpty: [
-				loadedItemsProviders lock: [ :theLoadedItemsProviders |
-				theLoadedItemsProviders isNotEmpty
-					ifTrue: [
-						| anItemsProviderToFinish |
-						
-						anItemsProviderToFinish := theLoadedItemsProviders anyOne.
-						theLoadedItemsProviders remove: anItemsProviderToFinish.
-						theAlreadyLoadingProviders add: anItemsProviderToFinish.
-						NonInteractiveTranscript stdout nextPutAll: 'Load the rest of the items: ', aGroup domainObject title asString; cr.
-						(anItemsProviderToFinish preloadUntilFoundSuchThat: [ :each | false ])
-							then: [ loadingItemsProviders lock: [ :aSet | aSet remove: anItemsProviderToFinish ifAbsent: [  ] ] ]
-							otherwise: [ loadingItemsProviders lock: [ :aSet | aSet remove: anItemsProviderToFinish ifAbsent: [  ] ] ] ] ] ] ] ] ].
+			ifFalse: [ aSet add: anItemsProvider ] ].
+
+	self tryToPreloadTheRest
+]
+
+{ #category : #'private - event handling' }
+GtStreamingSpotterStepElement >> onLoadingFinished: anItemsProviderDoneEvent [
+	| anItemsProvider aGroup |
+
+	anItemsProvider := anItemsProviderDoneEvent itemsProvider.
+	aGroup := anItemsProvider userData at: #group.
+
+	startedItemsProviders lock: [ :aSet | aSet remove: anItemsProvider ifAbsent: [ ] ].
+	loadingItemsProviders lock: [ :aSet | aSet remove: anItemsProvider ifAbsent: [  ] ].
+
+	self tryToPreloadTheRest
 ]
 
 { #category : #'private - event handling' }
@@ -128,24 +114,10 @@ GtStreamingSpotterStepElement >> onLoadingStarted: anItemsProviderStartedLoading
 	anItemsProvider := anItemsProviderStartedLoadingEvent itemsProvider.
 	aGroup := anItemsProvider userData at: #group.
 
-	NonInteractiveTranscript stdout
-		nextPutAll: 'Started loading ';
-		nextPutAll: aGroup domainObject title;
-		nextPutAll:' (';
-		print: anItemsProviderStartedLoadingEvent initialAmountOfItems;
-		nextPutAll: ')';
-		cr.
-
 	anItemsProviderStartedLoadingEvent initialAmountOfItems < aGroup itemsLimit
 		ifTrue: [ startedItemsProviders lock: [ :aCollection |
 			(aCollection includes: anItemsProvider)
-				ifFalse: [
-					NonInteractiveTranscript stdout
-						nextPutAll: 'Add ';
-						nextPutAll: aGroup domainObject title;
-						nextPutAll:' to #startedItemsProviders';
-						cr.
-					aCollection add: anItemsProvider ] ] ]
+				ifFalse: [ aCollection add: anItemsProvider ] ] ]
 ]
 
 { #category : #'private - event handling' }
@@ -165,7 +137,8 @@ GtStreamingSpotterStepElement >> onSearchQueryChanged [
 		aStreamItemsProvider := BrStreamItemsProvider new
 			stream: aSearchStream
 			sinks: { AsyncForwardSink new . AsyncCounterSink new };
-			preloadAmount: 5.
+			preloadAmount: 5;
+			preloadDuration: 1 minutes.
 
 		aStreamItemsProvider
 			when: BrItemsProviderNewItemsLoadedEvent
@@ -175,6 +148,11 @@ GtStreamingSpotterStepElement >> onSearchQueryChanged [
 		aStreamItemsProvider
 			when: BrItemsProviderStartedLoadingEvent
 			send: #onLoadingStarted:
+			to: self.
+			
+		aStreamItemsProvider
+			when: BrItemsProviderDoneEvent
+			send: #onLoadingFinished:
 			to: self.
 		
 		aGroup := BrGroup new
@@ -218,6 +196,28 @@ GtStreamingSpotterStepElement >> subscribeToSpotterStep [
 		when: GtStreamingSpotterStepSearchQueryChanged
 		send: #onSearchQueryChanged
 		to: self
+]
+
+{ #category : #'private - event handling' }
+GtStreamingSpotterStepElement >> tryToPreloadTheRest [
+	"if all item providers loaded their initial batch, we can start taking item providers and finish their searches one by one"
+	loadingItemsProviders lock: [ :theAlreadyLoadingProviders |		
+		theAlreadyLoadingProviders ifEmpty: [
+			startedItemsProviders lock: [ :theStartedItemsProviders | theStartedItemsProviders ifEmpty: [
+				loadedItemsProviders lock: [ :theLoadedItemsProviders |
+				theLoadedItemsProviders isNotEmpty
+					ifTrue: [
+						| anItemsProviderToFinish aGroup |
+						
+						anItemsProviderToFinish := theLoadedItemsProviders anyOne.
+						theLoadedItemsProviders remove: anItemsProviderToFinish.
+						theAlreadyLoadingProviders add: anItemsProviderToFinish.
+						
+						aGroup := anItemsProviderToFinish userData at: #group.
+
+						(anItemsProviderToFinish preloadUntilFoundSuchThat: [ :each | false ])
+							then: [ loadingItemsProviders lock: [ :aSet | aSet remove: anItemsProviderToFinish ifAbsent: [  ] ] ]
+							otherwise: [ loadingItemsProviders lock: [ :aSet | aSet remove: anItemsProviderToFinish ifAbsent: [  ] ] ] ] ] ] ] ] ].
 ]
 
 { #category : #'api - spotter step' }

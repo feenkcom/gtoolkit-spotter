@@ -3,7 +3,8 @@ Class {
 	#superclass : #GtSpotterSearch,
 	#instVars : [
 		'filterComputation',
-		'itemsComputation'
+		'itemsComputation',
+		'wantsToDisplayOnEmptyQuery'
 	],
 	#category : #'GToolkit-Spotter-Streaming-Searches'
 }
@@ -31,7 +32,8 @@ GtSpotterListSearch >> filter: aFilterOrBlock [
 GtSpotterListSearch >> initialize [
 	super initialize.
 	
-	filterComputation := [ :aSpotterContext |  ]
+	filterComputation := [ :aSpotterContext |  ].
+	wantsToDisplayOnEmptyQuery := true
 ]
 
 { #category : #accessing }
@@ -44,4 +46,14 @@ GtSpotterListSearch >> printOn: aStream [
 	aStream
 		nextPutAll: 'List Search: ';
 		nextPutAll: title
+]
+
+{ #category : #accessing }
+GtSpotterListSearch >> wantsToDisplayOnEmptyQuery [
+	^ wantsToDisplayOnEmptyQuery
+]
+
+{ #category : #'api - configuration' }
+GtSpotterListSearch >> wantsToDisplayOnEmptyQuery: aBoolean [
+	wantsToDisplayOnEmptyQuery := aBoolean
 ]

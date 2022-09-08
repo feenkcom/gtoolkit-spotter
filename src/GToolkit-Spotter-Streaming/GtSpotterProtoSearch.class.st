@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : #accessing }
+GtSpotterProtoSearch >> explicit [
+	^ GtSpotterExplicitSearch new
+]
+
+{ #category : #accessing }
 GtSpotterProtoSearch >> list [
 	^ GtSpotterListSearch new
 ]

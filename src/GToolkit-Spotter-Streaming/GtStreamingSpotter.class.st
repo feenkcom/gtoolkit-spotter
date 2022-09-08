@@ -88,6 +88,11 @@ GtStreamingSpotter >> currentStepIndex [
 		ifAbsent: [ self error: 'Current step is wrong' ]
 ]
 
+{ #category : #'as yet unclassified' }
+GtStreamingSpotter >> hidePreview [
+	
+]
+
 { #category : #initialization }
 GtStreamingSpotter >> initialize [
 	super initialize.

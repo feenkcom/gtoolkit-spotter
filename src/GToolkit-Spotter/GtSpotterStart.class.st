@@ -90,12 +90,28 @@ GtSpotterStart >> gtSearchForPragmasFor: aSearch [
 GtSpotterStart >> gtSearchImplementorsFor: aSearch [
 	<gtSpotterSearch>
 
-	^ aSearch list
+	^ aSearch explicit
 		priority: 30;
 		title: 'Implementors';
-		items: [ AsyncImageMethodsStream new ];
-		filter: [ GtSpotterSubstringFilter new itemString: [ :each | each selector asString ] ];
-		wantsToDisplayOnEmptyQuery: false
+		search: [ :aContext |
+			| anIndexTree theExactMatches theOtherMatches |
+			anIndexTree := GtPharoIndex current selectorCache.
+			
+			theExactMatches := (anIndexTree asyncStreamStartingWith: aContext searchQuery)
+				select: [ :each | (anIndexTree nodeFor: each)
+					ifNil: [ false ]
+					ifNotNil: [ :node | node implementersCollection notEmpty ] ].
+
+			theOtherMatches := (anIndexTree asyncStreamStartingWith: '')
+				select: [ :each | 
+					(each beginsWith: aContext searchQuery) not
+						and: [ (each includesSubstring: aContext searchQuery caseSensitive: false)
+							and: [
+								(anIndexTree nodeFor: each)
+									ifNil: [ false ]
+									ifNotNil: [ :node | node implementersCollection notEmpty ] ] ] ].
+
+			(AsyncSequenceStream forCollection: { theExactMatches . theOtherMatches }) flatten ]
 ]
 
 { #category : #spotter }

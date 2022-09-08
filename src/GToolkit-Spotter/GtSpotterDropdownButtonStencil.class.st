@@ -224,15 +224,26 @@ GtSpotterDropdownButtonStencil >> spotterElementDo: aOneArgBlock [
 
 { #category : #'api - instantiation' }
 GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
-	| aSpotterModel aSpotterElement |
+	| aSpotterModel aSpotterElement isNewSpotterEnabled |
 
-	aSpotterModel := GtSpotter new initializeWith: self object.
+	isNewSpotterEnabled := GtStreamingSpotter isEnabled.
+	
+	aSpotterModel := isNewSpotterEnabled
+		ifTrue: [ GtStreamingSpotter on: self object ]
+		ifFalse: [ GtSpotter new initializeWith: self object ].
+
 	spotterModelActions do: [ :eachAction |
 		eachAction cull: aSpotterModel ].
 
-	aSpotterElement := GtSpotterElement new
-		spotterModel: aSpotterModel;
-		size: self extent.
+	aSpotterElement := isNewSpotterEnabled
+		ifTrue: [
+			GtStreamingSpotterElement new
+				spotter: aSpotterModel;
+				exact: self extent ]
+		ifFalse: [
+			GtSpotterElement new
+				spotterModel: aSpotterModel;
+				size: self extent ].
 
 	spotterElementActions do: [ :eachAction | 
 		eachAction cull: aSpotterElement ].

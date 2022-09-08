@@ -4,18 +4,6 @@ Class {
 	#category : #'GToolkit-Spotter-Streaming-Model'
 }
 
-{ #category : #searches }
-GtStreamingSpotterStart >> gtClassesFor: aSearch [
-	<gtSpotterSearch>
-	
-	^ aSearch list
-		title: 'Classes';
-		priority: 10;
-		items: [ AsyncImageBehaviorsStream new ];
-		filter: [ GtSpotterSubstringFilter new ];
-		wantsToDisplayOnEmptyQuery: false
-]
-
 { #category : #printing }
 GtStreamingSpotterStart >> gtDisplayOn: aStream [
 	aStream nextPutAll: 'Spotter'
@@ -54,16 +42,4 @@ GtStreamingSpotterStart >> gtSpotterForToolsFor: aSearch [
 		title: 'Tools';
 		filter: [ GtSpotterSubstringFilter new ];
 		wantsToDisplayOnEmptyQuery: true
-]
-
-{ #category : #searches }
-GtStreamingSpotterStart >> gtSpotterImplementorsFor: aSearch [
-	<gtSpotterSearch>
-
-	^ aSearch list
-		priority: 30;
-		title: 'Implementors';
-		items: [ AsyncImageMethodsStream new ];
-		filter: [ GtSpotterSubstringFilter new itemString: [ :each | each selector asString ] ];
-		wantsToDisplayOnEmptyQuery: false
 ]

@@ -68,7 +68,7 @@ GtSpotterStart >> gtSearchForClassesFor: aSearch [
 	^ aSearch explicit
 		priority: 10;
 		title: 'Classes';
-		search: [ :aContext | GtPharoIndex current asyncClassNamesForWord: aContext searchQuery ]
+		search: [ :aContext | GtPharoIndex current asyncClassesForWord: aContext searchQuery ]
 ]
 
 { #category : #searches }

@@ -64,7 +64,7 @@ GtStreamingSpotterCandidateElement >> initialize [
 	
 	self addAptitude: BrGlamorousListItemAptitude + (BrStyleCommonAptitude new
 		@ aToolbar;
-		default: [ :aStyle | aStyle visibility: BlVisibility hidden ];
+		default: [ :aStyle | aStyle visibility: BlVisibility gone ];
 		when: [ :aState | aState hovered or: aState selected ]
 			style: [ :aStyle | aStyle visibility: BlVisibility visible ] )
 ]

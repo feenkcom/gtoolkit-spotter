@@ -16,15 +16,17 @@ GtStreamingSpotterHeaderElement >> initialize [
 	
 	self hMatchParent.
 	self vFitContent.
-	
+
 	breadcrumb := GtStreamingSpotterBreadcrumb new.
 	breadcrumb background: self theme header secondaryBackgroundColor.
+	breadcrumb padding: (BlInsets left: 2).
 
 	searchField := GtStreamingSpotterSearchField new.
 	searchField
 		vFitContent;
 		hMatchParent;
-		padding: (BlInsets all: 10).
+		padding: (BlInsets all: 10);
+		margin: (BlInsets left: 2).
 
 	self addChildren: {
 		breadcrumb.

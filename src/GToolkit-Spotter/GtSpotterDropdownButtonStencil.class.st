@@ -247,7 +247,13 @@ GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
 
 	spotterElementActions do: [ :eachAction | 
 		eachAction cull: aSpotterElement ].
-
+		
+	aSpotterElement
+		when: GtPhlowObjectToSpawn
+		do: [ :anEvent | aButton fireEvent: (GtPhlowObjectToSpawn new
+				object: anEvent object;
+				sourceElement: anEvent target) ].
+		
 	aSpotterModel announcer
 		when: GtSpotterExitAnnouncement
 		do: [ 

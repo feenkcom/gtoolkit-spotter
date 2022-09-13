@@ -33,6 +33,7 @@ GtStreamingSpotterPreviewElement >> initialize [
 	self when: GtPhlowObjectToSelect do: [ :anEvent | anEvent consumed: anEvent sourceElement == self ].
 
 	labelElement := BrLabel new
+		text: '';
 		aptitude: (BrGlamorousLabelAptitude new foreground: Color gray);
 		alignCenter;
 		hMatchParent;

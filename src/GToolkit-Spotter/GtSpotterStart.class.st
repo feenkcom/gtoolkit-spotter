@@ -72,6 +72,20 @@ GtSpotterStart >> gtSearchForClassesFor: aSearch [
 ]
 
 { #category : #searches }
+GtSpotterStart >> gtSearchForPackagesFor: aSearch [
+	<gtSpotterSearch>
+	
+	^ aSearch list
+		title: 'Packages';
+		priority: 20;
+		items: [ RPackageOrganizer default packages ];
+		itemName: [ :aPackage | aPackage name ];
+		"itemIcon: [ Smalltalk ui icons iconNamed: #packageIcon ];"
+		filter: GtSpotterSubstringFilter new;
+		wantsToDisplayOnEmptyQuery: false
+]
+
+{ #category : #searches }
 GtSpotterStart >> gtSearchForPragmasFor: aSearch [
 	<gtSpotterSearch>
 

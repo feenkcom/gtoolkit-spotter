@@ -6,7 +6,7 @@ Class {
 		'spotter',
 		'origin',
 		'searchQuery',
-		'selectedItem'
+		'selectedCandidate'
 	],
 	#category : #'GToolkit-Spotter-Streaming-Model'
 }
@@ -33,6 +33,30 @@ GtStreamingSpotterStep >> actOn: anItemObject search: aSpotterSearch dueTo: anEv
 		ifTrue: [ ^ self ].
 	
 	aSpotterSearch
+		actOn: anObjectToActOn
+		for: self
+		from: anElement
+]
+
+{ #category : #'api - step' }
+GtStreamingSpotterStep >> actOnItemDueTo: anEventType from: anElement [
+	"Perform an action associated with the given candidate item.
+	(can be triggered by doubleClick: or keyboard Enter press)"
+	| anAnnouncement anObjectToActOn |
+	
+	self hasSelectedItem
+		ifFalse: [ ^ self ].
+	
+	anObjectToActOn := self selectedSearch objectToActOn: self selectedItem from: self.
+	
+	anAnnouncement := spotter
+		notifyActOn: anObjectToActOn
+		for: anEventType.
+	
+	anAnnouncement isActedUpon
+		ifTrue: [ ^ self ].
+	
+	self selectedSearch
 		actOn: anObjectToActOn
 		for: self
 		from: anElement
@@ -68,13 +92,33 @@ GtStreamingSpotterStep >> diveIn: anOriginObject dueTo: anEventType [
 ]
 
 { #category : #'api - step' }
+GtStreamingSpotterStep >> diveInCategoryDueTo: anEventType [
+	
+]
+
+{ #category : #'api - step' }
+GtStreamingSpotterStep >> diveInItemDueTo: anEventType [
+	self hasSelectedItem
+		ifFalse: [ ^ self ].
+		
+	self
+		diveIn: self selectedItem
+		dueTo: anEventType
+]
+
+{ #category : #'api - step' }
+GtStreamingSpotterStep >> diveOutDueTo: anEventType [
+	spotter popUntilIncluding: self
+]
+
+{ #category : #'api - step' }
 GtStreamingSpotterStep >> exit [
 	self flag: #TODO.
 ]
 
 { #category : #testing }
 GtStreamingSpotterStep >> hasSelectedItem [
-	^ selectedItem isNotNil
+	^ selectedCandidate isNotNil
 ]
 
 { #category : #initialization }
@@ -146,10 +190,10 @@ GtStreamingSpotterStep >> select: anObject search: aSearch dueTo: anEventType [
 	aSelectedCandidate := aSearch -> anObject.
 	
 	"A given candidate is already selected, do nothing"
-	selectedItem = aSelectedCandidate
+	selectedCandidate = aSelectedCandidate
 		ifTrue: [ ^ self ].
 
-	selectedItem := aSelectedCandidate.
+	selectedCandidate := aSelectedCandidate.
 	self
 		notifySelectedCandidateChanged: anObject
 		search: aSearch
@@ -158,12 +202,12 @@ GtStreamingSpotterStep >> select: anObject search: aSearch dueTo: anEventType [
 
 { #category : #'api - accessing' }
 GtStreamingSpotterStep >> selectedItem [
-	^ selectedItem value
+	^ selectedCandidate value
 ]
 
 { #category : #'api - accessing' }
 GtStreamingSpotterStep >> selectedSearch [
-	^ selectedItem key
+	^ selectedCandidate key
 ]
 
 { #category : #'api - announcer' }

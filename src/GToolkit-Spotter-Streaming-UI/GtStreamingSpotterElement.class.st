@@ -11,6 +11,27 @@ Class {
 	#category : #'GToolkit-Spotter-Streaming-UI'
 }
 
+{ #category : #'private - event handling' }
+GtStreamingSpotterElement >> handleCategoryActOn: anEvent [
+]
+
+{ #category : #'private - event handling' }
+GtStreamingSpotterElement >> handleDiveIn: anEvent [
+	self spotter currentStep diveInItemDueTo: #keyPressedPrimaryArrowRight
+]
+
+{ #category : #'private - event handling' }
+GtStreamingSpotterElement >> handleDiveOut: anEvent [
+	self spotter currentStep  diveOutDueTo: #keyPressedPrimaryArrowLeft
+]
+
+{ #category : #'private - event handling' }
+GtStreamingSpotterElement >> handleItemActOn: anEvent [
+	self spotter currentStep
+		actOnItemDueTo: #keyPressedReturn
+		from: self
+]
+
 { #category : #initialization }
 GtStreamingSpotterElement >> initialize [
 	super initialize.
@@ -38,8 +59,32 @@ GtStreamingSpotterElement >> initialize [
 				previewElement } }.
 	
 	self addShortcut: (BlShortcutWithAction new
-		combination: (BlKeyCombination builder meta; key: BlKeyboardKey arrowRight; build);
-		action: [ :anEvent :aShortcut | self halt ])
+		overrideChildren: true;
+		combination: BlKeyCombination primaryArrowRight;
+		action: [ :anEvent :aShortcut | self handleDiveIn: anEvent ]).
+		
+	self addShortcut: (BlShortcutWithAction new
+		overrideChildren: true;
+		combination: BlKeyCombination primaryArrowLeft;
+		action: [ :anEvent :aShortcut | self handleDiveOut: anEvent ]).
+		
+	self addShortcut: (BlShortcutWithAction new
+		overrideChildren: true;
+		combination: BlKeyCombination return;
+		action: [ :anEvent :aShortcut | self handleItemActOn: anEvent ]).
+		
+	self addShortcut: (BlShortcutWithAction new
+		overrideChildren: true;
+		combination: BlKeyCombination primaryReturn;
+		action: [ :anEvent :aShortcut | self handleCategoryActOn: anEvent ]).
+
+	self when: BlKeyDownEvent do: [ :anEvent |
+		anEvent key isPrimary
+			ifTrue: [ spotter switchToDebugMode ] ].
+
+	self when: BlKeyUpEvent do: [ :anEvent |
+		anEvent key isPrimary
+			ifTrue: [ spotter switchToProductionMode ] ].
 ]
 
 { #category : #'private - event handling' }

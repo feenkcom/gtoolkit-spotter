@@ -56,9 +56,10 @@ GtStreamingSpotterStepElement >> newCandidateElement [
 GtStreamingSpotterStepElement >> onItemSelectionChanged: anEvent [
 	| anEntity aSelectedItem aSearch |
 	
-	anEvent selectedInterval ifNil: [ ^ self ].
+	anEvent selectedInterval
+		ifNil: [ ^ self ].
 	
-	anEntity := resultsElement viewModel entityAt: anEvent selectedInterval first.
+	"anEntity := resultsElement viewModel entityAt: anEvent selectedInterval first.
 
 	anEntity isItem
 		ifFalse: [ ^ self ].
@@ -69,7 +70,7 @@ GtStreamingSpotterStepElement >> onItemSelectionChanged: anEvent [
 	self spotterStep
 		select: aSelectedItem
 		search: aSearch
-		dueTo: #singleClick
+		dueTo: #singleClick"
 ]
 
 { #category : #'private - event handling' }
@@ -171,7 +172,8 @@ GtStreamingSpotterStepElement >> onSearchQueryChanged [
 
 		aGroup ].
 
-	resultsElement groupsProvider: aGroupesStream
+	resultsElement groupsProvider: aGroupesStream.
+	resultsElement selectOne: 2.
 ]
 
 { #category : #'api - spotter step' }
@@ -184,6 +186,32 @@ GtStreamingSpotterStepElement >> onSpotterStepChanged [
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#onObjectChangedTemplate'>
 	
 	self onSearchQueryChanged
+]
+
+{ #category : #'api - selection' }
+GtStreamingSpotterStepElement >> selectNextItem [
+	resultsElement selectNext
+]
+
+{ #category : #'api - selection' }
+GtStreamingSpotterStepElement >> selectPreviousItem [
+	resultsElement selectPrevious
+]
+
+{ #category : #'api - selection' }
+GtStreamingSpotterStepElement >> selectedCandidateDo: aBlock [
+	resultsElement selectedEntityDo: [ :anEntity |
+		| aCandidate |
+	
+		anEntity isItem
+			ifFalse: [ ^ self ].
+	
+	
+		aCandidate := GtStreamingSpotterCandidate new
+			item: anEntity object
+			search: anEntity group domainObject.
+		
+		aBlock value: aCandidate ]
 ]
 
 { #category : #'api - spotter step' }

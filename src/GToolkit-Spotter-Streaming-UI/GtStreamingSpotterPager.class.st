@@ -53,7 +53,8 @@ GtStreamingSpotterPager >> pushStep: aSpotterStep [
 	| aStepElement aPageModel aPageContainer |
 	
 	aStepElement := GtStreamingSpotterStepElement new
-		spotterStep: aSpotterStep.
+		spotterStep: aSpotterStep;
+		id: (GtStreamingSpotterStepElementId indexed: self pages size + 1).
 	
 	aPageModel := BrPagerPageModel new.
 	aPageModel model: aSpotterStep.

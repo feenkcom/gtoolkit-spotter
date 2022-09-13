@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'announcer',
 		'steps',
-		'currentStep'
+		'currentStep',
+		'isDebugMode'
 	],
 	#category : #'GToolkit-Spotter-Streaming-Model'
 }
@@ -88,7 +89,7 @@ GtStreamingSpotter >> currentStepIndex [
 		ifAbsent: [ self error: 'Current step is wrong' ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'api - actions' }
 GtStreamingSpotter >> hidePreview [
 	
 ]
@@ -97,12 +98,18 @@ GtStreamingSpotter >> hidePreview [
 GtStreamingSpotter >> initialize [
 	super initialize.
 
-	steps := OrderedCollection new
+	steps := OrderedCollection new.
+	isDebugMode := false
 ]
 
 { #category : #initialization }
 GtStreamingSpotter >> initializeWith: anObject [
 	self pushStep: anObject
+]
+
+{ #category : #'api - accessing' }
+GtStreamingSpotter >> isDebugMode [
+	^ isDebugMode
 ]
 
 { #category : #'private - notifying' }
@@ -127,6 +134,19 @@ GtStreamingSpotter >> notifyCurrentStepChanged: aSpotterStep at: aStepIndex [
 	anAnnouncement := GtStreamingSpotterCurrentStepChanged new 
 		spotterStep: aSpotterStep;
 		stepIndex: aStepIndex.
+
+	self announce: anAnnouncement.
+	
+	^ anAnnouncement
+]
+
+{ #category : #'private - notifying' }
+GtStreamingSpotter >> notifyModeChanged [
+	<return: #GtSpotterActOn>
+	| anAnnouncement |
+	
+	anAnnouncement := GtStreamingSpotterModeChanged new 
+		isDebugMode: isDebugMode.
 
 	self announce: anAnnouncement.
 	
@@ -165,17 +185,20 @@ GtStreamingSpotter >> popStep [
 	^ steps
 		ifEmpty: [ self error: 'There are no steps to pop' ]
 		ifNotEmpty: [ :theSteps |
-			| aPoppedStep aPoppedStepIndex |
+			| aNewCurrentStep aPoppedStep aPoppedStepIndex |
 
 			aPoppedStepIndex := theSteps size.
+			
+			aNewCurrentStep := theSteps at: aPoppedStepIndex - 1.
+			self currentStep: aNewCurrentStep.
+			
 			aPoppedStep := theSteps removeLast.
 			aPoppedStep removeFromSpotter.
+			
 			self
 				notifyStepPopped: aPoppedStep
 				at: aPoppedStepIndex.
 				
-			self currentStep: theSteps last.
-
 			aPoppedStep ]
 ]
 
@@ -185,6 +208,15 @@ GtStreamingSpotter >> popUntil: aSpotterStep [
 
 	[ steps last == aSpotterStep ]
 		whileFalse: [ self popStep ]
+]
+
+{ #category : #'api - steps' }
+GtStreamingSpotter >> popUntilIncluding: aSpotterStep [
+	"Remove steps until a given step does not become the last one"
+
+	[ steps last == aSpotterStep ]
+		whileFalse: [ self popStep ].
+	steps size > 1 ifTrue: [ self popStep ]
 ]
 
 { #category : #'api - steps' }
@@ -212,6 +244,18 @@ GtStreamingSpotter >> showPreview: aBoolean [
 { #category : #'api - accessing' }
 GtStreamingSpotter >> steps [
 	^ steps
+]
+
+{ #category : #'api - actions' }
+GtStreamingSpotter >> switchToDebugMode [
+	isDebugMode := true.
+	self notifyModeChanged
+]
+
+{ #category : #'api - actions' }
+GtStreamingSpotter >> switchToProductionMode [
+	isDebugMode := false.
+	self notifyModeChanged
 ]
 
 { #category : #'api - announcer' }

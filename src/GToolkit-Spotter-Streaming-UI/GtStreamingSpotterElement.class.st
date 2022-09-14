@@ -66,6 +66,7 @@ GtStreamingSpotterElement >> initialize [
 	
 	self background: Color white.
 	self geometry: (BlRoundedRectangleGeometry cornerRadius: 5).
+	self beInSeparateCompositionLayer.
 	
 	headerElement := GtStreamingSpotterHeaderElement new.
 	stepsPager := GtStreamingSpotterPager new.
@@ -121,13 +122,18 @@ GtStreamingSpotterElement >> initialize [
 	self when: BlKeyUpEvent do: [ :anEvent |
 		anEvent key isPrimary
 			ifTrue: [ spotter switchToProductionMode ] ].
+		
+	self when: GtStreamingSpotterSelectedCandidateMaybeChanged do: [ :anEvent |
+		anEvent consumed: true.
+		self onSelectedCandidateMaybeChanged ]
 ]
 
 { #category : #'private - event handling' }
-GtStreamingSpotterElement >> onItemSelected: anAnnouncement [
-	previewElement
-		updatePreviewOf: anAnnouncement selected
-		forSearch: anAnnouncement search
+GtStreamingSpotterElement >> onSelectedCandidateMaybeChanged [
+	self currentStepSelectedCandidateDo: [ :aCandidate |
+		previewElement
+			updatePreviewOf: aCandidate item
+			forSearch: aCandidate search ]
 ]
 
 { #category : #'api - spotter' }
@@ -141,25 +147,4 @@ GtStreamingSpotterElement >> onSpotterChanged [
 	
 	headerElement spotter: spotter.
 	stepsPager spotter: spotter
-]
-
-{ #category : #'api - spotter' }
-GtStreamingSpotterElement >> subscribeToSpotter [
-	"Is sent after a new spotter is assigned to the receiver.
-	It is required to unsubscribe from the previously subscribed objects by implementing
-	#unsubscribeFromSpotter if the receiver subscribes to them"
-	<modelSubscriber: #spotter>
-	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#subscribeToObjectTemplate'>
-	
-	spotter when: GtSpotterSelectedCandidateChanged send: #onItemSelected: to: self
-]
-
-{ #category : #'api - spotter' }
-GtStreamingSpotterElement >> unsubscribeFromSpotter [
-	"Is sent before a new spotter is assigned to the receiver.
-	Objects that subscribe to spotter are required to implement this method."
-	<modelUnsubscriber: #spotter>
-	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#unsubscribeFromObjectTemplate'>
-	
-	spotter unsubscribe: self
 ]

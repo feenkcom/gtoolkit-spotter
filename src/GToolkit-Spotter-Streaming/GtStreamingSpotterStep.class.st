@@ -5,8 +5,7 @@ Class {
 		'announcer',
 		'spotter',
 		'origin',
-		'searchQuery',
-		'selectedCandidate'
+		'searchQuery'
 	],
 	#category : #'GToolkit-Spotter-Streaming-Model'
 }
@@ -33,30 +32,6 @@ GtStreamingSpotterStep >> actOn: anItemObject search: aSpotterSearch dueTo: anEv
 		ifTrue: [ ^ self ].
 	
 	aSpotterSearch
-		actOn: anObjectToActOn
-		for: self
-		from: anElement
-]
-
-{ #category : #'api - step' }
-GtStreamingSpotterStep >> actOnItemDueTo: anEventType from: anElement [
-	"Perform an action associated with the given candidate item.
-	(can be triggered by doubleClick: or keyboard Enter press)"
-	| anAnnouncement anObjectToActOn |
-	
-	self hasSelectedItem
-		ifFalse: [ ^ self ].
-	
-	anObjectToActOn := self selectedSearch objectToActOn: self selectedItem from: self.
-	
-	anAnnouncement := spotter
-		notifyActOn: anObjectToActOn
-		for: anEventType.
-	
-	anAnnouncement isActedUpon
-		ifTrue: [ ^ self ].
-	
-	self selectedSearch
 		actOn: anObjectToActOn
 		for: self
 		from: anElement
@@ -97,16 +72,6 @@ GtStreamingSpotterStep >> diveInCategoryDueTo: anEventType [
 ]
 
 { #category : #'api - step' }
-GtStreamingSpotterStep >> diveInItemDueTo: anEventType [
-	self hasSelectedItem
-		ifFalse: [ ^ self ].
-		
-	self
-		diveIn: self selectedItem
-		dueTo: anEventType
-]
-
-{ #category : #'api - step' }
 GtStreamingSpotterStep >> diveOutDueTo: anEventType [
 	spotter popUntilIncluding: self
 ]
@@ -116,31 +81,11 @@ GtStreamingSpotterStep >> exit [
 	self flag: #TODO.
 ]
 
-{ #category : #testing }
-GtStreamingSpotterStep >> hasSelectedItem [
-	^ selectedCandidate isNotNil
-]
-
 { #category : #initialization }
 GtStreamingSpotterStep >> initializeWithSpotter: aStreamingSpotter origin: anObject [
 	spotter := aStreamingSpotter.
 	origin := anObject.
 	searchQuery := ''
-]
-
-{ #category : #'private - notifying' }
-GtStreamingSpotterStep >> notifySelectedCandidateChanged: aObject search: aSearch for: anEventType [
-	| anAnnouncement |
-	self
-		assert: [ aObject isNotNil ]
-		description: [ 'aCandidate must not be nil' ].
-
-	anAnnouncement := GtSpotterSelectedCandidateChanged new
-		select: aObject;
-		search: aSearch.
-
-	self announce: anAnnouncement.
-	spotter announce: anAnnouncement
 ]
 
 { #category : #'api - accessing' }
@@ -172,42 +117,6 @@ GtStreamingSpotterStep >> searchQuery: aString [
 	searchQuery := aString.
 	
 	self announce: (GtStreamingSpotterStepSearchQueryChanged new)
-]
-
-{ #category : #'api - step' }
-GtStreamingSpotterStep >> select: anObject search: aSearch dueTo: anEventType [
-	"Select a given candidate due to provided event type.
-	A selection reason is used for statistical purposes and helps us
-	better understand how users use spotter and as result improve it.
-	aCandidate must not be nil.
-	anEventType must not be nil"
-	| aSelectedCandidate |
-
-	self
-		assert: [ anObject isNotNil ]
-		description: [ 'Candidate must not be nil' ].
-	
-	aSelectedCandidate := aSearch -> anObject.
-	
-	"A given candidate is already selected, do nothing"
-	selectedCandidate = aSelectedCandidate
-		ifTrue: [ ^ self ].
-
-	selectedCandidate := aSelectedCandidate.
-	self
-		notifySelectedCandidateChanged: anObject
-		search: aSearch
-		for: anEventType
-]
-
-{ #category : #'api - accessing' }
-GtStreamingSpotterStep >> selectedItem [
-	^ selectedCandidate value
-]
-
-{ #category : #'api - accessing' }
-GtStreamingSpotterStep >> selectedSearch [
-	^ selectedCandidate key
 ]
 
 { #category : #'api - announcer' }

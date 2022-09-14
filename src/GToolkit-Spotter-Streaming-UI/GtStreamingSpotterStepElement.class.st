@@ -29,7 +29,8 @@ GtStreamingSpotterStepElement >> initialize [
 	resultsElement := BrGroupedList new.
 	resultsElement
 		matchParent;
-		when: BrSelectionChanged do: [ :anEvent | self onItemSelectionChanged: anEvent ];
+		when: BrSelectionChanged do: [ self onSelectedCandidateMaybeChanged ];
+		when: BrItemsProviderItemsChangedEvent do: [ self onSelectedCandidateMaybeChanged ];
 		headerElementStencil: [
 			BrLabel new
 				hMatchParent;
@@ -50,27 +51,6 @@ GtStreamingSpotterStepElement >> initialize [
 { #category : #'private - instance creation' }
 GtStreamingSpotterStepElement >> newCandidateElement [
 	^ GtStreamingSpotterCandidateElement new
-]
-
-{ #category : #'private - event handling' }
-GtStreamingSpotterStepElement >> onItemSelectionChanged: anEvent [
-	| anEntity aSelectedItem aSearch |
-	
-	anEvent selectedInterval
-		ifNil: [ ^ self ].
-	
-	"anEntity := resultsElement viewModel entityAt: anEvent selectedInterval first.
-
-	anEntity isItem
-		ifFalse: [ ^ self ].
-		
-	aSelectedItem := anEntity object.
-	aSearch := anEntity group domainObject.
-	
-	self spotterStep
-		select: aSelectedItem
-		search: aSearch
-		dueTo: #singleClick"
 ]
 
 { #category : #'private - event handling' }
@@ -174,6 +154,11 @@ GtStreamingSpotterStepElement >> onSearchQueryChanged [
 
 	resultsElement groupsProvider: aGroupesStream.
 	resultsElement selectOne: 2.
+]
+
+{ #category : #'private - event handling' }
+GtStreamingSpotterStepElement >> onSelectedCandidateMaybeChanged [
+	self fireEvent: GtStreamingSpotterSelectedCandidateMaybeChanged new
 ]
 
 { #category : #'api - spotter step' }

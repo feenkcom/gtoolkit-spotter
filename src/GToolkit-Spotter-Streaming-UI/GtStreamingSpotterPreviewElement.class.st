@@ -78,12 +78,7 @@ GtStreamingSpotterPreviewElement >> onCandidateSelected: anAnnouncement [
 
 { #category : #'private - event handling' }
 GtStreamingSpotterPreviewElement >> onCurrentStepChanged: anAnnouncement [
-
-	self spotterModelDo: [ :aSpotter | aSpotter hasSelected
-		ifTrue: [ self updatePreview: aSpotter currentStep selectedItem ]
-		ifFalse: [ 
-			self onHidePreview.
-			previewObject := nil. ] ]
+	self flag: #TODO.
 ]
 
 { #category : #'private - event handling' }

@@ -7,7 +7,8 @@ Class {
 		'definingMethod',
 		'itemNameComputation',
 		'objectToActOnComputation',
-		'actOnLogicComputation'
+		'actOnLogicComputation',
+		'previewElementComputation'
 	],
 	#category : #'GToolkit-Spotter-Streaming-Searches'
 }
@@ -68,17 +69,18 @@ GtSpotterSearch >> objectToActOn: anObject from: aSpotterStep [
 		ifNotNil: [ objectToActOnComputation cull: anObject cull: aSpotterStep ]
 ]
 
+{ #category : #'api - configuration' }
+GtSpotterSearch >> previewElement: aBlockWithOneArgument [
+	previewElementComputation := aBlockWithOneArgument
+]
+
 { #category : #'private - computation' }
 GtSpotterSearch >> previewElementFor: anObject [
 	<return: #BlElement or: nil>
-	| aPreviewElement |
 	
-	aPreviewElement := nil.
-
-	(anObject gtViewsFor: GtPhlowView empty) originalView
-		asElementDo: [ :anElement | aPreviewElement := anElement ].
-
-	^ aPreviewElement
+	^ previewElementComputation
+		ifNil: [ self privateDefaultPreviewElementFor: anObject ]
+		ifNotNil: [ :aBlock | aBlock cull: anObject ]
 ]
 
 { #category : #'private - computation' }
@@ -95,6 +97,19 @@ GtSpotterSearch >> priority [
 { #category : #'api - configuration' }
 GtSpotterSearch >> priority: aNumber [
 	priority := aNumber
+]
+
+{ #category : #'private - computation' }
+GtSpotterSearch >> privateDefaultPreviewElementFor: anObject [
+	<return: #BlElement or: nil>
+	| aPreviewElement |
+	
+	aPreviewElement := nil.
+
+	(anObject gtViewsFor: GtPhlowView empty) originalView
+		asElementDo: [ :anElement | aPreviewElement := anElement ].
+
+	^ aPreviewElement
 ]
 
 { #category : #accessing }

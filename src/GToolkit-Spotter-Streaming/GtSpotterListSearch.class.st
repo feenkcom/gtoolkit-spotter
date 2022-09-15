@@ -28,6 +28,11 @@ GtSpotterListSearch >> filter: aFilterOrBlock [
 	filterComputation := aFilterOrBlock
 ]
 
+{ #category : #accessing }
+GtSpotterListSearch >> filterBySubstring [
+	self filter: GtSpotterSubstringFilter new
+]
+
 { #category : #initialization }
 GtSpotterListSearch >> initialize [
 	super initialize.

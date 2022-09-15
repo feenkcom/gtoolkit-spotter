@@ -8,5 +8,5 @@ CompiledMethod >> gtSearchForImplementorsFor: aSearch [
 		priority: 10;
 		title: 'Implementors';
 		items: [ self implementors collect: #compiledMethod ];
-		filter: [ GtSpotterSubstringFilter new ]
+		filterBySubstring
 ]

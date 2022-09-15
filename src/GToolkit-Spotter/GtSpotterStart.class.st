@@ -72,6 +72,20 @@ GtSpotterStart >> gtSearchForClassesFor: aSearch [
 ]
 
 { #category : #searches }
+GtSpotterStart >> gtSearchForGlobalVarsFor: aStep [
+	<gtSpotterSearch>
+	^ aStep list
+		priority: 40;
+		items: [ Smalltalk globals associations
+				select:
+					[ :assoc | assoc value isBehavior not and: [ assoc value isTrait not ] ] ];
+		title: 'Global variables';
+		itemName: [ :global | global key ];
+		filterBySubstring;
+		wantsToDisplayOnEmptyQuery: false
+]
+
+{ #category : #searches }
 GtSpotterStart >> gtSearchForPackagesFor: aSearch [
 	<gtSpotterSearch>
 	
@@ -81,20 +95,19 @@ GtSpotterStart >> gtSearchForPackagesFor: aSearch [
 		items: [ RPackageOrganizer default packages ];
 		itemName: [ :aPackage | aPackage name ];
 		"itemIcon: [ Smalltalk ui icons iconNamed: #packageIcon ];"
-		filter: GtSpotterSubstringFilter new;
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
 
 { #category : #searches }
 GtSpotterStart >> gtSearchForPragmasFor: aSearch [
 	<gtSpotterSearch>
-
 	^ aSearch list
 		priority: 40;
 		items: [ GtPragmaType all ];
 		title: 'Pragmas';
 		itemName: [ :pragma | pragma keyword ];
-		filter: GtSpotterSubstringFilter new;
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
 

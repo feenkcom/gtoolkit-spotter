@@ -8,5 +8,5 @@ Class >> gtSearchMethodsFor: aSearch [
 		priority: 10;
 		title: 'Instance methods';
 		items: [ self methods ];
-		filter: [ GtSpotterSubstringFilter new ]
+		filterBySubstring
 ]

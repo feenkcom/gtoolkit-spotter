@@ -12,34 +12,28 @@ GtStreamingSpotterStart >> gtDisplayOn: aStream [
 { #category : #searches }
 GtStreamingSpotterStart >> gtPackagesFor: aSearch [
 	<gtSpotterSearch>
-	
 	^ aSearch list
 		title: 'Packages';
 		priority: 20;
 		items: [ RPackageOrganizer default packages ];
 		itemName: [ :package | package name ];
-		filter: [ GtSpotterSubstringFilter new ];
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
 
 { #category : #searches }
 GtStreamingSpotterStart >> gtSpotterForToolsFor: aSearch [
 	<gtSpotterSearch>
-
 	^ aSearch list
 		priority: 1;
-		items: [ 
-			{
-				GtCoderStencil new . 
-				GtMonitorStencil new . 
-				GtRlGToolkitExamplesExplorer buildForGToolkitProject . 
-				GtGitStencil new . 
-				GtEpiceaStencil new . 
-				GtTranscriptStencil new .
-				GtFileSystemStencil new
-			} ];
-		"previewElement: [ :aStencil | aStencil asPreviewElement asElement ];"
+		items: [ {GtCoderStencil new.
+				GtMonitorStencil new.
+				GtRlGToolkitExamplesExplorer buildForGToolkitProject.
+				GtGitStencil new.
+				GtEpiceaStencil new.
+				GtTranscriptStencil new.
+				GtFileSystemStencil new} ];
 		title: 'Tools';
-		filter: [ GtSpotterSubstringFilter new ];
-		wantsToDisplayOnEmptyQuery: true
+		filterBySubstring;
+		wantsToDisplayOnEmptyQuery: true	"previewElement: [ :aStencil | aStencil asPreviewElement asElement ];"
 ]

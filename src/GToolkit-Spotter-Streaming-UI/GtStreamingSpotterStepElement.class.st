@@ -103,12 +103,18 @@ GtStreamingSpotterStepElement >> onLoadingStarted: anItemsProviderStartedLoading
 
 { #category : #'private - event handling' }
 GtStreamingSpotterStepElement >> onSearchQueryChanged [
-	| aGroupesStream |
+	| anErrorHandler anExecutionConfiguration aGroupesStream aGroupesItemProvider |
 	
 	startedItemsProviders lock: [ :aSet | aSet removeAll ].
 	loadedItemsProviders lock: [ :aSet | aSet removeAll ].
 	loadingItemsProviders lock: [ :aSet | aSet removeAll ].
-	
+
+	anErrorHandler := AsyncPassExceptionHandler new.
+
+	anExecutionConfiguration := AsyncFutureExecutionConfiguration new
+		errorHandler: anErrorHandler;
+		customGroup: #Spotter.
+
 	aGroupesStream := spotterStep createSearchResultsStream collect: [ :eachSearchAndResults |
 		| aSearch aSearchStream aStreamItemsProvider aGroup |
 		
@@ -118,8 +124,7 @@ GtStreamingSpotterStepElement >> onSearchQueryChanged [
 		aStreamItemsProvider := BrStreamItemsProvider new
 			preloadAmount: 1;
 			preloadDuration: 1 minutes;
-			executionConfiguration: (AsyncFutureExecutionConfiguration new
-				customGroup: #Spotter);
+			executionConfiguration: anExecutionConfiguration;
 			stream: aSearchStream
 			sinks: { AsyncForwardSink new . AsyncCounterSink new }.
 
@@ -147,12 +152,16 @@ GtStreamingSpotterStepElement >> onSearchQueryChanged [
 					spotterStep: self spotterStep;
 					candidate: eachItem search: aSearch ];
 			itemsLimit: 5.
-			
+	
 		aStreamItemsProvider userData at: #group put: aGroup.
 
 		aGroup ].
+	
+	aGroupesItemProvider := BrStreamItemsProvider new
+		executionConfiguration: anExecutionConfiguration;
+		stream: aGroupesStream.
 
-	resultsElement groupsProvider: aGroupesStream.
+	resultsElement groupsProvider: aGroupesItemProvider.
 	resultsElement selectOne: 2.
 ]
 

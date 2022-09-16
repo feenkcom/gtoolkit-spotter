@@ -8,7 +8,8 @@ Class {
 		'itemNameComputation',
 		'objectToActOnComputation',
 		'actOnLogicComputation',
-		'previewElementComputation'
+		'previewElementComputation',
+		'itemsLimit'
 	],
 	#category : #'GToolkit-Spotter-Streaming-Searches'
 }
@@ -42,7 +43,8 @@ GtSpotterSearch >> initialize [
 	super initialize.
 	
 	title := 'Untitled'.
-	priority := 10
+	priority := 10.
+	itemsLimit := 5
 ]
 
 { #category : #'api - configuration' }
@@ -57,6 +59,16 @@ GtSpotterSearch >> itemNameFor: anObject [
 	^ itemNameComputation 
 		ifNil: [ anObject gtDisplayText ]
 		ifNotNil: [ :aBlock | aBlock cull: anObject ]
+]
+
+{ #category : #accessing }
+GtSpotterSearch >> itemsLimit [
+	^ itemsLimit
+]
+
+{ #category : #'api - configuration' }
+GtSpotterSearch >> itemsLimit: anInteger [
+	itemsLimit := anInteger
 ]
 
 { #category : #'private - computation' }
@@ -121,4 +133,9 @@ GtSpotterSearch >> title [
 { #category : #'api - configuration' }
 GtSpotterSearch >> title: aString [
 	title := aString
+]
+
+{ #category : #'api - configuration' }
+GtSpotterSearch >> withoutItemsLimit [
+	self itemsLimit: Float infinity
 ]

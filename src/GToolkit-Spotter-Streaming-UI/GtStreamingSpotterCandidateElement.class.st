@@ -16,7 +16,7 @@ Class {
 { #category : #'private - event handling' }
 GtStreamingSpotterCandidateElement >> actDueTo: anEventType [
 	self spotterStep
-		actOn: candidate
+		itemActOn: candidate
 		search: search
 		dueTo: anEventType
 		from: self

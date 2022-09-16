@@ -10,37 +10,35 @@ Class {
 	#category : #'GToolkit-Spotter-Streaming-Model'
 }
 
+{ #category : #'api - announcer' }
+GtStreamingSpotterStep >> announce: anAnnouncement [
+	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#announceTemplate'>
+	announcer ifNotNil: [ :anAnnouncer | anAnnouncer announce: anAnnouncement ].
+]
+
 { #category : #'api - step' }
-GtStreamingSpotterStep >> actOn: anItemObject search: aSpotterSearch dueTo: anEventType from: anElement [
+GtStreamingSpotterStep >> categoryActOn: aCategory search: aSearch dueTo: anEventType from: anElement [
 	"Perform an action associated with the given candidate item.
 	(can be triggered by doubleClick: or keyboard Enter press)"
-	| anAnnouncement anObjectToActOn |
+	| anAnnouncement |
 	
 	self
-		assert: [ anItemObject isNotNil ]
+		assert: [ aCategory isNotNil ]
 		description: [ 'Spotter can not perform an action due to ', 
 			anEventType asString, 
-			' if there is no candidate' ].
-	
-	anObjectToActOn := aSpotterSearch objectToActOn: anItemObject from: self.
+			' if there is no category' ].
 	
 	anAnnouncement := spotter
-		notifyActOn: anObjectToActOn
+		notifyActOn: aCategory
 		for: anEventType.
 	
 	anAnnouncement isActedUpon
 		ifTrue: [ ^ self ].
 	
-	aSpotterSearch
-		actOn: anObjectToActOn
+	aSearch
+		categoryActOn: aCategory
 		for: self
 		from: anElement
-]
-
-{ #category : #'api - announcer' }
-GtStreamingSpotterStep >> announce: anAnnouncement [
-	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#announceTemplate'>
-	announcer ifNotNil: [ :anAnnouncer | anAnnouncer announce: anAnnouncement ].
 ]
 
 { #category : #'api - search' }
@@ -72,11 +70,6 @@ GtStreamingSpotterStep >> diveIn: anOriginObject dueTo: anEventType [
 ]
 
 { #category : #'api - step' }
-GtStreamingSpotterStep >> diveInCategoryDueTo: anEventType [
-	
-]
-
-{ #category : #'api - step' }
 GtStreamingSpotterStep >> diveOutDueTo: anEventType [
 	spotter popUntilIncluding: self
 ]
@@ -91,6 +84,33 @@ GtStreamingSpotterStep >> initializeWithSpotter: aStreamingSpotter origin: anObj
 	spotter := aStreamingSpotter.
 	origin := anObject.
 	searchQuery := ''
+]
+
+{ #category : #'api - step' }
+GtStreamingSpotterStep >> itemActOn: anItemObject search: aSpotterSearch dueTo: anEventType from: anElement [
+	"Perform an action associated with the given candidate item.
+	(can be triggered by doubleClick: or keyboard Enter press)"
+	| anAnnouncement anObjectToActOn |
+	
+	self
+		assert: [ anItemObject isNotNil ]
+		description: [ 'Spotter can not perform an action due to ', 
+			anEventType asString, 
+			' if there is no candidate' ].
+	
+	anObjectToActOn := aSpotterSearch objectToActOn: anItemObject from: self.
+	
+	anAnnouncement := spotter
+		notifyActOn: anObjectToActOn
+		for: anEventType.
+	
+	anAnnouncement isActedUpon
+		ifTrue: [ ^ self ].
+	
+	aSpotterSearch
+		itemActOn: anObjectToActOn
+		for: self
+		from: anElement
 ]
 
 { #category : #'api - accessing' }

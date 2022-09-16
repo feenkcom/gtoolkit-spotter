@@ -9,28 +9,29 @@ Class {
 		'objectToActOnComputation',
 		'actOnLogicComputation',
 		'previewElementComputation',
-		'itemsLimit'
+		'itemsLimit',
+		'actOnCategoryLogicComputation'
 	],
 	#category : #'GToolkit-Spotter-Streaming-Searches'
 }
-
-{ #category : #'api - configuration' }
-GtSpotterSearch >> actLogic: aBlockWithTwoArguments [
-	actOnLogicComputation := aBlockWithTwoArguments
-]
-
-{ #category : #'private - computation' }
-GtSpotterSearch >> actOn: anObject for: aSpotterStep from: anElement [
-	actOnLogicComputation
-		ifNil: [ anObject gtSpotterActDefault: aSpotterStep from: anElement ]
-		ifNotNil: [ actOnLogicComputation cull: anObject cull: aSpotterStep cull: anElement ]
-]
 
 { #category : #converting }
 GtSpotterSearch >> asStreamFor: aSpotterContext [
 	<return: #TAsyncStream>
 	
 	^ self subclassResponsibility
+]
+
+{ #category : #'api - configuration' }
+GtSpotterSearch >> categoryActLogic: aBlockWithTwoArguments [
+	actOnLogicComputation := aBlockWithTwoArguments
+]
+
+{ #category : #'private - computation' }
+GtSpotterSearch >> categoryActOn: aCategory for: aSpotterStep from: anElement [
+	actOnCategoryLogicComputation
+		ifNil: [ aCategory gtSpotterActDefault: aSpotterStep from: anElement ]
+		ifNotNil: [ actOnCategoryLogicComputation cull: aCategory cull: aSpotterStep cull: anElement ]
 ]
 
 { #category : #initialization }
@@ -45,6 +46,18 @@ GtSpotterSearch >> initialize [
 	title := 'Untitled'.
 	priority := 10.
 	itemsLimit := 5
+]
+
+{ #category : #'api - configuration' }
+GtSpotterSearch >> itemActLogic: aBlockWithTwoArguments [
+	actOnLogicComputation := aBlockWithTwoArguments
+]
+
+{ #category : #'private - computation' }
+GtSpotterSearch >> itemActOn: anObject for: aSpotterStep from: anElement [
+	actOnLogicComputation
+		ifNil: [ anObject gtSpotterActDefault: aSpotterStep from: anElement ]
+		ifNotNil: [ actOnLogicComputation cull: anObject cull: aSpotterStep cull: anElement ]
 ]
 
 { #category : #'api - configuration' }

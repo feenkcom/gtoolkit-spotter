@@ -13,15 +13,29 @@ Class {
 }
 
 { #category : #'private - event handling' }
-GtStreamingSpotterCategoryElement >> diveInDueTo: anEventType [
-	| aCategoryStart |
+GtStreamingSpotterCategoryElement >> actDueTo: anEventType [
+	| aCategory |
 
-	aCategoryStart := (GtStreamingSpotterCategoryStart new
-		search: group domainObject
-		context: spotterStep createSearchContext).
+	aCategory := self currentCategory.
 
 	self spotterStep
-		diveIn: aCategoryStart
+		categoryActOn: aCategory
+		search: aCategory search
+		dueTo: anEventType
+		from: self
+]
+
+{ #category : #'private - instance creation' }
+GtStreamingSpotterCategoryElement >> currentCategory [
+	^ GtStreamingSpotterCategory new
+		search: group domainObject
+		context: spotterStep createSearchContext
+]
+
+{ #category : #'private - event handling' }
+GtStreamingSpotterCategoryElement >> diveInDueTo: anEventType [
+	self spotterStep
+		diveIn: self currentCategory
 		dueTo: anEventType
 ]
 

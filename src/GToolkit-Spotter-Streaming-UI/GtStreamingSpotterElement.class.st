@@ -23,14 +23,24 @@ GtStreamingSpotterElement >> currentStepSelectedCandidateDo: aBlock [
 
 { #category : #'private - event handling' }
 GtStreamingSpotterElement >> handleCategoryActOn: anEvent [
+	self currentStepSelectedCandidateDo: [ :aCandidate |
+		self spotter currentStep
+			categoryActOn: (GtStreamingSpotterCategory new
+				search: aCandidate search
+				context: self spotter currentStep createSearchContext)
+			search: aCandidate search
+			dueTo: #keyPressedPrimaryReturn
+			from: self ]
 ]
 
 { #category : #'private - event handling' }
-GtStreamingSpotterElement >> handleDiveIn: anEvent [
+GtStreamingSpotterElement >> handleCategoryDiveIn: anEvent [
 	self currentStepSelectedCandidateDo: [ :aCandidate |
 		self spotter currentStep
-			diveIn: aCandidate item
-			dueTo: #keyPressedPrimaryArrowRight ]
+			diveIn: (GtStreamingSpotterCategory new
+				search: aCandidate search
+				context: self spotter currentStep createSearchContext)
+			dueTo: #keyPressedPrimaryShiftArrowRight ]
 ]
 
 { #category : #'private - event handling' }
@@ -42,10 +52,18 @@ GtStreamingSpotterElement >> handleDiveOut: anEvent [
 GtStreamingSpotterElement >> handleItemActOn: anEvent [		
 	self currentStepSelectedCandidateDo: [ :aCandidate |
 		self spotter currentStep
-			actOn: aCandidate item
+			itemActOn: aCandidate item
 			search: aCandidate search
 			dueTo: #keyPressedReturn
 			from: self ]
+]
+
+{ #category : #'private - event handling' }
+GtStreamingSpotterElement >> handleItemDiveIn: anEvent [
+	self currentStepSelectedCandidateDo: [ :aCandidate |
+		self spotter currentStep
+			diveIn: aCandidate item
+			dueTo: #keyPressedPrimaryArrowRight ]
 ]
 
 { #category : #'private - event handling' }
@@ -98,7 +116,12 @@ GtStreamingSpotterElement >> initialize [
 	self addShortcut: (BlShortcutWithAction new
 		overrideChildren: true;
 		combination: BlKeyCombination primaryArrowRight;
-		action: [ :anEvent :aShortcut | self handleDiveIn: anEvent ]).
+		action: [ :anEvent :aShortcut | self handleItemDiveIn: anEvent ]).
+		
+	self addShortcut: (BlShortcutWithAction new
+		overrideChildren: true;
+		combination: BlKeyCombination primaryShiftArrowRight;
+		action: [ :anEvent :aShortcut | self handleCategoryDiveIn: anEvent ]).
 
 	self addShortcut: (BlShortcutWithAction new
 		overrideChildren: true;

@@ -44,11 +44,16 @@ GtStreamingSpotterStep >> announce: anAnnouncement [
 ]
 
 { #category : #'api - search' }
+GtStreamingSpotterStep >> createSearchContext [
+	^ GtStreamingSpotterContext new searchQuery: searchQuery
+]
+
+{ #category : #'api - search' }
 GtStreamingSpotterStep >> createSearchResultsStream [
 	^ self createSearchesStream collect: [ :eachSpotterSearch |
 		| aContext aResultsStream |
 		
-		aContext := GtStreamingSpotterContext new searchQuery: searchQuery.
+		aContext := self createSearchContext.
 		aResultsStream := eachSpotterSearch asStreamFor: aContext.
 		eachSpotterSearch -> aResultsStream ]
 ]

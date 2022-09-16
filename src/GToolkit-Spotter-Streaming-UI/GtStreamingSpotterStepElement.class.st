@@ -31,19 +31,8 @@ GtStreamingSpotterStepElement >> initialize [
 		matchParent;
 		when: BrSelectionChanged do: [ self onSelectedCandidateMaybeChanged ];
 		when: BrItemsProviderItemsChangedEvent do: [ self onSelectedCandidateMaybeChanged ];
-		headerElementStencil: [
-			BrLabel new
-				hMatchParent;
-				margin: (BlInsets top: 15 right: 10 bottom: 5 left: 10);
-				aptitude: (BrGlamorousLabelAptitude new foreground: Color gray) ];
-		headerDataBinder: [ :aLabel :eachGroup | 
-			self updateLabel: aLabel forGroup: eachGroup.
-			aLabel
-				withAsyncSinkDo: [ :anElementSink |
-					anElementSink
-						whenUpdate: [ :aLabelElement | self updateLabel: aLabel forGroup: eachGroup. ] ].
-			eachGroup itemsProvider sinks first sink: aLabel asyncSink.
-			aLabel ].
+		headerElementStencil: [ self newCategoryElement spotterStep: spotterStep ];
+		headerDataBinder: [ :aCategoryElement :eachGroup | aCategoryElement group: eachGroup ].
 
 	self addChild: resultsElement
 ]
@@ -51,6 +40,11 @@ GtStreamingSpotterStepElement >> initialize [
 { #category : #'private - instance creation' }
 GtStreamingSpotterStepElement >> newCandidateElement [
 	^ GtStreamingSpotterCandidateElement new
+]
+
+{ #category : #'private - instance creation' }
+GtStreamingSpotterStepElement >> newCategoryElement [
+	^ GtStreamingSpotterCategoryElement new
 ]
 
 { #category : #'private - event handling' }
@@ -146,12 +140,9 @@ GtStreamingSpotterStepElement >> onSearchQueryChanged [
 		aGroup := BrGroup new
 			itemsProvider: aStreamItemsProvider;
 			domainObject: aSearch;
-			itemStencil: [ self newCandidateElement ];
-			itemDataBinder: [ :aCandidateElement :eachItem |
-				aCandidateElement
-					spotterStep: self spotterStep;
-					candidate: eachItem search: aSearch ];
-			itemsLimit: 5.
+			itemStencil: [ self newCandidateElement spotterStep: self spotterStep ];
+			itemDataBinder: [ :aCandidateElement :eachItem | aCandidateElement candidate: eachItem search: aSearch ];
+			itemsLimit: aSearch itemsLimit.
 	
 		aStreamItemsProvider userData at: #group put: aGroup.
 

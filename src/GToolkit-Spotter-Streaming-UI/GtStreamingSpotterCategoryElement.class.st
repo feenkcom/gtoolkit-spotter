@@ -1,11 +1,10 @@
 Class {
-	#name : #GtStreamingSpotterCandidateElement,
+	#name : #GtStreamingSpotterCategoryElement,
 	#superclass : #BrHorizontalPane,
 	#traits : 'TGtStreamingWithSpotterStep',
 	#classTraits : 'TGtStreamingWithSpotterStep classTrait',
 	#instVars : [
-		'candidate',
-		'search',
+		'group',
 		'label',
 		'actOnButton',
 		'diveInButton'
@@ -14,31 +13,28 @@ Class {
 }
 
 { #category : #'private - event handling' }
-GtStreamingSpotterCandidateElement >> actDueTo: anEventType [
+GtStreamingSpotterCategoryElement >> diveInDueTo: anEventType [
+	| aCategoryStart |
+
+	aCategoryStart := (GtStreamingSpotterCategoryStart new
+		search: group domainObject
+		context: spotterStep createSearchContext).
+
 	self spotterStep
-		actOn: candidate
-		search: search
+		diveIn: aCategoryStart
 		dueTo: anEventType
-		from: self
 ]
 
 { #category : #initialization }
-GtStreamingSpotterCandidateElement >> candidate: anObject search: aSpotterSearch [
-	candidate := anObject.
-	search := aSpotterSearch.
+GtStreamingSpotterCategoryElement >> group: aGroup [
+	group := aGroup.
 	
-	label text: (aSpotterSearch itemNameFor: anObject)
-]
-
-{ #category : #'private - event handling' }
-GtStreamingSpotterCandidateElement >> diveInDueTo: anEventType [
-	self spotterStep
-		diveIn: candidate
-		dueTo: anEventType
+	self updateLabel.
+	group itemsProvider sinks first sink: self asyncSink
 ]
 
 { #category : #initialization }
-GtStreamingSpotterCandidateElement >> initialize [
+GtStreamingSpotterCategoryElement >> initialize [
 	| aToolbar |
 	super initialize.
 	
@@ -48,7 +44,7 @@ GtStreamingSpotterCandidateElement >> initialize [
 		alignCenterLeft;
 		padding: (BlInsets top: 5 right: 10 bottom: 5 left: 10).
 	
-	label := self newCandidateLabel.
+	label := self newCategoryLabel.
 	actOnButton := self newActOnButton.
 	diveInButton := self newDiveInButton.
 	
@@ -56,7 +52,10 @@ GtStreamingSpotterCandidateElement >> initialize [
 		fitContent;
 		cellSpacing: 5;
 		addChildren: { actOnButton. diveInButton }.
-
+	
+	
+	self withAsyncSinkDo: [ :anElementSink | anElementSink whenUpdate: [ self updateLabel ] ].
+	
 	self addChildren: { 
 		label.
 		aToolbar
@@ -70,33 +69,56 @@ GtStreamingSpotterCandidateElement >> initialize [
 ]
 
 { #category : #'private - instance creation' }
-GtStreamingSpotterCandidateElement >> newActOnButton [
+GtStreamingSpotterCategoryElement >> newActOnButton [
 	^ BrButton new
 		aptitude: BrGlamorousButtonWithIconAptitude;
 		icon: BrGlamorousVectorIcons accept;
-		label: 'Select Item';
+		label: 'Act on category';
 		action: [ self actDueTo: #buttonClick ];
 		beTinySize;
 		yourself
 ]
 
 { #category : #'private - instance creation' }
-GtStreamingSpotterCandidateElement >> newCandidateLabel [
+GtStreamingSpotterCategoryElement >> newCategoryLabel [
 	^ BrLabel new
-		aptitude: BrGlamorousLabelAptitude;
+		aptitude: (BrGlamorousLabelAptitude new foreground: Color gray);
 		hMatchParent;
 		vFitContent;
 		alignCenterLeft
 ]
 
 { #category : #'private - instance creation' }
-GtStreamingSpotterCandidateElement >> newDiveInButton [
+GtStreamingSpotterCategoryElement >> newDiveInButton [
 	^ BrButton new
 		aptitude: BrGlamorousButtonWithIconAptitude;
 		icon: BrGlamorousVectorIcons right;
-		label: 'Dive-In to Search Item Details';
+		label: 'Dive-In to search through category';
 		action: [ self diveInDueTo: #buttonClick ];
 		beTinySize;
 		fitContent;
 		alignCenterLeft
+]
+
+{ #category : #'private - event handling' }
+GtStreamingSpotterCategoryElement >> updateLabel [
+	| groupTitle currentAmountOfItems isDone |
+
+	currentAmountOfItems := group itemsProvider sinks second count.
+	isDone := group itemsProvider isDone.
+	
+	groupTitle := String
+			streamContents: [ :aStream | 
+				aStream
+					nextPutAll: group domainObject title;
+					space;
+					nextPut: $(;
+					print: (currentAmountOfItems min: group itemsLimit);
+					space;
+					nextPut: $/;
+					space;
+					nextPutAll: (isDone ifTrue: [ currentAmountOfItems asString ] ifFalse: [ '...' ]);
+					nextPut: $) ].
+
+	label text: groupTitle
 ]

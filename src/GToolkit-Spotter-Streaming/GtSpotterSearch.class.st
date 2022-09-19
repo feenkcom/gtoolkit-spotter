@@ -160,7 +160,7 @@ GtSpotterSearch >> title: aString [
 
 { #category : #'api - configuration' }
 GtSpotterSearch >> withoutCategoryAction [
-	actOnLogicComputation := nil
+	actOnCategoryLogicComputation := nil
 ]
 
 { #category : #'api - configuration' }

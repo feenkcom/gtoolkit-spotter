@@ -91,7 +91,7 @@ GtStreamingSpotterHeaderElement >> subscribeToSpotter [
 	<modelSubscriber: #spotter>
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#subscribeToObjectTemplate'>
 	
-	spotter when: GtStreamingSpotterModeChanged send: #onDebugModeChanged to: self.
+	spotter when: GtStreamingSpotterDebugModeChanged send: #onDebugModeChanged to: self.
 ]
 
 { #category : #'api - spotter' }

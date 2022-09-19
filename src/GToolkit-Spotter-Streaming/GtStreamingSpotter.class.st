@@ -5,7 +5,8 @@ Class {
 		'announcer',
 		'steps',
 		'currentStep',
-		'isDebugMode'
+		'isDebugMode',
+		'shouldShowPreview'
 	],
 	#category : #'GToolkit-Spotter-Streaming-Model'
 }
@@ -89,9 +90,9 @@ GtStreamingSpotter >> currentStepIndex [
 		ifAbsent: [ self error: 'Current step is wrong' ]
 ]
 
-{ #category : #'api - actions' }
+{ #category : #'api - accessing' }
 GtStreamingSpotter >> hidePreview [
-	
+	self showPreview: false
 ]
 
 { #category : #initialization }
@@ -141,12 +142,25 @@ GtStreamingSpotter >> notifyCurrentStepChanged: aSpotterStep at: aStepIndex [
 ]
 
 { #category : #'private - notifying' }
-GtStreamingSpotter >> notifyModeChanged [
+GtStreamingSpotter >> notifyDebugModeChanged [
 	<return: #GtSpotterActOn>
 	| anAnnouncement |
 	
-	anAnnouncement := GtStreamingSpotterModeChanged new 
+	anAnnouncement := GtStreamingSpotterDebugModeChanged new 
 		isDebugMode: isDebugMode.
+
+	self announce: anAnnouncement.
+	
+	^ anAnnouncement
+]
+
+{ #category : #'private - notifying' }
+GtStreamingSpotter >> notifyPreviewStateChanged [
+	<return: #GtSpotterActOn>
+	| anAnnouncement |
+	
+	anAnnouncement := GtStreamingSpotterPreviewModeChanged new 
+		shouldShowPreview: shouldShowPreview.
 
 	self announce: anAnnouncement.
 	
@@ -238,7 +252,22 @@ GtStreamingSpotter >> pushStep: anOriginObject [
 ]
 
 { #category : #'api - accessing' }
+GtStreamingSpotter >> shouldShowPreview [
+	^ shouldShowPreview
+]
+
+{ #category : #'api - accessing' }
+GtStreamingSpotter >> showPreview [
+	self showPreview: true
+]
+
+{ #category : #'api - accessing' }
 GtStreamingSpotter >> showPreview: aBoolean [
+	shouldShowPreview = aBoolean
+		ifTrue: [ ^ self ].
+
+	shouldShowPreview := aBoolean.
+	self notifyPreviewStateChanged
 ]
 
 { #category : #'api - accessing' }
@@ -249,13 +278,20 @@ GtStreamingSpotter >> steps [
 { #category : #'api - actions' }
 GtStreamingSpotter >> switchToDebugMode [
 	isDebugMode := true.
-	self notifyModeChanged
+	self notifyDebugModeChanged
 ]
 
 { #category : #'api - actions' }
 GtStreamingSpotter >> switchToProductionMode [
 	isDebugMode := false.
-	self notifyModeChanged
+	self notifyDebugModeChanged
+]
+
+{ #category : #'api - accessing' }
+GtStreamingSpotter >> togglePreview [
+	self shouldShowPreview
+		ifTrue: [ self hidePreview ]
+		ifFalse: [ self showPreview ]
 ]
 
 { #category : #'api - announcer' }

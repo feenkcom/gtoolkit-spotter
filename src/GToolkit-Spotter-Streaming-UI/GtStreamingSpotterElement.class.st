@@ -81,6 +81,11 @@ GtStreamingSpotterElement >> handleSelectPrevious: anEvent [
 	self currentStepElementDo: [ :anElement | anElement selectPreviousItem ]
 ]
 
+{ #category : #'private - event handling' }
+GtStreamingSpotterElement >> handleTogglePreview: anEvent [
+	spotter togglePreview
+]
+
 { #category : #initialization }
 GtStreamingSpotterElement >> initialize [
 	super initialize.
@@ -142,6 +147,11 @@ GtStreamingSpotterElement >> initialize [
 		overrideChildren: true;
 		combination: BlKeyCombination primaryReturn;
 		action: [ :anEvent :aShortcut | self handleCategoryActOn: anEvent ]).
+		
+	self addShortcut: (BlShortcutWithAction new
+		overrideChildren: true;
+		combination: BlKeyCombination primaryP;
+		action: [ :anEvent :aShortcut | self handleTogglePreview: anEvent ]).
 
 	self when: BlKeyDownEvent do: [ :anEvent |
 		anEvent key isPrimary
@@ -154,6 +164,11 @@ GtStreamingSpotterElement >> initialize [
 	self when: GtStreamingSpotterSelectedCandidateMaybeChanged do: [ :anEvent |
 		anEvent consumed: true.
 		self onSelectedCandidateMaybeChanged ]
+]
+
+{ #category : #'private - event handling' }
+GtStreamingSpotterElement >> onPreviewStateChanged: anAnnouncement [
+	self updatePreviewState
 ]
 
 { #category : #'private - event handling' }
@@ -174,5 +189,38 @@ GtStreamingSpotterElement >> onSpotterChanged [
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#onObjectChangedTemplate'>
 	
 	headerElement spotter: spotter.
-	stepsPager spotter: spotter
+	stepsPager spotter: spotter.
+
+	self updatePreviewState
+]
+
+{ #category : #'api - spotter' }
+GtStreamingSpotterElement >> subscribeToSpotter [
+	"Is sent after a new spotter is assigned to the receiver.
+	It is required to unsubscribe from the previously subscribed objects by implementing
+	#unsubscribeFromSpotter if the receiver subscribes to them"
+	<modelSubscriber: #spotter>
+	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#subscribeToObjectTemplate'>
+	
+	spotter when: GtStreamingSpotterPreviewModeChanged send: #onPreviewStateChanged: to: self.
+]
+
+{ #category : #'private - update' }
+GtStreamingSpotterElement >> updatePreviewElement [
+	spotter shouldShowPreview
+		ifFalse: [ ^ self ].
+	
+	self currentStepSelectedCandidateDo: [ :aCandidate |
+		previewElement
+			updatePreviewOf: aCandidate item
+			forSearch: aCandidate search ]
+]
+
+{ #category : #'private - update' }
+GtStreamingSpotterElement >> updatePreviewState [
+	spotter shouldShowPreview
+		ifTrue: [ previewElement visibility: BlVisibility visible ]
+		ifFalse: [ previewElement visibility: BlVisibility gone ].
+		
+	self updatePreviewElement
 ]

@@ -1,5 +1,5 @@
 Class {
-	#name : #GtStreamingSpotterModeChanged,
+	#name : #GtStreamingSpotterDebugModeChanged,
 	#superclass : #GtStreamingSpotterAnnouncement,
 	#instVars : [
 		'isDebugMode'
@@ -8,11 +8,11 @@ Class {
 }
 
 { #category : #accessing }
-GtStreamingSpotterModeChanged >> isDebugMode [
+GtStreamingSpotterDebugModeChanged >> isDebugMode [
 	^ isDebugMode
 ]
 
 { #category : #accessing }
-GtStreamingSpotterModeChanged >> isDebugMode: aBoolean [
+GtStreamingSpotterDebugModeChanged >> isDebugMode: aBoolean [
 	isDebugMode := aBoolean
 ]

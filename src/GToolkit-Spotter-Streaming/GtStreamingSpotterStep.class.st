@@ -17,6 +17,13 @@ GtStreamingSpotterStep >> announce: anAnnouncement [
 ]
 
 { #category : #'api - step' }
+GtStreamingSpotterStep >> canDiveIn: anObject [
+	<return: #TAsyncFuture>
+
+	^ (GtSpotterUnorderedSearchesStream forOriginObject: anObject) isNotEmpty
+]
+
+{ #category : #'api - step' }
 GtStreamingSpotterStep >> categoryActOn: aCategory search: aSearch dueTo: anEventType from: anElement [
 	"Perform an action associated with the given candidate item.
 	(can be triggered by doubleClick: or keyboard Enter press)"

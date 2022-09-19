@@ -100,7 +100,8 @@ GtStreamingSpotter >> initialize [
 	super initialize.
 
 	steps := OrderedCollection new.
-	isDebugMode := false
+	isDebugMode := false.
+	shouldShowPreview := true
 ]
 
 { #category : #initialization }

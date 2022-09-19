@@ -30,13 +30,22 @@ GtSpotterSearch >> categoryActLogic: aBlockWithTwoArguments [
 { #category : #'private - computation' }
 GtSpotterSearch >> categoryActOn: aCategory for: aSpotterStep from: anElement [
 	actOnCategoryLogicComputation
-		ifNil: [ aCategory gtSpotterActDefault: aSpotterStep from: anElement ]
-		ifNotNil: [ actOnCategoryLogicComputation cull: aCategory cull: aSpotterStep cull: anElement ]
+		ifNotNil: [ :aBlock | aBlock cull: aCategory cull: aSpotterStep cull: anElement ]
 ]
 
 { #category : #initialization }
 GtSpotterSearch >> definingMethod: aCompiledMethod [
 	definingMethod := aCompiledMethod
+]
+
+{ #category : #accessing }
+GtSpotterSearch >> hasCategoryActOn [
+	^ actOnCategoryLogicComputation isNotNil
+]
+
+{ #category : #accessing }
+GtSpotterSearch >> hasItemActOn [
+	^ actOnLogicComputation isNotNil
 ]
 
 { #category : #initialization }
@@ -45,7 +54,9 @@ GtSpotterSearch >> initialize [
 	
 	title := 'Untitled'.
 	priority := 10.
-	itemsLimit := 5
+	itemsLimit := 5.
+	actOnLogicComputation := [ :anObject :aSpotterStep :anElement | anObject gtSpotterActDefault: aSpotterStep from: anElement ].
+	actOnCategoryLogicComputation := [ :aCategory :aSpotterStep :anElement | aCategory gtSpotterActDefault: aSpotterStep from: anElement ]
 ]
 
 { #category : #'api - configuration' }
@@ -56,8 +67,7 @@ GtSpotterSearch >> itemActLogic: aBlockWithTwoArguments [
 { #category : #'private - computation' }
 GtSpotterSearch >> itemActOn: anObject for: aSpotterStep from: anElement [
 	actOnLogicComputation
-		ifNil: [ anObject gtSpotterActDefault: aSpotterStep from: anElement ]
-		ifNotNil: [ actOnLogicComputation cull: anObject cull: aSpotterStep cull: anElement ]
+		ifNotNil: [ :aBlock | aBlock cull: anObject cull: aSpotterStep cull: anElement ]
 ]
 
 { #category : #'api - configuration' }
@@ -146,6 +156,16 @@ GtSpotterSearch >> title [
 { #category : #'api - configuration' }
 GtSpotterSearch >> title: aString [
 	title := aString
+]
+
+{ #category : #'api - configuration' }
+GtSpotterSearch >> withoutCategoryAction [
+	actOnLogicComputation := nil
+]
+
+{ #category : #'api - configuration' }
+GtSpotterSearch >> withoutItemAction [
+	actOnLogicComputation := nil
 ]
 
 { #category : #'api - configuration' }

@@ -44,7 +44,10 @@ GtStreamingSpotterCategoryElement >> group: aGroup [
 	group := aGroup.
 	
 	self updateLabel.
-	group itemsProvider sinks first sink: self asyncSink
+	group itemsProvider sinks first sink: self asyncSink.
+	group domainObject hasItemActOn
+		ifTrue: [ actOnButton visibility: BlVisibility visible ]
+		ifFalse: [ actOnButton visibility: BlVisibility hidden ]
 ]
 
 { #category : #initialization }
@@ -65,8 +68,7 @@ GtStreamingSpotterCategoryElement >> initialize [
 	aToolbar := BrHorizontalPane new
 		fitContent;
 		cellSpacing: 5;
-		addChildren: { actOnButton. diveInButton }.
-	
+		addChildren: { diveInButton . actOnButton }.
 	
 	self withAsyncSinkDo: [ :anElementSink | anElementSink whenUpdate: [ self updateLabel ] ].
 	

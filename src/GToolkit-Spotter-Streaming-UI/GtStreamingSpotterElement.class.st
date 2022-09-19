@@ -61,6 +61,11 @@ GtStreamingSpotterElement >> handleItemActOn: anEvent [
 { #category : #'private - event handling' }
 GtStreamingSpotterElement >> handleItemDiveIn: anEvent [
 	self currentStepSelectedCandidateDo: [ :aCandidate |
+		"dive-in should be thread safe"
+		self flag: #TODO.
+		(self spotter currentStep canDiveIn: aCandidate item) wait
+			ifFalse: [ ^ self ].
+		
 		self spotter currentStep
 			diveIn: aCandidate item
 			dueTo: #keyPressedPrimaryArrowRight ]
@@ -117,7 +122,7 @@ GtStreamingSpotterElement >> initialize [
 		overrideChildren: true;
 		combination: BlKeyCombination primaryArrowRight;
 		action: [ :anEvent :aShortcut | self handleItemDiveIn: anEvent ]).
-		
+
 	self addShortcut: (BlShortcutWithAction new
 		overrideChildren: true;
 		combination: BlKeyCombination primaryShiftArrowRight;

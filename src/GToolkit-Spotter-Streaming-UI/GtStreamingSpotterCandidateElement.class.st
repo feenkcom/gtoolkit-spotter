@@ -27,7 +27,12 @@ GtStreamingSpotterCandidateElement >> candidate: anObject search: aSpotterSearch
 	candidate := anObject.
 	search := aSpotterSearch.
 	
-	label text: (aSpotterSearch itemNameFor: anObject)
+	label text: (aSpotterSearch itemNameFor: anObject).
+	
+	diveInButton asyncFuture future: (spotterStep canDiveIn: anObject).
+	aSpotterSearch hasItemActOn
+		ifTrue: [ actOnButton visibility: BlVisibility visible ]
+		ifFalse: [ actOnButton visibility: BlVisibility hidden ]
 ]
 
 { #category : #'private - event handling' }
@@ -50,12 +55,23 @@ GtStreamingSpotterCandidateElement >> initialize [
 	
 	label := self newCandidateLabel.
 	actOnButton := self newActOnButton.
+	actOnButton visibility: BlVisibility hidden.
+
 	diveInButton := self newDiveInButton.
-	
+	diveInButton visibility: BlVisibility hidden.
+	diveInButton withAsyncFutureDo: [ :anElementFuture |
+		 anElementFuture
+			whenPending: [ :theButton | theButton visibility: BlVisibility hidden ];
+			whenError: [ :theButton :anError | theButton visibility: BlVisibility hidden ];
+			whenSuccess: [ :theButton :canDiveIn |
+				canDiveIn
+					ifTrue: [ theButton visibility: BlVisibility visible ]
+					ifFalse: [ theButton visibility: BlVisibility hidden ] ] ].
+
 	aToolbar := BrHorizontalPane new
 		fitContent;
 		cellSpacing: 5;
-		addChildren: { actOnButton. diveInButton }.
+		addChildren: { diveInButton . actOnButton }.
 
 	self addChildren: { 
 		label.
@@ -74,7 +90,7 @@ GtStreamingSpotterCandidateElement >> newActOnButton [
 	^ BrButton new
 		aptitude: BrGlamorousButtonWithIconAptitude;
 		icon: BrGlamorousVectorIcons accept;
-		label: 'Select Item';
+		label: 'Act on Item';
 		action: [ self actDueTo: #buttonClick ];
 		beTinySize;
 		yourself

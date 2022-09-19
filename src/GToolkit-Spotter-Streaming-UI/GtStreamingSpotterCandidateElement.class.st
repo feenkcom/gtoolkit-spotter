@@ -82,7 +82,11 @@ GtStreamingSpotterCandidateElement >> initialize [
 		@ aToolbar;
 		default: [ :aStyle | aStyle visibility: BlVisibility gone ];
 		when: [ :aState | aState hovered or: aState selected ]
-			style: [ :aStyle | aStyle visibility: BlVisibility visible ] )
+			style: [ :aStyle | aStyle visibility: BlVisibility visible ] ).
+			
+	self when: BlDoubleClickEvent do: [ :anEvent |
+		anEvent consumed: true.
+		self actDueTo: #buttonDoubleClick ]
 ]
 
 { #category : #'private - instance creation' }

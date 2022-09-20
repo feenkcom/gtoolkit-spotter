@@ -12,8 +12,28 @@ Class {
 }
 
 { #category : #'private - preview' }
+GtStreamingSpotterPreviewElement >> createPreviewForBrokenSearch: aSpotterSearch [
+	| aCoder aCoderViewModel anError aContext aFilteredStack |
+	
+	anError := aSpotterSearch error.
+	aContext := anError signalerContext ifNil: [ anError signalContext ].
+	aFilteredStack := (aContext stackOfSize: 50 ) select: [ :eachContext | 
+		(eachContext method hasPragmaNamed: #debuggerCompleteToSender) not ].
+	
+	aCoder := GtPharoMethodContextCoder
+		forContext: (aFilteredStack ifEmpty: [ aContext ] ifNotEmpty: [ :theStack | theStack first ])
+		session: nil.
+
+	aCoderViewModel := aCoder asCoderViewModel.
+	^ aCoderViewModel asExpandedOnlyElement vFitContentLimited
+]
+
+{ #category : #'private - preview' }
 GtStreamingSpotterPreviewElement >> generatePreviewOf: anObject forSearch: aSpotterSearch [
 	| aChildElement aText aPreviewObject |
+	
+	aSpotterSearch isBroken
+		ifTrue: [ ^ aSpotterSearch title -> (self createPreviewForBrokenSearch: aSpotterSearch) ].	
 	
 	aPreviewObject := aSpotterSearch previewObjectFor: anObject.
 

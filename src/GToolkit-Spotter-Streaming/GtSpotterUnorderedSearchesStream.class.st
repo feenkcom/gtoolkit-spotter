@@ -24,9 +24,19 @@ GtSpotterUnorderedSearchesStream >> basicProcessorForPragma: aPragma [
 	
 	"Some #gtSearch extensions do not actually return a processor...
 	we have to do a builder hack for now. We will rewrite the extensions!"
-	aSearch := origin
-		perform: aPragma methodSelector
-		with: aProtoSearch.
+	aSearch := [
+		| aMethodReturn |
+		aMethodReturn := origin
+			perform: aPragma methodSelector
+			with: aProtoSearch.
+		
+		(aMethodReturn isKindOf: GtSpotterProtoSearch)
+			ifFalse: [ (GtStreamingSpotterSearchWrongReturnError new definingMethod: aPragma method) signal ]
+			ifTrue: [ aMethodReturn ] ]
+		on: Error
+		do: [ :anError |
+			(self createBrokenSearchFrom: aPragma method)
+				error: anError ].
 
 	aSearch definingMethod: aPragma method.
 
@@ -37,6 +47,28 @@ GtSpotterUnorderedSearchesStream >> basicProcessorForPragma: aPragma [
 GtSpotterUnorderedSearchesStream >> buildProcessorsStream [
 	^ (GtSpotterSearchPragmasFuture forOriginObject: origin) asAsyncStream flatten
 		map: [ :eachPragma | self basicProcessorForPragma: eachPragma ]
+]
+
+{ #category : #private }
+GtSpotterUnorderedSearchesStream >> createBrokenSearchFrom: aCompiledMethod [
+	| aMethodNode aPriority aTitle |
+	
+	aMethodNode := aCompiledMethod ast.
+
+	aPriority := 1.
+	aTitle := 'Untitled'.
+	
+	aMethodNode nodesDo: [ :each |
+		(each isMessage and:  [ each arguments size = 1 and: [ each arguments first isLiteralNode ] ])
+			ifTrue: [
+				each selector = #priority:
+					ifTrue: [ aPriority := each arguments first value ].
+				each selector = #title:
+					ifTrue: [ aTitle := each arguments first value ] ] ].
+
+	^ GtSpotterBrokenSearch new
+		priority: aPriority;
+		title: aTitle
 ]
 
 { #category : #initialization }

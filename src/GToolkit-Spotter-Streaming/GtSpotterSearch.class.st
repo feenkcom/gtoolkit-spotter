@@ -2,9 +2,6 @@ Class {
 	#name : #GtSpotterSearch,
 	#superclass : #GtSpotterProtoSearch,
 	#instVars : [
-		'title',
-		'priority',
-		'definingMethod',
 		'itemNameComputation',
 		'objectToActOnComputation',
 		'actOnLogicComputation',
@@ -33,11 +30,6 @@ GtSpotterSearch >> categoryActOn: aCategory for: aSpotterStep from: anElement [
 		ifNotNil: [ :aBlock | aBlock cull: aCategory cull: aSpotterStep cull: anElement ]
 ]
 
-{ #category : #initialization }
-GtSpotterSearch >> definingMethod: aCompiledMethod [
-	definingMethod := aCompiledMethod
-]
-
 { #category : #accessing }
 GtSpotterSearch >> hasCategoryActOn [
 	^ actOnCategoryLogicComputation isNotNil
@@ -51,9 +43,7 @@ GtSpotterSearch >> hasItemActOn [
 { #category : #initialization }
 GtSpotterSearch >> initialize [
 	super initialize.
-	
-	title := 'Untitled'.
-	priority := 10.
+
 	itemsLimit := 5.
 	actOnLogicComputation := [ :anObject :aSpotterStep :anElement | anObject gtSpotterActDefault: aSpotterStep from: anElement ].
 	actOnCategoryLogicComputation := [ :aCategory :aSpotterStep :anElement | aCategory gtSpotterActDefault: aSpotterStep from: anElement ]
@@ -123,17 +113,6 @@ GtSpotterSearch >> previewObjectFor: anObject [
 	^ anObject
 ]
 
-{ #category : #accessing }
-GtSpotterSearch >> priority [
-
-	^ priority
-]
-
-{ #category : #'api - configuration' }
-GtSpotterSearch >> priority: aNumber [
-	priority := aNumber
-]
-
 { #category : #'private - computation' }
 GtSpotterSearch >> privateDefaultPreviewElementFor: anObject [
 	<return: #BlElement or: nil>
@@ -145,17 +124,6 @@ GtSpotterSearch >> privateDefaultPreviewElementFor: anObject [
 		asElementDo: [ :anElement | aPreviewElement := anElement ].
 
 	^ aPreviewElement
-]
-
-{ #category : #accessing }
-GtSpotterSearch >> title [
-
-	^ title
-]
-
-{ #category : #'api - configuration' }
-GtSpotterSearch >> title: aString [
-	title := aString
 ]
 
 { #category : #'api - configuration' }

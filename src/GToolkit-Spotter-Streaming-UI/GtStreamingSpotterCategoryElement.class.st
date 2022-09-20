@@ -45,7 +45,7 @@ GtStreamingSpotterCategoryElement >> group: aGroup [
 	
 	self updateLabel.
 	group itemsProvider sinks first sink: self asyncSink.
-	group domainObject hasItemActOn
+	group domainObject hasCategoryActOn
 		ifTrue: [ actOnButton visibility: BlVisibility visible ]
 		ifFalse: [ actOnButton visibility: BlVisibility hidden ]
 ]

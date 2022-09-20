@@ -38,6 +38,11 @@ GtStreamingSpotterStepElement >> initialize [
 ]
 
 { #category : #'private - instance creation' }
+GtStreamingSpotterStepElement >> newBrokenSearchElement [
+	^ GtStreamingSpotterBrokenSearchElement new
+]
+
+{ #category : #'private - instance creation' }
 GtStreamingSpotterStepElement >> newCandidateElement [
 	^ GtStreamingSpotterCandidateElement new
 ]
@@ -45,6 +50,24 @@ GtStreamingSpotterStepElement >> newCandidateElement [
 { #category : #'private - instance creation' }
 GtStreamingSpotterStepElement >> newCategoryElement [
 	^ GtStreamingSpotterCategoryElement new
+]
+
+{ #category : #'private - instance creation' }
+GtStreamingSpotterStepElement >> newGroup: aSearch itemsProvider: aStreamItemsProvider [
+	^ aSearch isBroken
+		ifTrue: [
+			BrGroup new
+				itemsProvider: aStreamItemsProvider;
+				domainObject: aSearch;
+				itemStencil: [ self newBrokenSearchElement spotterStep: self spotterStep ];
+				itemDataBinder: [ :aCandidateElement :aBrokenSearch | aCandidateElement search: aBrokenSearch ] ]
+		ifFalse: [
+			BrGroup new
+				itemsProvider: aStreamItemsProvider;
+				domainObject: aSearch;
+				itemStencil: [ self newCandidateElement spotterStep: self spotterStep ];
+				itemDataBinder: [ :aCandidateElement :eachItem | aCandidateElement candidate: eachItem search: aSearch ];
+				itemsLimit: aSearch itemsLimit ]
 ]
 
 { #category : #'private - event handling' }
@@ -137,12 +160,7 @@ GtStreamingSpotterStepElement >> onSearchQueryChanged [
 			send: #onLoadingFinished:
 			to: self.
 		
-		aGroup := BrGroup new
-			itemsProvider: aStreamItemsProvider;
-			domainObject: aSearch;
-			itemStencil: [ self newCandidateElement spotterStep: self spotterStep ];
-			itemDataBinder: [ :aCandidateElement :eachItem | aCandidateElement candidate: eachItem search: aSearch ];
-			itemsLimit: aSearch itemsLimit.
+		aGroup := self newGroup: aSearch itemsProvider: aStreamItemsProvider.
 	
 		aStreamItemsProvider userData at: #group put: aGroup.
 

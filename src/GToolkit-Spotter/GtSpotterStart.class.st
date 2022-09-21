@@ -8,30 +8,31 @@ Class {
 }
 
 { #category : #accessing }
-GtSpotterStart >> concreteMethodsInContext: aContext usingFilter: aFilter [
-	" return the concrete methods described by the expression (Class >> #Selector) - evaluate it savely "
+GtSpotterStart >> concreteMethodInContext: aContext [
+	" return the concrete methods described by the expression (Class >> #Selector) - evaluate it safely"
+	<return: #AsyncOptionalValue>
 	| classAndSelectorStrings class selector |
-	classAndSelectorStrings := (aContext textTrimmed splitOn: '>>') collect: [ :each | each trimBoth ].
+
+	classAndSelectorStrings := (aContext searchQuery trimBoth splitOn: '>>')
+		collect: [ :each | each trimBoth ].
 	
 	" check preconditions "
-	classAndSelectorStrings size = 2 ifFalse: [ ^ self ].
-	classAndSelectorStrings second size < 2 ifTrue: [ ^ self ].
+	classAndSelectorStrings size = 2
+		ifFalse: [ ^ AsyncOptionalValue none  ].
+	classAndSelectorStrings second size < 2
+		ifTrue: [ ^ AsyncOptionalValue none ].
 
-	" retrieve concrete class and selector - or saerch all behaviors "
+	" retrieve concrete class and selector - or search all behaviors "
 	selector := classAndSelectorStrings second first = $# 
 		ifTrue: [ classAndSelectorStrings second allButFirst asSymbol ]
 		ifFalse: [ classAndSelectorStrings second asSymbol ].
 	
-	(class := Smalltalk classNamed: classAndSelectorStrings first) ifNil: [ 
-		SystemNavigation default allBehaviorsDo: [ :aClass |
-			aClass methodsDo: [ :method |
-				method selector = selector ifTrue: [ aFilter value: method ] ] ].
-		^ self ].
-	
-	
-	" retrieve the compiled method in the class and class hierarchy "
-	class withAllSuperclassesDo: [ :aClass |
-		aFilter value: ([ aClass compiledMethodAt: selector ] on: Error do: [ ^ self ]) ]
+	(class := Smalltalk classNamed: classAndSelectorStrings first)
+		ifNil: [ ^ AsyncOptionalValue none ].
+
+	^ [ AsyncOptionalValue some: (class compiledMethodAt: selector) ]
+		on: Error
+		do: [ AsyncOptionalValue none ].
 ]
 
 { #category : #accessing }
@@ -59,6 +60,18 @@ GtSpotterStart >> fileReferencesBy: aSelector inContext: aSpotterContext usingFi
 { #category : #printing }
 GtSpotterStart >> gtDisplayOn: stream [
 	stream nextPutAll: 'Spotter'
+]
+
+{ #category : #spotter }
+GtSpotterStart >> gtSearchConcreteMethodFor: aSearch [
+	<gtSearch>
+
+	^ aSearch explicit
+		priority: 5;
+		title: 'Method';
+		search: [ :aContext |
+			AsyncMaybeOnceStream forFuture:
+				[ self concreteMethodInContext: aContext ] asAsyncFuture ]
 ]
 
 { #category : #searches }
@@ -149,18 +162,6 @@ GtSpotterStart >> gtSpotterClipboardFor: aStep [
 		actLogic: [ :item :step | 
 			step exit.
 			item asString inspect ];
-		wantsToDisplayOnEmptyQuery: false
-]
-
-{ #category : #spotter }
-GtSpotterStart >> gtSpotterConcreteMethodFor: aStep [
-	<gtSearch>
-	aStep listProcessor
-		priority: 30;
-		title: 'Methods';
-		filter: GtNullFilter
-			item:
-				[ :filter :context | self concreteMethodsInContext: context usingFilter: filter ];
 		wantsToDisplayOnEmptyQuery: false
 ]
 

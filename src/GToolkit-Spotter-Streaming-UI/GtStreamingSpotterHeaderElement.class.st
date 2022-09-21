@@ -40,8 +40,7 @@ GtStreamingSpotterHeaderElement >> initialize [
 			c ignoreByLayout.
 			c ignored horizontal alignRight.
 			c ignored vertical alignCenter ];
-		when: BlMouseDownEvent do: [ :anEvent |
-			GtInspector openOn: spotter from: anEvent currentTarget ].
+		action: [ :aButton | GtInspector openOn: spotter from: aButton ].
 
 	self addChildren: {
 		BrFrame new

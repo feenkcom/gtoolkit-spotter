@@ -64,25 +64,27 @@ GtStreamingSpotterCategoryElement >> initialize [
 	label := self newCategoryLabel.
 	actOnButton := self newActOnButton.
 	diveInButton := self newDiveInButton.
-	
+
 	aToolbar := BrHorizontalPane new
 		fitContent;
 		cellSpacing: 5;
 		addChildren: { diveInButton . actOnButton }.
-	
+
 	self withAsyncSinkDo: [ :anElementSink | anElementSink whenUpdate: [ self updateLabel ] ].
-	
+
 	self addChildren: { 
 		label.
 		aToolbar
 	}.
-	
+
 	self addAptitude: BrGlamorousListItemAptitude + (BrStyleCommonAptitude new
 		@ aToolbar;
 		default: [ :aStyle | aStyle visibility: BlVisibility gone ];
 		when: [ :aState | aState hovered or: aState selected ]
 			style: [ :aStyle | aStyle visibility: BlVisibility visible ] ).
-			
+
+	self addAptitude: (GtPhlowBrowseDefinitionAptitude new definition: [ group domainObject definingMethod ]).
+
 	self when: BlDoubleClickEvent do: [ :anEvent |
 		anEvent consumed: true.
 		self actDueTo: #buttonDoubleClick ]

@@ -2,7 +2,7 @@ Extension { #name : #Class }
 
 { #category : #'*GToolkit-Spotter-Streaming' }
 Class >> gtSearchMethodsFor: aSearch [
-	<gtSpotterSearch>
+	<gtSearch>
 	
 	^ aSearch list
 		priority: 10;

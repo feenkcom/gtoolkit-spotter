@@ -63,7 +63,7 @@ GtSpotterStart >> gtDisplayOn: stream [
 
 { #category : #searches }
 GtSpotterStart >> gtSearchForClassesFor: aSearch [
-	<gtSpotterSearch>
+	<gtSearch>
 	
 	^ aSearch explicit
 		priority: 10;
@@ -73,7 +73,7 @@ GtSpotterStart >> gtSearchForClassesFor: aSearch [
 
 { #category : #searches }
 GtSpotterStart >> gtSearchForGlobalVarsFor: aStep [
-	<gtSpotterSearch>
+	<gtSearch>
 	^ aStep list
 		priority: 40;
 		items: [ Smalltalk globals associations
@@ -87,7 +87,7 @@ GtSpotterStart >> gtSearchForGlobalVarsFor: aStep [
 
 { #category : #searches }
 GtSpotterStart >> gtSearchForPackagesFor: aSearch [
-	<gtSpotterSearch>
+	<gtSearch>
 	
 	^ aSearch list
 		title: 'Packages';
@@ -101,7 +101,7 @@ GtSpotterStart >> gtSearchForPackagesFor: aSearch [
 
 { #category : #searches }
 GtSpotterStart >> gtSearchForPragmasFor: aSearch [
-	<gtSpotterSearch>
+	<gtSearch>
 	^ aSearch list
 		priority: 40;
 		items: [ GtPragmaType all ];
@@ -113,7 +113,7 @@ GtSpotterStart >> gtSearchForPragmasFor: aSearch [
 
 { #category : #searches }
 GtSpotterStart >> gtSearchImplementorsFor: aSearch [
-	<gtSpotterSearch>
+	<gtSearch>
 
 	^ aSearch explicit
 		priority: 30;

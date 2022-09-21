@@ -23,7 +23,7 @@ GtStreamingSpotterCategory >> gtDisplayOn: aStream [
 
 { #category : #searches }
 GtStreamingSpotterCategory >> gtItemsFor: aSearch [
-	<gtSpotterSearch>
+	<gtSearch>
 	
 	^ aSearch list
 		title: search title;

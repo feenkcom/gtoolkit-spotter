@@ -2,7 +2,7 @@ Extension { #name : #CompiledMethod }
 
 { #category : #'*GToolkit-Spotter-Streaming' }
 CompiledMethod >> gtSearchForImplementorsFor: aSearch [
-	<gtSpotterSearch>
+	<gtSearch>
 
 	^ aSearch list
 		priority: 10;

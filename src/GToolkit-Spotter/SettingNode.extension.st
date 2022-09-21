@@ -1,16 +1,15 @@
 Extension { #name : #SettingNode }
 
 { #category : #'*GToolkit-Spotter' }
-SettingNode >> gtSpotterForSettingsFor: aStep [
+SettingNode >> gtSpotterForSettingsFor: aSearch [
 	<gtSearch>
-	self allChildren isEmpty
-		ifTrue: [ ^ self ].
-	aStep listProcessor
+	self allChildren isEmpty ifTrue: [ ^ aSearch empty ].
+	^ aSearch list
 		priority: 0;
 		title: 'Children';
-		allCandidates: [ self allChildren ];
+		items: [ self allChildren ];
 		itemName: [ :each | each spotterLabel ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }

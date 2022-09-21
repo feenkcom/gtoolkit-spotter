@@ -1,17 +1,17 @@
 Extension { #name : #Slot }
 
 { #category : #'*GToolkit-Spotter' }
-Slot >> gtSpotterAccessesFor: aStep [
+Slot >> gtSpotterAccessesFor: aSearch [
 	<gtSearch>
-	(aStep hasPreviousStep
-		and: [ (aStep previousStep origin isKindOf: Class)
-				or: [ aStep origin isKindOf: Class ] ])
-		ifTrue: [ aStep listProcessor
+	(aSearch hasPreviousStep
+		and: [ (aSearch previousStep origin isKindOf: Class)
+				or: [ aSearch origin isKindOf: Class ] ])
+		ifTrue: [ ^ aSearch list
 				priority: 10;
 				title: 'Accesses';
-				allCandidates: [ SystemNavigation default
+				items: [ SystemNavigation default
 						allAccessesTo: self name
-						from: aStep previousStep origin ];
+						from: aSearch previousStep origin ];
 				itemName: [ :each | each asString ];
-				filter: GtFilterSubstring ]
+				filterBySubstring ]
 ]

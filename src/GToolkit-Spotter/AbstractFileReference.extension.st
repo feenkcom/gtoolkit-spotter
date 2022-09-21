@@ -1,94 +1,85 @@
 Extension { #name : #AbstractFileReference }
 
 { #category : #'*GToolkit-Spotter' }
-AbstractFileReference >> gtSpotterForAddressFileFor: aStep [
+AbstractFileReference >> gtSpotterForAddressFileFor: aSearch [
 	<gtSearch>
-	self isAddressBookFile
-		ifFalse: [ ^ self ].
-	^ aStep listProcessor
+	self isAddressBookFile ifFalse: [ ^ aSearch empty ].
+	^ aSearch list
 		priority: 40;
 		title: 'Contacts';
-		allCandidates: [ self contactsFromFile ];
+		items: [ self contactsFromFile ];
 		itemName: #fullName;
-		filter: GtFilterSubstrings;
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]
 
 { #category : #'*GToolkit-Spotter' }
-AbstractFileReference >> gtSpotterForDirectoriesFor: aStep [
+AbstractFileReference >> gtSpotterForDirectoriesFor: aSearch [
 	<gtSearch>
 	^ self isDirectory
-		ifTrue: [ aStep listProcessor
+		ifTrue: [ aSearch list
 				priority: 10;
-				allCandidates: [ self directories ];
+				items: [ self directories ];
 				title: 'Directories';
 				candidatesLimit: Float infinity;
 				itemName: #basename;
-				itemIcon: [ BrGlamorousIcons folder ];
-				filter: GtFilterSubstring ]
+				filterBySubstring ]
 ]
 
 { #category : #'*GToolkit-Spotter' }
-AbstractFileReference >> gtSpotterForFilesFor: aStep [
+AbstractFileReference >> gtSpotterForFilesFor: aSearch [
 	<gtSearch>
 	^ self isDirectory
-		ifTrue: [ aStep listProcessor
+		ifTrue: [ aSearch list
 				priority: 20;
-				allCandidates: [ self files ];
+				items: [ self files ];
 				title: 'Files';
 				candidatesLimit: Float infinity;
 				itemName: #basename;
-				itemIcon: [ BrGlamorousIcons browse ];
-				filter: GtFilterSubstring ]
+				filterBySubstring ]
 ]
 
 { #category : #'*GToolkit-Spotter' }
-AbstractFileReference >> gtSpotterForXMLFileFor: aStep [
+AbstractFileReference >> gtSpotterForXMLFileFor: aSearch [
 	<gtSearch>
 	| xmlFileHandle |
 	xmlFileHandle := XMLFileSystemFileHandle fileReference: self.
-	xmlFileHandle isXMLDocumentFile
-		ifFalse: [ ^ self ].
-	^ aStep listProcessor
+	xmlFileHandle isXMLDocumentFile ifFalse: [ ^ aSearch empty ].
+	^ aSearch list
 		priority: 40;
 		title: 'XML Document';
-		allCandidates:
-				[ (XMLDOMParser parseFileNamed: xmlFileHandle path) allElements ];
+		items: [ (XMLDOMParser parseFileNamed: xmlFileHandle path) allElements ];
 		itemName: #gtDisplayString;
-		filter: GtFilterSubstring;
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]
 
 { #category : #'*GToolkit-Spotter' }
-AbstractFileReference >> gtSpotterForZipDirectoriesFor: aStep [
+AbstractFileReference >> gtSpotterForZipDirectoriesFor: aSearch [
 	<gtSearch>
 	| zipFileSystem |
-	self isZipFile
-		ifFalse: [ ^ self ].
-	^ aStep listProcessor
+	self isZipFile ifFalse: [ ^ aSearch empty ].
+	^ aSearch list
 		priority: 10;
-		allCandidates: [ zipFileSystem := (FileSystem zip: self) open.
+		items: [ zipFileSystem := (FileSystem zip: self) open.
 			zipFileSystem workingDirectory directories ];
 		title: 'Directories';
 		candidatesLimit: Float infinity;
 		itemName: #basename;
-		itemIcon: [ BrGlamorousIcons folder ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-AbstractFileReference >> gtSpotterForZipFilesFor: aStep [
+AbstractFileReference >> gtSpotterForZipFilesFor: aSearch [
 	<gtSearch>
 	| zipFileSystem |
-	self isZipFile
-		ifFalse: [ ^ self ].
-	^ aStep listProcessor
+	self isZipFile ifFalse: [ ^ aSearch empty ].
+	^ aSearch list
 		priority: 10;
-		allCandidates: [ zipFileSystem := (FileSystem zip: self) open.
+		items: [ zipFileSystem := (FileSystem zip: self) open.
 			zipFileSystem workingDirectory files ];
 		title: 'Files';
 		candidatesLimit: Float infinity;
 		itemName: #basename;
-		itemIcon: [ BrGlamorousIcons browse ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]

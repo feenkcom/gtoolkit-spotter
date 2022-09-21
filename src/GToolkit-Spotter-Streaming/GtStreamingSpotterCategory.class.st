@@ -24,7 +24,6 @@ GtStreamingSpotterCategory >> gtDisplayOn: aStream [
 { #category : #searches }
 GtStreamingSpotterCategory >> gtItemsFor: aSearch [
 	<gtSearch>
-	
 	^ aSearch list
 		title: search title;
 		priority: 1;

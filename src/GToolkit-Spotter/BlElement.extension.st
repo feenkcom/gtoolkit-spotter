@@ -1,14 +1,13 @@
 Extension { #name : #BlElement }
 
 { #category : #'*GToolkit-Spotter' }
-BlElement >> gtSpotterForChildrenFor: aStep [
+BlElement >> gtSpotterForChildrenFor: aSearch [
 	<gtSearch>
 	^ self hasChildren
-		ifTrue: [ 
-			aStep listProcessor
+		ifTrue: [ aSearch list
 				priority: 20;
-				allCandidates: [ self allChildrenBreadthFirstSelect: [ :x | true ] ];
+				items: [ self allChildrenBreadthFirstSelect: [ :x | true ] ];
 				title: 'Children';
 				candidatesLimit: Float infinity;
-				filter: GtFilterSubstring ]
+				filterBySubstring ]
 ]

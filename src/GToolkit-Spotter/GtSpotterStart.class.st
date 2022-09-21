@@ -68,35 +68,48 @@ GtSpotterStart >> gtSearchForClassesFor: aSearch [
 	^ aSearch explicit
 		priority: 10;
 		title: 'Classes';
-		search: [ :aContext | GtPharoIndex current asyncClassesForWord: aContext searchQuery ]
+		search: [ :aContext | GtPharoIndex current asyncClassesForWord: aContext searchQuery ];
+		"itemIcon: #systemIcon;"
+		"keyBinding: $b meta;"
+		yourself
 ]
 
 { #category : #searches }
-GtSpotterStart >> gtSearchForGlobalVarsFor: aStep [
+GtSpotterStart >> gtSearchForGlobalVarsFor: aSearch [
 	<gtSearch>
-	^ aStep list
+	^ aSearch list
 		priority: 40;
 		items: [ Smalltalk globals associations
-				select:
-					[ :assoc | assoc value isBehavior not and: [ assoc value isTrait not ] ] ];
+				select: [ :assoc | assoc value isBehavior not and: [ assoc value isTrait not ] ] ];
 		title: 'Global variables';
 		itemName: [ :global | global key ];
 		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
 
+{ #category : #spotter }
+GtSpotterStart >> gtSearchForIcebergRepositoriesFor: aSearch [
+	<gtSearch>
+	^ aSearch list
+		priority: 88;
+		title: 'Iceberg Repositories';
+		items: [ IceRepository registry ];
+		itemName: [ :aRepository | aRepository name ];
+		filterBySubstring;
+		itemActLogic: [ :anIcebergRepository :step :spotterElement | anIcebergRepository gtSpotterActDefault: step from: spotterElement ];
+		wantsToDisplayOnEmptyQuery: false
+]
+
 { #category : #searches }
 GtSpotterStart >> gtSearchForPackagesFor: aSearch [
 	<gtSearch>
-	
 	^ aSearch list
 		title: 'Packages';
 		priority: 20;
 		items: [ RPackageOrganizer default packages ];
 		itemName: [ :aPackage | aPackage name ];
-		"itemIcon: [ Smalltalk ui icons iconNamed: #packageIcon ];"
 		filterBySubstring;
-		wantsToDisplayOnEmptyQuery: false
+		wantsToDisplayOnEmptyQuery: false	"itemIcon: [ Smalltalk ui icons iconNamed: #packageIcon ];"
 ]
 
 { #category : #searches }
@@ -118,7 +131,9 @@ GtSpotterStart >> gtSearchImplementorsFor: aSearch [
 	^ aSearch explicit
 		priority: 30;
 		title: 'Implementors';
-		search: [ :aContext | GtPharoIndex current asyncImplementersForWord: aContext searchQuery ]
+		search: [ :aContext | GtPharoIndex current asyncImplementersForWord: aContext searchQuery ];
+		"keyBinding: $m meta;"
+		yourself
 ]
 
 { #category : #spotter }
@@ -184,19 +199,6 @@ GtSpotterStart >> gtSpotterForAllSuperclassesFor: aStep [
 ]
 
 { #category : #spotter }
-GtSpotterStart >> gtSpotterForClassesFor: aStep [
-	<gtSearch>
-	aStep listProcessor
-		priority: 10;
-		items: [ Smalltalk allClassesAndTraits ];
-		title: 'Classes';
-		filter: GtFilterSubstring;
-		itemIcon: #systemIcon;
-		keyBinding: $b meta;
-		wantsToDisplayOnEmptyQuery: false
-]
-
-{ #category : #spotter }
 GtSpotterStart >> gtSpotterForDirectoriesFor: aStep [
 	"<gtSearch>"
 	self flag: #specialFilter.
@@ -230,37 +232,6 @@ GtSpotterStart >> gtSpotterForFilesFor: aStep [
 ]
 
 { #category : #spotter }
-GtSpotterStart >> gtSpotterForGlobalVarsFor: aStep [
-	<gtSearch>
-	aStep listProcessor
-		priority: 40;
-		allCandidates: [ Smalltalk globals associations
-				select:
-					[ :assoc | assoc value isBehavior not and: [ assoc value isTrait not ] ] ];
-		title: 'Global variables';
-		itemName: [ :global | global key ];
-		filter: GtFilterSubstring;
-		wantsToDisplayOnEmptyQuery: false
-]
-
-{ #category : #spotter }
-GtSpotterStart >> gtSpotterForIcebergRepositoriesFor: aStep [
-	<gtSearch>
-	
-	aStep listProcessor
-		priority: 88;
-		title: 'Iceberg Repositories';
-		allCandidates: [ IceRepository registry ];
-		itemName: [ :aRepository | aRepository name ];
-		wantsToDisplayOnEmptyQuery: false;
-		filter: GtFilterSubstring;
-		actLogic: [ :anIcebergRepository :step :spotterElement | 
-			anIcebergRepository
-				gtSpotterActDefault: step 
-				from: spotterElement ]
-]
-
-{ #category : #spotter }
 GtSpotterStart >> gtSpotterForMessagesFor: aStep [
 	"<gtSearch>"
 	aStep listProcessor
@@ -289,26 +260,14 @@ GtSpotterStart >> gtSpotterForMetacelloBaselinesFor: aStep [
 ]
 
 { #category : #spotter }
-GtSpotterStart >> gtSpotterForPackagesFor: aStep [
-	<gtSearch>
-	aStep listProcessor
-		priority: 20;
-		allCandidates: [ RPackageOrganizer default packages ];
-		title: 'Packages';
-		itemName: [ :package | package name ];
-		itemIcon: [ Smalltalk ui icons iconNamed: #packageIcon ];
-		filter: GtFilterSubstring;
-		wantsToDisplayOnEmptyQuery: false
-]
-
-{ #category : #spotter }
-GtSpotterStart >> gtSpotterForPragmasFor: aStep [
-	<gtSearch>
-	aStep listProcessor
-		priority: 40;
-		allCandidates: [ GtPragmaType all ];
-		title: 'Pragmas';
-		itemName: [ :pragma | pragma keyword ];
+GtSpotterStart >> gtSpotterForPixelIconFor: aStep [
+	"<gtSearch>"
+	^ aStep listProcessor
+		title: 'Icon - Pixeled';
+		priority: 101;
+		allCandidates: [ GtSpotterPixelIconPreview 
+			library: BrGlamorousIcons allForms: BrGlamorousIcons allIcons ];
+		itemName: #iconSelector;
 		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
@@ -377,35 +336,7 @@ GtSpotterStart >> gtSpotterForSendersFor: aStep [
 ]
 
 { #category : #spotter }
-GtSpotterStart >> gtSpotterImplementorsFor: aStep [
-	<gtSearch>
-	self flag: #specialFilter.
-	aStep listProcessor
-		priority: 30;
-		title: 'Implementors';
-		filter: GtFilterImplementor
-			item: [ :filter :context | 
-			SystemNavigation default
-				allBehaviorsDo: [ :class | class localMethods do: filter ] ];
-		keyBinding: $m meta;
-		wantsToDisplayOnEmptyQuery: false
-]
-
-{ #category : #spotter }
-GtSpotterStart >> spotterForPixelIconFor: aStep [
-	"<gtSearch>"
-	^ aStep listProcessor
-		title: 'Icon - Pixeled';
-		priority: 101;
-		allCandidates: [ GtSpotterPixelIconPreview 
-			library: BrGlamorousIcons allForms: BrGlamorousIcons allIcons ];
-		itemName: #iconSelector;
-		filter: GtFilterSubstring;
-		wantsToDisplayOnEmptyQuery: false
-]
-
-{ #category : #spotter }
-GtSpotterStart >> spotterForVectorIconFor: aStep [
+GtSpotterStart >> gtSpotterForVectorIconFor: aStep [
 	"<gtSearch>"
 	^ aStep listProcessor
 		title: 'Icons - Vectorized';

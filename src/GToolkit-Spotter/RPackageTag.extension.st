@@ -1,11 +1,11 @@
 Extension { #name : #RPackageTag }
 
 { #category : #'*GToolkit-Spotter' }
-RPackageTag >> gtSpotterClassesFor: aStep [
+RPackageTag >> gtSpotterClassesFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 20;
-		allCandidates: [ self classes sorted: [ :a :b | a name < b name ] ];
+		items: [ self classes sorted: [ :a :b | a name < b name ] ];
 		title: 'Classes';
-		filter: GtFilterSubstring
+		filterBySubstring
 ]

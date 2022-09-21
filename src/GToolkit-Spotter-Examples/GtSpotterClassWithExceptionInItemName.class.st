@@ -1,16 +1,15 @@
 Class {
 	#name : #GtSpotterClassWithExceptionInItemName,
 	#superclass : #Object,
-	#category : 'GToolkit-Spotter-Examples-Exceptions'
+	#category : #'GToolkit-Spotter-Examples-Exceptions'
 }
 
 { #category : #examples }
-GtSpotterClassWithExceptionInItemName >> gtMockProcessorFor: aSpotterStep [
+GtSpotterClassWithExceptionInItemName >> gtMockProcessorFor: aSearch [
 	<gtSearch>
-	aSpotterStep listProcessor
+	^ aSearch list
 		priority: 1;
-		allCandidates: [ #(1 2 3) ];
+		items: [ #(1 2 3) ];
 		itemName: [ :item | item / 0 ];
-		" Exception while serializing candidates "
-			filter: GtFilterSubstring
+		filterBySubstring	" Exception while serializing candidates "
 ]

@@ -3,8 +3,7 @@ Extension { #name : #Behavior }
 { #category : #'*GToolkit-Spotter-Streaming' }
 Behavior >> gtSearchInstanceVariablesFor: aSearch [
 	<gtSearch>
-	self isTrait
-		ifTrue: [ ^ aSearch empty ].
+	self isTrait ifTrue: [ ^ aSearch empty ].
 	^ aSearch list
 		priority: 20;
 		title: 'Instance variables';

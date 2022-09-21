@@ -1,15 +1,15 @@
 Class {
 	#name : #GtSpotterClassWithExceptionInFilter,
 	#superclass : #Object,
-	#category : 'GToolkit-Spotter-Examples-Exceptions'
+	#category : #'GToolkit-Spotter-Examples-Exceptions'
 }
 
 { #category : #examples }
-GtSpotterClassWithExceptionInFilter >> gtMockProcessorFor: aSpotterStep [
+GtSpotterClassWithExceptionInFilter >> gtMockProcessorFor: aSearch [
 	<gtSearch>
-	aSpotterStep listProcessor
+	^ aSearch list
 		priority: 1;
-		allCandidates: [ #(1 2 3) ];
+		items: [ #(1 2 3) ];
 		itemName: [ :item | item asString ];
 		filter: GtSpotterFilterWithException	" Exception while filtering "
 ]

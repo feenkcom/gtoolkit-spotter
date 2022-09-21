@@ -1,18 +1,16 @@
 Extension { #name : #MetacelloProject }
 
 { #category : #'*GToolkit-Spotter' }
-MetacelloProject >> gtSpotterForVersionsFor: aStep [
+MetacelloProject >> gtSpotterForVersionsFor: aSearch [
 	<gtSearch>
 	self flag: #maybeRewriteForDirectStreaming.
-	aStep listProcessor
+	^ aSearch list
 		priority: 1;
 		title: 'Versions';
-		allCandidates: [ (#(stableVersion currentVersion bleedingEdge development)
-				collect: [ :each | 
-					[ self perform: each ]
-						on: Error
-						do: [ nil ] ]) reject: [ :each | each isNil ] ];
+		items: [ (#(stableVersion currentVersion bleedingEdge development)
+				collect: [ :each | [ self perform: each ] on: Error do: [ nil ] ])
+				reject: [ :each | each isNil ] ];
 		itemName: [ :version | version versionString ];
-		filter: GtFilterSubstring;
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]

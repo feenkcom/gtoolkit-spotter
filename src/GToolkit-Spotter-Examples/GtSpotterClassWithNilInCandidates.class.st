@@ -1,16 +1,15 @@
 Class {
 	#name : #GtSpotterClassWithNilInCandidates,
 	#superclass : #Object,
-	#category : 'GToolkit-Spotter-Examples-Exceptions'
+	#category : #'GToolkit-Spotter-Examples-Exceptions'
 }
 
 { #category : #examples }
-GtSpotterClassWithNilInCandidates >> gtMockProcessorFor: aSpotterStep [
+GtSpotterClassWithNilInCandidates >> gtMockProcessorFor: aSearch [
 	<gtSearch>
-	aSpotterStep listProcessor
+	^ aSearch list
 		priority: 1;
-		allCandidates: [ nil ];
-		" Exception while collecting candidates "
-			itemName: [ :item | item asString ];
-		filter: GtFilterSubstring
+		items: [ nil ];
+		itemName: [ :item | item asString ];
+		filterBySubstring	" Exception while collecting candidates "
 ]

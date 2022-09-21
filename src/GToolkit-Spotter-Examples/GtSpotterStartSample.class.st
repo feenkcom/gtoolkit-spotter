@@ -5,40 +5,37 @@ Class {
 }
 
 { #category : #'spotter-extensions' }
-GtSpotterStartSample >> gtSpotterSearch_10: aStep [
+GtSpotterStartSample >> gtSpotterSearch_10: aSearch [
 	<gtSearch>
-
-	aStep listProcessor
+	^ aSearch list
 		priority: 10;
 		title: 'Priority 10';
-		allCandidates: [ #(10) ];
+		items: [ #(10) ];
 		itemName: [ :each | each asString ];
-		filter: GtFilterSubstring;
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]
 
 { #category : #'spotter-extensions' }
-GtSpotterStartSample >> gtSpotterSearch_20: aStep [
+GtSpotterStartSample >> gtSpotterSearch_20: aSearch [
 	<gtSearch>
-
-	aStep listProcessor
+	^ aSearch list
 		priority: 20;
 		title: 'Priority 20';
-		allCandidates: [ #(20 20) ];
+		items: [ #(20 20) ];
 		itemName: [ :each | each asString ];
-		filter: GtFilterSubstring;
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]
 
 { #category : #'spotter-extensions' }
-GtSpotterStartSample >> gtSpotterSearch_30: aStep [
+GtSpotterStartSample >> gtSpotterSearch_30: aSearch [
 	<gtSearch>
-
-	aStep listProcessor
+	^ aSearch list
 		priority: 30;
 		title: 'Priority 30';
-		allCandidates: [ #(30 30 30) ];
+		items: [ #(30 30 30) ];
 		itemName: [ :each | each asString ];
-		filter: GtFilterSubstring;
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]

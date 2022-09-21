@@ -1,25 +1,25 @@
 Extension { #name : #MetacelloVersion }
 
 { #category : #'*GToolkit-Spotter' }
-MetacelloVersion >> gtSpotterForGroupsFor: aStep [
+MetacelloVersion >> gtSpotterForGroupsFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 2;
 		title: 'Groups';
-		allCandidates: [ self groups ];
+		items: [ self groups ];
 		itemName: [ :item | item name ];
-		filter: GtFilterSubstring;
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]
 
 { #category : #'*GToolkit-Spotter' }
-MetacelloVersion >> gtSpotterForPackagesFor: aStep [
+MetacelloVersion >> gtSpotterForPackagesFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 3;
 		title: 'Packages';
-		allCandidates: [ self packages ];
+		items: [ self packages ];
 		itemName: [ :item | item file ];
-		filter: GtFilterSubstring;
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]

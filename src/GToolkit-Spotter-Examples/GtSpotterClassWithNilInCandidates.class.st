@@ -6,10 +6,12 @@ Class {
 
 { #category : #examples }
 GtSpotterClassWithNilInCandidates >> gtMockProcessorFor: aSearch [
+	" Exception while collecting candidates "
+	
 	<gtSearch>
 	^ aSearch list
 		priority: 1;
 		items: [ nil ];
 		itemName: [ :item | item asString ];
-		filterBySubstring	" Exception while collecting candidates "
+		filterBySubstring
 ]

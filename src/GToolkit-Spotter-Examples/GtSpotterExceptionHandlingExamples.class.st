@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#traits : 'TGtExampleAssertable',
 	#classTraits : 'TGtExampleAssertable classTrait',
-	#category : 'GToolkit-Spotter-Examples-Exceptions'
+	#category : #'GToolkit-Spotter-Examples-Exceptions'
 }
 
 { #category : #accessing }
@@ -24,16 +24,11 @@ GtSpotterExceptionHandlingExamples >> spotterForExceptionInProcessor [
 { #category : #accessing }
 GtSpotterExceptionHandlingExamples >> spotterForNilInCandidates [
 	<gtExample>
-	| spotter step |
-	spotter := GtSpotter new.
-	spotter beDebugging.
-	step := GtSpotterStep new
-		spotter: spotter;
-		origin: GtSpotterClassWithNilInCandidates new;
-		yourself.
-	self
-		should: [ step processContext: (step newContextForQuery: 'something') ]
-		raise: MessageNotUnderstood
+	| spotter |
+
+	spotter := GtStreamingSpotter on: GtSpotterClassWithNilInCandidates new.
+	
+	^ spotter
 ]
 
 { #category : #accessing }

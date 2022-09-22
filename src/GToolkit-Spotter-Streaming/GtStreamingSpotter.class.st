@@ -76,6 +76,16 @@ GtStreamingSpotter >> currentStepIndex [
 		ifAbsent: [ self error: 'Current step is wrong' ]
 ]
 
+{ #category : #'gt-extension' }
+GtStreamingSpotter >> gtStepsFor: aView [
+	<gtView>
+	
+	^ aView list
+		title: 'Steps';
+		priority: 5;
+		items: [ self steps ]
+]
+
 { #category : #'api - accessing' }
 GtStreamingSpotter >> hidePreview [
 	self showPreview: false

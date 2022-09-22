@@ -86,6 +86,37 @@ GtStreamingSpotterStep >> exit [
 	self flag: #TODO.
 ]
 
+{ #category : #printing }
+GtStreamingSpotterStep >> gtDisplayOn: aStream [
+	aStream
+		nextPutAll: 'Step on ';
+		print: origin;
+		nextPutAll: ' searching for ';
+		print: searchQuery
+]
+
+{ #category : #'gt - extensions' }
+GtStreamingSpotterStep >> gtResultsFor: aView [
+	<gtView>
+	
+	^ aView forward
+		title: 'Results';
+		priority: 6;
+		object: [ self createSearchResultsStream ];
+		view: #gtLiveFor:
+]
+
+{ #category : #'gt - extensions' }
+GtStreamingSpotterStep >> gtSearchesFor: aView [
+	<gtView>
+	
+	^ aView forward
+		title: 'Searches';
+		priority: 5;
+		object: [ self createSearchesStream ];
+		view: #gtLiveFor:
+]
+
 { #category : #initialization }
 GtStreamingSpotterStep >> initializeWithSpotter: aStreamingSpotter origin: anObject [
 	spotter := aStreamingSpotter.

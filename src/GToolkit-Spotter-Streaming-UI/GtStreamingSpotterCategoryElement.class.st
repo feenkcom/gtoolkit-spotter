@@ -59,7 +59,8 @@ GtStreamingSpotterCategoryElement >> initialize [
 		hMatchParent;
 		vFitContent;
 		alignCenterLeft;
-		padding: (BlInsets top: 5 right: 10 bottom: 5 left: 10).
+		padding: (BlInsets top: 5 right: 10 bottom: 5 left: 10);
+		margin: (BlInsets top: 10).
 	
 	label := self newCategoryLabel.
 	actOnButton := self newActOnButton.

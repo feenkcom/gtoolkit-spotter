@@ -36,25 +36,25 @@ GtSpotterStart >> concreteMethodInContext: aContext [
 ]
 
 { #category : #accessing }
-GtSpotterStart >> fileReferencesBy: aSelector inContext: aSpotterContext usingFilter: aBlock [
-	| split rootDirectory query |
-	split := aSpotterContext textLowercase piecesCutWhere: [ :a :b | a = FileSystem disk delimiter ].
-	split size < 1
-		ifTrue: [ 
-			query := aSpotterContext textLowercase.
-			rootDirectory := FileSystem workingDirectory ]
-		ifFalse: [ 
-			(split last last = FileSystem disk delimiter)
-				ifTrue: [ 
-					query := ''.
-					rootDirectory := aSpotterContext textLowercase asFileReference ]
-				ifFalse: [ 
-					query := split last.
-					rootDirectory := ('' join: split allButLast) asFileReference ] ].
-	rootDirectory exists ifFalse: [ ^ self ].
-	self flag: 'this is an ugly hack for #queryForFileReference. This iterator has to manipulate the query in order for the filter to work properly'.
-	aSpotterContext cacheAt: #queryForFileReference put: query.
-	(rootDirectory perform: aSelector) do: aBlock
+GtSpotterStart >> fileReferencesBy: aSelector inContext: aSpotterContext [
+	^ ((aSpotterContext searchQuery asAsyncFuture asAsyncStream collect: #trimBoth)
+		collect: [ :aQuery | 
+			| lastDelimiter |
+			lastDelimiter := aQuery
+					findLastOccurrenceOfString: FileSystem disk delimiter asString
+					startingAt: 1.
+
+			lastDelimiter isZero
+				ifTrue: [ AsyncEmptyStream new ]
+				ifFalse: [ | rootDirectory allItems |
+					rootDirectory := (aQuery copyFrom: 1 to: lastDelimiter) asFileReference.
+					allItems := (rootDirectory perform: aSelector) asAsyncStream.
+					lastDelimiter = aQuery size
+						ifTrue: [ allItems ]
+						ifFalse: [ (GtSpotterSubstringFilterStream
+								forStream: allItems
+								search: (aQuery copyFrom: lastDelimiter + 1 to: aQuery size))
+								itemString: [ :eachFile | eachFile basename ] ] ] ]) flatten
 ]
 
 { #category : #printing }
@@ -200,36 +200,25 @@ GtSpotterStart >> gtSpotterForAllSuperclassesFor: aStep [
 ]
 
 { #category : #spotter }
-GtSpotterStart >> gtSpotterForDirectoriesFor: aStep [
-	"<gtSearch>"
-	self flag: #specialFilter.
-	aStep listProcessor
-		priority: 50;
+GtSpotterStart >> gtSpotterForDirectoriesFor: aSearch [
+	<gtSearch>
+	
+	^ aSearch explicit
+		priority: 0;
 		title: 'Directories';
-		itemIcon: [ BrGlamorousIcons folder ];
-		itemFilterName: [ :reference | reference basename ];
-		filter: GtFilterFileReference
-			item: [ :filter :context | 
-			self
-				fileReferencesBy: #directories
-				inContext: context
-				usingFilter: filter ];
-		wantsToDisplayOnEmptyQuery: false
+		"itemIcon: [ BrGlamorousIcons folder ];"
+		search: [ :aContext | self fileReferencesBy: #directories inContext: aContext ]
 ]
 
 { #category : #spotter }
-GtSpotterStart >> gtSpotterForFilesFor: aStep [
-	"<gtSearch>"
-	self flag: #specialFilter.
-	aStep listProcessor
-		priority: 40;
+GtSpotterStart >> gtSpotterForFilesFor: aSearch [
+	<gtSearch>
+	
+	^ aSearch explicit
+		priority: 1;
 		title: 'Files';
-		itemIcon: [ BrGlamorousIcons file ];
-		itemFilterName: [ :reference | reference basename ];
-		filter: GtFilterFileReference
-			item:
-				[ :filter :context | self fileReferencesBy: #files inContext: context usingFilter: filter ];
-		wantsToDisplayOnEmptyQuery: false
+		"itemIcon: [ BrGlamorousIcons file ];"
+		search: [ :aContext | self fileReferencesBy: #files inContext: aContext ]
 ]
 
 { #category : #spotter }

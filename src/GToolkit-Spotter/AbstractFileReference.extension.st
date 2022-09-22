@@ -17,11 +17,12 @@ AbstractFileReference >> gtSpotterForAddressFileFor: aSearch [
 AbstractFileReference >> gtSpotterForDirectoriesFor: aSearch [
 	<gtSearch>
 	^ self isDirectory
+		ifFalse: [ aSearch empty ]
 		ifTrue: [ aSearch list
 				priority: 10;
 				items: [ self directories ];
 				title: 'Directories';
-				candidatesLimit: Float infinity;
+				itemsLimit: Float infinity;
 				itemName: #basename;
 				filterBySubstring ]
 ]
@@ -30,11 +31,12 @@ AbstractFileReference >> gtSpotterForDirectoriesFor: aSearch [
 AbstractFileReference >> gtSpotterForFilesFor: aSearch [
 	<gtSearch>
 	^ self isDirectory
+		ifFalse: [ aSearch empty ]
 		ifTrue: [ aSearch list
 				priority: 20;
 				items: [ self files ];
 				title: 'Files';
-				candidatesLimit: Float infinity;
+				itemsLimit: Float infinity;
 				itemName: #basename;
 				filterBySubstring ]
 ]
@@ -60,11 +62,11 @@ AbstractFileReference >> gtSpotterForZipDirectoriesFor: aSearch [
 	| zipFileSystem |
 	self isZipFile ifFalse: [ ^ aSearch empty ].
 	^ aSearch list
+		title: 'Directories';
 		priority: 10;
 		items: [ zipFileSystem := (FileSystem zip: self) open.
 			zipFileSystem workingDirectory directories ];
-		title: 'Directories';
-		candidatesLimit: Float infinity;
+		itemsLimit: Float infinity;
 		itemName: #basename;
 		filterBySubstring
 ]
@@ -75,11 +77,11 @@ AbstractFileReference >> gtSpotterForZipFilesFor: aSearch [
 	| zipFileSystem |
 	self isZipFile ifFalse: [ ^ aSearch empty ].
 	^ aSearch list
+		title: 'Files';
 		priority: 10;
 		items: [ zipFileSystem := (FileSystem zip: self) open.
 			zipFileSystem workingDirectory files ];
-		title: 'Files';
-		candidatesLimit: Float infinity;
 		itemName: #basename;
+		itemsLimit: Float infinity;
 		filterBySubstring
 ]

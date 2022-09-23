@@ -1,13 +1,12 @@
 Extension { #name : #ClassDescription }
 
 { #category : #'*GToolkit-Spotter' }
-ClassDescription >> gtSpotterPackageFor: aStep [
+ClassDescription >> gtSpotterPackageFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 50;
 		title: 'Package';
-		allCandidates: [ {self package} ];
+		items: [ {self package} ];
 		itemName: [ :item | item packageName ];
-		itemIcon: #systemIcon;
-		filter: GtFilterSubstring
+		filterBySubstring
 ]

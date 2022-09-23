@@ -6,60 +6,55 @@ RPackage >> gtSpotterActDefaultFrom: anElement [
 ]
 
 { #category : #'*GToolkit-Spotter' }
-RPackage >> gtSpotterClassesFor: aStep [
+RPackage >> gtSpotterClassesFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 20;
-		allCandidates: [ self definedClasses sorted: [ :a :b | a name < b name ] ];
+		items: [ self definedClasses sorted: [ :a :b | a name < b name ] ];
 		title: 'Classes';
-		filter: GtFilterSubstring
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-RPackage >> gtSpotterExtensionMethodsFor: aStep [
+RPackage >> gtSpotterExtensionMethodsFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 30;
-		allCandidates: [ self extensionMethods ];
+		items: [ self extensionMethods ];
 		title: 'Extension Methods';
-		filter: GtFilterSubstring
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-RPackage >> gtSpotterMonticelloPackageFor: aStep [
+RPackage >> gtSpotterMonticelloPackageFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 41;
 		title: 'Monticello Package';
-		allCandidates: [ self mcPackage
-				ifNotNil: [ :mcPackage | Array with: mcPackage ]
-				ifNil: [ #() ] ];
-		itemIcon: [ Smalltalk ui icons iconNamed: #monticelloPackageIcon ];
-		filter: GtFilterSubstring
+		items: [ self mcPackage ifNotNil: [ :mcPackage | Array with: mcPackage ] ifNil: [ #() ] ];
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-RPackage >> gtSpotterMonticelloWorkingCopyFor: aStep [
+RPackage >> gtSpotterMonticelloWorkingCopyFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 42;
 		title: 'Monticello Working Copy';
-		allCandidates: [ self mcPackage
+		items: [ self mcPackage
 				ifNotNil: [ :mcPackage | Array with: mcPackage workingCopy ]
 				ifNil: [ #() ] ];
-		itemIcon: [ Smalltalk ui icons iconNamed: #versionControlIcon ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-RPackage >> gtSpotterTagsFor: aStep [
+RPackage >> gtSpotterTagsFor: aSearch [
 	<gtSearch>
-	self classTags size <= 1
-		ifTrue: [ ^ self ].
-	aStep listProcessor
+	self classTags size <= 1 ifTrue: [ ^ aSearch empty ].
+	^ aSearch list
 		priority: 20;
-		allCandidates: [ self classTags sorted: [ :a :b | a name < b name ] ];
+		items: [ self classTags sorted: [ :a :b | a name < b name ] ];
 		title: 'Tags';
 		itemName: [ :item | item name ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]

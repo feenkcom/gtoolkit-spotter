@@ -35,37 +35,40 @@ GtResourcesUtility >> spotterForStringResourcesFor: aStep [
 ]
 
 { #category : #'*GToolkit-Spotter' }
-GtResourcesUtility >> spotterPathResourceAtLocationsFor: aStep [
+GtResourcesUtility >> spotterPathResourceAtLocationsFor: aSearch [
 	<gtSearch>
-	^ aStep listProcessor
+	^ aSearch list
 		title: 'Locations from Path object';
 		priority: 4;
 		wantsToDisplayOnEmptyQuery: false;
-		items: [ self locations collect: [ :eachLocation | 
-				GtResourcesUtilityResultContext new location: eachLocation ] ];
-		filter: (GtFilterBlock new matcher: [ :anItem :aContext | 
-			(aContext textTrimmed beginsWith: 'Path')
-				ifTrue: [
-					| aPath |
-					aPath := GtResourcesUtilityPathExtractor new
-						pathFrom: aContext textTrimmed.
-					aPath 
-						ifNil: [ false ]
-						ifNotNil: [ anItem resourceAtPath: aContext textTrimmed. true ] ]
-				ifFalse: [ false ] ])
+		items: [ self locations
+				collect: [ :eachLocation | GtResourcesUtilityResultContext new location: eachLocation ] ];
+		filter: (GtFilterBlock new
+				matcher: [ :anItem :aContext | 
+					(aContext textTrimmed beginsWith: 'Path')
+						ifTrue: [ | aPath |
+							aPath := GtResourcesUtilityPathExtractor new
+									pathFrom: aContext textTrimmed.
+							aPath
+								ifNil: [ false ]
+								ifNotNil: [ anItem resourceAtPath: aContext textTrimmed.
+									true ] ]
+						ifFalse: [ false ] ])
 ]
 
 { #category : #'*GToolkit-Spotter' }
-GtResourcesUtility >> spotterStringResourcesAtLocationsFor: aStep [
+GtResourcesUtility >> spotterStringResourcesAtLocationsFor: aSearch [
 	<gtSearch>
-	^ aStep listProcessor
+	^ aSearch list
 		title: 'Locations from file or directory name';
 		priority: 5;
 		wantsToDisplayOnEmptyQuery: false;
-		items: [ self locations collect: [ :eachLocation | 
-				GtResourcesUtilityResultContext new location: eachLocation ] ];
-		filter: (GtFilterBlock new matcher: [ :anItem :aContext | 
-			aContext textTrimmed 
-				ifNotEmpty: [ anItem resourceAtPath: aContext textTrimmed. true ]
-				ifEmpty: [ false ] ])
+		items: [ self locations
+				collect: [ :eachLocation | GtResourcesUtilityResultContext new location: eachLocation ] ];
+		filter: (GtFilterBlock new
+				matcher: [ :anItem :aContext | 
+					aContext textTrimmed
+						ifNotEmpty: [ anItem resourceAtPath: aContext textTrimmed.
+							true ]
+						ifEmpty: [ false ] ])
 ]

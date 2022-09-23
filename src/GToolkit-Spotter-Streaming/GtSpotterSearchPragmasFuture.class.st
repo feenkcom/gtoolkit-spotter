@@ -22,7 +22,7 @@ GtSpotterSearchPragmasFuture class >> forOriginObject: anObject [
 GtSpotterSearchPragmasFuture class >> pragmaSymbol [
 	<gtExample>
 
-	^ #gtSpotterSearch
+	^ #gtSearch
 ]
 
 { #category : #initialization }

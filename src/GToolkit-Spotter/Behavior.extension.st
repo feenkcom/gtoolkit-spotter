@@ -1,97 +1,89 @@
 Extension { #name : #Behavior }
 
 { #category : #'*GToolkit-Spotter' }
-Behavior >> gtSpotterClassInstanceVariablesFor: aStep [
+Behavior >> gtSpotterClassInstanceVariablesFor: aSearch [
 	<gtSearch>
-	self isTrait
-		ifTrue: [ ^ self ].
-	^ aStep listProcessor
+	self isTrait ifTrue: [ ^ aSearch empty ].
+	^ aSearch list
 		priority: 25;
 		title: 'Class instance variables';
-		allCandidates: [ self class classLayout allSlots ];
+		items: [ self class classLayout allSlots ];
 		itemName: [ :each | each name asString ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-Behavior >> gtSpotterCompositionFor: aStep [
+Behavior >> gtSpotterCompositionFor: aSearch [
 	<gtSearch>
-	^ aStep listProcessor
+	^ aSearch list
 		priority: 25;
 		title: 'Composing traits';
-		allCandidates: [ self traitComposition allTraits ];
-		itemIcon: #systemIcon;
-		filter: GtFilterSubstring
+		items: [ self traitComposition allTraits ];
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-Behavior >> gtSpotterInstanceVariablesFor: aStep [
+Behavior >> gtSpotterInstanceVariablesFor: aSearch [
 	<gtSearch>
-	self isTrait
-		ifTrue: [ ^ self ].
-	aStep listProcessor
+	self isTrait ifTrue: [ ^ aSearch empty ].
+	^ aSearch list
 		priority: 20;
 		title: 'Instance variables';
-		allCandidates: [ self classLayout allSlots ];
+		items: [ self classLayout allSlots ];
 		itemName: [ :each | each name asString ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-Behavior >> gtSpotterSubclassesFor: aStep [
+Behavior >> gtSpotterSubclassesFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 50;
 		title: 'All subclasses';
-		allCandidates: [ self allSubclasses ];
-		itemIcon: #systemIcon;
-		filter: GtFilterSubstring
+		items: [ self allSubclasses ];
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-Behavior >> gtSpotterSuperclassesFor: aStep [
+Behavior >> gtSpotterSuperclassesFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 40;
 		title: 'All superclasses';
-		allCandidates: [ self allSuperclasses ];
-		itemIcon: #systemIcon;
-		filter: GtFilterSubstring
+		items: [ self allSuperclasses ];
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-Behavior >> gtSpotterTraitUsersFor: aStep [
+Behavior >> gtSpotterTraitUsersFor: aSearch [
 	<gtSearch>
-	self isTrait
-		ifFalse: [ ^ self ].
-	aStep listProcessor
+	self isTrait ifFalse: [ ^ aSearch empty ].
+	^ aSearch list
 		priority: 20;
 		title: 'Users';
-		allCandidates: [ self traitUsers asArray ];
-		itemIcon: #systemIcon;
-		filter: GtFilterSubstring
+		items: [ self traitUsers asArray ];
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-Behavior >> gtSpotterUsedSlotsFor: aStep [
+Behavior >> gtSpotterUsedSlotsFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 70;
 		title: 'Special Slots';
-		allCandidates: [ self slots select: [ :slot | slot isSpecial ] ];
+		items: [ self slots select: [ :slot | slot isSpecial ] ];
 		itemName: [ :item | item definitionString ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-Behavior >> gtSpotterUsedTraitsFor: aStep [
+Behavior >> gtSpotterUsedTraitsFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 60;
 		title: 'Uses Traits';
-		allCandidates: [ self traits asArray ];
-		itemIcon: #systemIcon;
-		filter: GtFilterSubstring
+		items: [ self traits asArray ];
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }

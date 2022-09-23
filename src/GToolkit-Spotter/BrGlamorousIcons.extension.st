@@ -1,13 +1,12 @@
 Extension { #name : #BrGlamorousIcons }
 
 { #category : #'*GToolkit-Spotter' }
-BrGlamorousIcons class >> spotterForPixelIconFor: aStep [
+BrGlamorousIcons class >> gtSpotterForPixelIconFor: aSearch [
 	<gtSearch>
-	^ aStep listProcessor
+	^ aSearch list
 		title: 'Pixel Icons';
 		priority: 1;
-		allCandidates: [ GtSpotterPixelIconPreview 
-			library: self allForms: self allIcons ];
+		items: [ GtSpotterPixelIconPreview library: self allForms: self allIcons ];
 		itemName: #iconSelector;
-		filter: GtFilterSubstring
+		filterBySubstring
 ]

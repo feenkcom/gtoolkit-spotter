@@ -6,56 +6,53 @@ CompiledMethod >> gtSpotterActDefaultFrom: anElement [
 ]
 
 { #category : #'*GToolkit-Spotter' }
-CompiledMethod >> gtSpotterForBytecodesFor: aStep [
+CompiledMethod >> gtSpotterForBytecodesFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 15;
 		title: 'Bytecode';
-		allCandidates: [ self symbolicBytecodes ];
+		items: [ self symbolicBytecodes ];
 		itemName: #printString;
-		filter: GtFilterSubstring
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-CompiledMethod >> gtSpotterForImplementorsFor: aStep [
+CompiledMethod >> gtSpotterForImplementorsFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 10;
 		title: 'Implementors';
-		allCandidates: [ self implementors collect: #compiledMethod ];
-		filter: GtFilterSubstring;
-		keyBinding: $m command
+		items: [ self implementors collect: #compiledMethod ];
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-CompiledMethod >> gtSpotterForMessagesFor: aStep [
+CompiledMethod >> gtSpotterForMessagesFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 12;
 		title: 'Messages';
-		allCandidates: [ self messages asSortedCollection
+		items: [ self messages asSortedCollection
 				collect: [ :each | GtSelector new name: each ] ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-CompiledMethod >> gtSpotterForSendersFor: aStep [
+CompiledMethod >> gtSpotterForSendersFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 11;
 		title: 'Senders';
-		allCandidates: [ self senders collect: #compiledMethod ];
-		filter: GtFilterSubstring;
-		keyBinding: $n command
+		items: [ self senders collect: #compiledMethod ];
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-CompiledMethod >> gtSpotterMethodClassFor: aStep [
+CompiledMethod >> gtSpotterMethodClassFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 50;
-		allCandidates: [ {self methodClass} ];
+		items: [ {self methodClass} ];
 		title: 'Class';
-		filter: GtFilterSubstring;
-		itemIcon: #systemIcon
+		filterBySubstring
 ]

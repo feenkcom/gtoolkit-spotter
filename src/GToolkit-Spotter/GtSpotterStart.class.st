@@ -8,52 +8,53 @@ Class {
 }
 
 { #category : #accessing }
-GtSpotterStart >> concreteMethodsInContext: aContext usingFilter: aFilter [
-	" return the concrete methods described by the expression (Class >> #Selector) - evaluate it savely "
+GtSpotterStart >> concreteMethodInContext: aContext [
+	" return the concrete methods described by the expression (Class >> #Selector) - evaluate it safely"
+	<return: #AsyncOptionalValue>
 	| classAndSelectorStrings class selector |
-	classAndSelectorStrings := (aContext textTrimmed splitOn: '>>') collect: [ :each | each trimBoth ].
+
+	classAndSelectorStrings := (aContext searchQuery trimBoth splitOn: '>>')
+		collect: [ :each | each trimBoth ].
 	
 	" check preconditions "
-	classAndSelectorStrings size = 2 ifFalse: [ ^ self ].
-	classAndSelectorStrings second size < 2 ifTrue: [ ^ self ].
+	classAndSelectorStrings size = 2
+		ifFalse: [ ^ AsyncOptionalValue none  ].
+	classAndSelectorStrings second size < 2
+		ifTrue: [ ^ AsyncOptionalValue none ].
 
-	" retrieve concrete class and selector - or saerch all behaviors "
+	" retrieve concrete class and selector - or search all behaviors "
 	selector := classAndSelectorStrings second first = $# 
 		ifTrue: [ classAndSelectorStrings second allButFirst asSymbol ]
 		ifFalse: [ classAndSelectorStrings second asSymbol ].
 	
-	(class := Smalltalk classNamed: classAndSelectorStrings first) ifNil: [ 
-		SystemNavigation default allBehaviorsDo: [ :aClass |
-			aClass methodsDo: [ :method |
-				method selector = selector ifTrue: [ aFilter value: method ] ] ].
-		^ self ].
-	
-	
-	" retrieve the compiled method in the class and class hierarchy "
-	class withAllSuperclassesDo: [ :aClass |
-		aFilter value: ([ aClass compiledMethodAt: selector ] on: Error do: [ ^ self ]) ]
+	(class := Smalltalk classNamed: classAndSelectorStrings first)
+		ifNil: [ ^ AsyncOptionalValue none ].
+
+	^ [ AsyncOptionalValue some: (class compiledMethodAt: selector) ]
+		on: Error
+		do: [ AsyncOptionalValue none ].
 ]
 
 { #category : #accessing }
-GtSpotterStart >> fileReferencesBy: aSelector inContext: aSpotterContext usingFilter: aBlock [
-	| split rootDirectory query |
-	split := aSpotterContext textLowercase piecesCutWhere: [ :a :b | a = FileSystem disk delimiter ].
-	split size < 1
-		ifTrue: [ 
-			query := aSpotterContext textLowercase.
-			rootDirectory := FileSystem workingDirectory ]
-		ifFalse: [ 
-			(split last last = FileSystem disk delimiter)
-				ifTrue: [ 
-					query := ''.
-					rootDirectory := aSpotterContext textLowercase asFileReference ]
-				ifFalse: [ 
-					query := split last.
-					rootDirectory := ('' join: split allButLast) asFileReference ] ].
-	rootDirectory exists ifFalse: [ ^ self ].
-	self flag: 'this is an ugly hack for #queryForFileReference. This iterator has to manipulate the query in order for the filter to work properly'.
-	aSpotterContext cacheAt: #queryForFileReference put: query.
-	(rootDirectory perform: aSelector) do: aBlock
+GtSpotterStart >> fileReferencesBy: aSelector inContext: aSpotterContext [
+	^ ((aSpotterContext searchQuery asAsyncFuture asAsyncStream collect: #trimBoth)
+		collect: [ :aQuery | 
+			| lastDelimiter |
+			lastDelimiter := aQuery
+					findLastOccurrenceOfString: FileSystem disk delimiter asString
+					startingAt: 1.
+
+			lastDelimiter isZero
+				ifTrue: [ AsyncEmptyStream new ]
+				ifFalse: [ | rootDirectory allItems |
+					rootDirectory := (aQuery copyFrom: 1 to: lastDelimiter) asFileReference.
+					allItems := (rootDirectory perform: aSelector) asAsyncStream.
+					lastDelimiter = aQuery size
+						ifTrue: [ allItems ]
+						ifFalse: [ (GtSpotterSubstringFilterStream
+								forStream: allItems
+								search: (aQuery copyFrom: lastDelimiter + 1 to: aQuery size))
+								itemString: [ :eachFile | eachFile basename ] ] ] ]) flatten
 ]
 
 { #category : #printing }
@@ -61,47 +62,72 @@ GtSpotterStart >> gtDisplayOn: stream [
 	stream nextPutAll: 'Spotter'
 ]
 
+{ #category : #spotter }
+GtSpotterStart >> gtSearchConcreteMethodFor: aSearch [
+	<gtSearch>
+
+	^ aSearch explicit
+		priority: 5;
+		title: 'Method';
+		search: [ :aContext |
+			AsyncMaybeOnceStream forFuture:
+				[ self concreteMethodInContext: aContext ] asAsyncFuture ]
+]
+
 { #category : #searches }
 GtSpotterStart >> gtSearchForClassesFor: aSearch [
-	<gtSpotterSearch>
+	<gtSearch>
 	
 	^ aSearch explicit
 		priority: 10;
 		title: 'Classes';
-		search: [ :aContext | GtPharoIndex current asyncClassesForWord: aContext searchQuery ]
+		search: [ :aContext | GtPharoIndex current asyncClassesForWord: aContext searchQuery ];
+		"itemIcon: #systemIcon;"
+		"keyBinding: $b meta;"
+		yourself
 ]
 
 { #category : #searches }
-GtSpotterStart >> gtSearchForGlobalVarsFor: aStep [
-	<gtSpotterSearch>
-	^ aStep list
+GtSpotterStart >> gtSearchForGlobalVarsFor: aSearch [
+	<gtSearch>
+	^ aSearch list
 		priority: 40;
 		items: [ Smalltalk globals associations
-				select:
-					[ :assoc | assoc value isBehavior not and: [ assoc value isTrait not ] ] ];
+				select: [ :assoc | assoc value isBehavior not and: [ assoc value isTrait not ] ] ];
 		title: 'Global variables';
 		itemName: [ :global | global key ];
 		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
 
+{ #category : #spotter }
+GtSpotterStart >> gtSearchForIcebergRepositoriesFor: aSearch [
+	<gtSearch>
+	^ aSearch list
+		priority: 88;
+		title: 'Iceberg Repositories';
+		items: [ IceRepository registry ];
+		itemName: [ :aRepository | aRepository name ];
+		filterBySubstring;
+		itemActLogic: [ :anIcebergRepository :step :spotterElement | anIcebergRepository gtSpotterActDefault: step from: spotterElement ];
+		wantsToDisplayOnEmptyQuery: false
+]
+
 { #category : #searches }
 GtSpotterStart >> gtSearchForPackagesFor: aSearch [
-	<gtSpotterSearch>
-	
+	<gtSearch>
 	^ aSearch list
 		title: 'Packages';
 		priority: 20;
 		items: [ RPackageOrganizer default packages ];
 		itemName: [ :aPackage | aPackage name ];
-		"itemIcon: [ Smalltalk ui icons iconNamed: #packageIcon ];"
 		filterBySubstring;
-		wantsToDisplayOnEmptyQuery: false
+		wantsToDisplayOnEmptyQuery: false	"itemIcon: [ Smalltalk ui icons iconNamed: #packageIcon ];"
 ]
 
 { #category : #searches }
 GtSpotterStart >> gtSearchForPragmasFor: aSearch [
-	<gtSpotterSearch>
+	<gtSearch>
 	^ aSearch list
 		priority: 40;
 		items: [ GtPragmaType all ];
@@ -113,12 +139,14 @@ GtSpotterStart >> gtSearchForPragmasFor: aSearch [
 
 { #category : #searches }
 GtSpotterStart >> gtSearchImplementorsFor: aSearch [
-	<gtSpotterSearch>
+	<gtSearch>
 
 	^ aSearch explicit
 		priority: 30;
 		title: 'Implementors';
-		search: [ :aContext | GtPharoIndex current asyncImplementersForWord: aContext searchQuery ]
+		search: [ :aContext | GtPharoIndex current asyncImplementersForWord: aContext searchQuery ];
+		"keyBinding: $m meta;"
+		yourself
 ]
 
 { #category : #spotter }
@@ -134,18 +162,6 @@ GtSpotterStart >> gtSpotterClipboardFor: aStep [
 		actLogic: [ :item :step | 
 			step exit.
 			item asString inspect ];
-		wantsToDisplayOnEmptyQuery: false
-]
-
-{ #category : #spotter }
-GtSpotterStart >> gtSpotterConcreteMethodFor: aStep [
-	<gtSearch>
-	aStep listProcessor
-		priority: 30;
-		title: 'Methods';
-		filter: GtNullFilter
-			item:
-				[ :filter :context | self concreteMethodsInContext: context usingFilter: filter ];
 		wantsToDisplayOnEmptyQuery: false
 ]
 
@@ -184,80 +200,25 @@ GtSpotterStart >> gtSpotterForAllSuperclassesFor: aStep [
 ]
 
 { #category : #spotter }
-GtSpotterStart >> gtSpotterForClassesFor: aStep [
-	<gtSearch>
-	aStep listProcessor
-		priority: 10;
-		items: [ Smalltalk allClassesAndTraits ];
-		title: 'Classes';
-		filter: GtFilterSubstring;
-		itemIcon: #systemIcon;
-		keyBinding: $b meta;
-		wantsToDisplayOnEmptyQuery: false
-]
-
-{ #category : #spotter }
-GtSpotterStart >> gtSpotterForDirectoriesFor: aStep [
-	"<gtSearch>"
-	self flag: #specialFilter.
-	aStep listProcessor
-		priority: 50;
-		title: 'Directories';
-		itemIcon: [ BrGlamorousIcons folder ];
-		itemFilterName: [ :reference | reference basename ];
-		filter: GtFilterFileReference
-			item: [ :filter :context | 
-			self
-				fileReferencesBy: #directories
-				inContext: context
-				usingFilter: filter ];
-		wantsToDisplayOnEmptyQuery: false
-]
-
-{ #category : #spotter }
-GtSpotterStart >> gtSpotterForFilesFor: aStep [
-	"<gtSearch>"
-	self flag: #specialFilter.
-	aStep listProcessor
-		priority: 40;
-		title: 'Files';
-		itemIcon: [ BrGlamorousIcons file ];
-		itemFilterName: [ :reference | reference basename ];
-		filter: GtFilterFileReference
-			item:
-				[ :filter :context | self fileReferencesBy: #files inContext: context usingFilter: filter ];
-		wantsToDisplayOnEmptyQuery: false
-]
-
-{ #category : #spotter }
-GtSpotterStart >> gtSpotterForGlobalVarsFor: aStep [
-	<gtSearch>
-	aStep listProcessor
-		priority: 40;
-		allCandidates: [ Smalltalk globals associations
-				select:
-					[ :assoc | assoc value isBehavior not and: [ assoc value isTrait not ] ] ];
-		title: 'Global variables';
-		itemName: [ :global | global key ];
-		filter: GtFilterSubstring;
-		wantsToDisplayOnEmptyQuery: false
-]
-
-{ #category : #spotter }
-GtSpotterStart >> gtSpotterForIcebergRepositoriesFor: aStep [
+GtSpotterStart >> gtSpotterForDirectoriesFor: aSearch [
 	<gtSearch>
 	
-	aStep listProcessor
-		priority: 88;
-		title: 'Iceberg Repositories';
-		allCandidates: [ IceRepository registry ];
-		itemName: [ :aRepository | aRepository name ];
-		wantsToDisplayOnEmptyQuery: false;
-		filter: GtFilterSubstring;
-		actLogic: [ :anIcebergRepository :step :spotterElement | 
-			anIcebergRepository
-				gtSpotterActDefault: step 
-				from: spotterElement ]
+	^ aSearch explicit
+		priority: 0;
+		title: 'Directories';
+		"itemIcon: [ BrGlamorousIcons folder ];"
+		search: [ :aContext | self fileReferencesBy: #directories inContext: aContext ]
+]
+
+{ #category : #spotter }
+GtSpotterStart >> gtSpotterForFilesFor: aSearch [
+	<gtSearch>
+	
+	^ aSearch explicit
+		priority: 1;
+		title: 'Files';
+		"itemIcon: [ BrGlamorousIcons file ];"
+		search: [ :aContext | self fileReferencesBy: #files inContext: aContext ]
 ]
 
 { #category : #spotter }
@@ -289,26 +250,14 @@ GtSpotterStart >> gtSpotterForMetacelloBaselinesFor: aStep [
 ]
 
 { #category : #spotter }
-GtSpotterStart >> gtSpotterForPackagesFor: aStep [
-	<gtSearch>
-	aStep listProcessor
-		priority: 20;
-		allCandidates: [ RPackageOrganizer default packages ];
-		title: 'Packages';
-		itemName: [ :package | package name ];
-		itemIcon: [ Smalltalk ui icons iconNamed: #packageIcon ];
-		filter: GtFilterSubstring;
-		wantsToDisplayOnEmptyQuery: false
-]
-
-{ #category : #spotter }
-GtSpotterStart >> gtSpotterForPragmasFor: aStep [
-	<gtSearch>
-	aStep listProcessor
-		priority: 40;
-		allCandidates: [ GtPragmaType all ];
-		title: 'Pragmas';
-		itemName: [ :pragma | pragma keyword ];
+GtSpotterStart >> gtSpotterForPixelIconFor: aStep [
+	"<gtSearch>"
+	^ aStep listProcessor
+		title: 'Icon - Pixeled';
+		priority: 101;
+		allCandidates: [ GtSpotterPixelIconPreview 
+			library: BrGlamorousIcons allForms: BrGlamorousIcons allIcons ];
+		itemName: #iconSelector;
 		filter: GtFilterSubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
@@ -377,35 +326,7 @@ GtSpotterStart >> gtSpotterForSendersFor: aStep [
 ]
 
 { #category : #spotter }
-GtSpotterStart >> gtSpotterImplementorsFor: aStep [
-	<gtSearch>
-	self flag: #specialFilter.
-	aStep listProcessor
-		priority: 30;
-		title: 'Implementors';
-		filter: GtFilterImplementor
-			item: [ :filter :context | 
-			SystemNavigation default
-				allBehaviorsDo: [ :class | class localMethods do: filter ] ];
-		keyBinding: $m meta;
-		wantsToDisplayOnEmptyQuery: false
-]
-
-{ #category : #spotter }
-GtSpotterStart >> spotterForPixelIconFor: aStep [
-	"<gtSearch>"
-	^ aStep listProcessor
-		title: 'Icon - Pixeled';
-		priority: 101;
-		allCandidates: [ GtSpotterPixelIconPreview 
-			library: BrGlamorousIcons allForms: BrGlamorousIcons allIcons ];
-		itemName: #iconSelector;
-		filter: GtFilterSubstring;
-		wantsToDisplayOnEmptyQuery: false
-]
-
-{ #category : #spotter }
-GtSpotterStart >> spotterForVectorIconFor: aStep [
+GtSpotterStart >> gtSpotterForVectorIconFor: aStep [
 	"<gtSearch>"
 	^ aStep listProcessor
 		title: 'Icons - Vectorized';

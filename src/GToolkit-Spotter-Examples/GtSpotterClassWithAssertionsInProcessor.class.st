@@ -1,33 +1,27 @@
 Class {
 	#name : #GtSpotterClassWithAssertionsInProcessor,
 	#superclass : #Object,
-	#category : 'GToolkit-Spotter-Examples-Exceptions'
+	#category : #'GToolkit-Spotter-Examples-Exceptions'
 }
 
 { #category : #examples }
-GtSpotterClassWithAssertionsInProcessor >> gtMockProcessorFor: aSpotterStep [
+GtSpotterClassWithAssertionsInProcessor >> gtMockProcessorFor: aSearch [
 	" No Exceptions expected ! "
 
 	<gtSearch>
 	self assert: GtCurrentSpotterExceptionHandler value notNil.
 	self
-		assert:
-			GtCurrentSpotterExceptionHandler value
-				== aSpotterStep spotter exceptionHandler.
-	aSpotterStep listProcessor
+		assert: GtCurrentSpotterExceptionHandler value == aSearch spotter exceptionHandler.
+	^ aSearch list
 		priority: 1;
-		allCandidates: [ self assert: GtCurrentSpotterExceptionHandler value notNil.
+		items: [ self assert: GtCurrentSpotterExceptionHandler value notNil.
 			self
-				assert:
-					GtCurrentSpotterExceptionHandler value
-						== aSpotterStep spotter exceptionHandler.
+				assert: GtCurrentSpotterExceptionHandler value == aSearch spotter exceptionHandler.
 			#(1 2 3) ];
 		itemName: [ :item | 
 			self assert: GtCurrentSpotterExceptionHandler value notNil.
 			self
-				assert:
-					GtCurrentSpotterExceptionHandler value
-						== aSpotterStep spotter exceptionHandler.
+				assert: GtCurrentSpotterExceptionHandler value == aSearch spotter exceptionHandler.
 			item asString ];
 		filter: GtSpotterFilterWithAssertions
 ]

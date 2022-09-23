@@ -6,24 +6,22 @@ GlobalVariable >> gtSpotterActDefaultFrom: aSpotterElement [
 ]
 
 { #category : #'*GToolkit-Spotter' }
-GlobalVariable >> gtSpotterClassFor: aStep [
+GlobalVariable >> gtSpotterClassFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 50;
 		title: 'Class';
-		allCandidates: [ {self value class} ];
-		itemIcon: #systemIcon;
-		filter: GtFilterSubstring
+		items: [ {self value class} ];
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-GlobalVariable >> gtSpotterForReferencesFor: aStep [
+GlobalVariable >> gtSpotterForReferencesFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 130;
 		title: 'References';
-		allCandidates: [ (SystemNavigation default allReferencesTo: self)
-				collect: #compiledMethod ];
+		items: [ (SystemNavigation default allReferencesTo: self) collect: #compiledMethod ];
 		itemName: [ :method | method gtDisplayString ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]

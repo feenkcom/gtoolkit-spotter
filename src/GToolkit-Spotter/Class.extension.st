@@ -6,59 +6,59 @@ Class >> gtSpotterActDefaultFrom: aSpotterElement [
 ]
 
 { #category : #'*GToolkit-Spotter' }
-Class >> gtSpotterClassMethodsFor: aStep [
+Class >> gtSpotterClassMethodsFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 15;
 		title: 'Class methods';
-		allCandidates: [ self classSide methods ];
+		items: [ self classSide methods ];
 		itemName: [ :method | method selector ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-Class >> gtSpotterMethodsFor: aStep [
+Class >> gtSpotterMethodsFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 10;
 		title: 'Instance methods';
-		allCandidates: [ self methods ];
+		items: [ self methods ];
 		itemName: [ :method | method selector ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-Class >> gtSpotterReferenceFor: aStep [
+Class >> gtSpotterReferenceFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 30;
 		title: 'References';
-		allCandidates: [ GtPharoIndex current globalVariableReferencesTo: self binding ];
+		items: [ GtPharoIndex current globalVariableReferencesTo: self binding ];
 		itemName: [ :method | method gtDisplayString ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-Class >> gtSpotterSuperClassMethodsFor: aStep [
+Class >> gtSpotterSuperClassMethodsFor: aSearch [
 	<gtSearch>
 	| superclasses |
 	superclasses := self class withAllSuperclasses select: #isMeta.
-	aStep listProcessor
+	^ aSearch list
 		priority: 16;
 		title: 'Super class methods';
-		allCandidates: [ self classSide allMethods
+		items: [ self classSide allMethods
 				select: [ :each | 
 					(each methodClass = self classSide) not
 						& (superclasses includes: each methodClass) ] ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]
 
 { #category : #'*GToolkit-Spotter' }
-Class >> gtSpotterSuperMethodsFor: aStep [
+Class >> gtSpotterSuperMethodsFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 11;
 		title: 'Super instance methods';
-		allCandidates: [ self allMethods reject: [ :each | each methodClass = self ] ];
-		filter: GtFilterSubstring
+		items: [ self allMethods reject: [ :each | each methodClass = self ] ];
+		filterBySubstring
 ]

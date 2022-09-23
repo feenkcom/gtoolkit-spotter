@@ -1,12 +1,12 @@
 Extension { #name : #SettingTree }
 
 { #category : #'*GToolkit-Spotter' }
-SettingTree >> gtSpotterForSettingsFor: aStep [
+SettingTree >> gtSpotterForSettingsFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 0;
 		title: 'Settings';
-		allCandidates: [ self nodeList ];
+		items: [ self nodeList ];
 		itemName: [ :each | each spotterLabel ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]

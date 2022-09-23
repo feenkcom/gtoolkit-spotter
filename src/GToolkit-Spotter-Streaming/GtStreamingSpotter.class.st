@@ -13,31 +13,17 @@ Class {
 
 { #category : #accessing }
 GtStreamingSpotter class >> enable: aBoolean [
-	aBoolean
-		ifTrue: [ self enabledNotification markAsViewsAndSaveStatus ]
-		ifFalse: [ self enabledNotification markAsDismissedAndSaveStatus ]
-]
-
-{ #category : #accessing }
-GtStreamingSpotter class >> enabledNotification [
-	| aNotification |
-
-	aNotification := GtNotification new
-		id: 'notification/try-new-spotter'.
-		
-	aNotification status: (aNotification statusRegistry statusForId: aNotification id).
-
-	^ aNotification
+	self deprecated: 'Spotter is enabled by default'
 ]
 
 { #category : #accessing }
 GtStreamingSpotter class >> isEnabled [
-	^ self enabledNotification status isViewed 
+	^ true
 ]
 
 { #category : #accessing }
 GtStreamingSpotter class >> isEnabledChoiceMade [
-	^ self enabledNotification status isViewed or: [ self enabledNotification status isDismissed ]
+	^ true
 ]
 
 { #category : #'instance creation' }
@@ -88,6 +74,16 @@ GtStreamingSpotter >> currentStepIndex [
 	^ steps
 		indexOf: currentStep
 		ifAbsent: [ self error: 'Current step is wrong' ]
+]
+
+{ #category : #'gt-extension' }
+GtStreamingSpotter >> gtStepsFor: aView [
+	<gtView>
+	
+	^ aView list
+		title: 'Steps';
+		priority: 5;
+		items: [ self steps ]
 ]
 
 { #category : #'api - accessing' }

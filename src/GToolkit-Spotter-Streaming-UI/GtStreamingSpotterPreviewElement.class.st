@@ -57,7 +57,8 @@ GtStreamingSpotterPreviewElement >> initialize [
 		aptitude: (BrGlamorousLabelAptitude new foreground: Color gray);
 		alignCenter;
 		hMatchParent;
-		vFitContent.
+		vFitContent;
+		margin: (BlInsets top: 5).
 
 	previewContainer := BrFrame new
 		margin: (BlInsets all: 5);

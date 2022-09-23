@@ -1,25 +1,25 @@
 Extension { #name : #MetacelloAbstractPackageSpec }
 
 { #category : #'*GToolkit-Spotter' }
-MetacelloAbstractPackageSpec >> gtSpotterForIncludesFor: aStep [
+MetacelloAbstractPackageSpec >> gtSpotterForIncludesFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 1;
 		title: 'Includes';
-		allCandidates: [ self includes ];
+		items: [ self includes ];
 		itemName: [ :item | item name ];
-		filter: GtFilterSubstring;
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]
 
 { #category : #'*GToolkit-Spotter' }
-MetacelloAbstractPackageSpec >> gtSpotterForRequiresFor: aStep [
+MetacelloAbstractPackageSpec >> gtSpotterForRequiresFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 2;
 		title: 'Requires';
-		allCandidates: [ self requires ];
+		items: [ self requires ];
 		itemName: [ :item | item name ];
-		filter: GtFilterSubstring;
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]

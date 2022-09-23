@@ -1,13 +1,14 @@
 Extension { #name : #BrGlamorousVectorIcons }
 
 { #category : #'*GToolkit-Spotter' }
-BrGlamorousVectorIcons class >> spotterForVectorIconFor: aStep [
+BrGlamorousVectorIcons class >> gtSpotterForVectorIconFor: aSearch [
 	<gtSearch>
-	^ aStep listProcessor
+	^ aSearch list
 		title: 'Vector Icons';
 		priority: 1;
-		allCandidates: [ GtSpotterVectorIconPreview 
-			library: BrGlamorousVectorIcons allIcons: BrGlamorousVectorIcons allIcons ];
+		items: [ GtSpotterVectorIconPreview
+				library: BrGlamorousVectorIcons
+				allIcons: BrGlamorousVectorIcons allIcons ];
 		itemName: #iconSelector;
-		filter: GtFilterSubstring
+		filterBySubstring
 ]

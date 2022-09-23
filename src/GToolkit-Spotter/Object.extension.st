@@ -15,11 +15,11 @@ Object >> asGtSpotterProcessorLink [
 { #category : #'*GToolkit-Spotter' }
 Object >> gtActionSearchFor: anAction [
 	<gtAction>
-	| fakeStep |
-	fakeStep := GtSpotter new newStep origin: self.
-	self gtSpotterProcessorsFor: fakeStep.
-	fakeStep processors isEmpty
-		ifTrue: [ ^ anAction noAction ].
+	
+	(GtSpotterUnorderedSearchesStream forOriginObject: self) isNotEmpty wait
+		ifFalse: [ ^ anAction noAction ].
+	
+
 	^ anAction explicit
 		stencil: [ GtSpotterDropdownButtonStencil new
 			object: self;

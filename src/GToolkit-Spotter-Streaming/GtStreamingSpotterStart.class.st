@@ -11,7 +11,7 @@ GtStreamingSpotterStart >> gtDisplayOn: aStream [
 
 { #category : #searches }
 GtStreamingSpotterStart >> gtPackagesFor: aSearch [
-	<gtSpotterSearch>
+	<gtSearch>
 	^ aSearch list
 		title: 'Packages';
 		priority: 20;
@@ -23,7 +23,7 @@ GtStreamingSpotterStart >> gtPackagesFor: aSearch [
 
 { #category : #searches }
 GtStreamingSpotterStart >> gtSpotterForToolsFor: aSearch [
-	<gtSpotterSearch>
+	<gtSearch>
 	^ aSearch list
 		priority: 1;
 		items: [ {GtCoderStencil new.

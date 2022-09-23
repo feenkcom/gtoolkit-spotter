@@ -1,12 +1,12 @@
 Extension { #name : #Dictionary }
 
 { #category : #'*GToolkit-Spotter' }
-Dictionary >> gtSpotterForKeysFor: aStep [
+Dictionary >> gtSpotterForKeysFor: aSearch [
 	<gtSearch>
-	aStep listProcessor
+	^ aSearch list
 		priority: 15;
 		title: 'Keys';
-		allCandidates: [ self keys ];
+		items: [ self keys ];
 		candidatesLimit: 5;
-		filter: GtFilterSubstring
+		filterBySubstring
 ]

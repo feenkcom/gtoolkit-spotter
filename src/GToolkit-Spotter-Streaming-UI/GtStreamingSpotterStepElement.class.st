@@ -133,14 +133,13 @@ GtStreamingSpotterStepElement >> onSearchQueryChanged [
 		customGroup: #Spotter.
 
 	aGroupesStream := spotterStep createSearchResultsStream collect: [ :eachSearchAndResults |
-		| aSearch aSearchStream aStreamItemsProvider aGroup |
+		| aSearch aSearchStream aStreamItemsProvider aGroup aPreloadIndex |
 		
 		aSearch := eachSearchAndResults key.
 		aSearchStream := eachSearchAndResults value.
 		
 		aStreamItemsProvider := BrStreamItemsProvider new
 			preloadAmount: 1;
-			preloadDuration: 1 minutes;
 			executionConfiguration: anExecutionConfiguration;
 			stream: aSearchStream
 			sinks: { AsyncForwardSink new . AsyncCounterSink new }.
@@ -163,9 +162,14 @@ GtStreamingSpotterStepElement >> onSearchQueryChanged [
 		aGroup := self newGroup: aSearch itemsProvider: aStreamItemsProvider.
 	
 		aStreamItemsProvider userData at: #group put: aGroup.
+		
+		aPreloadIndex := 0.
+		aStreamItemsProvider preloadUntilFoundSuchThat: [ :each |
+			aPreloadIndex := aPreloadIndex + 1.
+			aPreloadIndex = aSearch itemsLimit ].
 
 		aGroup ].
-	
+
 	aGroupesItemProvider := BrStreamItemsProvider new
 		executionConfiguration: anExecutionConfiguration;
 		stream: aGroupesStream.

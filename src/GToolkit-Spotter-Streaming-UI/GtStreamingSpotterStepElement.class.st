@@ -11,10 +11,53 @@ Class {
 		'resultsElement',
 		'startedItemsProviders',
 		'loadedItemsProviders',
-		'loadingItemsProviders'
+		'loadingItemsProviders',
+		'asyncErrorHandler',
+		'executionConfiguration'
 	],
 	#category : #'GToolkit-Spotter-Streaming-UI'
 }
+
+{ #category : #'private - instance creation' }
+GtStreamingSpotterStepElement >> createGroup: eachSearchAndResults [
+	| aGroup aSearchStream aStreamItemsProvider aSearch aPreloadIndex |
+	aSearch := eachSearchAndResults key.
+	aSearchStream := eachSearchAndResults value.
+
+	aStreamItemsProvider := BrStreamItemsProvider new
+			preloadAmount: 1;
+			executionConfiguration: executionConfiguration;
+			stream: aSearchStream
+				sinks: { AsyncForwardSink new. AsyncCounterSink new }.
+
+	aStreamItemsProvider
+		when: BrItemsProviderNewItemsLoadedEvent
+		send: #onItemsLoaded:
+		to: self.
+
+	aStreamItemsProvider
+		when: BrItemsProviderStartedLoadingEvent
+		send: #onLoadingStarted:
+		to: self.
+
+	aStreamItemsProvider
+		when: BrItemsProviderDoneEvent
+		send: #onLoadingFinished:
+		to: self.
+
+	aGroup := self newGroup: aSearch itemsProvider: aStreamItemsProvider.
+
+	aStreamItemsProvider userData at: #group put: aGroup.
+
+	aSearch isBroken ifFalse: [
+		aPreloadIndex := 0.
+		aStreamItemsProvider
+			preloadUntilFoundSuchThat: [ :each | 
+				aPreloadIndex := aPreloadIndex + 1.
+				aPreloadIndex = aSearch itemsLimit ] ].
+
+	^ aGroup
+]
 
 { #category : #initialization }
 GtStreamingSpotterStepElement >> initialize [
@@ -25,6 +68,10 @@ GtStreamingSpotterStepElement >> initialize [
 	startedItemsProviders := AsyncMutex for: IdentitySet new.
 	loadedItemsProviders := AsyncMutex for: IdentitySet new.
 	loadingItemsProviders := AsyncMutex for: IdentitySet new.
+	asyncErrorHandler := AsyncPassExceptionHandler new.
+	executionConfiguration := AsyncFutureExecutionConfiguration new
+		errorHandler: asyncErrorHandler;
+		customGroup: #Spotter.
 
 	resultsElement := BrGroupedList new.
 	resultsElement
@@ -120,62 +167,19 @@ GtStreamingSpotterStepElement >> onLoadingStarted: anItemsProviderStartedLoading
 
 { #category : #'private - event handling' }
 GtStreamingSpotterStepElement >> onSearchQueryChanged [
-	| anErrorHandler anExecutionConfiguration aGroupesStream aGroupesItemProvider |
-	
+	| aGroupesStream aGroupesItemProvider |
 	startedItemsProviders lock: [ :aSet | aSet removeAll ].
 	loadedItemsProviders lock: [ :aSet | aSet removeAll ].
 	loadingItemsProviders lock: [ :aSet | aSet removeAll ].
 
-	anErrorHandler := AsyncPassExceptionHandler new.
-
-	anExecutionConfiguration := AsyncFutureExecutionConfiguration new
-		errorHandler: anErrorHandler;
-		customGroup: #Spotter.
-
-	aGroupesStream := spotterStep createSearchResultsStream collect: [ :eachSearchAndResults |
-		| aSearch aSearchStream aStreamItemsProvider aGroup aPreloadIndex |
-		
-		aSearch := eachSearchAndResults key.
-		aSearchStream := eachSearchAndResults value.
-		
-		aStreamItemsProvider := BrStreamItemsProvider new
-			preloadAmount: 1;
-			executionConfiguration: anExecutionConfiguration;
-			stream: aSearchStream
-			sinks: { AsyncForwardSink new . AsyncCounterSink new }.
-
-		aStreamItemsProvider
-			when: BrItemsProviderNewItemsLoadedEvent
-			send: #onItemsLoaded:
-			to: self.
-			
-		aStreamItemsProvider
-			when: BrItemsProviderStartedLoadingEvent
-			send: #onLoadingStarted:
-			to: self.
-			
-		aStreamItemsProvider
-			when: BrItemsProviderDoneEvent
-			send: #onLoadingFinished:
-			to: self.
-		
-		aGroup := self newGroup: aSearch itemsProvider: aStreamItemsProvider.
-	
-		aStreamItemsProvider userData at: #group put: aGroup.
-		
-		aPreloadIndex := 0.
-		aStreamItemsProvider preloadUntilFoundSuchThat: [ :each |
-			aPreloadIndex := aPreloadIndex + 1.
-			aPreloadIndex = aSearch itemsLimit ].
-
-		aGroup ].
+	aGroupesStream := spotterStep createSearchResultsStream collect: (WeakMessageSend receiver: self selector: #createGroup:).
 
 	aGroupesItemProvider := BrStreamItemsProvider new
-		executionConfiguration: anExecutionConfiguration;
-		stream: aGroupesStream.
+			executionConfiguration: executionConfiguration;
+			stream: aGroupesStream.
 
 	resultsElement groupsProvider: aGroupesItemProvider.
-	resultsElement selectOne: 2.
+	resultsElement selectOne: 2
 ]
 
 { #category : #'private - event handling' }

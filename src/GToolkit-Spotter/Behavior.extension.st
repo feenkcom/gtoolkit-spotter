@@ -35,6 +35,17 @@ Behavior >> gtSpotterInstanceVariablesFor: aSearch [
 ]
 
 { #category : #'*GToolkit-Spotter' }
+Behavior >> gtSpotterSpecialSlotsFor: aSearch [
+	<gtSearch>
+	^ aSearch list
+		priority: 70;
+		title: 'Special Slots';
+		items: [ self slots select: [:each | each needsFullDefinition]];
+		itemName: [ :item | item definitionString ];
+		filterBySubstring
+]
+
+{ #category : #'*GToolkit-Spotter' }
 Behavior >> gtSpotterSubclassesFor: aSearch [
 	<gtSearch>
 	^ aSearch list
@@ -62,17 +73,6 @@ Behavior >> gtSpotterTraitUsersFor: aSearch [
 		priority: 20;
 		title: 'Users';
 		items: [ self traitUsers asArray ];
-		filterBySubstring
-]
-
-{ #category : #'*GToolkit-Spotter' }
-Behavior >> gtSpotterUsedSlotsFor: aSearch [
-	<gtSearch>
-	^ aSearch list
-		priority: 70;
-		title: 'Special Slots';
-		items: [ self slots select: [ :slot | slot isSpecial ] ];
-		itemName: [ :item | item definitionString ];
 		filterBySubstring
 ]
 

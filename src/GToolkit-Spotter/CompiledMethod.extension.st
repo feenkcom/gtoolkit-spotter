@@ -1,6 +1,12 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*GToolkit-Spotter' }
+CompiledMethod >> gtItemsSearchFor: aSearch [
+	"the search for collection items does not apply for compiled methods"
+	^ aSearch empty
+]
+
+{ #category : #'*GToolkit-Spotter' }
 CompiledMethod >> gtSpotterActDefaultFrom: anElement [
 	self gtBrowseFrom: anElement
 ]

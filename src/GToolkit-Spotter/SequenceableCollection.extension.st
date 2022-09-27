@@ -10,3 +10,15 @@ SequenceableCollection >> fasterDifferencePreservingOrder: aCollection [
 			ifFalse: [ newCollection add: each ] ].
 	^ newCollection
 ]
+
+{ #category : #'*GToolkit-Spotter' }
+SequenceableCollection >> gtItemsSearchFor: aSearch [
+	<gtSearch>
+	
+	^ aSearch list
+		priority: 10;
+		title: 'Items';
+		items: [ self ];
+		filterBySubstring;
+		withoutItemsLimit
+]

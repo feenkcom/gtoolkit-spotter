@@ -163,7 +163,32 @@ GtStreamingSpotterElement >> initialize [
 		
 	self when: GtStreamingSpotterSelectedCandidateMaybeChanged do: [ :anEvent |
 		anEvent consumed: true.
-		self onSelectedCandidateMaybeChanged ]
+		self onSelectedCandidateMaybeChanged ].
+		
+	self addChild: (BrResizer new
+		target: self;
+		beBottom;
+		aptitude: (BrGlamorousResizerAptitude new);
+		when: BlResizerResizedEvent do: [ :anEvent | self fireEvent: GtSpotterResizedEvent new ];
+		constraintsDo: [ :c |
+			c ignoreByLayout.
+			c ignored horizontal weight: 0.2 ]).
+	self addChild: (BrResizer new
+		target: self;
+		beLeft;
+		aptitude: BrGlamorousResizerAptitude;
+		when: BlResizerResizedEvent do: [ :anEvent | self fireEvent: GtSpotterResizedEvent new ];
+		constraintsDo: [ :c | 
+			c ignoreByLayout.
+			c ignored vertical weight: 0.2 ]).
+	self addChild: (BrResizer new
+		target: self;
+		beRight;
+		aptitude: BrGlamorousResizerAptitude;
+		when: BlResizerResizedEvent do: [ :anEvent | self fireEvent: GtSpotterResizedEvent new ];
+		constraintsDo: [ :c | 
+			c ignoreByLayout.
+			c ignored vertical weight: 0.2 ])
 ]
 
 { #category : #'private - event handling' }

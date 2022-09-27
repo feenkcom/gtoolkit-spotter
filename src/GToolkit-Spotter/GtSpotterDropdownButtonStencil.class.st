@@ -225,7 +225,7 @@ GtSpotterDropdownButtonStencil >> spotterElementDo: aOneArgBlock [
 { #category : #'api - instantiation' }
 GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
 	| aSpotterModel aSpotterElement |
-	
+
 	aSpotterModel := GtStreamingSpotter on: self object.
 
 	spotterModelActions do: [ :eachAction |
@@ -237,19 +237,18 @@ GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
 
 	spotterElementActions do: [ :eachAction | 
 		eachAction cull: aSpotterElement ].
-		
+
 	aSpotterElement
 		when: GtPhlowObjectToSpawn
 		do: [ :anEvent |
 			aButton fireEvent: (GtPhlowObjectToSpawn new
 				object: anEvent object;
 				sourceElement: anEvent target) ].
-	
-	aSpotterModel announcer
-		when: GtSpotterExitAnnouncement
-		do: [ 
-			aSpotterModel announcer unsubscribe: self.
-			aButton dispatchEvent: (BrDropdownHideWish new) ].
+
+	(aSpotterElement addShortcut: (BlShortcutWithAction new
+		overrideChildren: true;
+		combination: BlKeyCombination escape;
+		action: [ aButton dispatchEvent: BrDropdownHideWish new ])).
 
 	aSpotterModel announcer
 		when: GtSpotterActOn

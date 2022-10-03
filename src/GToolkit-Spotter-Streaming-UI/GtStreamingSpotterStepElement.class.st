@@ -21,8 +21,11 @@ Class {
 { #category : #'private - instance creation' }
 GtStreamingSpotterStepElement >> createGroup: eachSearchAndResults [
 	| aGroup aSearchStream aStreamItemsProvider aSearch aPreloadIndex |
+
 	aSearch := eachSearchAndResults key.
-	aSearchStream := eachSearchAndResults value.
+	aSearchStream := (eachSearchAndResults value
+		collect: [ :anItem | GtStreamingSpotterCandidate new item: anItem search: aSearch ])
+		on: Error do: [ :anError | GtStreamingSpotterBrokenCandidate new item: anError copy freeze search: aSearch ].
 
 	aStreamItemsProvider := BrStreamItemsProvider new
 			preloadAmount: 1;
@@ -78,20 +81,10 @@ GtStreamingSpotterStepElement >> initialize [
 		matchParent;
 		when: BrSelectionChanged do: [ self onSelectedCandidateMaybeChanged ];
 		when: BrItemsProviderItemsChangedEvent do: [ self onSelectedCandidateMaybeChanged ];
-		headerElementStencil: [ self newCategoryElement spotterStep: spotterStep ];
+		headerElementStencil: [ self newCategoryElement id: GtSpotterCategoryElementId; spotterStep: spotterStep ];
 		headerDataBinder: [ :aCategoryElement :eachGroup | aCategoryElement group: eachGroup ].
 
 	self addChild: resultsElement
-]
-
-{ #category : #'private - instance creation' }
-GtStreamingSpotterStepElement >> newBrokenSearchElement [
-	^ GtStreamingSpotterBrokenSearchElement new
-]
-
-{ #category : #'private - instance creation' }
-GtStreamingSpotterStepElement >> newCandidateElement [
-	^ GtStreamingSpotterCandidateElement new
 ]
 
 { #category : #'private - instance creation' }
@@ -106,14 +99,18 @@ GtStreamingSpotterStepElement >> newGroup: aSearch itemsProvider: aStreamItemsPr
 			BrGroup new
 				itemsProvider: aStreamItemsProvider;
 				domainObject: aSearch;
-				itemStencil: [ self newBrokenSearchElement spotterStep: self spotterStep ];
-				itemDataBinder: [ :aCandidateElement :aBrokenSearch | aCandidateElement search: aBrokenSearch ] ]
+				itemStencil: [ GtStreamingSpotterBrokenSearchElement new spotterStep: self spotterStep ];
+				itemDataBinder: [ :aCandidateElement :eachCandidate | aCandidateElement error: eachCandidate item error search: eachCandidate item ] ]
 		ifFalse: [
 			BrGroup new
 				itemsProvider: aStreamItemsProvider;
 				domainObject: aSearch;
-				itemStencil: [ self newCandidateElement spotterStep: self spotterStep ];
-				itemDataBinder: [ :aCandidateElement :eachItem | aCandidateElement candidate: eachItem search: aSearch ];
+				itemType: [ :aFactory :eachCandidate |
+					eachCandidate isBroken
+						ifTrue: [ GtStreamingSpotterBrokenSearchElement ]
+						ifFalse: [ GtStreamingSpotterCandidateErrorHandlingElement ] ];
+				itemStencil: [ :anElementClass | anElementClass new spotterStep: self spotterStep ];
+				itemDataBinder: [ :aCandidateElement :eachCandidate | aCandidateElement candidate: eachCandidate search: aSearch ];
 				itemsLimit: aSearch itemsLimit ]
 ]
 
@@ -212,17 +209,10 @@ GtStreamingSpotterStepElement >> selectPreviousItem [
 { #category : #'api - selection' }
 GtStreamingSpotterStepElement >> selectedCandidateDo: aBlock [
 	resultsElement selectedEntityDo: [ :anEntity |
-		| aCandidate |
-	
 		anEntity isItem
 			ifFalse: [ ^ self ].
-	
-	
-		aCandidate := GtStreamingSpotterCandidate new
-			item: anEntity object
-			search: anEntity group domainObject.
 		
-		aBlock value: aCandidate ]
+		aBlock value: anEntity object ]
 ]
 
 { #category : #'api - spotter step' }

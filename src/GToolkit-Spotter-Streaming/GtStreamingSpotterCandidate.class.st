@@ -8,6 +8,11 @@ Class {
 	#category : #'GToolkit-Spotter-Streaming-Model'
 }
 
+{ #category : #testing }
+GtStreamingSpotterCandidate >> isBroken [
+	^ false
+]
+
 { #category : #accessing }
 GtStreamingSpotterCandidate >> item [
 

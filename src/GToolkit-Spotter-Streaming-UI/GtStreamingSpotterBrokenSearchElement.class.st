@@ -5,6 +5,7 @@ Class {
 	#classTraits : 'TGtStreamingWithSpotterStep classTrait',
 	#instVars : [
 		'search',
+		'error',
 		'label',
 		'debugButton',
 		'browseButton'
@@ -14,9 +15,18 @@ Class {
 
 { #category : #'private - event handling' }
 GtStreamingSpotterBrokenSearchElement >> browseDueTo: anEventType [
-	((GtCoder forMethod: search definingMethod) 
+	"((GtCoder forMethod: search definingMethod) 
 		openInPagerFrom: self)
-			maximized
+			maximized."
+			
+		"search definingMethod gtBrowseFrom: self"
+		
+	self phlow spawnTool: (GtMethodCoderTool compiledMethod: search definingMethod)
+]
+
+{ #category : #initialization }
+GtStreamingSpotterBrokenSearchElement >> candidate: aStreamingSpotterCandidate search: aSpotterSearch [
+	self error: aStreamingSpotterCandidate item search: aSpotterSearch
 ]
 
 { #category : #'private - event handling' }
@@ -24,16 +34,26 @@ GtStreamingSpotterBrokenSearchElement >> debugDueTo: anEventType [
 	[ 
 	  UIManager default
 		  gtDebugProcess: Processor activeProcess
-		  context: (search error signalerContext ifNil: [ search error signalContext ])
-		  label: search error description
+		  context: (error signalerContext ifNil: [ error signalContext ])
+		  label: error description
 		  fullView: true
 		  notification: nil ] forkNamed: 'Debug'
+]
+
+{ #category : #initialization }
+GtStreamingSpotterBrokenSearchElement >> error: anError search: aBrokenSearch [
+	search := aBrokenSearch.
+	error := anError.
+
+	label text: error printString
 ]
 
 { #category : #initialization }
 GtStreamingSpotterBrokenSearchElement >> initialize [
 	| aToolbar |
 	super initialize.
+	
+	self id: GtSpotterBrokenSearchElementId.
 	
 	self
 		hMatchParent;
@@ -100,12 +120,5 @@ GtStreamingSpotterBrokenSearchElement >> newErrorLabel [
 
 { #category : #accessing }
 GtStreamingSpotterBrokenSearchElement >> search [
-
 	^ search
-]
-
-{ #category : #accessing }
-GtStreamingSpotterBrokenSearchElement >> search: aBrokenSearch [
-	search := aBrokenSearch.
-	label text: aBrokenSearch error printString
 ]

@@ -16,21 +16,21 @@ Class {
 { #category : #'private - event handling' }
 GtStreamingSpotterCandidateElement >> actDueTo: anEventType [
 	self spotterStep
-		itemActOn: candidate
+		itemActOn: candidate item
 		search: search
 		dueTo: anEventType
 		from: self
 ]
 
 { #category : #initialization }
-GtStreamingSpotterCandidateElement >> candidate: anObject search: aSpotterSearch [
-	candidate := anObject.
+GtStreamingSpotterCandidateElement >> candidate: aStreamingSpotterCandidate search: aSpotterSearch [
+	candidate := aStreamingSpotterCandidate.
 	search := aSpotterSearch.
+
+	label text: (search itemNameFor: candidate item).
 	
-	label text: (aSpotterSearch itemNameFor: anObject).
-	
-	diveInButton asyncFuture future: (spotterStep canDiveIn: anObject).
-	aSpotterSearch hasItemActOn
+	diveInButton asyncFuture future: (spotterStep canDiveIn: candidate item).
+	search hasItemActOn
 		ifTrue: [ actOnButton visibility: BlVisibility visible ]
 		ifFalse: [ actOnButton visibility: BlVisibility hidden ]
 ]
@@ -38,7 +38,7 @@ GtStreamingSpotterCandidateElement >> candidate: anObject search: aSpotterSearch
 { #category : #'private - event handling' }
 GtStreamingSpotterCandidateElement >> diveInDueTo: anEventType [
 	self spotterStep
-		diveIn: candidate
+		diveIn: candidate item
 		dueTo: anEventType
 ]
 

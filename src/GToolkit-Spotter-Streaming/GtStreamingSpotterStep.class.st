@@ -56,11 +56,20 @@ GtStreamingSpotterStep >> createSearchContext [
 { #category : #'api - search' }
 GtStreamingSpotterStep >> createSearchResultsStream [
 	^ self createSearchesStream collect: [ :eachSpotterSearch |
-		| aContext aResultsStream |
+		| aContext aSpotterSearch aResultsStream |
 		
 		aContext := self createSearchContext.
-		aResultsStream := eachSpotterSearch asStreamFor: aContext.
-		eachSpotterSearch -> aResultsStream ]
+		aSpotterSearch := eachSpotterSearch.
+		aResultsStream := [ eachSpotterSearch asStreamFor: aContext ]
+			on: Error
+			do: [ :anError |
+				aSpotterSearch := GtSpotterBrokenSearch new
+					priority: aSpotterSearch priority;
+					title: aSpotterSearch title;
+					error: anError;
+					definingMethod: aSpotterSearch definingMethod.
+				aSpotterSearch asStreamFor: aContext ].
+		aSpotterSearch -> aResultsStream ]
 ]
 
 { #category : #'api - search' }

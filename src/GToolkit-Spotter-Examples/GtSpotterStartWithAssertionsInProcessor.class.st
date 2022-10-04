@@ -1,11 +1,11 @@
 Class {
-	#name : #GtSpotterClassWithAssertionsInProcessor,
+	#name : #GtSpotterStartWithAssertionsInProcessor,
 	#superclass : #Object,
 	#category : #'GToolkit-Spotter-Examples-Exceptions'
 }
 
 { #category : #examples }
-GtSpotterClassWithAssertionsInProcessor >> gtMockProcessorFor: aSearch [
+GtSpotterStartWithAssertionsInProcessor >> gtMockProcessorFor: aSearch [
 	" No Exceptions expected ! "
 
 	<gtSearch>

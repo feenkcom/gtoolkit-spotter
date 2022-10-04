@@ -125,7 +125,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionInItemName [
 	<gtExample>
 	| scripter |
 
-	scripter := self spotterElementOnStart: GtSpotterClassWithExceptionInItemName new.
+	scripter := self spotterElementOnStart: GtSpotterStartWithExceptionInItemName new.
 	
 	scripter assert
 		id: GtSpotterCandidateElementId index: 3;
@@ -143,7 +143,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionsInSearch [
 	<gtExample>
 	| scripter |
 
-	scripter := self spotterElementOnStart: GtSpotterClassWithExceptionInSearch new.
+	scripter := self spotterElementOnStart: GtSpotterStartWithExceptionInSearch new.
 	
 	scripter assert
 		id: GtSpotterCategoryElementId index: 1;
@@ -156,7 +156,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionsInSearch [
 		id: GtSpotterBrokenSearchElementId index: 1;
 		// BrLabel;
 		value: [ :aLabel | aLabel text asString ]
-			equals: [ AssertionFailure name, ': ', GtSpotterClassWithExceptionInSearch name ];
+			equals: [ AssertionFailure name, ': ', GtSpotterStartWithExceptionInSearch name ];
 		play.
 		
 	scripter assert
@@ -170,7 +170,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionsInSearch [
 		id: GtSpotterBrokenSearchElementId index: 2;
 		// BrLabel;
 		value: [ :aLabel | aLabel text asString ]
-			equals: [ AssertionFailure name, ': ', GtSpotterClassWithExceptionInSearch name ];
+			equals: [ AssertionFailure name, ': ', GtSpotterStartWithExceptionInSearch name ];
 		play.
 
 	scripter assert

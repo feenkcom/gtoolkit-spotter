@@ -1,17 +1,17 @@
 Class {
-	#name : #GtSpotterClassWithExceptionInSearch,
+	#name : #GtSpotterStartWithExceptionInSearch,
 	#superclass : #Object,
 	#category : #'GToolkit-Spotter-Examples-Exceptions'
 }
 
 { #category : #examples }
-GtSpotterClassWithExceptionInSearch >> gtViewWithAssertionFor: aSpotterStep [
+GtSpotterStartWithExceptionInSearch >> gtViewWithAssertionFor: aSpotterStep [
 	<gtSearch>
 	AssertionFailure signal: self messageText	" Exception while creating the processor "
 ]
 
 { #category : #examples }
-GtSpotterClassWithExceptionInSearch >> gtViewWithAssertionTitleAndPriorityFor: aSearch [
+GtSpotterStartWithExceptionInSearch >> gtViewWithAssertionTitleAndPriorityFor: aSearch [
 	<gtSearch>
 	"Exception while creating a search"
 	AssertionFailure signal: self messageText.	
@@ -23,7 +23,7 @@ GtSpotterClassWithExceptionInSearch >> gtViewWithAssertionTitleAndPriorityFor: a
 ]
 
 { #category : #examples }
-GtSpotterClassWithExceptionInSearch >> gtViewWithNoReturnFor: aSearch [
+GtSpotterStartWithExceptionInSearch >> gtViewWithNoReturnFor: aSearch [
 	<gtSearch>
 
 	aSearch list
@@ -33,6 +33,6 @@ GtSpotterClassWithExceptionInSearch >> gtViewWithNoReturnFor: aSearch [
 ]
 
 { #category : #mocks }
-GtSpotterClassWithExceptionInSearch >> messageText [
+GtSpotterStartWithExceptionInSearch >> messageText [
 	^ self class name
 ]

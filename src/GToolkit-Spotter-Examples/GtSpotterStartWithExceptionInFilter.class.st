@@ -1,11 +1,11 @@
 Class {
-	#name : #GtSpotterClassWithExceptionInFilter,
+	#name : #GtSpotterStartWithExceptionInFilter,
 	#superclass : #Object,
 	#category : #'GToolkit-Spotter-Examples-Exceptions'
 }
 
 { #category : #examples }
-GtSpotterClassWithExceptionInFilter >> gtMockProcessorFor: aSearch [
+GtSpotterStartWithExceptionInFilter >> gtMockProcessorFor: aSearch [
 	<gtSearch>
 	^ aSearch list
 		priority: 1;

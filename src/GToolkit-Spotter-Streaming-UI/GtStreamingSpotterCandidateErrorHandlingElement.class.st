@@ -43,7 +43,9 @@ GtStreamingSpotterCandidateErrorHandlingElement >> initialize [
 	self id: GtSpotterCandidateElementId.
 	
 	candidateElement := GtStreamingSpotterCandidateElement new.
-	self addChild: candidateElement
+	self addChild: candidateElement.
+	
+	self addAptitude: BrGlamorousListItemAptitude
 ]
 
 { #category : #'api - spotter step' }

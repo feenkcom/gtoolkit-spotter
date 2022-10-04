@@ -40,21 +40,9 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckCandidates [
 
 	scripter assert
 		id: GtSpotterCandidateElementId index: 1;
-		satisfies: [ :aCandidate |
-			aCandidate states hasState: BlElementState selected ];
-		play.
-		
-	scripter assert
-		id: GtSpotterCandidateElementId index: 1;
 		// BrLabel;
 		value: [ :aLabel | aLabel text asString ]
 		equals: '10';
-		play.
-		
-	scripter assert
-		id: GtSpotterCandidateElementId index: 2;
-		satisfies: [ :aCandidate |
-			(aCandidate states hasState: BlElementState selected) not ];
 		play.
 		
 	scripter assert
@@ -93,6 +81,40 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckCategories [
 		// BrLabel;
 		value: [ :aLabel | aLabel text asString ]
 		equals: 'Priority 30 (3 / 3)';
+		play.
+
+	^ scripter
+]
+
+{ #category : #accessing }
+GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckSelection [
+	<gtExample>
+	| scripter |
+
+	scripter := self spotterElementOnStartSample.
+
+	scripter assert
+		id: GtSpotterCandidateElementId index: 1;
+		satisfies: [ :aCandidate |
+			aCandidate states hasState: BlElementState selected ];
+		play.
+		
+	scripter assert
+		id: GtSpotterCandidateElementId index: 1;
+		value: [ :aCandidate | aCandidate background ]
+			equals: ((Color fromHexString: #'69ABFD') alpha: 86 / 255.0) asBlBackground;
+		play.
+
+	scripter assert
+		id: GtSpotterCandidateElementId index: 2;
+		satisfies: [ :aCandidate |
+			(aCandidate states hasState: BlElementState selected) not ];
+		play.
+
+	scripter assert
+		id: GtSpotterCandidateElementId index: 2;
+		value: [ :aCandidate | aCandidate background ]
+			equals: Color transparent asBlBackground;
 		play.
 
 	^ scripter

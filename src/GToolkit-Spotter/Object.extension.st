@@ -15,17 +15,12 @@ Object >> asGtSpotterProcessorLink [
 { #category : #'*GToolkit-Spotter' }
 Object >> gtActionSearchFor: anAction [
 	<gtAction>
-	
+
 	(GtSpotterUnorderedSearchesStream forOriginObject: self) isNotEmpty wait
 		ifFalse: [ ^ anAction noAction ].
-	
 
 	^ anAction explicit
-		stencil: [ GtSpotterDropdownButtonStencil new
-			object: self;
-			actOn: [ :anActOnEvent :anItem :aButton | 
-				aButton phlow spawnObject: anItem.
-				anActOnEvent beActed ] ]
+		stencil: [ GtSpotterDropdownButtonStencil new object: self ]
 ]
 
 { #category : #'*GToolkit-Spotter' }

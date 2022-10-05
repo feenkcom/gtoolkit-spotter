@@ -20,5 +20,7 @@ SequenceableCollection >> gtItemsSearchFor: aSearch [
 		title: 'Items';
 		items: [ self ];
 		filterBySubstring;
+		itemActLogic: [:anObject :step :spotterElement | 
+			spotterElement phlow spawnObject: anObject ];
 		withoutItemsLimit
 ]

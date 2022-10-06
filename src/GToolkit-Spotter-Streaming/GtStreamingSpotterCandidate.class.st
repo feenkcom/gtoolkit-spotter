@@ -25,6 +25,16 @@ GtStreamingSpotterCandidate >> item: anObject search: aSearch [
 	search := aSearch
 ]
 
+{ #category : #printing }
+GtStreamingSpotterCandidate >> printOn: aStream [
+	"Append a sequence of characters to aStream that identify the receiver."
+
+	super printOn: aStream.
+	aStream
+		nextPutAll: ' item: ';
+		print: item
+]
+
 { #category : #accessing }
 GtStreamingSpotterCandidate >> search [
 

@@ -23,9 +23,7 @@ GtStreamingSpotterStepElement >> createGroup: eachSearchAndResults [
 	| aGroup aSearchStream aStreamItemsProvider aSearch aPreloadIndex |
 
 	aSearch := eachSearchAndResults key.
-	aSearchStream := (eachSearchAndResults value
-		collect: [ :anItem | GtStreamingSpotterCandidate new item: anItem search: aSearch ])
-		on: Error do: [ :anError | GtStreamingSpotterBrokenCandidate new item: anError copy freeze search: aSearch ].
+	aSearchStream := eachSearchAndResults value.
 
 	aStreamItemsProvider := BrStreamItemsProvider new
 			preloadAmount: 1;

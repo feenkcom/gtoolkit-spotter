@@ -69,6 +69,15 @@ GtStreamingSpotterStep >> createSearchResultsStream [
 					error: anError;
 					definingMethod: aSpotterSearch definingMethod.
 				aSpotterSearch asStreamFor: aContext ].
+		
+		aResultsStream := aResultsStream collect: [ :anItem |
+			GtStreamingSpotterCandidate new item: anItem search: aSpotterSearch ].
+
+		aResultsStream := aResultsStream
+			on: Error
+			do: [ :anError |
+				GtStreamingSpotterBrokenCandidate new item: anError copy freeze search: aSpotterSearch ].
+		
 		aSpotterSearch -> aResultsStream ]
 ]
 

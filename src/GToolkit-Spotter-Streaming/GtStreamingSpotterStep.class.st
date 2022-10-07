@@ -20,7 +20,7 @@ GtStreamingSpotterStep >> announce: anAnnouncement [
 GtStreamingSpotterStep >> canDiveIn: anObject [
 	<return: #TAsyncFuture>
 
-	^ (GtSpotterUnorderedSearchesStream forOriginObject: anObject) isNotEmpty
+	^ (GtSpotterUnorderedSearchesStream forOriginObject: anObject context: self createSearchContext) isNotEmpty
 ]
 
 { #category : #'api - step' }
@@ -55,12 +55,15 @@ GtStreamingSpotterStep >> createSearchContext [
 
 { #category : #'api - search' }
 GtStreamingSpotterStep >> createSearchResultsStream [
-	^ self createSearchesStream collect: [ :eachSpotterSearch |
-		| aContext aSpotterSearch aResultsStream |
+	| aSpotterContext |
+	
+	aSpotterContext := self createSearchContext.
+
+	^ (self createSearchesStream: aSpotterContext) collect: [ :eachSpotterSearch |
+		| aSpotterSearch aResultsStream |
 		
-		aContext := self createSearchContext.
 		aSpotterSearch := eachSpotterSearch.
-		aResultsStream := [ eachSpotterSearch asStreamFor: aContext ]
+		aResultsStream := [ eachSpotterSearch asStreamFor: aSpotterContext ]
 			on: Error
 			do: [ :anError |
 				aSpotterSearch := GtSpotterBrokenSearch new
@@ -68,7 +71,7 @@ GtStreamingSpotterStep >> createSearchResultsStream [
 					title: aSpotterSearch title;
 					error: anError;
 					definingMethod: aSpotterSearch definingMethod.
-				aSpotterSearch asStreamFor: aContext ].
+				aSpotterSearch asStreamFor: aSpotterContext ].
 		
 		aResultsStream := aResultsStream collect: [ :anItem |
 			GtStreamingSpotterCandidate new item: anItem search: aSpotterSearch ].
@@ -83,7 +86,12 @@ GtStreamingSpotterStep >> createSearchResultsStream [
 
 { #category : #'api - search' }
 GtStreamingSpotterStep >> createSearchesStream [
-	^ GtSpotterOrderedSearchesStream forOriginObject: origin
+	^ self createSearchesStream: self createSearchContext
+]
+
+{ #category : #'api - search' }
+GtStreamingSpotterStep >> createSearchesStream: aSpotterContext [
+	^ (origin gtSpotterSearchesInContext: aSpotterContext) asAsyncStream
 ]
 
 { #category : #'api - step' }

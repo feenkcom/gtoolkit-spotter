@@ -4,7 +4,6 @@ Class {
 	#traits : 'TAsyncStream',
 	#classTraits : 'TAsyncStream classTrait',
 	#instVars : [
-		'origin',
 		'stream'
 	],
 	#category : #'GToolkit-Spotter-Streaming-Streams'
@@ -12,20 +11,30 @@ Class {
 
 { #category : #'instance creation' }
 GtSpotterOrderedSearchesStream class >> forOriginObject: anObject [
-	^ self new forOriginObject: anObject
+	^ self
+		forOriginObject: anObject
+		context: GtStreamingSpotterContext new
+]
+
+{ #category : #'instance creation' }
+GtSpotterOrderedSearchesStream class >> forOriginObject: anObject context: aSpotterContext [
+	^ self forSearches: (GtSpotterUnorderedSearchesStream forOriginObject: anObject context: aSpotterContext)
+]
+
+{ #category : #'instance creation' }
+GtSpotterOrderedSearchesStream class >> forSearches: aStreamOfSearches [
+	^ self new forSearches: aStreamOfSearches
 ]
 
 { #category : #initialization }
-GtSpotterOrderedSearchesStream >> buildProcessorsStream [
-	^ (((GtSpotterUnorderedSearchesStream forOriginObject: origin) toArray
-		map: [ :anArrayOfProcessors | (anArrayOfProcessors sorted: [ :a :b | a priority < b priority ]) asAsyncStream ]))
+GtSpotterOrderedSearchesStream >> buildSearchesStream: aStreamOfSearches [
+	^ ((aStreamOfSearches toArray map: [ :anArrayOfProcessors | (anArrayOfProcessors sorted: [ :a :b | a priority < b priority ]) asAsyncStream ]))
 			asAsyncStream flatten
 ]
 
 { #category : #initialization }
-GtSpotterOrderedSearchesStream >> forOriginObject: anObject [
-	origin := anObject.
-	stream := self buildProcessorsStream
+GtSpotterOrderedSearchesStream >> forSearches: aStreamOfSearches [
+	stream := self buildSearchesStream: aStreamOfSearches asAsyncStream
 ]
 
 { #category : #'api - stream' }
@@ -43,6 +52,6 @@ GtSpotterOrderedSearchesStream >> pollNext: anAsynchronousContext [
 { #category : #'api - stream copy' }
 GtSpotterOrderedSearchesStream >> postSimilarCopy [
 	"Is called by similarCopy. self is a shallow copy, implementors should set the fields as necessary to complete the similar copy"
-	
-	stream := self buildProcessorsStream
+
+	stream := stream asyncSimilarCopy
 ]

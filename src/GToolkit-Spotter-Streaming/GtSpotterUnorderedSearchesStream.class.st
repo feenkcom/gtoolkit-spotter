@@ -5,18 +5,28 @@ Class {
 	#classTraits : 'TAsyncStream classTrait',
 	#instVars : [
 		'origin',
-		'stream'
+		'stream',
+		'context'
 	],
 	#category : #'GToolkit-Spotter-Streaming-Streams'
 }
 
 { #category : #'instance creation' }
 GtSpotterUnorderedSearchesStream class >> forOriginObject: anObject [
-	^ self new forOriginObject: anObject
+	^ self
+		forOriginObject: anObject
+		context: GtStreamingSpotterContext new
+]
+
+{ #category : #'instance creation' }
+GtSpotterUnorderedSearchesStream class >> forOriginObject: anObject context: aSpotterContext [
+	^ self new
+		forOriginObject: anObject
+		context: aSpotterContext
 ]
 
 { #category : #private }
-GtSpotterUnorderedSearchesStream >> basicProcessorForPragma: aPragma [
+GtSpotterUnorderedSearchesStream >> basicSearchesForPragma: aPragma [
 	| aProtoSearch aSearch |
 	self flag: 'handle errors and return a "broken" processor'.
 
@@ -25,10 +35,22 @@ GtSpotterUnorderedSearchesStream >> basicProcessorForPragma: aPragma [
 	"Some #gtSearch extensions do not actually return a processor...
 	we have to do a builder hack for now. We will rewrite the extensions!"
 	aSearch := [
-		| aMethodReturn |
-		aMethodReturn := origin
-			perform: aPragma methodSelector
-			with: aProtoSearch.
+		| aSelector aSelectorArgs theArguments aMethodReturn |
+		
+		aSelector := aPragma methodSelector.
+		aSelectorArgs := aSelector numArgs.
+		theArguments := aSelectorArgs = 1
+			ifTrue: [ { aProtoSearch } ]
+			ifFalse: [
+				aSelectorArgs = 2
+					ifTrue: [ { aProtoSearch . context } ]
+					ifFalse: [ self error: 'Wrong amount of arguments: ', aSelectorArgs asString ] ].
+		
+		aMethodReturn := thisContext
+				object: origin
+				perform: aSelector
+				withArguments: theArguments
+				inClass: origin class.
 		
 		(aMethodReturn isKindOf: GtSpotterProtoSearch)
 			ifFalse: [ (GtStreamingSpotterSearchWrongReturnError new definingMethod: aPragma method) signal ]
@@ -43,10 +65,10 @@ GtSpotterUnorderedSearchesStream >> basicProcessorForPragma: aPragma [
 	^ aSearch
 ]
 
-{ #category : #initialization }
-GtSpotterUnorderedSearchesStream >> buildProcessorsStream [
+{ #category : #private }
+GtSpotterUnorderedSearchesStream >> buildSearchesStream [
 	^ (GtSpotterSearchPragmasFuture forOriginObject: origin) asAsyncStream flatten
-		map: [ :eachPragma | self basicProcessorForPragma: eachPragma ]
+		map: [ :eachPragma | self basicSearchesForPragma: eachPragma ]
 ]
 
 { #category : #private }
@@ -72,9 +94,10 @@ GtSpotterUnorderedSearchesStream >> createBrokenSearchFrom: aCompiledMethod [
 ]
 
 { #category : #initialization }
-GtSpotterUnorderedSearchesStream >> forOriginObject: anObject [
+GtSpotterUnorderedSearchesStream >> forOriginObject: anObject context: aSpotterContext [
 	origin := anObject.
-	stream := self buildProcessorsStream
+	context := aSpotterContext.
+	stream := self buildSearchesStream.
 ]
 
 { #category : #'api - stream' }
@@ -92,6 +115,6 @@ GtSpotterUnorderedSearchesStream >> pollNext: anAsynchronousContext [
 { #category : #'api - stream copy' }
 GtSpotterUnorderedSearchesStream >> postSimilarCopy [
 	"Is called by similarCopy. self is a shallow copy, implementors should set the fields as necessary to complete the similar copy"
-	
-	stream := self buildProcessorsStream
+
+	stream := self buildSearchesStream
 ]

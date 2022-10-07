@@ -10,3 +10,9 @@ GtSpotterEmptySearch >> asStreamFor: aSpotterContext [
 	
 	^ AsyncEmptyStream new
 ]
+
+{ #category : #printing }
+GtSpotterEmptySearch >> printOn: aStream [
+	aStream
+		nextPutAll: 'Empty Search'
+]

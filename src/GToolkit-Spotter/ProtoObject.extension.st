@@ -4,5 +4,5 @@ Extension { #name : #ProtoObject }
 ProtoObject >> gtSpotterSearchesInContext: aSpotterContext [
 	<return: #TAsyncStream of: #GtSpotterSearch>
 
-	^ GtSpotterOrderedSearchesStream forOriginObject: self context: aSpotterContext
+	^ GtSpotterUnorderedSearchesStream forOriginObject: self context: aSpotterContext
 ]

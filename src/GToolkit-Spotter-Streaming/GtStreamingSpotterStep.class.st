@@ -91,7 +91,7 @@ GtStreamingSpotterStep >> createSearchesStream [
 
 { #category : #'api - search' }
 GtStreamingSpotterStep >> createSearchesStream: aSpotterContext [
-	^ (origin gtSpotterSearchesInContext: aSpotterContext) asAsyncStream
+	^ GtSpotterOrderedSearchesStream forSearches: (origin gtSpotterSearchesInContext: aSpotterContext) asAsyncStream
 ]
 
 { #category : #'api - step' }

@@ -5,6 +5,13 @@ Class {
 }
 
 { #category : #accessing }
+GtSpotterByScripterExamples >> elementOnStartWithExceptionsInSearch [
+	<gtExample>
+	"used for documentation"
+	^ self spotterElementOnStartWithExceptionsInSearch elementWithoutParent
+]
+
+{ #category : #accessing }
 GtSpotterByScripterExamples >> scripter [
 	<gtExample>
 	

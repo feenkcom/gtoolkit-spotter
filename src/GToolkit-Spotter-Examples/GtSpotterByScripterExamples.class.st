@@ -7,6 +7,7 @@ Class {
 { #category : #accessing }
 GtSpotterByScripterExamples >> elementOnStartWithExceptionsInSearch [
 	<gtExample>
+	<noTest>
 	"used for documentation"
 	^ self spotterElementOnStartWithExceptionsInSearch elementWithoutParent
 ]

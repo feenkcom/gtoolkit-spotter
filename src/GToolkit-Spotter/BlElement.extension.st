@@ -8,6 +8,6 @@ BlElement >> gtSpotterForChildrenFor: aSearch [
 				priority: 20;
 				items: [ self allChildrenBreadthFirstSelect: [ :x | true ] ];
 				title: 'Children';
-				candidatesLimit: Float infinity;
+				withoutItemsLimit;
 				filterBySubstring ]
 ]

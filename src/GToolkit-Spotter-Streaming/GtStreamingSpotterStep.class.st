@@ -27,21 +27,21 @@ GtStreamingSpotterStep >> canDiveIn: anObject [
 GtStreamingSpotterStep >> categoryActOn: aCategory search: aSearch dueTo: anEventType from: anElement [
 	"Perform an action associated with the given candidate item.
 	(can be triggered by doubleClick: or keyboard Enter press)"
+
 	| anAnnouncement |
-	
 	self
 		assert: [ aCategory isNotNil ]
-		description: [ 'Spotter can not perform an action due to ', 
-			anEventType asString, 
-			' if there is no category' ].
-	
+		description: [ 'Spotter can not perform an action due to ' , anEventType asString
+				, ' if there is no category' ].
+
 	anAnnouncement := spotter
-		notifyActOn: aCategory
-		for: anEventType.
-	
-	anAnnouncement isActedUpon
-		ifTrue: [ ^ self ].
-	
+			notifyActOn: aCategory
+			dueTo: anEventType
+			search: nil
+			step: nil.
+
+	anAnnouncement isActedUpon ifTrue: [ ^ self ].
+
 	aSearch
 		categoryActOn: aCategory
 		for: self
@@ -154,25 +154,24 @@ GtStreamingSpotterStep >> initializeWithSpotter: aStreamingSpotter origin: anObj
 GtStreamingSpotterStep >> itemActOn: anItemObject search: aSpotterSearch dueTo: anEventType from: anElement [
 	"Perform an action associated with the given candidate item.
 	(can be triggered by doubleClick: or keyboard Enter press)"
-	| anAnnouncement anObjectToActOn |
-	
+
+	| anAnnouncement |
 	self
 		assert: [ anItemObject isNotNil ]
-		description: [ 'Spotter can not perform an action due to ', 
-			anEventType asString, 
-			' if there is no candidate' ].
-	
-	anObjectToActOn := aSpotterSearch objectToActOn: anItemObject from: self.
-	
+		description: [ 'Spotter can not perform an action due to ' , anEventType asString
+				, ' if there is no candidate' ].
+
 	anAnnouncement := spotter
-		notifyActOn: anObjectToActOn
-		for: anEventType.
-	
+		notifyActOn: anItemObject
+		dueTo: anEventType
+		search: aSpotterSearch
+		step: self.
+
 	anAnnouncement isActedUpon
 		ifTrue: [ ^ self ].
-	
+
 	aSpotterSearch
-		itemActOn: anObjectToActOn
+		itemActOn: anItemObject
 		for: self
 		from: anElement
 ]

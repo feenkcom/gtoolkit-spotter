@@ -17,6 +17,11 @@ GtStreamingSpotter class >> enable: aBoolean [
 ]
 
 { #category : #accessing }
+GtStreamingSpotter class >> extensionsPragma [
+	^ #gtSearch
+]
+
+{ #category : #accessing }
 GtStreamingSpotter class >> isEnabled [
 	^ true
 ]
@@ -29,6 +34,16 @@ GtStreamingSpotter class >> isEnabledChoiceMade [
 { #category : #'instance creation' }
 GtStreamingSpotter class >> on: anObject [
 	^ self new initializeWith: anObject
+]
+
+{ #category : #accessing }
+GtStreamingSpotter class >> spotterExtendingMethods [
+
+	^ (SystemNavigation default allBehaviors
+		flatCollect: [ :each | 
+			(Pragma allNamed: self extensionsPragma in: each) 
+				collect: [ :p | p method asRingDefinition ] ])
+		sorted
 ]
 
 { #category : #'api - accessing' }
@@ -111,13 +126,15 @@ GtStreamingSpotter >> isDebugMode [
 ]
 
 { #category : #'private - notifying' }
-GtStreamingSpotter >> notifyActOn: anObject for: anEventType [
-	<return: #GtSpotterActOn>
+GtStreamingSpotter >> notifyActOn: anObject dueTo: anEventType search: aSpotterSearch step: aSpotterStep [
+	<return: #GtSpotterObjectActOn>
 	| anAnnouncement |
 	
-	anAnnouncement := GtSpotterActOn new 
-		element: anObject;
-		eventType: anEventType.
+	anAnnouncement := GtSpotterObjectActOn new 
+		rawObject: anObject;
+		eventType: anEventType;
+		search: aSpotterSearch;
+		step: aSpotterStep.
 	
 	self announce: anAnnouncement.
 	
@@ -126,7 +143,7 @@ GtStreamingSpotter >> notifyActOn: anObject for: anEventType [
 
 { #category : #'private - notifying' }
 GtStreamingSpotter >> notifyCurrentStepChanged: aSpotterStep at: aStepIndex [
-	<return: #GtSpotterActOn>
+	<return: #GtStreamingSpotterCurrentStepChanged>
 	| anAnnouncement |
 	
 	anAnnouncement := GtStreamingSpotterCurrentStepChanged new 
@@ -140,7 +157,7 @@ GtStreamingSpotter >> notifyCurrentStepChanged: aSpotterStep at: aStepIndex [
 
 { #category : #'private - notifying' }
 GtStreamingSpotter >> notifyDebugModeChanged [
-	<return: #GtSpotterActOn>
+	<return: #GtStreamingSpotterDebugModeChanged>
 	| anAnnouncement |
 	
 	anAnnouncement := GtStreamingSpotterDebugModeChanged new 
@@ -153,7 +170,7 @@ GtStreamingSpotter >> notifyDebugModeChanged [
 
 { #category : #'private - notifying' }
 GtStreamingSpotter >> notifyPreviewStateChanged [
-	<return: #GtSpotterActOn>
+	<return: #GtStreamingSpotterPreviewModeChanged>
 	| anAnnouncement |
 	
 	anAnnouncement := GtStreamingSpotterPreviewModeChanged new 
@@ -166,7 +183,7 @@ GtStreamingSpotter >> notifyPreviewStateChanged [
 
 { #category : #'private - notifying' }
 GtStreamingSpotter >> notifyStepPopped: aSpotterStep at: aStepIndex [
-	<return: #GtSpotterActOn>
+	<return: #GtStreamingSpotterStepPopped>
 	| anAnnouncement |
 	
 	anAnnouncement := GtStreamingSpotterStepPopped new 
@@ -180,7 +197,7 @@ GtStreamingSpotter >> notifyStepPopped: aSpotterStep at: aStepIndex [
 
 { #category : #'private - notifying' }
 GtStreamingSpotter >> notifyStepPushed: aSpotterStep [
-	<return: #GtSpotterActOn>
+	<return: #GtStreamingSpotterStepPushed>
 	| anAnnouncement |
 	
 	anAnnouncement := GtStreamingSpotterStepPushed new 

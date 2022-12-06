@@ -1,18 +1,6 @@
 Extension { #name : #Object }
 
 { #category : #'*GToolkit-Spotter' }
-Object >> asGtSpotterCandidateLink [
-
-	^ GtSpotterCandidateLink value: self
-]
-
-{ #category : #'*GToolkit-Spotter' }
-Object >> asGtSpotterProcessorLink [
-
-	^ GtSpotterProcessorLink value: self
-]
-
-{ #category : #'*GToolkit-Spotter' }
 Object >> gtActionSearchFor: anAction [
 	<gtAction>
 
@@ -20,23 +8,16 @@ Object >> gtActionSearchFor: anAction [
 		ifFalse: [ ^ anAction noAction ].
 
 	^ anAction explicit
-		stencil: [ GtSpotterDropdownButtonStencil new object: self ]
-]
-
-{ #category : #'*GToolkit-Spotter' }
-Object >> gtFilter [
-	^ GtFilterBlock gtFilter
-		
+		stencil: [ GtSpotterDropdownButtonStencil new
+			actOn: [ :anActOnEvent :anItem :theButton | 
+				anActOnEvent beActed.
+				theButton phlow spawnObject: anItem. ];
+			object: self ]
 ]
 
 { #category : #'*GToolkit-Spotter' }
 Object >> gtIterator [
 	^ Error signal: 'This is not a spotter iterator'
-]
-
-{ #category : #'*GToolkit-Spotter' }
-Object >> gtListFilter [
-	^ GtFilterSubstring new
 ]
 
 { #category : #'*GToolkit-Spotter' }
@@ -50,15 +31,6 @@ Object >> gtSpotterActDefault: aStep from: aSpotterElement [
 { #category : #'*GToolkit-Spotter' }
 Object >> gtSpotterActDefaultFrom: aSpotterElement [
 	^ GtInspector openOn: self from: aSpotterElement
-]
-
-{ #category : #'*GToolkit-Spotter' }
-Object >> gtSpotterProcessorsFor: aSpotterStep [
-	<return: #Collection of: #Pragma>
-	^ GtSpotterProcessorsCollector new 
-		fromObject: self;
-		spotterStep: aSpotterStep;
-		collect
 ]
 
 { #category : #'*GToolkit-Spotter' }

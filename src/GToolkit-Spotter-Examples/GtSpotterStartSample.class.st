@@ -12,6 +12,8 @@ GtSpotterStartSample >> gtSpotterSearch_10: aSearch [
 		title: 'Priority 10';
 		items: [ #(10) ];
 		itemName: [ :each | each asString ];
+		send: [ :anItem :aStep | { anItem . aStep } ];
+		sendTool: [ :anItem :aStep | GtInspectorTool forObject: { aStep . anItem } ];
 		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]

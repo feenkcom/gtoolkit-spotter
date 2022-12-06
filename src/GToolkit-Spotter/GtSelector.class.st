@@ -5,7 +5,7 @@ Class {
 		'name',
 		'methods'
 	],
-	#category : 'GToolkit-Spotter-Utils'
+	#category : #'GToolkit-Spotter-Utils'
 }
 
 { #category : #examples }
@@ -60,8 +60,7 @@ GtSelector >> gtSpotterImplementorsFor: aStep [
 	^ aStep listProcessor
 		priority: 40;
 		title: 'Implementors';
-		filter: GtFilterSubstring
-			item: [ :filter :context | self implementors do: filter ];
+		filterBySubstring;
 		keyBinding: $m meta
 ]
 
@@ -71,9 +70,7 @@ GtSelector >> gtSpotterUsersFor: aStep [
 	^ aStep listProcessor
 		priority: 50;
 		title: 'Senders';
-		filter: GtFilterSubstring
-			item:
-				[ :filter :context | self senders do: [ :sender | filter value: sender compiledMethod ] ];
+		filterBySubstring;
 		keyBinding: $n meta
 ]
 
@@ -104,7 +101,7 @@ GtSelector >> spotterImplementorsFor: aStep [
 	<spotterOrder: 40>
 	^ aStep listProcessor
 		title: 'Implementors';
-		filter: GtFilterSubstring item: [ :filter :context | self implementors do: filter ];
+		filterBySubstring;
 		keyBinding: $m meta
 ]
 
@@ -113,8 +110,6 @@ GtSelector >> spotterUsersFor: aStep [
 	<spotterOrder: 50>
 	^ aStep listProcessor
 		title: 'Senders';
-		filter: GtFilterSubstring item: [ :filter :context | 
-			self senders do: [ :sender | 
-				filter value: sender compiledMethod ] ];
+		filterBySubstring;
 		keyBinding: $n meta
 ]

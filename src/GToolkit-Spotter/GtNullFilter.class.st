@@ -1,12 +1,12 @@
 Class {
 	#name : #GtNullFilter,
-	#superclass : #GtStringFilter,
-	#category : 'GToolkit-Spotter-Filters'
+	#superclass : #Object,
+	#category : #'GToolkit-Spotter-Filters'
 }
 
-{ #category : #public }
-GtNullFilter class >> gtListFilter [
-	^ GtFilterSubstring new
+{ #category : #testing }
+GtNullFilter class >> isDeprecated [
+	^ true
 ]
 
 { #category : #private }
@@ -24,9 +24,4 @@ GtNullFilter >> applyFilterWithQuery [
 			" this will be much much faster for small collections and/or very quick filters " 
 			self filteredItems: self allItems.
 			self addItems: (self allItems first: (self itemsLimit min: self allItems size)) ]
-]
-
-{ #category : #public }
-GtNullFilter >> gtListFilter [
-	^ GtFilterSubstring new
 ]

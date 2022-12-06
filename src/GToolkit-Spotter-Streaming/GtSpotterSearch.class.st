@@ -3,11 +3,13 @@ Class {
 	#superclass : #GtSpotterProtoSearch,
 	#instVars : [
 		'itemNameComputation',
-		'objectToActOnComputation',
 		'actOnLogicComputation',
 		'previewElementComputation',
 		'itemsLimit',
-		'actOnCategoryLogicComputation'
+		'actOnCategoryLogicComputation',
+		'objectTransformation',
+		'objectToolTransformation',
+		'hasObjectAction'
 	],
 	#category : #'GToolkit-Spotter-Streaming-Searches'
 }
@@ -21,12 +23,13 @@ GtSpotterSearch >> asStreamFor: aSpotterContext [
 
 { #category : #'api - configuration' }
 GtSpotterSearch >> categoryActLogic: aBlockWithTwoArguments [
-	actOnLogicComputation := aBlockWithTwoArguments
+	actOnCategoryLogicComputation := aBlockWithTwoArguments
 ]
 
 { #category : #'private - computation' }
 GtSpotterSearch >> categoryActOn: aCategory for: aSpotterStep from: anElement [
-	actOnCategoryLogicComputation
+	^ actOnCategoryLogicComputation
+		ifNil: [ aCategory ]
 		ifNotNil: [ :aBlock | aBlock cull: aCategory cull: aSpotterStep cull: anElement ]
 ]
 
@@ -36,8 +39,8 @@ GtSpotterSearch >> hasCategoryActOn [
 ]
 
 { #category : #accessing }
-GtSpotterSearch >> hasItemActOn [
-	^ actOnLogicComputation isNotNil
+GtSpotterSearch >> hasObjectAction [
+	^ hasObjectAction or: [ actOnLogicComputation isNotNil ]
 ]
 
 { #category : #initialization }
@@ -45,17 +48,29 @@ GtSpotterSearch >> initialize [
 	super initialize.
 
 	itemsLimit := 5.
-	actOnLogicComputation := [ :anObject :aSpotterStep :anElement | anObject gtSpotterActDefault: aSpotterStep from: anElement ].
-	actOnCategoryLogicComputation := [ :aCategory :aSpotterStep :anElement | aCategory gtSpotterActDefault: aSpotterStep from: anElement ]
+	
+	objectTransformation := [ :anObject :aStep | anObject ].
+	objectToolTransformation := [ :anObject :aStep | anObject gtDefaultInspectorTool ].
+	hasObjectAction := true.
+	
+	actOnLogicComputation := [ :anObject :aSpotterStep :anElement |
+		anObject gtSpotterActDefault: aSpotterStep from: anElement ].
+	actOnCategoryLogicComputation := [ :aCategory :aSpotterStep :anElement |
+		aCategory gtSpotterActDefault: aSpotterStep from: anElement ]
 ]
 
 { #category : #'api - configuration' }
 GtSpotterSearch >> itemActLogic: aBlockWithTwoArguments [
+	self deprecated: 'Use send: or sendTool:, otherwise handle GtSpotterObjectActOn notification to customize the act-on behavior'.
+
 	actOnLogicComputation := aBlockWithTwoArguments
 ]
 
 { #category : #'private - computation' }
 GtSpotterSearch >> itemActOn: anObject for: aSpotterStep from: anElement [
+	self hasObjectAction
+		ifFalse: [ ^ self ].
+
 	actOnLogicComputation
 		ifNotNil: [ :aBlock | aBlock cull: anObject cull: aSpotterStep cull: anElement ]
 ]
@@ -86,12 +101,18 @@ GtSpotterSearch >> itemsLimit: anInteger [
 
 { #category : #'private - computation' }
 GtSpotterSearch >> objectToActOn: anObject from: aSpotterStep [
-	"Return an object that should be acted upon from a given step"
+	"Return an object that should be acted upon from a given step."
 	<return: #Object>
 	
-	^ objectToActOnComputation
-		ifNil: [ anObject ]
-		ifNotNil: [ objectToActOnComputation cull: anObject cull: aSpotterStep ]
+	^ objectTransformation cull: anObject cull: aSpotterStep
+]
+
+{ #category : #'private - computation' }
+GtSpotterSearch >> objectToolToActOn: anObject from: aSpotterStep [
+	"Return a tool that should be acted upon from a given step"
+	<return: #GtPhlowTool>
+
+	^ objectToolTransformation cull: anObject cull: aSpotterStep
 ]
 
 { #category : #'api - configuration' }
@@ -127,13 +148,24 @@ GtSpotterSearch >> privateDefaultPreviewElementFor: anObject [
 ]
 
 { #category : #'api - configuration' }
+GtSpotterSearch >> send: aBlock [
+	objectTransformation := aBlock
+]
+
+{ #category : #'api - configuration' }
+GtSpotterSearch >> sendTool: aBlock [
+	objectToolTransformation := aBlock
+]
+
+{ #category : #'api - configuration' }
 GtSpotterSearch >> withoutCategoryAction [
 	actOnCategoryLogicComputation := nil
 ]
 
 { #category : #'api - configuration' }
 GtSpotterSearch >> withoutItemAction [
-	actOnLogicComputation := nil
+	actOnLogicComputation := nil.
+	hasObjectAction := false
 ]
 
 { #category : #'api - configuration' }

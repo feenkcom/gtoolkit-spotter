@@ -1,10 +1,12 @@
 Class {
 	#name : #GtSpotterFilterWithException,
-	#superclass : #GtFilter,
-	#category : 'GToolkit-Spotter-Examples-Exceptions'
+	#superclass : #Object,
+	#traits : 'TGtSpotterFilter',
+	#classTraits : 'TGtSpotterFilter classTrait',
+	#category : #'GToolkit-Spotter-Examples-Exceptions'
 }
 
-{ #category : #public }
-GtSpotterFilterWithException >> value: aSpotterContext [
+{ #category : #evaluating }
+GtSpotterFilterWithException >> applyInScope: aStream context: aSpotterContext [
 	ArithmeticError signal: 'Error while filtering' " Exception while filtering "
 ]

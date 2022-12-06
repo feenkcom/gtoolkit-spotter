@@ -103,13 +103,13 @@ GtSpotterStart >> gtSearchForGlobalVarsFor: aSearch [
 { #category : #spotter }
 GtSpotterStart >> gtSearchForIcebergRepositoriesFor: aSearch [
 	<gtSearch>
+
 	^ aSearch list
 		priority: 88;
 		title: 'Iceberg Repositories';
 		items: [ IceRepository registry ];
 		itemName: [ :aRepository | aRepository name ];
 		filterBySubstring;
-		itemActLogic: [ :anIcebergRepository :step :spotterElement | anIcebergRepository gtSpotterActDefault: step from: spotterElement ];
 		wantsToDisplayOnEmptyQuery: false
 ]
 
@@ -150,18 +150,15 @@ GtSpotterStart >> gtSearchImplementorsFor: aSearch [
 ]
 
 { #category : #spotter }
-GtSpotterStart >> gtSpotterClipboardFor: aStep [
-	"<gtSearch>"
-	aStep listProcessor
+GtSpotterStart >> gtSpotterClipboardFor: aSearch [
+	<gtSearch>
+	
+	^ aSearch list
 		priority: 90;
 		title: 'Clipboard History';
 		items: [ Clipboard default recentItems ];
 		itemName: [ :item | item asString contractTo: 100 ];
-		itemFilterName: [ :item | item asString ];
-		filter: GtFilterSubstrings;
-		actLogic: [ :item :step | 
-			step exit.
-			item asString inspect ];
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
 
@@ -245,7 +242,7 @@ GtSpotterStart >> gtSpotterForMetacelloBaselinesFor: aStep [
 		title: 'Metacello baselines';
 		allCandidates: [ BaselineOf allSubclasses ];
 		itemName: [ :each | each name ];
-		filter: GtFilterSubstring;
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
 
@@ -258,7 +255,7 @@ GtSpotterStart >> gtSpotterForPixelIconFor: aStep [
 		allCandidates: [ GtSpotterPixelIconPreview 
 			library: BrGlamorousIcons allForms: BrGlamorousIcons allIcons ];
 		itemName: #iconSelector;
-		filter: GtFilterSubstring;
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
 
@@ -334,7 +331,7 @@ GtSpotterStart >> gtSpotterForVectorIconFor: aStep [
 		allCandidates: [ GtSpotterVectorIconPreview 
 			library: BrGlamorousVectorIcons allIcons: BrGlamorousVectorIcons allIcons ];
 		itemName: #iconSelector;
-		filter: GtFilterSubstring;
+		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
 

@@ -171,7 +171,7 @@ The list is computed automatically. You can also browse it by inspecting:
 GtSpotterHelp class >> extensionsString [
 	| methods title |
 	^ String streamContents: [ :s |
-		((GtSpotter spotterExtendingMethods groupedBy: #methodClass) 
+		((GtStreamingSpotter spotterExtendingMethods groupedBy: #methodClass) 
 		associations sorted: [ :a :b | a key name < b key name ]) 
 		do: [ :classMethodsAssociation |
 			s nextPutAll: classMethodsAssociation key name; cr.

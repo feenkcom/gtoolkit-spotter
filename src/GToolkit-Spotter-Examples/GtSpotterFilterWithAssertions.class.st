@@ -1,11 +1,13 @@
 Class {
 	#name : #GtSpotterFilterWithAssertions,
-	#superclass : #GtFilter,
-	#category : 'GToolkit-Spotter-Examples-Exceptions'
+	#superclass : #Object,
+	#traits : 'TGtSpotterFilter',
+	#classTraits : 'TGtSpotterFilter classTrait',
+	#category : #'GToolkit-Spotter-Examples-Exceptions'
 }
 
-{ #category : #public }
-GtSpotterFilterWithAssertions >> value: aSpotterContext [
+{ #category : #evaluating }
+GtSpotterFilterWithAssertions >> applyInScope: aStream context: aSpotterContext [
 	" No Exceptions expected ! "
 	| currentExceptionHandler |
 	currentExceptionHandler := GtCurrentSpotterExceptionHandler value.

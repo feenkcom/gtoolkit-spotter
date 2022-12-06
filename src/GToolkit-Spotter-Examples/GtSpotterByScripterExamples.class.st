@@ -83,6 +83,49 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCandidate [
 ]
 
 { #category : #accessing }
+GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCandidateWithDefaultObjectActOn [
+	<gtExample>
+	| scripter actOnEvents actOn |
+
+	scripter := self spotterElementOnStartSample.
+	
+	actOnEvents := OrderedCollection new.
+	scripter element spotter
+		when: GtSpotterObjectActOn
+		do: [ :anAnnouncement |
+			anAnnouncement beActed.
+			actOnEvents add: anAnnouncement ].
+	
+	scripter mouseMoveOver
+		id: GtSpotterCandidateElementId index: 2;
+		play.
+
+	scripter mouseMoveOver
+		id: GtSpotterCandidateElementId index: 2;
+		id: GtSpotterCandidateActOnButtonId;
+		play.
+
+	scripter click
+		id: GtSpotterCandidateElementId index: 2;
+		id: GtSpotterCandidateActOnButtonId;
+		play.
+
+	self assert: actOnEvents size equals: 1.
+	
+	actOn := actOnEvents first.
+
+	self assert: actOn isActedUpon equals: true.
+	self assert: actOn spotterSearch title equals: 'Priority 20'.
+	self assert: actOn spotterStep equals: scripter element spotter steps first.
+	self assert: actOn rawObject equals: 20.
+	self assert: actOn objectToSend equals: 20.
+	self assert: actOn toolToSend class equals: GtInspectorTool.
+	self assert: actOn toolToSend object equals: 20.
+	
+	^ scripter
+]
+
+{ #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckCandidates [
 	<gtExample>
 	| scripter |

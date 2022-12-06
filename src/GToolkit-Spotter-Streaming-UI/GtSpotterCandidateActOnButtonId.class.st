@@ -1,10 +1,10 @@
 Class {
-	#name : #GtStreamingSpotterStepElementId,
+	#name : #GtSpotterCandidateActOnButtonId,
 	#superclass : #GtSpotterElementId,
 	#category : #'GToolkit-Spotter-Streaming-UI'
 }
 
 { #category : #converting }
-GtStreamingSpotterStepElementId >> asSymbol [
-	^ #'spotter-step'
+GtSpotterCandidateActOnButtonId >> asSymbol [
+	^ #'spotter--candidate-act-on'
 ]

@@ -31,7 +31,10 @@ GtSpotterDropdownButtonStencil >> actOn: aBlock [
 
 { #category : #'private - actions' }
 GtSpotterDropdownButtonStencil >> actOn: anAnnouncement button: aButton [
-	self actOn cull: anAnnouncement cull: anAnnouncement realItem cull: aButton.
+	self actOn
+		cull: anAnnouncement
+		cull: anAnnouncement rawObject
+		cull: aButton.
 
 	"hide Spotter in the next Space iteration 
 	to be able to open a new World tab if necessary"
@@ -41,17 +44,16 @@ GtSpotterDropdownButtonStencil >> actOn: anAnnouncement button: aButton [
 
 { #category : #'api - instantiation' }
 GtSpotterDropdownButtonStencil >> create [
-
 	| aButton |
 	aButton := self createButtonWithTooltip.
 	aButton
 		id: id;
 		addAptitude: (BrGlamorousWithDropdownAptitude
-				 handle: [ self createHandleButton ]
-				 content: [ self spotterElementFor: aButton ]
-				 aptitudeDo: [ :aDropdownLook | 
-					 aDropdownLook background:
-							 BrGlamorousColors secondaryHeaderBackgroundColor ]).
+			 handle: [ self createHandleButton ]
+			 content: [ self spotterElementFor: aButton ]
+			 aptitudeDo: [ :aDropdownLook | 
+				 aDropdownLook background:
+						 BrGlamorousColors secondaryHeaderBackgroundColor ]).
 	^ aButton
 ]
 
@@ -251,7 +253,7 @@ GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
 		action: [ aButton dispatchEvent: BrDropdownHideWish new ])).
 
 	aSpotterModel announcer
-		when: GtSpotterActOn
+		when: GtSpotterObjectActOn
 		do: [ :anAnnouncement |
 			aSpotterModel announcer unsubscribe: self.
 			self actOn: anAnnouncement button: aButton ].

@@ -30,7 +30,7 @@ GtStreamingSpotterCandidateElement >> candidate: aStreamingSpotterCandidate sear
 	label text: (search itemNameFor: candidate item).
 	
 	diveInButton asyncFuture future: (spotterStep canDiveIn: candidate item).
-	search hasItemActOn
+	search hasObjectAction
 		ifTrue: [ actOnButton visibility: BlVisibility visible ]
 		ifFalse: [ actOnButton visibility: BlVisibility hidden ]
 ]
@@ -92,6 +92,7 @@ GtStreamingSpotterCandidateElement >> initialize [
 { #category : #'private - instance creation' }
 GtStreamingSpotterCandidateElement >> newActOnButton [
 	^ BrButton new
+		id: GtSpotterCandidateActOnButtonId;
 		aptitude: BrGlamorousButtonWithIconAptitude;
 		icon: BrGlamorousVectorIcons accept;
 		label: 'Act on Item';

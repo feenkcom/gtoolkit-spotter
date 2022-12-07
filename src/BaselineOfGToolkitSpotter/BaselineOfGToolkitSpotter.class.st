@@ -42,11 +42,11 @@ BaselineOfGToolkitSpotter >> baseline: spec [
 
 		spec package: 'GToolkit-Spotter' with: [
 			spec requires: #('Brick') ].
-		spec package: 'GToolkit-Spotter-Streaming' with: [
-			spec requires: #('Brick') ].
-		spec package: 'GToolkit-Spotter-Streaming-UI' with: [
-			spec requires: #('GToolkit-Spotter-Streaming') ].
+		spec package: 'GToolkit-Spotter-UI' with: [
+			spec requires: #('GToolkit-Spotter' 'Brick') ].
+		spec package: 'GToolkit-Spotter-Extensions' with: [
+			spec requires: #('GToolkit-Spotter' 'GToolkit-Spotter-UI') ].
 		spec package: 'GToolkit-Spotter-Examples' with: [
-			spec requires: #('GToolkitExamples' 'GToolkit-Spotter') ].
+			spec requires: #('GToolkitExamples' 'GToolkit-Spotter' 'GToolkit-Spotter-UI') ].
 	]
 ]

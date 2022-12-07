@@ -49,7 +49,6 @@ GtStreamingSpotterCategory >> items [
 
 { #category : #accessing }
 GtStreamingSpotterCategory >> search [
-
 	^ search
 ]
 

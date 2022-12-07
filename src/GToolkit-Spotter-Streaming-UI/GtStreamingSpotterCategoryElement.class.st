@@ -123,6 +123,13 @@ GtStreamingSpotterCategoryElement >> newDiveInButton [
 		alignCenterLeft
 ]
 
+{ #category : #accessing }
+GtStreamingSpotterCategoryElement >> search [
+	<return: #GtSpotterSearch>
+
+	^ group domainObject
+]
+
 { #category : #'private - event handling' }
 GtStreamingSpotterCategoryElement >> updateLabel [
 	| groupTitle currentAmountOfItems isDone |

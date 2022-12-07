@@ -88,9 +88,9 @@ GtStreamingSpotterBreadcrumb >> subscribeToSpotter [
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#subscribeToObjectTemplate'>
 	
 	spotter
-		when: GtStreamingSpotterStepPushed send: #onStepAdded: to: self;
-		when: GtStreamingSpotterStepPopped send: #onStepRemoved: to: self;
-		when: GtStreamingSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self
+		when: GtSpotterStepPushed send: #onStepAdded: to: self;
+		when: GtSpotterStepPopped send: #onStepRemoved: to: self;
+		when: GtSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self
 ]
 
 { #category : #'api - spotter' }

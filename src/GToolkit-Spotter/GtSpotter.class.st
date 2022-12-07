@@ -143,10 +143,10 @@ GtSpotter >> notifyActOn: anObject dueTo: anEventType search: aSpotterSearch ste
 
 { #category : #'private - notifying' }
 GtSpotter >> notifyCurrentStepChanged: aSpotterStep at: aStepIndex [
-	<return: #GtStreamingSpotterCurrentStepChanged>
+	<return: #GtSpotterCurrentStepChanged>
 	| anAnnouncement |
 	
-	anAnnouncement := GtStreamingSpotterCurrentStepChanged new 
+	anAnnouncement := GtSpotterCurrentStepChanged new 
 		spotterStep: aSpotterStep;
 		stepIndex: aStepIndex.
 
@@ -157,10 +157,10 @@ GtSpotter >> notifyCurrentStepChanged: aSpotterStep at: aStepIndex [
 
 { #category : #'private - notifying' }
 GtSpotter >> notifyDebugModeChanged [
-	<return: #GtStreamingSpotterDebugModeChanged>
+	<return: #GtSpotterDebugModeChanged>
 	| anAnnouncement |
 	
-	anAnnouncement := GtStreamingSpotterDebugModeChanged new 
+	anAnnouncement := GtSpotterDebugModeChanged new 
 		isDebugMode: isDebugMode.
 
 	self announce: anAnnouncement.
@@ -170,10 +170,10 @@ GtSpotter >> notifyDebugModeChanged [
 
 { #category : #'private - notifying' }
 GtSpotter >> notifyPreviewStateChanged [
-	<return: #GtStreamingSpotterPreviewModeChanged>
+	<return: #GtSpotterPreviewModeChanged>
 	| anAnnouncement |
 	
-	anAnnouncement := GtStreamingSpotterPreviewModeChanged new 
+	anAnnouncement := GtSpotterPreviewModeChanged new 
 		shouldShowPreview: shouldShowPreview.
 
 	self announce: anAnnouncement.
@@ -183,10 +183,10 @@ GtSpotter >> notifyPreviewStateChanged [
 
 { #category : #'private - notifying' }
 GtSpotter >> notifyStepPopped: aSpotterStep at: aStepIndex [
-	<return: #GtStreamingSpotterStepPopped>
+	<return: #GtSpotterStepPopped>
 	| anAnnouncement |
 	
-	anAnnouncement := GtStreamingSpotterStepPopped new 
+	anAnnouncement := GtSpotterStepPopped new 
 		spotterStep: aSpotterStep;
 		stepIndex: aStepIndex.
 
@@ -197,10 +197,10 @@ GtSpotter >> notifyStepPopped: aSpotterStep at: aStepIndex [
 
 { #category : #'private - notifying' }
 GtSpotter >> notifyStepPushed: aSpotterStep [
-	<return: #GtStreamingSpotterStepPushed>
+	<return: #GtSpotterStepPushed>
 	| anAnnouncement |
 	
-	anAnnouncement := GtStreamingSpotterStepPushed new 
+	anAnnouncement := GtSpotterStepPushed new 
 		spotterStep: aSpotterStep.
 
 	self announce: anAnnouncement.

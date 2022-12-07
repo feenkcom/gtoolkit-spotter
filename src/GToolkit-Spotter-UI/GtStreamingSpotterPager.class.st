@@ -78,9 +78,9 @@ GtStreamingSpotterPager >> subscribeToSpotter [
 	<modelSubscriber: #spotter>
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#subscribeToObjectTemplate'>
 	
-	spotter when: GtStreamingSpotterStepPushed send: #onStepAdded: to: self.
-	spotter when: GtStreamingSpotterStepPopped send: #onStepRemoved: to: self.
-	spotter when: GtStreamingSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self
+	spotter when: GtSpotterStepPushed send: #onStepAdded: to: self.
+	spotter when: GtSpotterStepPopped send: #onStepRemoved: to: self.
+	spotter when: GtSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self
 ]
 
 { #category : #'api - spotter' }

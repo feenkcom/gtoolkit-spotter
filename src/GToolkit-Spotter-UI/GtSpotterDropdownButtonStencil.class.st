@@ -192,8 +192,8 @@ GtSpotterDropdownButtonStencil >> onPreviewChangedDo: aBlock [
 	It receives the status: [ :isDisplayed | ... ]"
 	self spotterModelDo: [ :aSpotter | 
 		aSpotter announcer
-			when: GtSpotterHidePreview, GtSpotterShowPreview
-			do: [ :anEvent | aBlock value: aSpotter isPreviewVisible ] ]
+			when: GtSpotterPreviewModeChanged
+			do: [ :anEvent | aBlock value: anEvent shouldShowPreview ] ]
 ]
 
 { #category : #'api - accessing' }

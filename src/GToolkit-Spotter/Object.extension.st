@@ -7,8 +7,3 @@ Object >> gtSpotterActDefault: aStep from: aSpotterElement [
 	through the space in which spotter lives"
 	aStep exit
 ]
-
-{ #category : #'*GToolkit-Spotter' }
-Object >> hasDynamicItems [
-	^ false
-]

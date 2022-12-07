@@ -204,7 +204,7 @@ GtSpotterStep >> searchQuery [
 GtSpotterStep >> searchQuery: aString [
 	searchQuery := aString.
 	
-	self announce: (GtStreamingSpotterStepSearchQueryChanged new)
+	self announce: (GtSpotterStepSearchQueryChanged new)
 ]
 
 { #category : #'api - announcer' }

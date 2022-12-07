@@ -227,7 +227,7 @@ GtStreamingSpotterElement >> subscribeToSpotter [
 	<modelSubscriber: #spotter>
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#subscribeToObjectTemplate'>
 	
-	spotter when: GtStreamingSpotterPreviewModeChanged send: #onPreviewStateChanged: to: self.
+	spotter when: GtSpotterPreviewModeChanged send: #onPreviewStateChanged: to: self.
 ]
 
 { #category : #'private - update' }

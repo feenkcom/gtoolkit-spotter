@@ -1,6 +1,6 @@
 Class {
-	#name : #GtStreamingSpotterStepPopped,
-	#superclass : #GtStreamingSpotterAnnouncement,
+	#name : #GtSpotterStepPopped,
+	#superclass : #GtSpotterAnnouncement,
 	#instVars : [
 		'spotterStep',
 		'stepIndex'
@@ -9,25 +9,25 @@ Class {
 }
 
 { #category : #accessing }
-GtStreamingSpotterStepPopped >> spotterStep [
+GtSpotterStepPopped >> spotterStep [
 
 	^ spotterStep
 ]
 
 { #category : #accessing }
-GtStreamingSpotterStepPopped >> spotterStep: anObject [
+GtSpotterStepPopped >> spotterStep: anObject [
 
 	spotterStep := anObject
 ]
 
 { #category : #accessing }
-GtStreamingSpotterStepPopped >> stepIndex [
+GtSpotterStepPopped >> stepIndex [
 
 	^ stepIndex
 ]
 
 { #category : #accessing }
-GtStreamingSpotterStepPopped >> stepIndex: anObject [
+GtSpotterStepPopped >> stepIndex: anObject [
 
 	stepIndex := anObject
 ]

@@ -44,7 +44,7 @@ GtStreamingSpotterSearchField >> subscribeToSpotter [
 	<modelSubscriber: #spotter>
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#subscribeToObjectTemplate'>
 	
-	spotter when: GtStreamingSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self
+	spotter when: GtSpotterCurrentStepChanged send: #onCurrentStepChanged: to: self
 ]
 
 { #category : #'api - spotter' }

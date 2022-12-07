@@ -1,6 +1,6 @@
 Class {
 	#name : #GtSpotterCategoryActOn,
-	#superclass : #Announcement,
+	#superclass : #GtSpotterAnnouncement,
 	#instVars : [
 		'eventType',
 		'isActedUpon',

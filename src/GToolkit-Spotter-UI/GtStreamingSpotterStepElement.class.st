@@ -222,7 +222,7 @@ GtStreamingSpotterStepElement >> subscribeToSpotterStep [
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#subscribeToObjectTemplate'>
 
 	spotterStep
-		when: GtStreamingSpotterStepSearchQueryChanged
+		when: GtSpotterStepSearchQueryChanged
 		send: #onSearchQueryChanged
 		to: self
 ]

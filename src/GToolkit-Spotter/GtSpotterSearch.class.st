@@ -121,30 +121,8 @@ GtSpotterSearch >> previewElement: aBlockWithOneArgument [
 ]
 
 { #category : #'private - computation' }
-GtSpotterSearch >> previewElementFor: anObject [
-	<return: #BlElement or: nil>
-	
-	^ previewElementComputation
-		ifNil: [ self privateDefaultPreviewElementFor: anObject ]
-		ifNotNil: [ :aBlock | aBlock cull: anObject ]
-]
-
-{ #category : #'private - computation' }
 GtSpotterSearch >> previewObjectFor: anObject [
 	^ anObject
-]
-
-{ #category : #'private - computation' }
-GtSpotterSearch >> privateDefaultPreviewElementFor: anObject [
-	<return: #BlElement or: nil>
-	| aPreviewElement |
-	
-	aPreviewElement := nil.
-
-	(anObject gtViewsFor: GtPhlowView empty) originalView
-		asElementDo: [ :anElement | aPreviewElement := anElement ].
-
-	^ aPreviewElement
 ]
 
 { #category : #'api - configuration' }

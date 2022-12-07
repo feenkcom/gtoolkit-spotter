@@ -39,7 +39,7 @@ GtSpotter class >> on: anObject [
 { #category : #accessing }
 GtSpotter class >> spotterExtendingMethods [
 
-	^ (SystemNavigation default allBehaviors
+	^ (Smalltalk environment allBehaviors
 		flatCollect: [ :each | 
 			(Pragma allNamed: self extensionsPragma in: each) 
 				collect: [ :p | p method asRingDefinition ] ])

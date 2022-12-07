@@ -15,7 +15,7 @@ Class {
 GtSpotterUnorderedSearchesStream class >> forOriginObject: anObject [
 	^ self
 		forOriginObject: anObject
-		context: GtStreamingSpotterContext new
+		context: GtSpotterContext new
 ]
 
 { #category : #'instance creation' }
@@ -53,7 +53,7 @@ GtSpotterUnorderedSearchesStream >> basicSearchesForPragma: aPragma [
 				inClass: origin class.
 		
 		(aMethodReturn isKindOf: GtSpotterProtoSearch)
-			ifFalse: [ (GtStreamingSpotterSearchWrongReturnError new definingMethod: aPragma method) signal ]
+			ifFalse: [ (GtSpotterSearchWrongReturnError new definingMethod: aPragma method) signal ]
 			ifTrue: [ aMethodReturn ] ]
 		on: Error
 		do: [ :anError |

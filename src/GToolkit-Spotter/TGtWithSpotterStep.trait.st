@@ -1,5 +1,5 @@
 Trait {
-	#name : #TGtStreamingWithSpotterStep,
+	#name : #TGtWithSpotterStep,
 	#instVars : [
 		'spotterStep'
 	],
@@ -7,7 +7,7 @@ Trait {
 }
 
 { #category : #'api - spotter step' }
-TGtStreamingWithSpotterStep >> hasSpotterStep [
+TGtWithSpotterStep >> hasSpotterStep [
 	"Return a true if nil is assigned to the receiver, false otherwise"
 	<return: #Boolean>
 	<modelTester: #spotterStep>
@@ -17,7 +17,7 @@ TGtStreamingWithSpotterStep >> hasSpotterStep [
 ]
 
 { #category : #'api - spotter step' }
-TGtStreamingWithSpotterStep >> onPostSpotterStepChanged [
+TGtWithSpotterStep >> onPostSpotterStepChanged [
 	"I am an optional hook method that is sent after #subscribeToSpotterStep.
 	I do nothing by default but allow users to perform update operations when a receiver object is already
 	subscribed to announcements."
@@ -25,7 +25,7 @@ TGtStreamingWithSpotterStep >> onPostSpotterStepChanged [
 ]
 
 { #category : #'api - spotter step' }
-TGtStreamingWithSpotterStep >> onSpotterStepChanged [
+TGtWithSpotterStep >> onSpotterStepChanged [
 	"Is sent when a new spotterStep is assigned to the receiver.
 	Note: #onSpotterStepChanged is sent before #subscribeToSpotterStep
 	which means that if you perform any operation that triggers an announcement it will be ignored because the receiver
@@ -35,7 +35,7 @@ TGtStreamingWithSpotterStep >> onSpotterStepChanged [
 ]
 
 { #category : #'api - spotter step' }
-TGtStreamingWithSpotterStep >> spotterStep [
+TGtWithSpotterStep >> spotterStep [
 	"Return a not-null spotterStep assigned to the receiver"
 	<modelGetter: #spotterStep>
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#objectGetterTemplate'>
@@ -47,7 +47,7 @@ TGtStreamingWithSpotterStep >> spotterStep [
 ]
 
 { #category : #'api - spotter step' }
-TGtStreamingWithSpotterStep >> spotterStep: aSpotterStep [
+TGtWithSpotterStep >> spotterStep: aSpotterStep [
 	"Set a not-null spotterStep assigned to the receiver"
 	<modelSetter: #spotterStep>
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#objectSetterTemplate'>
@@ -67,7 +67,7 @@ TGtStreamingWithSpotterStep >> spotterStep: aSpotterStep [
 ]
 
 { #category : #'api - spotter step' }
-TGtStreamingWithSpotterStep >> subscribeToSpotterStep [
+TGtWithSpotterStep >> subscribeToSpotterStep [
 	"Is sent after a new spotterStep is assigned to the receiver.
 	It is required to unsubscribe from the previously subscribed objects by implementing
 	#unsubscribeFromSpotterStep if the receiver subscribes to them"
@@ -76,7 +76,7 @@ TGtStreamingWithSpotterStep >> subscribeToSpotterStep [
 ]
 
 { #category : #'api - spotter step' }
-TGtStreamingWithSpotterStep >> unsubscribeFromSpotterStep [
+TGtWithSpotterStep >> unsubscribeFromSpotterStep [
 	"Is sent before a new spotterStep is assigned to the receiver.
 	Objects that subscribe to spotterStep are required to implement this method."
 	<modelUnsubscriber: #spotterStep>

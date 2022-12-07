@@ -1,8 +1,8 @@
 Class {
 	#name : #GtStreamingSpotterHeaderElement,
 	#superclass : #BrVerticalPane,
-	#traits : 'TGtStreamingWithSpotter',
-	#classTraits : 'TGtStreamingWithSpotter classTrait',
+	#traits : 'TGtWithSpotter',
+	#classTraits : 'TGtWithSpotter classTrait',
 	#instVars : [
 		'searchField',
 		'breadcrumb',

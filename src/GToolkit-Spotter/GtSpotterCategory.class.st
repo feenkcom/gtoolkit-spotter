@@ -1,5 +1,5 @@
 Class {
-	#name : #GtStreamingSpotterCategory,
+	#name : #GtSpotterCategory,
 	#superclass : #Object,
 	#instVars : [
 		'search',
@@ -10,19 +10,19 @@ Class {
 }
 
 { #category : #accessing }
-GtStreamingSpotterCategory >> context [
+GtSpotterCategory >> context [
 
 	^ context
 ]
 
 { #category : #printing }
-GtStreamingSpotterCategory >> gtDisplayOn: aStream [
+GtSpotterCategory >> gtDisplayOn: aStream [
 	aStream
 		nextPutAll: search title
 ]
 
 { #category : #searches }
-GtStreamingSpotterCategory >> gtItemsFor: aSearch [
+GtSpotterCategory >> gtItemsFor: aSearch [
 	<gtSearch>
 	^ aSearch list
 		title: search title;
@@ -36,24 +36,24 @@ GtStreamingSpotterCategory >> gtItemsFor: aSearch [
 ]
 
 { #category : #searches }
-GtStreamingSpotterCategory >> gtSpotterActDefaultFrom: aSpotterElement [
+GtSpotterCategory >> gtSpotterActDefaultFrom: aSpotterElement [
 	^ GtInspector
 		openOn: self items
 		from: aSpotterElement
 ]
 
 { #category : #accessing }
-GtStreamingSpotterCategory >> items [
+GtSpotterCategory >> items [
 	^ candidates asyncSimilarCopy
 ]
 
 { #category : #accessing }
-GtStreamingSpotterCategory >> search [
+GtSpotterCategory >> search [
 	^ search
 ]
 
 { #category : #initialization }
-GtStreamingSpotterCategory >> search: aSearch context: aSearchContext [
+GtSpotterCategory >> search: aSearch context: aSearchContext [
 	search := aSearch.
 	context := aSearchContext.
 	candidates := (search asStreamFor: context) cached

@@ -1,8 +1,8 @@
 Class {
 	#name : #GtStreamingSpotterPager,
 	#superclass : #BrPager,
-	#traits : 'TGtStreamingWithSpotter',
-	#classTraits : 'TGtStreamingWithSpotter classTrait',
+	#traits : 'TGtWithSpotter',
+	#classTraits : 'TGtWithSpotter classTrait',
 	#category : #'GToolkit-Spotter-Streaming-UI'
 }
 

@@ -1,8 +1,8 @@
 Class {
 	#name : #GtStreamingSpotterBreadcrumb,
 	#superclass : #BrBreadcrumb,
-	#traits : 'TBrSelectable + TGtStreamingWithSpotter',
-	#classTraits : 'TBrSelectable classTrait + TGtStreamingWithSpotter classTrait',
+	#traits : 'TBrSelectable + TGtWithSpotter',
+	#classTraits : 'TBrSelectable classTrait + TGtWithSpotter classTrait',
 	#category : #'GToolkit-Spotter-Streaming-UI'
 }
 

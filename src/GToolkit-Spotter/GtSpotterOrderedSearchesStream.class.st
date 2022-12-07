@@ -13,7 +13,7 @@ Class {
 GtSpotterOrderedSearchesStream class >> forOriginObject: anObject [
 	^ self
 		forOriginObject: anObject
-		context: GtStreamingSpotterContext new
+		context: GtSpotterContext new
 ]
 
 { #category : #'instance creation' }

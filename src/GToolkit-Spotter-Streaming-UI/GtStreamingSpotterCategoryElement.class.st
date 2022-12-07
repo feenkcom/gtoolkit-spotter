@@ -1,8 +1,8 @@
 Class {
 	#name : #GtStreamingSpotterCategoryElement,
 	#superclass : #BrHorizontalPane,
-	#traits : 'TGtStreamingWithSpotterStep',
-	#classTraits : 'TGtStreamingWithSpotterStep classTrait',
+	#traits : 'TGtWithSpotterStep',
+	#classTraits : 'TGtWithSpotterStep classTrait',
 	#instVars : [
 		'group',
 		'label',
@@ -27,7 +27,7 @@ GtStreamingSpotterCategoryElement >> actDueTo: anEventType [
 
 { #category : #'private - instance creation' }
 GtStreamingSpotterCategoryElement >> currentCategory [
-	^ GtStreamingSpotterCategory new
+	^ GtSpotterCategory new
 		search: group domainObject
 		context: spotterStep createSearchContext
 ]

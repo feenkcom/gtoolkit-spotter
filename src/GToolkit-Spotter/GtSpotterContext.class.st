@@ -1,5 +1,5 @@
 Class {
-	#name : #GtStreamingSpotterContext,
+	#name : #GtSpotterContext,
 	#superclass : #Object,
 	#instVars : [
 		'searchQuery'
@@ -8,24 +8,24 @@ Class {
 }
 
 { #category : #initialization }
-GtStreamingSpotterContext >> initialize [
+GtSpotterContext >> initialize [
 	super initialize.
 	
 	searchQuery := ''
 ]
 
 { #category : #testing }
-GtStreamingSpotterContext >> isEmptySearchQuery [
+GtSpotterContext >> isEmptySearchQuery [
 	^ searchQuery isEmpty
 ]
 
 { #category : #accessing }
-GtStreamingSpotterContext >> searchQuery [
+GtSpotterContext >> searchQuery [
 
 	^ searchQuery
 ]
 
 { #category : #accessing }
-GtStreamingSpotterContext >> searchQuery: anObject [
+GtSpotterContext >> searchQuery: anObject [
 	searchQuery := anObject
 ]

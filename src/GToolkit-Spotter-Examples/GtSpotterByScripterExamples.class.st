@@ -278,7 +278,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionsInSearch [
 		id: GtSpotterBrokenSearchElementId index: 3;
 		// BrLabel;
 		value: [ :aLabel | aLabel text asString ]
-			equals: [ GtStreamingSpotterSearchWrongReturnError name];
+			equals: [ GtSpotterSearchWrongReturnError name];
 		play.
 		
 	^ scripter
@@ -312,5 +312,5 @@ GtSpotterByScripterExamples >> spotterElementOnStartWithNilItems [
 GtSpotterByScripterExamples >> spotterOnStart: aStartObject [
 	<gtExample>
 
-	^ GtStreamingSpotter on: aStartObject
+	^ GtSpotter on: aStartObject
 ]

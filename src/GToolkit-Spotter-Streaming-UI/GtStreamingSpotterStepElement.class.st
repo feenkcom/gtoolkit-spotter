@@ -5,8 +5,8 @@ It reacts to a change of {{gtMethod:GtStreamingSpotterStep>>#searchQuery:}} by s
 Class {
 	#name : #GtStreamingSpotterStepElement,
 	#superclass : #BrFrame,
-	#traits : 'TGtStreamingWithSpotterStep',
-	#classTraits : 'TGtStreamingWithSpotterStep classTrait',
+	#traits : 'TGtWithSpotterStep',
+	#classTraits : 'TGtWithSpotterStep classTrait',
 	#instVars : [
 		'resultsElement',
 		'startedItemsProviders',

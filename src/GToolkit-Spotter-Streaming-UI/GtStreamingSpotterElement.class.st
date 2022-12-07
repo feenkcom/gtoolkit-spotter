@@ -1,8 +1,8 @@
 Class {
 	#name : #GtStreamingSpotterElement,
 	#superclass : #BrVerticalPane,
-	#traits : 'TGtStreamingWithSpotter',
-	#classTraits : 'TGtStreamingWithSpotter classTrait',
+	#traits : 'TGtWithSpotter',
+	#classTraits : 'TGtWithSpotter classTrait',
 	#instVars : [
 		'headerElement',
 		'stepsPager',
@@ -25,7 +25,7 @@ GtStreamingSpotterElement >> currentStepSelectedCandidateDo: aBlock [
 GtStreamingSpotterElement >> handleCategoryActOn: anEvent [
 	self currentStepSelectedCandidateDo: [ :aCandidate |
 		self spotter currentStep
-			categoryActOn: (GtStreamingSpotterCategory new
+			categoryActOn: (GtSpotterCategory new
 				search: aCandidate search
 				context: self spotter currentStep createSearchContext)
 			search: aCandidate search
@@ -37,7 +37,7 @@ GtStreamingSpotterElement >> handleCategoryActOn: anEvent [
 GtStreamingSpotterElement >> handleCategoryDiveIn: anEvent [
 	self currentStepSelectedCandidateDo: [ :aCandidate |
 		self spotter currentStep
-			diveIn: (GtStreamingSpotterCategory new
+			diveIn: (GtSpotterCategory new
 				search: aCandidate search
 				context: self spotter currentStep createSearchContext)
 			dueTo: #keyPressedPrimaryShiftArrowRight ]

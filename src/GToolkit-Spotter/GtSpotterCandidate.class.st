@@ -1,5 +1,5 @@
 Class {
-	#name : #GtStreamingSpotterCandidate,
+	#name : #GtSpotterCandidate,
 	#superclass : #Object,
 	#instVars : [
 		'item',
@@ -9,24 +9,24 @@ Class {
 }
 
 { #category : #testing }
-GtStreamingSpotterCandidate >> isBroken [
+GtSpotterCandidate >> isBroken [
 	^ false
 ]
 
 { #category : #accessing }
-GtStreamingSpotterCandidate >> item [
+GtSpotterCandidate >> item [
 
 	^ item
 ]
 
 { #category : #initialization }
-GtStreamingSpotterCandidate >> item: anObject search: aSearch [
+GtSpotterCandidate >> item: anObject search: aSearch [
 	item := anObject.
 	search := aSearch
 ]
 
 { #category : #printing }
-GtStreamingSpotterCandidate >> printOn: aStream [
+GtSpotterCandidate >> printOn: aStream [
 	"Append a sequence of characters to aStream that identify the receiver."
 
 	super printOn: aStream.
@@ -36,7 +36,7 @@ GtStreamingSpotterCandidate >> printOn: aStream [
 ]
 
 { #category : #accessing }
-GtStreamingSpotterCandidate >> search [
+GtSpotterCandidate >> search [
 
 	^ search
 ]

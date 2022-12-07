@@ -1,5 +1,5 @@
 Class {
-	#name : #GtStreamingSpotterSearchWrongReturnError,
+	#name : #GtSpotterSearchWrongReturnError,
 	#superclass : #Error,
 	#instVars : [
 		'definingMethod'
@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : #accessing }
-GtStreamingSpotterSearchWrongReturnError >> definingMethod [
+GtSpotterSearchWrongReturnError >> definingMethod [
 
 	^ definingMethod
 ]
 
 { #category : #accessing }
-GtStreamingSpotterSearchWrongReturnError >> definingMethod: anObject [
+GtSpotterSearchWrongReturnError >> definingMethod: anObject [
 
 	definingMethod := anObject
 ]

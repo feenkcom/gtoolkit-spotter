@@ -1,5 +1,5 @@
 Class {
-	#name : #GtStreamingSpotterStep,
+	#name : #GtSpotterStep,
 	#superclass : #Object,
 	#instVars : [
 		'announcer',
@@ -11,20 +11,20 @@ Class {
 }
 
 { #category : #'api - announcer' }
-GtStreamingSpotterStep >> announce: anAnnouncement [
+GtSpotterStep >> announce: anAnnouncement [
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#announceTemplate'>
 	announcer ifNotNil: [ :anAnnouncer | anAnnouncer announce: anAnnouncement ].
 ]
 
 { #category : #'api - step' }
-GtStreamingSpotterStep >> canDiveIn: anObject [
+GtSpotterStep >> canDiveIn: anObject [
 	<return: #TAsyncFuture>
 
 	^ (GtSpotterUnorderedSearchesStream forOriginObject: anObject context: self createSearchContext) isNotEmpty
 ]
 
 { #category : #'api - step' }
-GtStreamingSpotterStep >> categoryActOn: aCategory search: aSearch dueTo: anEventType from: anElement [
+GtSpotterStep >> categoryActOn: aCategory search: aSearch dueTo: anEventType from: anElement [
 	"Perform an action associated with the given candidate item.
 	(can be triggered by doubleClick: or keyboard Enter press)"
 
@@ -49,12 +49,12 @@ GtStreamingSpotterStep >> categoryActOn: aCategory search: aSearch dueTo: anEven
 ]
 
 { #category : #'api - search' }
-GtStreamingSpotterStep >> createSearchContext [
-	^ GtStreamingSpotterContext new searchQuery: searchQuery
+GtSpotterStep >> createSearchContext [
+	^ GtSpotterContext new searchQuery: searchQuery
 ]
 
 { #category : #'api - search' }
-GtStreamingSpotterStep >> createSearchResultsStream [
+GtSpotterStep >> createSearchResultsStream [
 	| aSpotterContext |
 	
 	aSpotterContext := self createSearchContext.
@@ -74,28 +74,28 @@ GtStreamingSpotterStep >> createSearchResultsStream [
 				aSpotterSearch asStreamFor: aSpotterContext ].
 		
 		aResultsStream := aResultsStream collect: [ :anItem |
-			GtStreamingSpotterCandidate new item: anItem search: aSpotterSearch ].
+			GtSpotterCandidate new item: anItem search: aSpotterSearch ].
 
 		aResultsStream := aResultsStream
 			on: Error
 			do: [ :anError |
-				GtStreamingSpotterBrokenCandidate new item: anError copy freeze search: aSpotterSearch ].
+				GtSpotterBrokenCandidate new item: anError copy freeze search: aSpotterSearch ].
 		
 		aSpotterSearch -> aResultsStream ]
 ]
 
 { #category : #'api - search' }
-GtStreamingSpotterStep >> createSearchesStream [
+GtSpotterStep >> createSearchesStream [
 	^ self createSearchesStream: self createSearchContext
 ]
 
 { #category : #'api - search' }
-GtStreamingSpotterStep >> createSearchesStream: aSpotterContext [
+GtSpotterStep >> createSearchesStream: aSpotterContext [
 	^ GtSpotterOrderedSearchesStream forSearches: (origin gtSpotterSearchesInContext: aSpotterContext) asAsyncStream
 ]
 
 { #category : #'api - step' }
-GtStreamingSpotterStep >> diveIn: anOriginObject dueTo: anEventType [
+GtSpotterStep >> diveIn: anOriginObject dueTo: anEventType [
 	| aNewStep |
 
 	aNewStep := self requestNextStepWith: anOriginObject.
@@ -103,17 +103,17 @@ GtStreamingSpotterStep >> diveIn: anOriginObject dueTo: anEventType [
 ]
 
 { #category : #'api - step' }
-GtStreamingSpotterStep >> diveOutDueTo: anEventType [
+GtSpotterStep >> diveOutDueTo: anEventType [
 	spotter popUntilIncluding: self
 ]
 
 { #category : #'api - step' }
-GtStreamingSpotterStep >> exit [
+GtSpotterStep >> exit [
 	self flag: #TODO.
 ]
 
 { #category : #printing }
-GtStreamingSpotterStep >> gtDisplayOn: aStream [
+GtSpotterStep >> gtDisplayOn: aStream [
 	aStream
 		nextPutAll: 'Step on ';
 		print: origin;
@@ -122,7 +122,7 @@ GtStreamingSpotterStep >> gtDisplayOn: aStream [
 ]
 
 { #category : #'gt - extensions' }
-GtStreamingSpotterStep >> gtResultsFor: aView [
+GtSpotterStep >> gtResultsFor: aView [
 	<gtView>
 	
 	^ aView forward
@@ -133,7 +133,7 @@ GtStreamingSpotterStep >> gtResultsFor: aView [
 ]
 
 { #category : #'gt - extensions' }
-GtStreamingSpotterStep >> gtSearchesFor: aView [
+GtSpotterStep >> gtSearchesFor: aView [
 	<gtView>
 	
 	^ aView forward
@@ -144,14 +144,14 @@ GtStreamingSpotterStep >> gtSearchesFor: aView [
 ]
 
 { #category : #initialization }
-GtStreamingSpotterStep >> initializeWithSpotter: aStreamingSpotter origin: anObject [
+GtSpotterStep >> initializeWithSpotter: aStreamingSpotter origin: anObject [
 	spotter := aStreamingSpotter.
 	origin := anObject.
 	searchQuery := ''
 ]
 
 { #category : #'api - step' }
-GtStreamingSpotterStep >> itemActOn: anItemObject search: aSpotterSearch dueTo: anEventType from: anElement [
+GtSpotterStep >> itemActOn: anItemObject search: aSpotterSearch dueTo: anEventType from: anElement [
 	"Perform an action associated with the given candidate item.
 	(can be triggered by doubleClick: or keyboard Enter press)"
 
@@ -177,18 +177,18 @@ GtStreamingSpotterStep >> itemActOn: anItemObject search: aSpotterSearch dueTo: 
 ]
 
 { #category : #'api - accessing' }
-GtStreamingSpotterStep >> origin [
+GtSpotterStep >> origin [
 	^ origin
 ]
 
 { #category : #initialization }
-GtStreamingSpotterStep >> removeFromSpotter [
+GtSpotterStep >> removeFromSpotter [
 	spotter := nil.
 ]
 
 { #category : #'api - step' }
-GtStreamingSpotterStep >> requestNextStepWith: anOriginObject [
-	<return: #GtStreamingSpotterStep>
+GtSpotterStep >> requestNextStepWith: anOriginObject [
+	<return: #GtSpotterStep>
 
 	^ spotter
 		popUntil: self;
@@ -196,19 +196,19 @@ GtStreamingSpotterStep >> requestNextStepWith: anOriginObject [
 ]
 
 { #category : #'api - accessing' }
-GtStreamingSpotterStep >> searchQuery [
+GtSpotterStep >> searchQuery [
 	^ searchQuery
 ]
 
 { #category : #'api - accessing' }
-GtStreamingSpotterStep >> searchQuery: aString [
+GtSpotterStep >> searchQuery: aString [
 	searchQuery := aString.
 	
 	self announce: (GtStreamingSpotterStepSearchQueryChanged new)
 ]
 
 { #category : #'api - announcer' }
-GtStreamingSpotterStep >> unsubscribe: anObject [
+GtSpotterStep >> unsubscribe: anObject [
 	"Unsubscribe all subscriptions of anObject from the receiver"
 
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#unsubscribeTemplate'>
@@ -216,14 +216,14 @@ GtStreamingSpotterStep >> unsubscribe: anObject [
 ]
 
 { #category : #'api - announcer' }
-GtStreamingSpotterStep >> when: anAnnouncementClass do: aBlock [
+GtSpotterStep >> when: anAnnouncementClass do: aBlock [
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#whenDoTemplate'>
 	^ (announcer ifNil: [ announcer := Announcer new ])
 		when: anAnnouncementClass do: aBlock
 ]
 
 { #category : #'api - announcer' }
-GtStreamingSpotterStep >> when: anAnnouncementClass do: aBlock for: aSubscriber [
+GtSpotterStep >> when: anAnnouncementClass do: aBlock for: aSubscriber [
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#whenDoForTemplate'>
 	^ (self when: anAnnouncementClass do: aBlock)
 		subscriber: aSubscriber;
@@ -231,7 +231,7 @@ GtStreamingSpotterStep >> when: anAnnouncementClass do: aBlock for: aSubscriber 
 ]
 
 { #category : #'api - announcer' }
-GtStreamingSpotterStep >> when: anAnnouncementClass send: aSelector to: anObject [
+GtSpotterStep >> when: anAnnouncementClass send: aSelector to: anObject [
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#whenSendToTemplate'>
 	^ (announcer ifNil: [ announcer := Announcer new ]) weak
 		when: anAnnouncementClass send: aSelector to: anObject

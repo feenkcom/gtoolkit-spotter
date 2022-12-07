@@ -228,7 +228,7 @@ GtSpotterDropdownButtonStencil >> spotterElementDo: aOneArgBlock [
 GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
 	| aSpotterModel aSpotterElement |
 
-	aSpotterModel := GtStreamingSpotter on: self object.
+	aSpotterModel := GtSpotter on: self object.
 
 	spotterModelActions do: [ :eachAction |
 		eachAction cull: aSpotterModel ].

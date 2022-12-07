@@ -1,8 +1,8 @@
 Class {
 	#name : #GtStreamingSpotterSearchField,
 	#superclass : #BrEditor,
-	#traits : 'TGtStreamingWithSpotter',
-	#classTraits : 'TGtStreamingWithSpotter classTrait',
+	#traits : 'TGtWithSpotter',
+	#classTraits : 'TGtWithSpotter classTrait',
 	#category : #'GToolkit-Spotter-Streaming-UI'
 }
 

@@ -1,8 +1,8 @@
 Class {
 	#name : #GtStreamingSpotterCandidateErrorHandlingElement,
 	#superclass : #BrHorizontalPane,
-	#traits : 'TGtStreamingWithSpotterStep',
-	#classTraits : 'TGtStreamingWithSpotterStep classTrait',
+	#traits : 'TGtWithSpotterStep',
+	#classTraits : 'TGtWithSpotterStep classTrait',
 	#instVars : [
 		'candidateElement'
 	],

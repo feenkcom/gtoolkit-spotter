@@ -1,5 +1,5 @@
 Class {
-	#name : #GtStreamingSpotter,
+	#name : #GtSpotter,
 	#superclass : #Object,
 	#instVars : [
 		'announcer',
@@ -12,32 +12,32 @@ Class {
 }
 
 { #category : #accessing }
-GtStreamingSpotter class >> enable: aBoolean [
+GtSpotter class >> enable: aBoolean [
 	self deprecated: 'Spotter is enabled by default'
 ]
 
 { #category : #accessing }
-GtStreamingSpotter class >> extensionsPragma [
+GtSpotter class >> extensionsPragma [
 	^ #gtSearch
 ]
 
 { #category : #accessing }
-GtStreamingSpotter class >> isEnabled [
+GtSpotter class >> isEnabled [
 	^ true
 ]
 
 { #category : #accessing }
-GtStreamingSpotter class >> isEnabledChoiceMade [
+GtSpotter class >> isEnabledChoiceMade [
 	^ true
 ]
 
 { #category : #'instance creation' }
-GtStreamingSpotter class >> on: anObject [
+GtSpotter class >> on: anObject [
 	^ self new initializeWith: anObject
 ]
 
 { #category : #accessing }
-GtStreamingSpotter class >> spotterExtendingMethods [
+GtSpotter class >> spotterExtendingMethods [
 
 	^ (SystemNavigation default allBehaviors
 		flatCollect: [ :each | 
@@ -47,28 +47,28 @@ GtStreamingSpotter class >> spotterExtendingMethods [
 ]
 
 { #category : #'api - accessing' }
-GtStreamingSpotter >> amountOfSteps [
+GtSpotter >> amountOfSteps [
 	^ steps size
 ]
 
 { #category : #'api - announcer' }
-GtStreamingSpotter >> announce: anAnnouncement [
+GtSpotter >> announce: anAnnouncement [
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#announceTemplate'>
 	announcer ifNotNil: [ :anAnnouncer | anAnnouncer announce: anAnnouncement ].
 ]
 
 { #category : #'api - announcer' }
-GtStreamingSpotter >> announcer [
+GtSpotter >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : #'api - steps' }
-GtStreamingSpotter >> currentStep [
+GtSpotter >> currentStep [
 	^ currentStep
 ]
 
 { #category : #'api - steps' }
-GtStreamingSpotter >> currentStep: aSpotterStep [
+GtSpotter >> currentStep: aSpotterStep [
 	| aStepIndex |
 	
 	aStepIndex := steps
@@ -85,14 +85,14 @@ GtStreamingSpotter >> currentStep: aSpotterStep [
 ]
 
 { #category : #'api - steps' }
-GtStreamingSpotter >> currentStepIndex [
+GtSpotter >> currentStepIndex [
 	^ steps
 		indexOf: currentStep
 		ifAbsent: [ self error: 'Current step is wrong' ]
 ]
 
 { #category : #'gt-extension' }
-GtStreamingSpotter >> gtStepsFor: aView [
+GtSpotter >> gtStepsFor: aView [
 	<gtView>
 	
 	^ aView list
@@ -102,12 +102,12 @@ GtStreamingSpotter >> gtStepsFor: aView [
 ]
 
 { #category : #'api - accessing' }
-GtStreamingSpotter >> hidePreview [
+GtSpotter >> hidePreview [
 	self showPreview: false
 ]
 
 { #category : #initialization }
-GtStreamingSpotter >> initialize [
+GtSpotter >> initialize [
 	super initialize.
 
 	steps := OrderedCollection new.
@@ -116,17 +116,17 @@ GtStreamingSpotter >> initialize [
 ]
 
 { #category : #initialization }
-GtStreamingSpotter >> initializeWith: anObject [
+GtSpotter >> initializeWith: anObject [
 	self pushStep: anObject
 ]
 
 { #category : #'api - accessing' }
-GtStreamingSpotter >> isDebugMode [
+GtSpotter >> isDebugMode [
 	^ isDebugMode
 ]
 
 { #category : #'private - notifying' }
-GtStreamingSpotter >> notifyActOn: anObject dueTo: anEventType search: aSpotterSearch step: aSpotterStep [
+GtSpotter >> notifyActOn: anObject dueTo: anEventType search: aSpotterSearch step: aSpotterStep [
 	<return: #GtSpotterObjectActOn>
 	| anAnnouncement |
 	
@@ -142,7 +142,7 @@ GtStreamingSpotter >> notifyActOn: anObject dueTo: anEventType search: aSpotterS
 ]
 
 { #category : #'private - notifying' }
-GtStreamingSpotter >> notifyCurrentStepChanged: aSpotterStep at: aStepIndex [
+GtSpotter >> notifyCurrentStepChanged: aSpotterStep at: aStepIndex [
 	<return: #GtStreamingSpotterCurrentStepChanged>
 	| anAnnouncement |
 	
@@ -156,7 +156,7 @@ GtStreamingSpotter >> notifyCurrentStepChanged: aSpotterStep at: aStepIndex [
 ]
 
 { #category : #'private - notifying' }
-GtStreamingSpotter >> notifyDebugModeChanged [
+GtSpotter >> notifyDebugModeChanged [
 	<return: #GtStreamingSpotterDebugModeChanged>
 	| anAnnouncement |
 	
@@ -169,7 +169,7 @@ GtStreamingSpotter >> notifyDebugModeChanged [
 ]
 
 { #category : #'private - notifying' }
-GtStreamingSpotter >> notifyPreviewStateChanged [
+GtSpotter >> notifyPreviewStateChanged [
 	<return: #GtStreamingSpotterPreviewModeChanged>
 	| anAnnouncement |
 	
@@ -182,7 +182,7 @@ GtStreamingSpotter >> notifyPreviewStateChanged [
 ]
 
 { #category : #'private - notifying' }
-GtStreamingSpotter >> notifyStepPopped: aSpotterStep at: aStepIndex [
+GtSpotter >> notifyStepPopped: aSpotterStep at: aStepIndex [
 	<return: #GtStreamingSpotterStepPopped>
 	| anAnnouncement |
 	
@@ -196,7 +196,7 @@ GtStreamingSpotter >> notifyStepPopped: aSpotterStep at: aStepIndex [
 ]
 
 { #category : #'private - notifying' }
-GtStreamingSpotter >> notifyStepPushed: aSpotterStep [
+GtSpotter >> notifyStepPushed: aSpotterStep [
 	<return: #GtStreamingSpotterStepPushed>
 	| anAnnouncement |
 	
@@ -209,7 +209,7 @@ GtStreamingSpotter >> notifyStepPushed: aSpotterStep [
 ]
 
 { #category : #'api - steps' }
-GtStreamingSpotter >> popStep [
+GtSpotter >> popStep [
 	^ steps
 		ifEmpty: [ self error: 'There are no steps to pop' ]
 		ifNotEmpty: [ :theSteps |
@@ -231,7 +231,7 @@ GtStreamingSpotter >> popStep [
 ]
 
 { #category : #'api - steps' }
-GtStreamingSpotter >> popUntil: aSpotterStep [
+GtSpotter >> popUntil: aSpotterStep [
 	"Remove steps until a given step does not become the last one"
 
 	[ steps last == aSpotterStep ]
@@ -239,7 +239,7 @@ GtStreamingSpotter >> popUntil: aSpotterStep [
 ]
 
 { #category : #'api - steps' }
-GtStreamingSpotter >> popUntilIncluding: aSpotterStep [
+GtSpotter >> popUntilIncluding: aSpotterStep [
 	"Remove steps until a given step does not become the last one"
 
 	[ steps last == aSpotterStep ]
@@ -248,11 +248,11 @@ GtStreamingSpotter >> popUntilIncluding: aSpotterStep [
 ]
 
 { #category : #'api - steps' }
-GtStreamingSpotter >> pushStep: anOriginObject [
-	<return: #GtStreamingSpotterStep>
+GtSpotter >> pushStep: anOriginObject [
+	<return: #GtSpotterStep>
 	| aNewStep shouldAsssignCurrentStep |
 	
-	aNewStep := GtStreamingSpotterStep new initializeWithSpotter: self origin: anOriginObject.
+	aNewStep := GtSpotterStep new initializeWithSpotter: self origin: anOriginObject.
 	steps add: aNewStep.
 
 	shouldAsssignCurrentStep := currentStep isNil.
@@ -266,17 +266,17 @@ GtStreamingSpotter >> pushStep: anOriginObject [
 ]
 
 { #category : #'api - accessing' }
-GtStreamingSpotter >> shouldShowPreview [
+GtSpotter >> shouldShowPreview [
 	^ shouldShowPreview
 ]
 
 { #category : #'api - accessing' }
-GtStreamingSpotter >> showPreview [
+GtSpotter >> showPreview [
 	self showPreview: true
 ]
 
 { #category : #'api - accessing' }
-GtStreamingSpotter >> showPreview: aBoolean [
+GtSpotter >> showPreview: aBoolean [
 	shouldShowPreview = aBoolean
 		ifTrue: [ ^ self ].
 
@@ -285,31 +285,31 @@ GtStreamingSpotter >> showPreview: aBoolean [
 ]
 
 { #category : #'api - accessing' }
-GtStreamingSpotter >> steps [
+GtSpotter >> steps [
 	^ steps
 ]
 
 { #category : #'api - actions' }
-GtStreamingSpotter >> switchToDebugMode [
+GtSpotter >> switchToDebugMode [
 	isDebugMode := true.
 	self notifyDebugModeChanged
 ]
 
 { #category : #'api - actions' }
-GtStreamingSpotter >> switchToProductionMode [
+GtSpotter >> switchToProductionMode [
 	isDebugMode := false.
 	self notifyDebugModeChanged
 ]
 
 { #category : #'api - accessing' }
-GtStreamingSpotter >> togglePreview [
+GtSpotter >> togglePreview [
 	self shouldShowPreview
 		ifTrue: [ self hidePreview ]
 		ifFalse: [ self showPreview ]
 ]
 
 { #category : #'api - announcer' }
-GtStreamingSpotter >> unsubscribe: anObject [
+GtSpotter >> unsubscribe: anObject [
 	"Unsubscribe all subscriptions of anObject from the receiver"
 
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#unsubscribeTemplate'>
@@ -317,14 +317,14 @@ GtStreamingSpotter >> unsubscribe: anObject [
 ]
 
 { #category : #'api - announcer' }
-GtStreamingSpotter >> when: anAnnouncementClass do: aBlock [
+GtSpotter >> when: anAnnouncementClass do: aBlock [
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#whenDoTemplate'>
 	^ (announcer ifNil: [ announcer := Announcer new ])
 		when: anAnnouncementClass do: aBlock
 ]
 
 { #category : #'api - announcer' }
-GtStreamingSpotter >> when: anAnnouncementClass do: aBlock for: aSubscriber [
+GtSpotter >> when: anAnnouncementClass do: aBlock for: aSubscriber [
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#whenDoForTemplate'>
 	^ (self when: anAnnouncementClass do: aBlock)
 		subscriber: aSubscriber;
@@ -332,7 +332,7 @@ GtStreamingSpotter >> when: anAnnouncementClass do: aBlock for: aSubscriber [
 ]
 
 { #category : #'api - announcer' }
-GtStreamingSpotter >> when: anAnnouncementClass send: aSelector to: anObject [
+GtSpotter >> when: anAnnouncementClass send: aSelector to: anObject [
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#whenSendToTemplate'>
 	^ (announcer ifNil: [ announcer := Announcer new ]) weak
 		when: anAnnouncementClass send: aSelector to: anObject

@@ -1,6 +1,6 @@
 "
-An element that represents a spotter step {{gtClass:GtStreamingSpotterStep}} and shows a grouped list of search results.
-It reacts to a change of {{gtMethod:GtStreamingSpotterStep>>#searchQuery:}} by subscribing to {{gtClass:GtStreamingSpotterStepSearchQueryChanged}}.
+An element that represents a spotter step {{gtClass:GtSpotterStep}} and shows a grouped list of search results.
+It reacts to a change of {{gtMethod:GtSpotterStep>>#searchQuery:}} by subscribing tso {{gtClass:GtSpotterStepSearchQueryChanged}}.
 "
 Class {
 	#name : #GtStreamingSpotterStepElement,

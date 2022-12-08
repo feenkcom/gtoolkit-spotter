@@ -10,13 +10,13 @@ Class {
 		'actOnButton',
 		'diveInButton'
 	],
-	#category : #'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI-Elements'
 }
 
 { #category : #'private - event handling' }
 GtStreamingSpotterCandidateElement >> actDueTo: anEventType [
 	self spotterStep
-		itemActOn: candidate item
+		objectActOn: candidate item
 		search: search
 		dueTo: anEventType
 		from: self

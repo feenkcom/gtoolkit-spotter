@@ -15,7 +15,7 @@ Class {
 		'asyncErrorHandler',
 		'executionConfiguration'
 	],
-	#category : #'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI-Elements'
 }
 
 { #category : #'private - instance creation' }

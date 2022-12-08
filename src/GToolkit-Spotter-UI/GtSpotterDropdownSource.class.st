@@ -1,7 +1,7 @@
 Class {
 	#name : #GtSpotterDropdownSource,
 	#superclass : #Object,
-	#category : #'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI-Stencils'
 }
 
 { #category : #'api - accessing' }

@@ -37,3 +37,8 @@ GtSpotterCategory >> search: aSearch context: aSearchContext [
 	context := aSearchContext.
 	candidates := (search asStreamFor: context) cached
 ]
+
+{ #category : #accessing }
+GtSpotterCategory >> searchQuery [
+	^ context searchQuery
+]

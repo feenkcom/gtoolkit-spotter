@@ -1,5 +1,5 @@
 Class {
 	#name : #GtSpotterElementId,
 	#superclass : #BlElementUniqueId,
-	#category : #'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI-Ids'
 }

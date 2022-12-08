@@ -1,66 +1,36 @@
 Class {
 	#name : #GtSpotterCategoryActOn,
-	#superclass : #GtSpotterAnnouncement,
+	#superclass : #GtSpotterActOn,
 	#instVars : [
-		'eventType',
-		'isActedUpon',
-		'search',
-		'step',
 		'rawCategory'
 	],
 	#category : #'GToolkit-Spotter-Announcements'
 }
 
-{ #category : #accessing }
-GtSpotterCategoryActOn >> actedUpon: aBoolean [
-	isActedUpon := aBoolean
-]
-
-{ #category : #accessing }
-GtSpotterCategoryActOn >> beActed [
-	self actedUpon: true.
-]
-
-{ #category : #accessing }
-GtSpotterCategoryActOn >> eventType [
-	^ eventType
-]
-
-{ #category : #accessing }
-GtSpotterCategoryActOn >> eventType: anObject [
-	eventType := anObject
-]
-
-{ #category : #initialization }
-GtSpotterCategoryActOn >> initialize [
-	super initialize.
-	
-	isActedUpon := false
-]
-
-{ #category : #accessing }
-GtSpotterCategoryActOn >> isActedUpon [
-	^ isActedUpon
-]
-
-{ #category : #accessing }
+{ #category : #'api - accessing' }
 GtSpotterCategoryActOn >> objectToSend [
+	<return: #Object>
+
 	^ search
-		objectToActOn: rawCategory
+		categoryToActOn: rawCategory
 		from: step
 ]
 
-{ #category : #accessing }
+{ #category : #'api - accessing' }
 GtSpotterCategoryActOn >> rawCategory [
 	^ rawCategory
 ]
 
-{ #category : #'private - notifying' }
-GtSpotterCategoryActOn >> search: aSpotterSearch [ 
-	search := aSpotterSearch
+{ #category : #'api - accessing' }
+GtSpotterCategoryActOn >> rawCategory: aSpotterCategory [
+	rawCategory := aSpotterCategory
 ]
 
-{ #category : #'private - notifying' }
-GtSpotterCategoryActOn >> step: aSpotterStep [ 
-	step := aSpotterStep
+{ #category : #'api - accessing' }
+GtSpotterCategoryActOn >> toolToSend [
+	<return: #GtPhlowTool>
+
+	^ search
+		categoryToolToActOn: rawCategory
+		from: step
 ]

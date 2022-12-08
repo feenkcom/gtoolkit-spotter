@@ -126,12 +126,20 @@ GtSpotter >> isDebugMode [
 ]
 
 { #category : #'private - notifying' }
-GtSpotter >> notifyActOn: anObject dueTo: anEventType search: aSpotterSearch step: aSpotterStep [
-	<return: #GtSpotterObjectActOn>
+GtSpotter >> notifyCategoryActOn: anObject dueTo: anEventType search: aSpotterSearch step: aSpotterStep [
+	<return: #GtSpotterCategoryActOn>
 	| anAnnouncement |
 	
-	anAnnouncement := GtSpotterObjectActOn new 
-		rawObject: anObject;
+	self
+		assert: [ aSpotterSearch notNil ]
+		description: [ 'Spotter search must not be nil' ].
+		
+	self
+		assert: [ aSpotterStep notNil ]
+		description: [ 'Spotter step must not be nil' ].
+	
+	anAnnouncement := GtSpotterCategoryActOn new 
+		rawCategory: anObject;
 		eventType: anEventType;
 		search: aSpotterSearch;
 		step: aSpotterStep.
@@ -163,6 +171,30 @@ GtSpotter >> notifyDebugModeChanged [
 	anAnnouncement := GtSpotterDebugModeChanged new 
 		isDebugMode: isDebugMode.
 
+	self announce: anAnnouncement.
+	
+	^ anAnnouncement
+]
+
+{ #category : #'private - notifying' }
+GtSpotter >> notifyObjectActOn: anObject dueTo: anEventType search: aSpotterSearch step: aSpotterStep [
+	<return: #GtSpotterObjectActOn>
+	| anAnnouncement |
+	
+	self
+		assert: [ aSpotterSearch notNil ]
+		description: [ 'Spotter search must not be nil' ].
+		
+	self
+		assert: [ aSpotterStep notNil ]
+		description: [ 'Spotter step must not be nil' ].
+	
+	anAnnouncement := GtSpotterObjectActOn new 
+		rawObject: anObject;
+		eventType: anEventType;
+		search: aSpotterSearch;
+		step: aSpotterStep.
+	
 	self announce: anAnnouncement.
 	
 	^ anAnnouncement

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'object'
 	],
-	#category : #'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI-Stencils'
 }
 
 { #category : #'api - instance creation' }

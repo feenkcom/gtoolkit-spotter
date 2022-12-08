@@ -1,5 +1,5 @@
 Class {
 	#name : #GtStreamingSpotterSelectedCandidateMaybeChanged,
 	#superclass : #BlEvent,
-	#category : #'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI-Events'
 }

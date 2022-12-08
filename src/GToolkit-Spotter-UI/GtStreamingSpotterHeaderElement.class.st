@@ -9,7 +9,7 @@ Class {
 		'debugToolbar',
 		'debugButton'
 	],
-	#category : #'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI-Elements'
 }
 
 { #category : #initialization }

@@ -8,7 +8,7 @@ Class {
 		'labelElement',
 		'previewContainer'
 	],
-	#category : #'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI-Elements'
 }
 
 { #category : #'private - preview' }

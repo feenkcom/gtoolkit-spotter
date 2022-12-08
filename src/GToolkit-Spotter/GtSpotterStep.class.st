@@ -35,12 +35,13 @@ GtSpotterStep >> categoryActOn: aCategory search: aSearch dueTo: anEventType fro
 				, ' if there is no category' ].
 
 	anAnnouncement := spotter
-			notifyActOn: aCategory
-			dueTo: anEventType
-			search: nil
-			step: nil.
+		notifyCategoryActOn: aCategory
+		dueTo: anEventType
+		search: aSearch
+		step: self.
 
-	anAnnouncement isActedUpon ifTrue: [ ^ self ].
+	anAnnouncement isActedUpon
+		ifTrue: [ ^ self ].
 
 	aSearch
 		categoryActOn: aCategory
@@ -151,7 +152,7 @@ GtSpotterStep >> initializeWithSpotter: aStreamingSpotter origin: anObject [
 ]
 
 { #category : #'api - step' }
-GtSpotterStep >> itemActOn: anItemObject search: aSpotterSearch dueTo: anEventType from: anElement [
+GtSpotterStep >> objectActOn: anItemObject search: aSpotterSearch dueTo: anEventType from: anElement [
 	"Perform an action associated with the given candidate item.
 	(can be triggered by doubleClick: or keyboard Enter press)"
 
@@ -162,7 +163,7 @@ GtSpotterStep >> itemActOn: anItemObject search: aSpotterSearch dueTo: anEventTy
 				, ' if there is no candidate' ].
 
 	anAnnouncement := spotter
-		notifyActOn: anItemObject
+		notifyObjectActOn: anItemObject
 		dueTo: anEventType
 		search: aSpotterSearch
 		step: self.
@@ -171,7 +172,7 @@ GtSpotterStep >> itemActOn: anItemObject search: aSpotterSearch dueTo: anEventTy
 		ifTrue: [ ^ self ].
 
 	aSpotterSearch
-		itemActOn: anItemObject
+		objectActOn: anItemObject
 		for: self
 		from: anElement
 ]

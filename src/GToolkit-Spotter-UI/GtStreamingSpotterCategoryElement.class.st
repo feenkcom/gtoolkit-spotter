@@ -9,7 +9,7 @@ Class {
 		'actOnButton',
 		'diveInButton'
 	],
-	#category : #'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI-Elements'
 }
 
 { #category : #'private - event handling' }
@@ -94,6 +94,7 @@ GtStreamingSpotterCategoryElement >> initialize [
 { #category : #'private - instance creation' }
 GtStreamingSpotterCategoryElement >> newActOnButton [
 	^ BrButton new
+		id: GtSpotterCategoryActOnButtonId;
 		aptitude: BrGlamorousButtonWithIconAptitude;
 		icon: BrGlamorousVectorIcons accept;
 		label: 'Act on category';

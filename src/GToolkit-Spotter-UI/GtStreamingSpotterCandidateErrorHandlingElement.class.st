@@ -6,7 +6,7 @@ Class {
 	#instVars : [
 		'candidateElement'
 	],
-	#category : #'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI-Elements'
 }
 
 { #category : #initialization }

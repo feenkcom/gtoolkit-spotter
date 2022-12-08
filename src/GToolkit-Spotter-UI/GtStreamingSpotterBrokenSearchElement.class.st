@@ -10,7 +10,7 @@ Class {
 		'debugButton',
 		'browseButton'
 	],
-	#category : #'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI-Elements'
 }
 
 { #category : #'private - event handling' }

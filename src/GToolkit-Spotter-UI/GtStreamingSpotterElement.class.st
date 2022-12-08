@@ -8,7 +8,7 @@ Class {
 		'stepsPager',
 		'previewElement'
 	],
-	#category : #'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI-Elements'
 }
 
 { #category : #private }
@@ -52,7 +52,7 @@ GtStreamingSpotterElement >> handleDiveOut: anEvent [
 GtStreamingSpotterElement >> handleItemActOn: anEvent [		
 	self currentStepSelectedCandidateDo: [ :aCandidate |
 		self spotter currentStep
-			itemActOn: aCandidate item
+			objectActOn: aCandidate item
 			search: aCandidate search
 			dueTo: #keyPressedReturn
 			from: self ]

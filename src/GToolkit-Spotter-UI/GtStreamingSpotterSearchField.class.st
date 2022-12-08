@@ -3,7 +3,7 @@ Class {
 	#superclass : #BrEditor,
 	#traits : 'TGtWithSpotter',
 	#classTraits : 'TGtWithSpotter classTrait',
-	#category : #'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI-Elements'
 }
 
 { #category : #initialization }

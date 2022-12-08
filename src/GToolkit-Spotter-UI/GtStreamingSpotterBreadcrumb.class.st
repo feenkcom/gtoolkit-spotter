@@ -3,7 +3,7 @@ Class {
 	#superclass : #BrBreadcrumb,
 	#traits : 'TBrSelectable + TGtWithSpotter',
 	#classTraits : 'TBrSelectable classTrait + TGtWithSpotter classTrait',
-	#category : #'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI-Elements'
 }
 
 { #category : #private }

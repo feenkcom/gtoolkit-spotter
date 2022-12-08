@@ -3,43 +3,47 @@ Class {
 	#superclass : #BrStencil,
 	#instVars : [
 		'id',
-		'actOn',
 		'tooltip',
 		'valuable',
 		'icon',
 		'extentComputation',
 		'spotterModelActions',
 		'spotterElementActions',
-		'label'
+		'label',
+		'objectActOn',
+		'categoryActOn'
 	],
-	#category : #'GToolkit-Spotter-UI'
+	#category : #'GToolkit-Spotter-UI-Stencils'
 }
-
-{ #category : #'api - accessing' }
-GtSpotterDropdownButtonStencil >> actOn [
-	"Return a block that receives a ${class:GtSpotterActOn}$, an acted on item, a button.
-	User should call ${method:aGtSpotterActOn>>#actedUpon:}$ when an action happens"
-	^ actOn 
-]
 
 { #category : #'api - accessing' }
 GtSpotterDropdownButtonStencil >> actOn: aBlock [
 	"Set a block that receives a ${class:GtSpotterActOn}$, an acted on item, a button.
 	User should call ${method:GtSpotterActOn>>#actedUpon:}$ when an action happens"
-	actOn := aBlock
+
+	self objectActOn: aBlock.
+	self categoryActOn: aBlock
+]
+
+{ #category : #'api - accessing' }
+GtSpotterDropdownButtonStencil >> categoryActOn: aBlock [
+	"Set a block that receives a ${class:GtSpotterCategoryActOn}$, an acted-on category, a button.
+	User should call ${method:GtSpotterActOn>>#beActed}$ when an action happens"
+
+	categoryActOn := aBlock
 ]
 
 { #category : #'private - actions' }
-GtSpotterDropdownButtonStencil >> actOn: anAnnouncement button: aButton [
-	self actOn
+GtSpotterDropdownButtonStencil >> categoryActOn: anAnnouncement button: aButton [
+	categoryActOn
 		cull: anAnnouncement
-		cull: anAnnouncement rawObject
+		cull: anAnnouncement rawCategory
 		cull: aButton.
 
 	"hide Spotter in the next Space iteration 
 	to be able to open a new World tab if necessary"
 	aButton enqueueTask: (BlTaskAction new action: [
-		aButton fireEvent: (BrDropdownHideWish new anchor: aButton) ]).
+		aButton fireEvent: (BrDropdownHideWish new anchor: aButton) ])
 ]
 
 { #category : #'api - instantiation' }
@@ -151,7 +155,8 @@ GtSpotterDropdownButtonStencil >> initialize [
 	id := BlElementId noId.
 	spotterModelActions := Array empty.
 	spotterElementActions := Array empty.
-	actOn := [ :anActOnEvent :anItem :aButton | "do nothing" ].
+	objectActOn := [ :anActOnEvent :anItem :aButton | "do nothing" ].
+	categoryActOn := [ :anActOnEvent :anItem :aButton | "do nothing" ].
 	icon := BrGlamorousVectorIcons search.
 	tooltip := 'Search'.
 	
@@ -184,6 +189,27 @@ GtSpotterDropdownButtonStencil >> object [
 GtSpotterDropdownButtonStencil >> object: anObject [ 
 	"Set an object on which a Spotter search starts"
 	valuable := GtSpotterDropdownObjectSource object: anObject
+]
+
+{ #category : #'api - accessing' }
+GtSpotterDropdownButtonStencil >> objectActOn: aBlock [
+	"Set a block that receives a ${class:GtSpotterObjectActOn}$, an acted on item, a button.
+	User should call ${method:GtSpotterActOn>>#beActed}$ when an action happens"
+
+	objectActOn := aBlock
+]
+
+{ #category : #'private - actions' }
+GtSpotterDropdownButtonStencil >> objectActOn: anAnnouncement button: aButton [
+	objectActOn
+		cull: anAnnouncement
+		cull: anAnnouncement rawObject
+		cull: aButton.
+
+	"hide Spotter in the next Space iteration 
+	to be able to open a new World tab if necessary"
+	aButton enqueueTask: (BlTaskAction new action: [
+		aButton fireEvent: (BrDropdownHideWish new anchor: aButton) ]).
 ]
 
 { #category : #'api - preview' }
@@ -256,7 +282,13 @@ GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
 		when: GtSpotterObjectActOn
 		do: [ :anAnnouncement |
 			aSpotterModel announcer unsubscribe: self.
-			self actOn: anAnnouncement button: aButton ].
+			self objectActOn: anAnnouncement button: aButton ].
+		
+	aSpotterModel announcer
+		when: GtSpotterCategoryActOn
+		do: [ :anAnnouncement |
+			aSpotterModel announcer unsubscribe: self.
+			self categoryActOn: anAnnouncement button: aButton ].
 
 	^ aSpotterElement
 ]

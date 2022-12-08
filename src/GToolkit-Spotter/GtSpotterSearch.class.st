@@ -9,7 +9,10 @@ Class {
 		'actOnCategoryLogicComputation',
 		'objectTransformation',
 		'objectToolTransformation',
-		'hasObjectAction'
+		'hasObjectAction',
+		'categoryToolTransformation',
+		'categoryTransformation',
+		'hasCategoryAction'
 	],
 	#category : #'GToolkit-Spotter-Searches'
 }
@@ -23,19 +26,52 @@ GtSpotterSearch >> asStreamFor: aSpotterContext [
 
 { #category : #'api - configuration' }
 GtSpotterSearch >> categoryActLogic: aBlockWithTwoArguments [
+	self deprecated: ('Use {1} or {2}, otherwise handle {3} announcement to customize the act-on behavior' format: {
+		(GtSpotterSearch >> #sendCategory:) selector printString.
+		(GtSpotterSearch >> #sendToolCategory:) selector printString.
+		GtSpotterCategoryActOn name
+	}).
+
 	actOnCategoryLogicComputation := aBlockWithTwoArguments
 ]
 
 { #category : #'private - computation' }
 GtSpotterSearch >> categoryActOn: aCategory for: aSpotterStep from: anElement [
-	^ actOnCategoryLogicComputation
-		ifNil: [ aCategory ]
-		ifNotNil: [ :aBlock | aBlock cull: aCategory cull: aSpotterStep cull: anElement ]
+	self hasCategoryActOn
+		ifFalse: [ ^ self ].
+
+	actOnCategoryLogicComputation
+		cull: aCategory
+		cull: aSpotterStep
+		cull: self
+		cull: anElement
+]
+
+{ #category : #'private - computation' }
+GtSpotterSearch >> categoryToActOn: anObject from: aSpotterStep [
+	"Return an object that should be acted upon from a given step."
+	<return: #Object>
+	
+	^ categoryTransformation
+		cull: anObject
+		cull: aSpotterStep
+		cull: self
+]
+
+{ #category : #'private - computation' }
+GtSpotterSearch >> categoryToolToActOn: anObject from: aSpotterStep [
+	"Return a tool that should be acted upon from a given step"
+	<return: #GtPhlowTool>
+
+	^ categoryToolTransformation
+		cull: anObject
+		cull: aSpotterStep
+		cull: self
 ]
 
 { #category : #accessing }
 GtSpotterSearch >> hasCategoryActOn [
-	^ actOnCategoryLogicComputation isNotNil
+	^ hasCategoryAction or: [ actOnCategoryLogicComputation isNotNil ]
 ]
 
 { #category : #accessing }
@@ -51,28 +87,27 @@ GtSpotterSearch >> initialize [
 	
 	objectTransformation := [ :anObject :aStep | anObject ].
 	objectToolTransformation := [ :anObject :aStep | anObject gtDefaultInspectorTool ].
+	categoryTransformation  := [ :anObject :aStep | anObject ].
+	categoryToolTransformation := [ :anObject :aStep | anObject gtDefaultInspectorTool ].
+
 	hasObjectAction := true.
-	
-	actOnLogicComputation := [ :anObject :aSpotterStep :anElement |
+	hasCategoryAction := true.
+
+	actOnLogicComputation := [ :anObject :aSpotterStep :aSpotterSearch :anElement |
 		anObject gtSpotterActDefault: aSpotterStep from: anElement ].
-	actOnCategoryLogicComputation := [ :aCategory :aSpotterStep :anElement |
+	actOnCategoryLogicComputation := [ :aCategory :aSpotterStep :aSpotterSearch :anElement |
 		aCategory gtSpotterActDefault: aSpotterStep from: anElement ]
 ]
 
 { #category : #'api - configuration' }
 GtSpotterSearch >> itemActLogic: aBlockWithTwoArguments [
-	self deprecated: 'Use send: or sendTool:, otherwise handle GtSpotterObjectActOn notification to customize the act-on behavior'.
+	self deprecated: ('Use {1} or {2}, otherwise handle {3} announcement to customize the act-on behavior' format: {
+		(GtSpotterSearch >> #send:) selector printString.
+		(GtSpotterSearch >> #sendTool:) selector printString.
+		GtSpotterObjectActOn name
+	}).
 
 	actOnLogicComputation := aBlockWithTwoArguments
-]
-
-{ #category : #'private - computation' }
-GtSpotterSearch >> itemActOn: anObject for: aSpotterStep from: anElement [
-	self hasObjectAction
-		ifFalse: [ ^ self ].
-
-	actOnLogicComputation
-		ifNotNil: [ :aBlock | aBlock cull: anObject cull: aSpotterStep cull: anElement ]
 ]
 
 { #category : #'api - configuration' }
@@ -100,11 +135,26 @@ GtSpotterSearch >> itemsLimit: anInteger [
 ]
 
 { #category : #'private - computation' }
+GtSpotterSearch >> objectActOn: anObject for: aSpotterStep from: anElement [
+	self hasObjectAction
+		ifFalse: [ ^ self ].
+
+	actOnLogicComputation
+		cull: anObject
+		cull: aSpotterStep
+		cull: self
+		cull: anElement
+]
+
+{ #category : #'private - computation' }
 GtSpotterSearch >> objectToActOn: anObject from: aSpotterStep [
 	"Return an object that should be acted upon from a given step."
 	<return: #Object>
 	
-	^ objectTransformation cull: anObject cull: aSpotterStep
+	^ objectTransformation
+		cull: anObject
+		cull: aSpotterStep
+		cull: self
 ]
 
 { #category : #'private - computation' }
@@ -112,7 +162,10 @@ GtSpotterSearch >> objectToolToActOn: anObject from: aSpotterStep [
 	"Return a tool that should be acted upon from a given step"
 	<return: #GtPhlowTool>
 
-	^ objectToolTransformation cull: anObject cull: aSpotterStep
+	^ objectToolTransformation
+		cull: anObject
+		cull: aSpotterStep
+		cull: self
 ]
 
 { #category : #'api - configuration' }
@@ -131,13 +184,24 @@ GtSpotterSearch >> send: aBlock [
 ]
 
 { #category : #'api - configuration' }
+GtSpotterSearch >> sendCategory: aBlock [
+	categoryTransformation := aBlock
+]
+
+{ #category : #'api - configuration' }
+GtSpotterSearch >> sendCategoryTool: aBlock [
+	categoryToolTransformation := aBlock
+]
+
+{ #category : #'api - configuration' }
 GtSpotterSearch >> sendTool: aBlock [
 	objectToolTransformation := aBlock
 ]
 
 { #category : #'api - configuration' }
 GtSpotterSearch >> withoutCategoryAction [
-	actOnCategoryLogicComputation := nil
+	actOnCategoryLogicComputation := nil.
+	hasCategoryAction := false
 ]
 
 { #category : #'api - configuration' }

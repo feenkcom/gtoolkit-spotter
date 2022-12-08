@@ -83,6 +83,51 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCandidate [
 ]
 
 { #category : #accessing }
+GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCategory [
+	<gtExample>
+	| scripter actOnEvents actOn |
+
+	scripter := self spotterElementOnStartSample.
+	
+	actOnEvents := OrderedCollection new.
+	scripter element spotter
+		when: GtSpotterCategoryActOn
+		do: [ :anAnnouncement |
+			anAnnouncement beActed.
+			actOnEvents add: anAnnouncement ].
+	
+	scripter mouseMoveOver
+		id: GtSpotterCategoryElementId index: 1;
+		play.
+
+	scripter mouseMoveOver
+		id: GtSpotterCategoryElementId index: 1;
+		id: GtSpotterCategoryActOnButtonId;
+		play.
+
+	scripter click
+		id: GtSpotterCategoryElementId index: 1;
+		id: GtSpotterCategoryActOnButtonId;
+		play.
+
+	self assert: actOnEvents size equals: 1.
+	
+	actOn := actOnEvents first.
+
+	self assert: actOn isActedUpon equals: true.
+	self assert: actOn spotterSearch title equals: 'Priority 10'.
+	self assert: actOn spotterStep equals: scripter element spotter steps first.
+
+	self assert: actOn rawCategory searchQuery equals: ''.
+
+	self assert: actOn objectToSend equals: { actOn rawCategory . scripter element spotter steps first . actOn spotterSearch }.
+	self assert: actOn toolToSend class equals: GtInspectorTool.
+	self assert: actOn toolToSend object equals: { actOn spotterSearch. scripter element spotter steps first . actOn rawCategory }.
+
+	^ scripter
+]
+
+{ #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCandidateWithDefaultObjectActOn [
 	<gtExample>
 	| scripter actOnEvents actOn |
@@ -121,6 +166,49 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCandidateWi
 	self assert: actOn objectToSend equals: 20.
 	self assert: actOn toolToSend class equals: GtInspectorTool.
 	self assert: actOn toolToSend object equals: 20.
+	
+	^ scripter
+]
+
+{ #category : #accessing }
+GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCategoryWithDefaultCategoryActOn [
+	<gtExample>
+	| scripter actOnEvents actOn |
+
+	scripter := self spotterElementOnStartSample.
+	
+	actOnEvents := OrderedCollection new.
+	scripter element spotter
+		when: GtSpotterCategoryActOn
+		do: [ :anAnnouncement |
+			anAnnouncement beActed.
+			actOnEvents add: anAnnouncement ].
+	
+	scripter mouseMoveOver
+		id: GtSpotterCategoryElementId index: 2;
+		play.
+
+	scripter mouseMoveOver
+		id: GtSpotterCategoryElementId index: 2;
+		id: GtSpotterCategoryActOnButtonId;
+		play.
+
+	scripter click
+		id: GtSpotterCategoryElementId index: 2;
+		id: GtSpotterCategoryActOnButtonId;
+		play.
+
+	self assert: actOnEvents size equals: 1.
+	
+	actOn := actOnEvents first.
+
+	self assert: actOn isActedUpon equals: true.
+	self assert: actOn spotterSearch title equals: 'Priority 20'.
+	self assert: actOn spotterStep equals: scripter element spotter steps first.
+	self assert: actOn rawCategory searchQuery equals: ''.
+	self assert: actOn objectToSend equals: actOn rawCategory.
+	self assert: actOn toolToSend class equals: GtInspectorTool.
+	self assert: actOn toolToSend object equals: actOn rawCategory.
 	
 	^ scripter
 ]

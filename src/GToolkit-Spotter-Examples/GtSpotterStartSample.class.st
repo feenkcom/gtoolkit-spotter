@@ -14,6 +14,8 @@ GtSpotterStartSample >> gtSpotterSearch_10: aSearch [
 		itemName: [ :each | each asString ];
 		send: [ :anItem :aStep | { anItem . aStep } ];
 		sendTool: [ :anItem :aStep | GtInspectorTool forObject: { aStep . anItem } ];
+		sendCategory: [ :aCategory :aStep :aCategorySearch | { aCategory  . aStep . aCategorySearch } ];
+		sendCategoryTool: [ :aCategory :aStep :aCategorySearch | GtInspectorTool forObject: { aCategorySearch . aStep . aCategory } ];
 		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]

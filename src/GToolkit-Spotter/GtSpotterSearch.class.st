@@ -59,12 +59,13 @@ GtSpotterSearch >> categoryToActOn: anObject from: aSpotterStep [
 ]
 
 { #category : #'private - computation' }
-GtSpotterSearch >> categoryToolToActOn: anObject from: aSpotterStep [
+GtSpotterSearch >> categoryToolToActOn: aCategoryToSend rawCategory: aRawCategory from: aSpotterStep [
 	"Return a tool that should be acted upon from a given step"
 	<return: #GtPhlowTool>
 
 	^ categoryToolTransformation
-		cull: anObject
+		cull: aCategoryToSend
+		cull: aRawCategory
 		cull: aSpotterStep
 		cull: self
 ]
@@ -84,11 +85,13 @@ GtSpotterSearch >> initialize [
 	super initialize.
 
 	itemsLimit := 5.
-	
-	objectTransformation := [ :anObject :aStep | anObject ].
-	objectToolTransformation := [ :anObject :aStep | anObject gtDefaultInspectorTool ].
+
+	objectTransformation := [ :anObject :aStep :aSearch | anObject ].
+	objectToolTransformation := [ :anObjectToSend :aRawObject :aStep :aSearch |
+		anObjectToSend gtDefaultInspectorTool ].
 	categoryTransformation  := [ :anObject :aStep | anObject ].
-	categoryToolTransformation := [ :anObject :aStep | anObject gtDefaultInspectorTool ].
+	categoryToolTransformation := [ :aCategoryToSend :aRawCategory :aStep :aSearch | 
+		aCategoryToSend gtDefaultInspectorTool ].
 
 	hasObjectAction := true.
 	hasCategoryAction := true.
@@ -158,12 +161,13 @@ GtSpotterSearch >> objectToActOn: anObject from: aSpotterStep [
 ]
 
 { #category : #'private - computation' }
-GtSpotterSearch >> objectToolToActOn: anObject from: aSpotterStep [
+GtSpotterSearch >> objectToolToActOn: anObjectToSend rawObject: aRawObject from: aSpotterStep [
 	"Return a tool that should be acted upon from a given step"
 	<return: #GtPhlowTool>
 
 	^ objectToolTransformation
-		cull: anObject
+		cull: anObjectToSend
+		cull: aRawObject
 		cull: aSpotterStep
 		cull: self
 ]

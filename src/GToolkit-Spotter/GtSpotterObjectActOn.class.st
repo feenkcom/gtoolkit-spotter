@@ -60,6 +60,7 @@ GtSpotterObjectActOn >> toolToSend [
 	<return: #GtPhlowTool>
 
 	^ search
-		objectToolToActOn: rawObject
+		objectToolToActOn: self objectToSend
+		rawObject: self rawObject
 		from: step
 ]

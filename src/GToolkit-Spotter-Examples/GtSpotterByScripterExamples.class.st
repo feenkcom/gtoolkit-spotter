@@ -75,9 +75,33 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCandidate [
 	self assert: actOn spotterSearch title equals: 'Priority 10'.
 	self assert: actOn spotterStep equals: scripter element spotter steps first.
 	self assert: actOn rawObject equals: 10.
-	self assert: actOn objectToSend equals: { 10 . scripter element spotter steps first }.
-	self assert: actOn toolToSend class equals: GtInspectorTool.
-	self assert: actOn toolToSend object equals: { scripter element spotter steps first . 10 }.
+	
+	self
+		assert: actOn objectToSend
+		equals: {
+			"raw object"
+			10 .
+			"step"
+			scripter element spotter steps first.
+			"search"
+			actOn spotterSearch }.
+	self
+		assert: actOn toolToSend class
+		equals: GtInspectorTool.
+	self
+		assert: actOn toolToSend object
+		equals: {
+			"search"
+			actOn spotterSearch.
+			"step"
+			scripter element spotter steps first.
+			"raw object".
+			10.
+			"object to send"
+			{
+				10 .
+				scripter element spotter steps first.
+				actOn spotterSearch } }.
 	
 	^ scripter
 ]
@@ -120,9 +144,35 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCategory [
 
 	self assert: actOn rawCategory searchQuery equals: ''.
 
-	self assert: actOn objectToSend equals: { actOn rawCategory . scripter element spotter steps first . actOn spotterSearch }.
-	self assert: actOn toolToSend class equals: GtInspectorTool.
-	self assert: actOn toolToSend object equals: { actOn spotterSearch. scripter element spotter steps first . actOn rawCategory }.
+	self
+		assert: actOn objectToSend
+		equals: {
+			"raw category"
+			actOn rawCategory.
+			"step"
+			scripter element spotter steps first.
+			"search"
+			actOn spotterSearch }.
+	
+	self
+		assert: actOn toolToSend
+		class equals: GtInspectorTool.
+	self
+		assert: actOn toolToSend object
+		equals: {
+			"search"
+			actOn spotterSearch.
+			"step"
+			scripter element spotter steps first.
+			"raw category"
+			actOn rawCategory.
+			"category to send"
+			{
+				actOn rawCategory.
+				scripter element spotter steps first .
+				actOn spotterSearch
+			}
+		}.
 
 	^ scripter
 ]

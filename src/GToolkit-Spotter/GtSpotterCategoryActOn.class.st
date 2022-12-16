@@ -31,6 +31,7 @@ GtSpotterCategoryActOn >> toolToSend [
 	<return: #GtPhlowTool>
 
 	^ search
-		categoryToolToActOn: rawCategory
+		categoryToolToActOn: self objectToSend
+		rawCategory: self rawCategory
 		from: step
 ]

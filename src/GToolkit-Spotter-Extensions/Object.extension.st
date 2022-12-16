@@ -11,7 +11,7 @@ Object >> gtActionSearchFor: anAction [
 		stencil: [ GtSpotterDropdownButtonStencil new
 			actOn: [ :anActOnEvent :anItem :theButton | 
 				anActOnEvent beActed.
-				theButton phlow spawnObject: anItem. ];
+				theButton phlow spawnTool: anActOnEvent toolToSend ];
 			object: self ]
 ]
 

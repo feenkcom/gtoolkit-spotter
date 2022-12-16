@@ -12,10 +12,13 @@ GtSpotterStartSample >> gtSpotterSearch_10: aSearch [
 		title: 'Priority 10';
 		items: [ #(10) ];
 		itemName: [ :each | each asString ];
-		send: [ :anItem :aStep | { anItem . aStep } ];
-		sendTool: [ :anItem :aStep | GtInspectorTool forObject: { aStep . anItem } ];
-		sendCategory: [ :aCategory :aStep :aCategorySearch | { aCategory  . aStep . aCategorySearch } ];
-		sendCategoryTool: [ :aCategory :aStep :aCategorySearch | GtInspectorTool forObject: { aCategorySearch . aStep . aCategory } ];
+		send: [ :aRawObject :aStep :thisSearch | { aRawObject . aStep . thisSearch } ];
+		sendTool: [ :anObjectToSend :aRawObject :aStep :thisSearch |
+			GtInspectorTool forObject: { thisSearch . aStep . aRawObject . anObjectToSend } ];
+		sendCategory: [ :aCategory :aStep :thisSearch |
+			{ aCategory  . aStep . thisSearch } ];
+		sendCategoryTool: [ :aCategoryToSend :aRawCategory :aStep :thisSearch |
+			GtInspectorTool forObject: { thisSearch . aStep . aRawCategory. aCategoryToSend } ];
 		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: true
 ]

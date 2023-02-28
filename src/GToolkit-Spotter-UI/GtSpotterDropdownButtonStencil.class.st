@@ -48,16 +48,15 @@ GtSpotterDropdownButtonStencil >> categoryActOn: anAnnouncement button: aButton 
 
 { #category : #'api - instantiation' }
 GtSpotterDropdownButtonStencil >> create [
-	| aButton |
+	| aButton aSpotterElement |
 	aButton := self createButtonWithTooltip.
 	aButton
 		id: id;
-		addAptitude: (BrGlamorousWithDropdownAptitude
-			 handle: [ self createHandleButton ]
-			 content: [ self spotterElementFor: aButton ]
-			 aptitudeDo: [ :aDropdownLook | 
-				 aDropdownLook background:
-						 BrGlamorousColors secondaryHeaderBackgroundColor ]).
+		addAptitude: ((BrGlamorousWithDropdownAptitude
+				handle: [ self createHandleButton ]
+				content: [ aSpotterElement := self spotterElementFor: aButton ]
+				aptitudeDo: [ :aDropdownLook | aDropdownLook background: BrGlamorousColors secondaryHeaderBackgroundColor ])
+				whenResizedDo: [ :anEvent | aSpotterElement fireEvent: GtSpotterResizedEvent new ]).
 	^ aButton
 ]
 

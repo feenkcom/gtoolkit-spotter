@@ -166,15 +166,6 @@ GtStreamingSpotterElement >> initialize [
 		self onSelectedCandidateMaybeChanged ].
 ]
 
-{ #category : #accessing }
-GtStreamingSpotterElement >> onAddedToParent [
-	(self aptitude withDeepCollect: #children)
-		do: [ :anAptitude | 
-			(anAptitude isKindOf: BrGlamorousWithResizerAptitude)
-				ifTrue: [ anAptitude
-						whenResizedDo: [ :anEvent | self fireEvent: GtSpotterResizedEvent new ] ] ]
-]
-
 { #category : #'private - event handling' }
 GtStreamingSpotterElement >> onPreviewStateChanged: anAnnouncement [
 	self updatePreviewState

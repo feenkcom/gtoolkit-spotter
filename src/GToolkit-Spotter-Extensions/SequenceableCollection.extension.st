@@ -9,10 +9,5 @@ SequenceableCollection >> gtItemsSearchFor: aSearch [
 		title: 'Items';
 		items: [ self ];
 		filterBySubstring;
-		send: [ :anObject | anObject class ];
-		sendTool: [ :anObject | anObject class inspectorTool ];
-		
-		"buttonm itemActLogic: [ :anObject :step :spotterElement |
-			anObject class inspect ];"
 		withoutItemsLimit
 ]

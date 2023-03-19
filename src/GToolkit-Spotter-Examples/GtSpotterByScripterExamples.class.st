@@ -353,7 +353,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckSelection [
 ]
 
 { #category : #accessing }
-GtSpotterByScripterExamples >> spotterElementOnStartWithAPI [
+GtSpotterByScripterExamples >> spotterElementOnStartWithAPIHasPreview [
 	<gtExample>
 
 	| scripter |

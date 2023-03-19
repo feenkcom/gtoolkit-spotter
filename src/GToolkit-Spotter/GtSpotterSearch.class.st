@@ -12,7 +12,8 @@ Class {
 		'hasObjectAction',
 		'categoryToolTransformation',
 		'categoryTransformation',
-		'hasCategoryAction'
+		'hasCategoryAction',
+		'previewObjectComputation'
 	],
 	#category : #'GToolkit-Spotter-Searches'
 }
@@ -177,9 +178,16 @@ GtSpotterSearch >> previewElement: aBlockWithOneArgument [
 	previewElementComputation := aBlockWithOneArgument
 ]
 
+{ #category : #'api - configuration' }
+GtSpotterSearch >> previewObject: aBlockWithOneArgument [
+	previewObjectComputation := aBlockWithOneArgument
+]
+
 { #category : #'private - computation' }
 GtSpotterSearch >> previewObjectFor: anObject [
-	^ anObject
+	^ previewObjectComputation
+		ifNil: [ anObject ]
+		ifNotNil: [ :aBlock | aBlock cull: anObject ]
 ]
 
 { #category : #'api - configuration' }

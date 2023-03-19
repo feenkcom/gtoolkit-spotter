@@ -47,6 +47,8 @@ GtStreamingSpotterPreviewElement >> generatePreviewOf: anObject forSearch: aSpot
 GtStreamingSpotterPreviewElement >> initialize [
 	super initialize.
 
+	self id: GtSpotterPreviewElementId.
+	
 	self matchParent.
 	self padding: (BlInsets all: 10).
 

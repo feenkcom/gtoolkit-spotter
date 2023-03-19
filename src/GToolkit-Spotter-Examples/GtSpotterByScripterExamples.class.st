@@ -353,6 +353,35 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckSelection [
 ]
 
 { #category : #accessing }
+GtSpotterByScripterExamples >> spotterElementOnStartWithAPI [
+	<gtExample>
+
+	| scripter |
+	scripter := self spotterElementOnStart: GtSpotterStartWithAPI new.
+	
+	scripter assert
+		id: GtSpotterCandidateElementId index: 1;
+		satisfies: [ :aCandidate |
+			aCandidate states hasState: BlElementState selected ];
+		play.
+
+	scripter assert
+		id: GtSpotterPreviewElementId index: 1;
+		satisfies: [ :aPreviewElement | 
+			aPreviewElement children size = 2 ];
+		play.
+
+	scripter assert
+		id: GtSpotterPreviewElementId index: 1;
+		on: BrLabel index: 1;
+		satisfies: [ :aLabel | 
+			aLabel text asString = 'true' ];
+		play.
+
+	^ scripter
+]
+
+{ #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionInItemName [
 	<gtExample>
 	| scripter |

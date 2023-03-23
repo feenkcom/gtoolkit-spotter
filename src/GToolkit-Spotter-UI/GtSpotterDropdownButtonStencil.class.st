@@ -56,6 +56,11 @@ GtSpotterDropdownButtonStencil >> create [
 				handle: [ self createHandleButton ]
 				content: [ aSpotterElement := self spotterElementFor: aButton ]
 				aptitudeDo: [ :aDropdownLook | aDropdownLook background: BrGlamorousColors secondaryHeaderBackgroundColor ])
+				preferredExtent: self extent 
+					+ (0@24); "Handle height - this fixed value is fine
+					for now as we place dropdowns either below and above 
+					the handle element. If we include also left and right
+					dropdown placements, we will have to rework this part."
 				whenResizedDo: [ :anEvent | aSpotterElement fireEvent: GtSpotterResizedEvent new ]).
 	^ aButton
 ]

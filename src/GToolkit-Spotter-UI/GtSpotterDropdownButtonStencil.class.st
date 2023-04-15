@@ -33,19 +33,6 @@ GtSpotterDropdownButtonStencil >> categoryActOn: aBlock [
 	categoryActOn := aBlock
 ]
 
-{ #category : #'private - actions' }
-GtSpotterDropdownButtonStencil >> categoryActOn: anAnnouncement button: aButton [
-	categoryActOn
-		cull: anAnnouncement
-		cull: anAnnouncement rawCategory
-		cull: aButton.
-
-	"hide Spotter in the next Space iteration 
-	to be able to open a new World tab if necessary"
-	aButton enqueueTask: (BlTaskAction new action: [
-		aButton fireEvent: (BrDropdownHideWish new anchor: aButton) ])
-]
-
 { #category : #'api - instantiation' }
 GtSpotterDropdownButtonStencil >> create [
 	| aButton aSpotterElement |
@@ -203,27 +190,29 @@ GtSpotterDropdownButtonStencil >> objectActOn: aBlock [
 	objectActOn := aBlock
 ]
 
-{ #category : #'private - actions' }
-GtSpotterDropdownButtonStencil >> objectActOn: anAnnouncement button: aButton [
-	objectActOn
-		cull: anAnnouncement
-		cull: anAnnouncement rawObject
-		cull: aButton.
-
-	"hide Spotter in the next Space iteration 
-	to be able to open a new World tab if necessary"
-	aButton enqueueTask: (BlTaskAction new action: [
-		aButton fireEvent: (BrDropdownHideWish new anchor: aButton) ]).
-]
-
 { #category : #'api - preview' }
 GtSpotterDropdownButtonStencil >> onPreviewChangedDo: aBlock [
 	"Block is evaluated on preview satus changes.
 	It receives the status: [ :isDisplayed | ... ]"
+
+	self
+		deprecated: 'Use GtSpotterDropdownButtonStencil>>#onPreviewChangedSend:to:'
+		on: '14 Apr 2023'
+		in: 'GToolkit DEV v0.8.2710'.
+
+	self error: 'Use GtSpotterDropdownButtonStencil>>#onPreviewChangedSend:to:'
+]
+
+{ #category : #'api - preview' }
+GtSpotterDropdownButtonStencil >> onPreviewChangedSend: aSelector to: aReceiver [
+	"Block is evaluated on preview satus changes.
+	It receives the announcement: [ :anAnnouncement | anAnnouncement shouldShowPreview ].
+	anAnnouncement shouldShowPreview returns a boolean value"
 	self spotterModelDo: [ :aSpotter | 
-		aSpotter announcer
+		aSpotter announcer weak
 			when: GtSpotterPreviewModeChanged
-			do: [ :anEvent | aBlock value: anEvent shouldShowPreview ] ]
+			send: aSelector 
+			to: aReceiver ]
 ]
 
 { #category : #'api - accessing' }
@@ -256,7 +245,7 @@ GtSpotterDropdownButtonStencil >> spotterElementDo: aOneArgBlock [
 
 { #category : #'api - instantiation' }
 GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
-	| aSpotterModel aSpotterElement |
+	| aSpotterModel aSpotterElement aHandler |
 
 	aSpotterModel := GtSpotter on: self object.
 
@@ -282,17 +271,13 @@ GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
 		combination: BlKeyCombination escape;
 		action: [ aButton dispatchEvent: BrDropdownHideWish new ])).
 
-	aSpotterModel announcer
-		when: GtSpotterObjectActOn
-		do: [ :anAnnouncement |
-			aSpotterModel announcer unsubscribe: self.
-			self objectActOn: anAnnouncement button: aButton ].
-		
-	aSpotterModel announcer
-		when: GtSpotterCategoryActOn
-		do: [ :anAnnouncement |
-			aSpotterModel announcer unsubscribe: self.
-			self categoryActOn: anAnnouncement button: aButton ].
+	aHandler := GtSpotterDropdownButtonActOnHandler new 
+		spotterModel: aSpotterModel;
+		spotterElement: aSpotterElement;
+		button: aButton;
+		objectActOn: objectActOn;
+		categoryActOn: categoryActOn;
+		install.
 
 	^ aSpotterElement
 ]

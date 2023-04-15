@@ -42,16 +42,18 @@ GtSpotterByScripterExamples >> spotterElementOnStartSample [
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCandidate [
 	<gtExample>
-	| scripter actOnEvents actOn |
+	| scripter actOnEvents actOn actOnHandler |
 
 	scripter := self spotterElementOnStartSample.
 	
 	actOnEvents := OrderedCollection new.
-	scripter element spotter
+	actOnHandler := GtSpotterByScripterExamplesActOnHandler new
+		actOnEvents: actOnEvents.
+		
+	scripter element spotter announcer weak
 		when: GtSpotterObjectActOn
-		do: [ :anAnnouncement |
-			anAnnouncement beActed.
-			actOnEvents add: anAnnouncement ].
+		send: #onActed:
+		to: actOnHandler.
 	
 	scripter mouseMoveOver
 		id: GtSpotterCandidateElementId index: 1;
@@ -109,16 +111,18 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCandidate [
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCategory [
 	<gtExample>
-	| scripter actOnEvents actOn |
+	| scripter actOnEvents actOn actOnHandler |
 
 	scripter := self spotterElementOnStartSample.
 	
 	actOnEvents := OrderedCollection new.
-	scripter element spotter
+	actOnHandler := GtSpotterByScripterExamplesActOnHandler new
+		actOnEvents: actOnEvents.
+		
+	scripter element spotter announcer weak
 		when: GtSpotterCategoryActOn
-		do: [ :anAnnouncement |
-			anAnnouncement beActed.
-			actOnEvents add: anAnnouncement ].
+		send: #onActed:
+		to: actOnHandler.
 	
 	scripter mouseMoveOver
 		id: GtSpotterCategoryElementId index: 1;
@@ -180,16 +184,18 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCategory [
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCandidateWithDefaultObjectActOn [
 	<gtExample>
-	| scripter actOnEvents actOn |
+	| scripter actOnEvents actOn actOnHandler |
 
 	scripter := self spotterElementOnStartSample.
 	
 	actOnEvents := OrderedCollection new.
-	scripter element spotter
+	actOnHandler := GtSpotterByScripterExamplesActOnHandler new
+		actOnEvents: actOnEvents.
+		
+	scripter element spotter announcer weak
 		when: GtSpotterObjectActOn
-		do: [ :anAnnouncement |
-			anAnnouncement beActed.
-			actOnEvents add: anAnnouncement ].
+		send: #onActed:
+		to: actOnHandler.
 	
 	scripter mouseMoveOver
 		id: GtSpotterCandidateElementId index: 2;
@@ -223,16 +229,18 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCandidateWi
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCategoryWithDefaultCategoryActOn [
 	<gtExample>
-	| scripter actOnEvents actOn |
+	| scripter actOnEvents actOn actOnHandler |
 
 	scripter := self spotterElementOnStartSample.
 	
 	actOnEvents := OrderedCollection new.
-	scripter element spotter
+	actOnHandler := GtSpotterByScripterExamplesActOnHandler new
+		actOnEvents: actOnEvents.
+		
+	scripter element spotter announcer weak
 		when: GtSpotterCategoryActOn
-		do: [ :anAnnouncement |
-			anAnnouncement beActed.
-			actOnEvents add: anAnnouncement ].
+		send: #onActed:
+		to: actOnHandler.
 	
 	scripter mouseMoveOver
 		id: GtSpotterCategoryElementId index: 2;

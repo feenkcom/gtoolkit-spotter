@@ -1,7 +1,7 @@
 Class {
 	#name : #GtSpotterStartWithAPI,
 	#superclass : #Object,
-	#category : #'GToolkit-Spotter-Examples'
+	#category : #'GToolkit-Spotter-Examples-Examples'
 }
 
 { #category : #accessing }

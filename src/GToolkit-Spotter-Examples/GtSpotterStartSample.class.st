@@ -1,7 +1,7 @@
 Class {
 	#name : #GtSpotterStartSample,
 	#superclass : #Object,
-	#category : #'GToolkit-Spotter-Examples'
+	#category : #'GToolkit-Spotter-Examples-Examples'
 }
 
 { #category : #'spotter-extensions' }

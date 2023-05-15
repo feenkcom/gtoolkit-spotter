@@ -1,8 +1,23 @@
 Class {
 	#name : #GtSpotterByScripterExamples,
 	#superclass : #Object,
-	#category : #'GToolkit-Spotter-Examples'
+	#category : #'GToolkit-Spotter-Examples-Examples'
 }
+
+{ #category : #accessing }
+GtSpotterByScripterExamples >> defaultStepOnStart [
+	<gtExample>
+	<noTest>
+	^ (GtSpotter on: GtWorldSpotterSearchStart new) steps anyOne
+]
+
+{ #category : #accessing }
+GtSpotterByScripterExamples >> elementOnStart [
+	<gtExample>
+	<noTest>
+	"used for documentation"
+	^ self spotterElementOnStart elementWithoutParent
+]
 
 { #category : #accessing }
 GtSpotterByScripterExamples >> elementOnStartWithExceptionsInSearch [
@@ -17,6 +32,13 @@ GtSpotterByScripterExamples >> scripter [
 	<gtExample>
 	
 	^ BlScripter new
+]
+
+{ #category : #accessing }
+GtSpotterByScripterExamples >> spotterElementOnStart [
+	<gtExample>
+
+	^ self spotterElementOnStart: GtWorldSpotterSearchStart new
 ]
 
 { #category : #accessing }

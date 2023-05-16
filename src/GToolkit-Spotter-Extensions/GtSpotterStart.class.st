@@ -48,13 +48,16 @@ GtSpotterStart >> fileReferencesBy: aSelector inContext: aSpotterContext [
 				ifTrue: [ AsyncEmptyStream new ]
 				ifFalse: [ | rootDirectory allItems |
 					rootDirectory := (aQuery copyFrom: 1 to: lastDelimiter) asFileReference.
-					allItems := (rootDirectory perform: aSelector) asAsyncStream.
-					lastDelimiter = aQuery size
-						ifTrue: [ allItems ]
-						ifFalse: [ (GtSpotterSubstringFilterStream
-								forStream: allItems
-								search: (aQuery copyFrom: lastDelimiter + 1 to: aQuery size))
-								itemString: [ :eachFile | eachFile basename ] ] ] ]) flatten
+					rootDirectory exists 
+						ifFalse: [ AsyncEmptyStream new ]
+						ifTrue: [
+							allItems := (rootDirectory perform: aSelector) asAsyncStream.
+							lastDelimiter = aQuery size
+								ifTrue: [ allItems ]
+								ifFalse: [ (GtSpotterSubstringFilterStream
+										forStream: allItems
+										search: (aQuery copyFrom: lastDelimiter + 1 to: aQuery size))
+										itemString: [ :eachFile | eachFile basename ] ] ] ] ]) flatten
 ]
 
 { #category : #printing }

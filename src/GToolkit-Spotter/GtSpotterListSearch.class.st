@@ -33,6 +33,11 @@ GtSpotterListSearch >> filterBySubstring [
 	self filter: GtSpotterSubstringFilter new
 ]
 
+{ #category : #accessing }
+GtSpotterListSearch >> filterBySubstring: aBlock [
+	self filter: (GtSpotterSubstringFilter new itemString: aBlock)
+]
+
 { #category : #initialization }
 GtSpotterListSearch >> initialize [
 	super initialize.

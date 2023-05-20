@@ -30,7 +30,7 @@ GtSpotterListSearch >> filter: aFilterOrBlock [
 
 { #category : #accessing }
 GtSpotterListSearch >> filterBySubstring [
-	self filter: GtSpotterSubstringFilter new
+	self filter: (GtSpotterSubstringFilter new itemString: [:anObject | self itemNameFor: anObject ])
 ]
 
 { #category : #accessing }

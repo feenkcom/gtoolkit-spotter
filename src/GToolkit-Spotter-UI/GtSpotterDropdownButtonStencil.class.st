@@ -188,7 +188,7 @@ GtSpotterDropdownButtonStencil >> initialize [
 	categoryActOn := [ :anActOnEvent :anItem :aButton | "do nothing" ].
 	icon := BrGlamorousVectorIcons search.
 	tooltip := 'Search'.
-	self beSmallSize.
+	self beNormalSize.
 	
 	"Extent should be a computation block, otherwise the size in the stencil
 	would only change after the recreation of the stencil.

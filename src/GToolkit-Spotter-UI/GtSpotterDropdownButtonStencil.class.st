@@ -11,7 +11,8 @@ Class {
 		'spotterElementActions',
 		'label',
 		'objectActOn',
-		'categoryActOn'
+		'categoryActOn',
+		'sizeSelector'
 	],
 	#category : #'GToolkit-Spotter-UI-Stencils'
 }
@@ -23,6 +24,41 @@ GtSpotterDropdownButtonStencil >> actOn: aBlock [
 
 	self objectActOn: aBlock.
 	self categoryActOn: aBlock
+]
+
+{ #category : #accessing }
+GtSpotterDropdownButtonStencil >> beHugeSize [
+	sizeSelector := #beHugeSize
+]
+
+{ #category : #accessing }
+GtSpotterDropdownButtonStencil >> beLargeSize [
+	sizeSelector := #beLargeSize
+]
+
+{ #category : #accessing }
+GtSpotterDropdownButtonStencil >> beMiniSize [
+	sizeSelector := #beMiniSize
+]
+
+{ #category : #accessing }
+GtSpotterDropdownButtonStencil >> beNoneSize [
+	sizeSelector := #beNoneSize
+]
+
+{ #category : #accessing }
+GtSpotterDropdownButtonStencil >> beNormalSize [
+	sizeSelector := #beNormalSize
+]
+
+{ #category : #accessing }
+GtSpotterDropdownButtonStencil >> beSmallSize [
+	sizeSelector := #beSmallSize
+]
+
+{ #category : #accessing }
+GtSpotterDropdownButtonStencil >> beTinySize [
+	sizeSelector := #beTinySize
 ]
 
 { #category : #'api - accessing' }
@@ -57,6 +93,8 @@ GtSpotterDropdownButtonStencil >> createBasicButton [
 
 	| aButton |
 	aButton := BrButton new icon: icon.
+	
+	aButton perform: self sizeSelector.
 
 	self label
 		ifNotNil: [ 
@@ -150,6 +188,7 @@ GtSpotterDropdownButtonStencil >> initialize [
 	categoryActOn := [ :anActOnEvent :anItem :aButton | "do nothing" ].
 	icon := BrGlamorousVectorIcons search.
 	tooltip := 'Search'.
+	self beNormalSize.
 	
 	"Extent should be a computation block, otherwise the size in the stencil
 	would only change after the recreation of the stencil.
@@ -233,6 +272,11 @@ GtSpotterDropdownButtonStencil >> showPreview: aValuable [
 	true  = show preview
 	false = hide preview"
 	self spotterModelDo: [ :aSpotter | aSpotter showPreview: aValuable value ]
+]
+
+{ #category : #'api - instantiation' }
+GtSpotterDropdownButtonStencil >> sizeSelector [
+	^ sizeSelector
 ]
 
 { #category : #'api - accessing' }

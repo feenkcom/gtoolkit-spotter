@@ -1,7 +1,7 @@
 Extension { #name : #GtSpotterCategory }
 
 { #category : #'*GToolkit-Spotter-Extensions' }
-GtSpotterCategory >> gtItemsFor: aSearch [
+GtSpotterCategory >> gtSearchItemsFor: aSearch [
 	<gtSearch>
 	^ aSearch list
 		title: search title;
@@ -19,4 +19,16 @@ GtSpotterCategory >> gtSpotterActDefaultFrom: aSpotterElement [
 	^ GtInspector
 		openOn: self items
 		from: aSpotterElement
+]
+
+{ #category : #'*GToolkit-Spotter-Extensions' }
+GtSpotterCategory >> gtViewItemsFor: aView [
+	<gtView>
+
+	^ aView forward
+		title: 'Items';
+		priority: 5;
+		object: self items;
+		view: #gtLiveFor:;
+		actionUpdateButton
 ]

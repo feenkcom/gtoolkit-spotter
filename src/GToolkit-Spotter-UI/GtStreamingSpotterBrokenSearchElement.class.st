@@ -37,7 +37,8 @@ GtStreamingSpotterBrokenSearchElement >> debugDueTo: anEventType [
 		  context: (error signalerContext ifNil: [ error signalContext ])
 		  label: error description
 		  fullView: true
-		  notification: nil ] forkNamed: 'Debug'
+		  notification: nil
+		  forException: error ] forkNamed: 'Debug'
 ]
 
 { #category : #initialization }

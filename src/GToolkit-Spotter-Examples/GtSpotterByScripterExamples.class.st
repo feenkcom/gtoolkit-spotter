@@ -65,68 +65,58 @@ GtSpotterByScripterExamples >> spotterElementOnStartSample [
 GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCandidate [
 	<gtExample>
 	| scripter actOnEvents actOn actOnHandler |
-
 	scripter := self spotterElementOnStartSample.
-	
+
 	actOnEvents := OrderedCollection new.
 	actOnHandler := GtSpotterByScripterExamplesActOnHandler new
-		actOnEvents: actOnEvents.
-		
+			actOnEvents: actOnEvents.
+
 	scripter element spotter announcer weak
 		when: GtSpotterObjectActOn
 		send: #onActed:
 		to: actOnHandler.
-	
-	scripter mouseMoveOver
-		id: GtSpotterCandidateElementId index: 1;
-		play.
 
-	scripter mouseMoveOver
-		id: GtSpotterCandidateElementId index: 1;
-		id: GtSpotterCandidateActOnButtonId;
-		play.
+	scripter
+		mouseMoveOverStep: [ :s | 
+			s
+				id: GtSpotterCandidateElementId index: 1 ].
 
-	scripter click
-		id: GtSpotterCandidateElementId index: 1;
-		id: GtSpotterCandidateActOnButtonId;
-		play.
+	scripter
+		mouseMoveOverStep: [ :s | 
+			s
+				id: GtSpotterCandidateElementId index: 1;
+				id: GtSpotterCandidateActOnButtonId ].
+
+	scripter
+		clickStep: [ :s | 
+			s
+				id: GtSpotterCandidateElementId index: 1;
+				id: GtSpotterCandidateActOnButtonId ].
 
 	self assert: actOnEvents size equals: 1.
-	
+
 	actOn := actOnEvents first.
 
 	self assert: actOn isActedUpon equals: true.
 	self assert: actOn spotterSearch title equals: 'Priority 10'.
 	self assert: actOn spotterStep equals: scripter element spotter steps first.
 	self assert: actOn rawObject equals: 10.
-	
+
 	self
 		assert: actOn objectToSend
-		equals: {
-			"raw object"
-			10 .
-			"step"
-			scripter element spotter steps first.
-			"search"
-			actOn spotterSearch }.
-	self
-		assert: actOn toolToSend class
-		equals: GtInspectorTool.
+		equals: {10.
+				scripter element spotter steps first.
+				actOn spotterSearch}.	"raw object"	"step"	"search"
+	self assert: actOn toolToSend class equals: GtInspectorTool.
 	self
 		assert: actOn toolToSend object
-		equals: {
-			"search"
-			actOn spotterSearch.
-			"step"
-			scripter element spotter steps first.
-			"raw object".
-			10.
-			"object to send"
-			{
-				10 .
+		equals: {actOn spotterSearch.
 				scripter element spotter steps first.
-				actOn spotterSearch } }.
-	
+				10.
+				{10.
+					scripter element spotter steps first.
+					actOn spotterSearch}}.	"search"	"step"	"raw object"	"object to send"
+
 	^ scripter
 ]
 
@@ -134,34 +124,36 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCandidate [
 GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCategory [
 	<gtExample>
 	| scripter actOnEvents actOn actOnHandler |
-
 	scripter := self spotterElementOnStartSample.
-	
+
 	actOnEvents := OrderedCollection new.
 	actOnHandler := GtSpotterByScripterExamplesActOnHandler new
-		actOnEvents: actOnEvents.
-		
+			actOnEvents: actOnEvents.
+
 	scripter element spotter announcer weak
 		when: GtSpotterCategoryActOn
 		send: #onActed:
 		to: actOnHandler.
-	
-	scripter mouseMoveOver
-		id: GtSpotterCategoryElementId index: 1;
-		play.
 
-	scripter mouseMoveOver
-		id: GtSpotterCategoryElementId index: 1;
-		id: GtSpotterCategoryActOnButtonId;
-		play.
+	scripter
+		mouseMoveOverStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 1 ].
 
-	scripter click
-		id: GtSpotterCategoryElementId index: 1;
-		id: GtSpotterCategoryActOnButtonId;
-		play.
+	scripter
+		mouseMoveOverStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 1;
+				id: GtSpotterCategoryActOnButtonId ].
+
+	scripter
+		clickStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 1;
+				id: GtSpotterCategoryActOnButtonId ].
 
 	self assert: actOnEvents size equals: 1.
-	
+
 	actOn := actOnEvents first.
 
 	self assert: actOn isActedUpon equals: true.
@@ -172,33 +164,19 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCategory [
 
 	self
 		assert: actOn objectToSend
-		equals: {
-			"raw category"
-			actOn rawCategory.
-			"step"
-			scripter element spotter steps first.
-			"search"
-			actOn spotterSearch }.
-	
-	self
-		assert: actOn toolToSend
-		class equals: GtInspectorTool.
+		equals: {actOn rawCategory.
+				scripter element spotter steps first.
+				actOn spotterSearch}.	"raw category"	"step"	"search"
+
+	self assert: actOn toolToSend class equals: GtInspectorTool.
 	self
 		assert: actOn toolToSend object
-		equals: {
-			"search"
-			actOn spotterSearch.
-			"step"
-			scripter element spotter steps first.
-			"raw category"
-			actOn rawCategory.
-			"category to send"
-			{
+		equals: {actOn spotterSearch.
+				scripter element spotter steps first.
 				actOn rawCategory.
-				scripter element spotter steps first .
-				actOn spotterSearch
-			}
-		}.
+				{actOn rawCategory.
+					scripter element spotter steps first.
+					actOn spotterSearch}}.	"search"	"step"	"raw category"	"category to send"
 
 	^ scripter
 ]
@@ -207,34 +185,36 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCategory [
 GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCandidateWithDefaultObjectActOn [
 	<gtExample>
 	| scripter actOnEvents actOn actOnHandler |
-
 	scripter := self spotterElementOnStartSample.
-	
+
 	actOnEvents := OrderedCollection new.
 	actOnHandler := GtSpotterByScripterExamplesActOnHandler new
-		actOnEvents: actOnEvents.
-		
+			actOnEvents: actOnEvents.
+
 	scripter element spotter announcer weak
 		when: GtSpotterObjectActOn
 		send: #onActed:
 		to: actOnHandler.
-	
-	scripter mouseMoveOver
-		id: GtSpotterCandidateElementId index: 2;
-		play.
 
-	scripter mouseMoveOver
-		id: GtSpotterCandidateElementId index: 2;
-		id: GtSpotterCandidateActOnButtonId;
-		play.
+	scripter
+		mouseMoveOverStep: [ :s | 
+			s
+				id: GtSpotterCandidateElementId index: 2 ].
 
-	scripter click
-		id: GtSpotterCandidateElementId index: 2;
-		id: GtSpotterCandidateActOnButtonId;
-		play.
+	scripter
+		mouseMoveOverStep: [ :s | 
+			s
+				id: GtSpotterCandidateElementId index: 2;
+				id: GtSpotterCandidateActOnButtonId ].
+
+	scripter
+		clickStep: [ :s | 
+			s
+				id: GtSpotterCandidateElementId index: 2;
+				id: GtSpotterCandidateActOnButtonId ].
 
 	self assert: actOnEvents size equals: 1.
-	
+
 	actOn := actOnEvents first.
 
 	self assert: actOn isActedUpon equals: true.
@@ -244,7 +224,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCandidateWi
 	self assert: actOn objectToSend equals: 20.
 	self assert: actOn toolToSend class equals: GtInspectorTool.
 	self assert: actOn toolToSend object equals: 20.
-	
+
 	^ scripter
 ]
 
@@ -252,34 +232,36 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCandidateWi
 GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCategoryWithDefaultCategoryActOn [
 	<gtExample>
 	| scripter actOnEvents actOn actOnHandler |
-
 	scripter := self spotterElementOnStartSample.
-	
+
 	actOnEvents := OrderedCollection new.
 	actOnHandler := GtSpotterByScripterExamplesActOnHandler new
-		actOnEvents: actOnEvents.
-		
+			actOnEvents: actOnEvents.
+
 	scripter element spotter announcer weak
 		when: GtSpotterCategoryActOn
 		send: #onActed:
 		to: actOnHandler.
-	
-	scripter mouseMoveOver
-		id: GtSpotterCategoryElementId index: 2;
-		play.
 
-	scripter mouseMoveOver
-		id: GtSpotterCategoryElementId index: 2;
-		id: GtSpotterCategoryActOnButtonId;
-		play.
+	scripter
+		mouseMoveOverStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 2 ].
 
-	scripter click
-		id: GtSpotterCategoryElementId index: 2;
-		id: GtSpotterCategoryActOnButtonId;
-		play.
+	scripter
+		mouseMoveOverStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 2;
+				id: GtSpotterCategoryActOnButtonId ].
+
+	scripter
+		clickStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 2;
+				id: GtSpotterCategoryActOnButtonId ].
 
 	self assert: actOnEvents size equals: 1.
-	
+
 	actOn := actOnEvents first.
 
 	self assert: actOn isActedUpon equals: true.
@@ -289,7 +271,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCategoryWit
 	self assert: actOn objectToSend equals: actOn rawCategory.
 	self assert: actOn toolToSend class equals: GtInspectorTool.
 	self assert: actOn toolToSend object equals: actOn rawCategory.
-	
+
 	^ scripter
 ]
 
@@ -297,22 +279,21 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCategoryWit
 GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckCandidates [
 	<gtExample>
 	| scripter |
-
 	scripter := self spotterElementOnStartSample.
 
-	scripter assert
-		id: GtSpotterCandidateElementId index: 1;
-		// BrLabel;
-		value: [ :aLabel | aLabel text asString ]
-		equals: '10';
-		play.
-		
-	scripter assert
-		id: GtSpotterCandidateElementId index: 2;
-		// BrLabel;
-		value: [ :aLabel | aLabel text asString ]
-		equals: '20';
-		play.
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterCandidateElementId index: 1;
+				// BrLabel;
+				value: [ :aLabel | aLabel text asString ] equals: '10' ].
+
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterCandidateElementId index: 2;
+				// BrLabel;
+				value: [ :aLabel | aLabel text asString ] equals: '20' ].
 
 	^ scripter
 ]
@@ -321,29 +302,28 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckCandidates [
 GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckCategories [
 	<gtExample>
 	| scripter |
-
 	scripter := self spotterElementOnStartSample.
 
-	scripter assert
-		id: GtSpotterCategoryElementId index: 1;
-		// BrLabel;
-		value: [ :aLabel | aLabel text asString ]
-		equals: 'Priority 10 (1 / 1)';
-		play.
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 1;
+				// BrLabel;
+				value: [ :aLabel | aLabel text asString ] equals: 'Priority 10 (1 / 1)' ].
 
-	scripter assert
-		id: GtSpotterCategoryElementId index: 2;
-		// BrLabel;
-		value: [ :aLabel | aLabel text asString ]
-		equals: 'Priority 20 (2 / 2)';
-		play.
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 2;
+				// BrLabel;
+				value: [ :aLabel | aLabel text asString ] equals: 'Priority 20 (2 / 2)' ].
 
-	scripter assert
-		id: GtSpotterCategoryElementId index: 3;
-		// BrLabel;
-		value: [ :aLabel | aLabel text asString ]
-		equals: 'Priority 30 (3 / 3)';
-		play.
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 3;
+				// BrLabel;
+				value: [ :aLabel | aLabel text asString ] equals: 'Priority 30 (3 / 3)' ].
 
 	^ scripter
 ]
@@ -352,32 +332,33 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckCategories [
 GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckSelection [
 	<gtExample>
 	| scripter |
-
 	scripter := self spotterElementOnStartSample.
 
-	scripter assert
-		id: GtSpotterCandidateElementId index: 1;
-		satisfies: [ :aCandidate |
-			aCandidate states hasState: BlElementState selected ];
-		play.
-		
-	scripter assert
-		id: GtSpotterCandidateElementId index: 1;
-		value: [ :aCandidate | aCandidate background ]
-			equals: ((Color fromHexString: #'69ABFD') alpha: 86 / 255.0) asBlBackground;
-		play.
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterCandidateElementId index: 1;
+				satisfies: [ :aCandidate | aCandidate states hasState: BlElementState selected ] ].
 
-	scripter assert
-		id: GtSpotterCandidateElementId index: 2;
-		satisfies: [ :aCandidate |
-			(aCandidate states hasState: BlElementState selected) not ];
-		play.
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterCandidateElementId index: 1;
+				value: [ :aCandidate | aCandidate background ]
+					equals: ((Color fromHexString: #'69ABFD') alpha: 86 / 255.0) asBlBackground ].
 
-	scripter assert
-		id: GtSpotterCandidateElementId index: 2;
-		value: [ :aCandidate | aCandidate background ]
-			equals: Color transparent asBlBackground;
-		play.
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterCandidateElementId index: 2;
+				satisfies: [ :aCandidate | (aCandidate states hasState: BlElementState selected) not ] ].
+
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterCandidateElementId index: 2;
+				value: [ :aCandidate | aCandidate background ]
+					equals: Color transparent asBlBackground ].
 
 	^ scripter
 ]
@@ -385,28 +366,27 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckSelection [
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartWithAPIHasPreview [
 	<gtExample>
-
 	| scripter |
 	scripter := self spotterElementOnStart: GtSpotterStartWithAPI new.
-	
-	scripter assert
-		id: GtSpotterCandidateElementId index: 1;
-		satisfies: [ :aCandidate |
-			aCandidate states hasState: BlElementState selected ];
-		play.
 
-	scripter assert
-		id: GtSpotterPreviewElementId index: 1;
-		satisfies: [ :aPreviewElement | 
-			aPreviewElement children size = 2 ];
-		play.
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterCandidateElementId index: 1;
+				satisfies: [ :aCandidate | aCandidate states hasState: BlElementState selected ] ].
 
-	scripter assert
-		id: GtSpotterPreviewElementId index: 1;
-		on: BrLabel index: 1;
-		satisfies: [ :aLabel | 
-			aLabel text asString = 'true' ];
-		play.
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterPreviewElementId index: 1;
+				satisfies: [ :aPreviewElement | aPreviewElement children size = 2 ] ].
+
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterPreviewElementId index: 1;
+				on: BrLabel index: 1;
+				satisfies: [ :aLabel | aLabel text asString = 'true' ] ].
 
 	^ scripter
 ]
@@ -415,17 +395,17 @@ GtSpotterByScripterExamples >> spotterElementOnStartWithAPIHasPreview [
 GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionInItemName [
 	<gtExample>
 	| scripter |
+	scripter := self
+			spotterElementOnStart: GtSpotterStartWithExceptionInItemName new.
 
-	scripter := self spotterElementOnStart: GtSpotterStartWithExceptionInItemName new.
-	
-	scripter assert
-		id: GtSpotterCandidateElementId index: 3;
-		// GtSpotterBrokenSearchElementId;
-		// BrLabel;
-		value: [ :aLabel | aLabel text asString ]
-		equals: 'ZeroDivide';
-		play.
-	
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterCandidateElementId index: 3;
+				// GtSpotterBrokenSearchElementId;
+				// BrLabel;
+				value: [ :aLabel | aLabel text asString ] equals: 'ZeroDivide' ].
+
 	^ scripter
 ]
 
@@ -433,51 +413,55 @@ GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionInItemName [
 GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionsInSearch [
 	<gtExample>
 	| scripter |
-
 	scripter := self spotterElementOnStart: GtSpotterStartWithExceptionInSearch new.
-	
-	scripter assert
-		id: GtSpotterCategoryElementId index: 1;
-		// BrLabel;
-		value: [ :aLabel | aLabel text asString ]
-			equals: 'Untitled (1 / 1)';
-		play.
-	
-	scripter assert
-		id: GtSpotterBrokenSearchElementId index: 1;
-		// BrLabel;
-		value: [ :aLabel | aLabel text asString ]
-			equals: [ AssertionFailure name, ': ', GtSpotterStartWithExceptionInSearch name ];
-		play.
-		
-	scripter assert
-		id: GtSpotterCategoryElementId index: 2;
-		// BrLabel;
-		value: [ :aLabel | aLabel text asString ]
-			equals: 'Search with error (1 / 1)';
-		play.
-	
-	scripter assert
-		id: GtSpotterBrokenSearchElementId index: 2;
-		// BrLabel;
-		value: [ :aLabel | aLabel text asString ]
-			equals: [ AssertionFailure name, ': ', GtSpotterStartWithExceptionInSearch name ];
-		play.
 
-	scripter assert
-		id: GtSpotterCategoryElementId index: 3;
-		// BrLabel;
-		value: [ :aLabel | aLabel text asString ]
-			equals: 'Search without return (1 / 1)';
-		play.
-	
-	scripter assert
-		id: GtSpotterBrokenSearchElementId index: 3;
-		// BrLabel;
-		value: [ :aLabel | aLabel text asString ]
-			equals: [ GtSpotterSearchWrongReturnError name];
-		play.
-		
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 1;
+				// BrLabel;
+				value: [ :aLabel | aLabel text asString ] equals: 'Untitled (1 / 1)' ].
+
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterBrokenSearchElementId index: 1;
+				// BrLabel;
+				value: [ :aLabel | aLabel text asString ]
+					equals: [ AssertionFailure name , ': ' , GtSpotterStartWithExceptionInSearch name ] ].
+
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 2;
+				// BrLabel;
+				value: [ :aLabel | aLabel text asString ]
+					equals: 'Search with error (1 / 1)' ].
+
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterBrokenSearchElementId index: 2;
+				// BrLabel;
+				value: [ :aLabel | aLabel text asString ]
+					equals: [ AssertionFailure name , ': ' , GtSpotterStartWithExceptionInSearch name ] ].
+
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 3;
+				// BrLabel;
+				value: [ :aLabel | aLabel text asString ]
+					equals: 'Search without return (1 / 1)' ].
+
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterBrokenSearchElementId index: 3;
+				// BrLabel;
+				value: [ :aLabel | aLabel text asString ]
+					equals: [ GtSpotterSearchWrongReturnError name ] ].
+
 	^ scripter
 ]
 
@@ -485,22 +469,22 @@ GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionsInSearch [
 GtSpotterByScripterExamples >> spotterElementOnStartWithNilItems [
 	<gtExample>
 	| scripter |
-	
 	scripter := self spotterElementOnStart: GtSpotterStartWithNilItems new.
 
-	scripter assert
-		id: GtSpotterCategoryElementId index: 1;
-		// BrLabel;
-		value: [ :aLabel | aLabel text asString ]
-			equals: 'Nil items (1 / 1)';
-		play.
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 1;
+				// BrLabel;
+				value: [ :aLabel | aLabel text asString ] equals: 'Nil items (1 / 1)' ].
 
-	scripter assert
-		id: GtSpotterBrokenSearchElementId index: 1;
-		// BrLabel;
-		value: [ :aLabel | aLabel text asString ]
-		equals: '#asAsyncStream was sent to nil';
-		play.
+	scripter
+		assertStep: [ :s | 
+			s
+				id: GtSpotterBrokenSearchElementId index: 1;
+				// BrLabel;
+				value: [ :aLabel | aLabel text asString ]
+					equals: '#asAsyncStream was sent to nil' ].
 
 	^ scripter
 ]

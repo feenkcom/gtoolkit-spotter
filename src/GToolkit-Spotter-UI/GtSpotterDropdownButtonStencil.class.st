@@ -12,7 +12,8 @@ Class {
 		'label',
 		'objectActOn',
 		'categoryActOn',
-		'sizeSelector'
+		'sizeSelector',
+		'aptitudeComputation'
 	],
 	#category : #'GToolkit-Spotter-UI-Stencils'
 }
@@ -24,6 +25,22 @@ GtSpotterDropdownButtonStencil >> actOn: aBlock [
 
 	self objectActOn: aBlock.
 	self categoryActOn: aBlock
+]
+
+{ #category : #'api - accessing' }
+GtSpotterDropdownButtonStencil >> aptitude [
+	<return: #BrAptitude>
+	^ aptitudeComputation value
+]
+
+{ #category : #'api - accessing' }
+GtSpotterDropdownButtonStencil >> aptitude: aBlock [
+	self assert: [ aBlock isNotNil ] description: [ 'Aptitude must be non-nil' ].
+	self
+		assert: [ (aBlock isKindOf: BrAptitude) not ]
+		description: [ 'Aptitude must be computed, not instantiated in advance' ].
+
+	aptitudeComputation := aBlock
 ]
 
 { #category : #accessing }
@@ -70,6 +87,45 @@ GtSpotterDropdownButtonStencil >> categoryActOn: aBlock [
 ]
 
 { #category : #'api - instantiation' }
+GtSpotterDropdownButtonStencil >> configureButtonWithIconLabelAndTooltip: aButton [
+	(self icon isNil and: [ self label isNil ])
+		ifTrue: [ aButton icon: BrGlamorousVectorIcons search.
+			self tooltip
+				ifNotNil: [ aButton label: self tooltip ]
+				ifNil: [ aButton label: 'Search' ].
+			self aptitude
+				ifNotNil: [ :anAptitude | aButton aptitude: anAptitude ]
+				ifNil: [ aButton aptitude: BrGlamorousButtonWithIconAptitude ].
+			^ aButton ].
+
+	(self icon isNil and: [ self label isNotNil ])
+		ifTrue: [ aButton label: self label.
+			self aptitude
+				ifNotNil: [ :anAptitude | aButton aptitude: anAptitude ]
+				ifNil: [ aButton aptitude: BrGlamorousButtonWithLabelAptitude ].
+			^ aButton ].
+
+	(self icon isNotNil and: [ self label isNil ])
+		ifTrue: [ aButton icon: self icon.
+			self tooltip
+				ifNotNil: [ aButton label: self tooltip ]
+				ifNil: [ aButton label: 'Search' ].
+			self aptitude
+				ifNotNil: [ :anAptitude | aButton aptitude: anAptitude ]
+				ifNil: [ aButton aptitude: BrGlamorousButtonWithIconAptitude ].
+			^ aButton ].
+
+	(self icon isNotNil and: [ self label isNotNil ])
+		ifTrue: [ aButton
+				icon: self icon;
+				label: self label.
+			self aptitude
+				ifNotNil: [ :anAptitude | aButton aptitude: anAptitude ]
+				ifNil: [ aButton aptitude: BrGlamorousButtonWithIconAndLabelAptitude ].
+			^ aButton ]
+]
+
+{ #category : #'api - instantiation' }
 GtSpotterDropdownButtonStencil >> create [
 	| aButton aSpotterElement |
 	aButton := self createButtonWithTooltip.
@@ -90,21 +146,12 @@ GtSpotterDropdownButtonStencil >> create [
 
 { #category : #'api - instantiation' }
 GtSpotterDropdownButtonStencil >> createBasicButton [
-
 	| aButton |
-	aButton := BrButton new icon: icon.
-	
-	aButton perform: self sizeSelector.
+	aButton := BrButton new.
 
-	self label
-		ifNotNil: [ 
-			aButton
-				label: self label;
-				aptitude: BrGlamorousButtonWithIconAndLabelAptitude ]
-		ifNil: [ 
-			aButton
-				label: self tooltip;
-				aptitude: BrGlamorousButtonWithIconAptitude ].
+	self configureButtonWithIconLabelAndTooltip: aButton.
+
+	aButton perform: self sizeSelector.
 
 	^ aButton
 ]
@@ -189,6 +236,7 @@ GtSpotterDropdownButtonStencil >> initialize [
 	icon := BrGlamorousVectorIcons search.
 	tooltip := 'Search'.
 	self beNormalSize.
+	aptitudeComputation := [ nil ].
 	
 	"Extent should be a computation block, otherwise the size in the stencil
 	would only change after the recreation of the stencil.

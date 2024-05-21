@@ -14,7 +14,8 @@ SettingNode >> gtSpotterForSettingsFor: aSearch [
 
 { #category : #'*GToolkit-Spotter-Extensions' }
 SettingNode >> spotterLabel [
-
+	<gtPharoPatch: #Pharo>
+	
 	| label |
 	label := self settingDeclaration label.
 	^ self parentNode ifNil: [ label ] ifNotNil: [ self parentNode spotterLabel , '/' , label ]

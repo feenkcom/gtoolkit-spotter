@@ -163,8 +163,9 @@ GtSpotterDropdownButtonStencil >> createButtonWithTooltip [
 	aButton := self createBasicButton.
 
 	self label ifNotNil: [ 
-		aButton addAptitude:
-			(BrGlamorousWithLabelTooltipAptitude new text: self tooltip) ].
+		self tooltip ifNotNil: [ 
+			aButton addAptitude:
+				(BrGlamorousWithLabelTooltipAptitude new text: self tooltip) ] ].
 
 	^ aButton
 ]

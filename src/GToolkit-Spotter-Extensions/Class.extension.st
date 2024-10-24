@@ -24,12 +24,14 @@ Class >> gtSpotterClassMethodSourceCodesFor: aSearch [
 { #category : #'*GToolkit-Spotter-Extensions' }
 Class >> gtSpotterClassMethodsFor: aSearch [
 	<gtSearch>
-	^ aSearch list
+	^ aSearch explicit
 		priority: 15;
 		title: 'Class methods';
-		items: [ self classSide methods ];
-		itemName: [ :method | method selector ];
-		filterBySubstring
+		search: [ :aContext | 
+			GtPharoIndex current
+				asyncImplementersForWord: aContext searchQuery
+				convertUsing: [ :each | self classSide compiledMethodAt: each ifAbsent: [  ] ] ];
+		itemName: [ :method | method selector ]
 ]
 
 { #category : #'*GToolkit-Spotter-Extensions' }
@@ -51,12 +53,14 @@ Class >> gtSpotterMethodSourceCodesFor: aSearch [
 { #category : #'*GToolkit-Spotter-Extensions' }
 Class >> gtSpotterMethodsFor: aSearch [
 	<gtSearch>
-	^ aSearch list
+	^ aSearch explicit
 		priority: 10;
 		title: 'Instance methods';
-		items: [ self methods ];
-		itemName: [ :method | method selector ];
-		filterBySubstring
+		search: [ :aContext | 
+			GtPharoIndex current
+				asyncImplementersForWord: aContext searchQuery
+				convertUsing: [ :each | self compiledMethodAt: each ifAbsent: [  ] ] ];
+		itemName: [ :method | method selector ]
 ]
 
 { #category : #'*GToolkit-Spotter-Extensions' }
@@ -92,16 +96,22 @@ Class >> gtSpotterSuperClassMethodSourceCodesFor: aSearch [
 { #category : #'*GToolkit-Spotter-Extensions' }
 Class >> gtSpotterSuperClassMethodsFor: aSearch [
 	<gtSearch>
-	| superclasses |
-	superclasses := self class withAllSuperclasses select: #isMeta.
-	^ aSearch list
+	^ aSearch explicit
 		priority: 16;
 		title: 'Super class methods';
-		items: [ self classSide allMethods
-				select: [ :each | 
-					(each methodClass = self classSide) not
-						& (superclasses includes: each methodClass) ] ];
-		filterBySubstring
+		search: [ :aContext | 
+			GtPharoIndex current
+				asyncImplementersForWord: aContext searchQuery
+				convertUsing: [ :each | 
+						self classSide superclass
+							ifNotNil: [ :aClass |
+								aClass isClassSide
+									ifTrue: [ (aClass lookupSelector: each)
+										ifNotNil: [ :aMethod | 
+											aMethod methodClass isClassSide
+												ifTrue: [ aMethod ]
+												ifFalse: [ nil ] ] ]
+									ifFalse: [ nil ] ] ] ]
 ]
 
 { #category : #'*GToolkit-Spotter-Extensions' }
@@ -125,9 +135,14 @@ Class >> gtSpotterSuperMethodSourceCodesFor: aSearch [
 { #category : #'*GToolkit-Spotter-Extensions' }
 Class >> gtSpotterSuperMethodsFor: aSearch [
 	<gtSearch>
-	^ aSearch list
+	^ aSearch explicit
 		priority: 11;
 		title: 'Super instance methods';
-		items: [ self allMethods reject: [ :each | each methodClass = self ] ];
-		filterBySubstring
+		search: [ :aContext | 
+			GtPharoIndex current
+				asyncImplementersForWord: aContext searchQuery
+				convertUsing: [ :each | 
+						self superclass
+							ifNotNil: [ :aClass | aClass lookupSelector: each ]
+							ifNil: [ nil ] ] ]
 ]

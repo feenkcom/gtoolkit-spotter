@@ -9,6 +9,7 @@ Object >> gtActionSearchFor: anAction [
 
 	^ anAction explicit
 		stencil: [ GtSpotterDropdownButtonStencil new
+			id: GtSpotterObjectActionSearchId;
 			actOn: [ :anActOnEvent :anItem :theButton | 
 				anActOnEvent beActed.
 				theButton phlow spawnTool: anActOnEvent toolToSend ];

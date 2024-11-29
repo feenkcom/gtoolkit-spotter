@@ -16,6 +16,11 @@ GtSpotterStart >> concreteMethodInContext: aContext [
 	classAndSelectorStrings := (aContext searchQuery trimBoth splitOn: '>>')
 		collect: [ :each | each trimBoth ].
 	
+	" Jenkins reports include `Object.method` strings."
+	classAndSelectorStrings size = 2 ifFalse: [
+		classAndSelectorStrings := (aContext searchQuery trimBoth splitOn: '.')
+			collect: [ :each | each trimBoth ] ].
+	
 	" check preconditions "
 	classAndSelectorStrings size = 2
 		ifFalse: [ ^ AsyncOptionalValue none  ].

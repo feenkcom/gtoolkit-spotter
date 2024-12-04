@@ -359,9 +359,7 @@ GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
 	aSpotterElement
 		when: GtPhlowObjectToSpawn
 		do: [ :anEvent |
-			aButton fireEvent: (GtPhlowObjectToSpawn new
-				object: anEvent object;
-				sourceElement: anEvent target) ].
+			aButton phlow spawnPreviousEvent: anEvent ].
 
 	(aSpotterElement addShortcut: (BlShortcutWithAction new
 		overrideChildren: true;

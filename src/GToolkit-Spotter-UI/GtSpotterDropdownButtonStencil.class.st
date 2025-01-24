@@ -127,25 +127,7 @@ GtSpotterDropdownButtonStencil >> configureButtonWithIconLabelAndTooltip: aButto
 
 { #category : #'api - instantiation' }
 GtSpotterDropdownButtonStencil >> create [
-	| aButton |
-	aButton := self createButtonWithTooltip.
-	aButton
-		id: id;
-		addAptitude: ((BrGlamorousWithDropdownAptitude
-				handle: [ self createHandleButton ]
-				content: [ self spotterElementFor: aButton ]
-				aptitudeDo: [ :aDropdownLook | aDropdownLook background: BrGlamorousColors secondaryHeaderBackgroundColor ])
-				preferredExtent: self extent 
-					+ (0@24); "Handle height - this fixed value is fine
-					for now as we place dropdowns either below and above 
-					the handle element. If we include also left and right
-					dropdown placements, we will have to rework this part."
-				whenResizedDo: [ :anEvent | 
-					anEvent resizeTarget ifNotNil: [ :anElement |
-						anElement fireEvent: (GtSpotterResizedEvent new
-							extent: anEvent extent;
-							resizeTarget: anElement) ] ]).
-	^ aButton
+	^ self createNew
 ]
 
 { #category : #'api - instantiation' }
@@ -183,6 +165,50 @@ GtSpotterDropdownButtonStencil >> createHandleButton [
 	aButton aptitude - BrGlamorousButtonWithLabelTooltipAptitude
 	- BrGlamorousButtonExteriorAptitude.
 
+	^ aButton
+]
+
+{ #category : #'api - instantiation' }
+GtSpotterDropdownButtonStencil >> createNew [
+	| aButton |
+	aButton := self createButtonWithTooltip.
+	aButton
+		id: id;
+		addAptitude: (BrWithExplicitDropdownAptitude
+				handle: [ self createHandleButton ]
+				content: [ (self spotterElementFor: aButton)
+						addAptitude: (BrMenuResizableAptitude new
+								whenResizedDo: [ :anEvent | 
+									anEvent resizeTarget
+										ifNotNil: [ :anElement | 
+											anElement
+												fireEvent: (GtSpotterResizedEvent new
+														extent: anEvent extent;
+														resizeTarget: anElement) ] ]) ]
+				containerDo: [ :anElement | anElement background: BrGlamorousColors secondaryHeaderBackgroundColor ]).
+	^ aButton
+]
+
+{ #category : #'api - instantiation' }
+GtSpotterDropdownButtonStencil >> createOld [
+	| aButton |
+	aButton := self createButtonWithTooltip.
+	aButton
+		id: id;
+		addAptitude: ((BrGlamorousWithDropdownAptitude
+				handle: [ self createHandleButton ]
+				content: [ self spotterElementFor: aButton ]
+				aptitudeDo: [ :aDropdownLook | aDropdownLook background: BrGlamorousColors secondaryHeaderBackgroundColor ])
+				preferredExtent: self extent 
+					+ (0@24); "Handle height - this fixed value is fine
+					for now as we place dropdowns either below and above 
+					the handle element. If we include also left and right
+					dropdown placements, we will have to rework this part."
+				whenResizedDo: [ :anEvent | 
+					anEvent resizeTarget ifNotNil: [ :anElement |
+						anElement fireEvent: (GtSpotterResizedEvent new
+							extent: anEvent extent;
+							resizeTarget: anElement) ] ]).
 	^ aButton
 ]
 

@@ -127,7 +127,7 @@ GtSpotterDropdownButtonStencil >> configureButtonWithIconLabelAndTooltip: aButto
 
 { #category : #'api - instantiation' }
 GtSpotterDropdownButtonStencil >> create [
-	^ self createNew
+	^ self createOld
 ]
 
 { #category : #'api - instantiation' }

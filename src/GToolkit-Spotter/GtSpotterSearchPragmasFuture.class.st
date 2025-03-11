@@ -18,6 +18,11 @@ GtSpotterSearchPragmasFuture class >> forOriginObject: anObject [
 	^ self new forOriginObject: anObject
 ]
 
+{ #category : #testing }
+GtSpotterSearchPragmasFuture class >> hasSpotterSearch: anObject [
+	^ Pragma hasNamed: self pragmaSymbol from: anObject class to: Object
+]
+
 { #category : #accessing }
 GtSpotterSearchPragmasFuture class >> pragmaSymbol [
 	<gtExample>

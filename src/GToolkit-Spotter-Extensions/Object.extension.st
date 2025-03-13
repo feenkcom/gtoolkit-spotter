@@ -4,7 +4,7 @@ Extension { #name : #Object }
 Object >> gtActionSearchFor: anAction [
 	<gtAction>
 
-	(GtSpotterUnorderedSearchesStream forOriginObject: self) isNotEmpty wait
+	(GtSpotterSearchPragmasFuture hasSpotterSearch: self)
 		ifFalse: [ ^ anAction noAction ].
 
 	^ anAction explicit

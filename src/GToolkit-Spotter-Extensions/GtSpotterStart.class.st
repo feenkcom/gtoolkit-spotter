@@ -156,7 +156,7 @@ GtSpotterStart >> gtSearchImplementorsFor: aSearch [
 			GtPharoIndex current asyncImplementersForWord: aContext searchQuery ];
 		sendCategory: [ :aCategory :aStep :thisSearch | 
 			(GtSearchCustomScopedMethodsFilter new
-				filterLabel: aStep searchQuery printString, ' word implementors';
+				filterLabel: aStep searchQuery printString, ' implementors';
 				defaultFilterScope: aCategory items  asyncSimilarCopy) ];
 		"keyBinding: $m meta;"
 		yourself

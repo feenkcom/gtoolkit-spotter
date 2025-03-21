@@ -367,7 +367,7 @@ GtSpotterDropdownButtonStencil >> spotterElementDo: aOneArgBlock [
 ]
 
 { #category : #'api - instantiation' }
-GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
+GtSpotterDropdownButtonStencil >> spotterElementFor: anAnchorButton [
 	| aSpotterModel aSpotterElement aHandler |
 
 	aSpotterModel := GtSpotter on: self object.
@@ -385,17 +385,17 @@ GtSpotterDropdownButtonStencil >> spotterElementFor: aButton [
 	aSpotterElement
 		when: GtPhlowObjectToSpawn
 		do: [ :anEvent |
-			aButton phlow spawnPreviousEvent: anEvent ].
+			anAnchorButton phlow spawnPreviousEvent: anEvent ].
 
 	(aSpotterElement addShortcut: (BlShortcutWithAction new
 		overrideChildren: true;
 		combination: BlKeyCombination escape;
-		action: [ aButton dispatchEvent: BrDropdownHideWish new ])).
+		action: [ anAnchorButton dispatchEvent: (BrDropdownHideWish new anchor: anAnchorButton) ])).
 
 	aHandler := GtSpotterDropdownButtonActOnHandler new 
 		spotterModel: aSpotterModel;
 		spotterElement: aSpotterElement;
-		button: aButton;
+		button: anAnchorButton;
 		objectActOn: objectActOn;
 		categoryActOn: categoryActOn;
 		install.

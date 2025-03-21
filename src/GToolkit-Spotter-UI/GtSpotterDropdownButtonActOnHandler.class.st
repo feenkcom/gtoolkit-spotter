@@ -55,10 +55,22 @@ GtSpotterDropdownButtonActOnHandler >> hideDropdown [
 	"hide Spotter in the next Space iteration 
 	to be able to open a new World tab if necessary"
 
-	self button enqueueTask: (BlTaskAction new
-		action: [ self button 
-			fireEvent: (BrDropdownHideWish new 
-				anchor: self button) ])
+	BlTaskAction
+		enqueueElement: self button
+		action: [
+			self button isAttachedToSceneGraph
+				ifTrue: [ self button fireEvent: (BrDropdownHideWish new anchor: self button) ]
+				ifFalse: [  
+					"Since the anchor button is removed from the space,
+					we enqueue the hide-wish task to wait for the moment
+					the anchor button is displayed again.
+					
+					See https://github.com/feenkcom/gtoolkit/issues/4375
+					The question is whether we should support something like forced-hide-event
+					that would remove the temporary hidden dropdown and cleaned its caches."
+					BlTaskAction
+						enqueueElement: self button
+						action: [ self button fireEvent: (BrDropdownHideWish new anchor: self button) ] ] ]
 ]
 
 { #category : #initialization }

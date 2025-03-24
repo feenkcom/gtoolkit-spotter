@@ -144,26 +144,24 @@ GtSpotterDropdownButtonStencil >> createBasicButton [
 
 { #category : #'api - instantiation' }
 GtSpotterDropdownButtonStencil >> createButtonWithTooltip [
-
 	| aButton |
 	aButton := self createBasicButton.
 
-	self label ifNotNil: [ 
-		self tooltip ifNotNil: [ 
-			aButton addAptitude:
-				(BrGlamorousWithLabelTooltipAptitude new text: self tooltip) ] ].
+	self label
+		ifNotNil: [ self tooltip
+				ifNotNil: [ aButton
+						addAptitude: (BrGlamorousWithExplicitTooltipAptitude text: self tooltip) ] ].
 
 	^ aButton
 ]
 
 { #category : #'api - instantiation' }
 GtSpotterDropdownButtonStencil >> createHandleButton [
-
 	| aButton |
 	aButton := self createBasicButton.
 
-	aButton aptitude - BrGlamorousButtonWithLabelTooltipAptitude
-	- BrGlamorousButtonExteriorAptitude.
+	aButton aptitude - BrGlamorousButtonWithLabelTooltipAptitude2
+		- BrGlamorousButtonExteriorAptitude.
 
 	^ aButton
 ]

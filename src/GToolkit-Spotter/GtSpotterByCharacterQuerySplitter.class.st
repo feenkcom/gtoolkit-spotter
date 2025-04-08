@@ -13,6 +13,11 @@ GtSpotterByCharacterQuerySplitter >> defaultWordSeparators [
 		with: Character space
 ]
 
+{ #category : #printing }
+GtSpotterByCharacterQuerySplitter >> description [
+	^ 'Split by: ', wordSeparators printString
+]
+
 { #category : #initialization }
 GtSpotterByCharacterQuerySplitter >> initialize [
 	super initialize.

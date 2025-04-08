@@ -5,36 +5,16 @@ Class {
 	#classTraits : 'TGtSpotterFilter classTrait',
 	#instVars : [
 		'itemStringComputation',
-		'querySplitter',
-		'caseComparison'
-	],
-	#classVars : [
-		'DEFAULT_CASE_COMPARISON',
-		'DEFAULT_QUERY_SPLITTER'
+		'filterConfiguration'
 	],
 	#category : #'GToolkit-Spotter-Filters'
 }
 
-{ #category : #configuring }
-GtSpotterSubstringsFilter class >> defaultCaseComparison [
-	DEFAULT_CASE_COMPARISON ifNil: [
-		DEFAULT_CASE_COMPARISON := GtSpotterCaseInsensitiveComparison new]
-]
-
-{ #category : #configuring }
-GtSpotterSubstringsFilter class >> defaultCaseComparison: aCaseComparison [
-	DEFAULT_CASE_COMPARISON := aCaseComparison
-]
-
-{ #category : #configuring }
-GtSpotterSubstringsFilter class >> defaultQuerySplitter [
-	DEFAULT_QUERY_SPLITTER ifNil: [
-		DEFAULT_QUERY_SPLITTER := GtSpotterByCharacterQuerySplitter new]
-]
-
-{ #category : #configuring }
-GtSpotterSubstringsFilter class >> defaultQuerySplitter: aQuerySplitter [
-	DEFAULT_QUERY_SPLITTER := aQuerySplitter
+{ #category : #configuration }
+GtSpotterSubstringsFilter >> applyConfigurationWithId: aFilterConfigurationId inContext: aSpotterContext [
+	aSpotterContext filtersConfiguration
+		applyConfigurationWithId: aFilterConfigurationId 
+		onFilter: self
 ]
 
 { #category : #evaluating }
@@ -52,17 +32,22 @@ GtSpotterSubstringsFilter >> applyInScope: aStream context: aSpotterContext [
 
 { #category : #configuration }
 GtSpotterSubstringsFilter >> beCaseSensitive [
-	caseComparison := GtSpotterCaseSensitiveComparison new
+	filterConfiguration beCaseSensitive
 ]
 
 { #category : #configuration }
 GtSpotterSubstringsFilter >> beCaseSensitiveByCapitalization [
-	caseComparison := GtSpotterCaseSensitiveByCapitalizationComparison new
+	filterConfiguration beCaseSensitiveByCapitalization
+]
+
+{ #category : #accessing }
+GtSpotterSubstringsFilter >> caseComparison [
+	^ filterConfiguration caseComparison
 ]
 
 { #category : #accessing }
 GtSpotterSubstringsFilter >> caseComparison: aCaseComparison [
-	caseComparison := aCaseComparison
+	filterConfiguration caseComparison: aCaseComparison
 ]
 
 { #category : #evaluating }
@@ -75,7 +60,12 @@ GtSpotterSubstringsFilter >> configureFilterStream: aFilterStream inContext: aSp
 		wordsFromQueryString: aSpotterContext searchQuery.
 	aFilterStream searchWords: searchWords.
 
-	caseComparison applyOnFilterStream: aFilterStream.
+	self caseComparison applyOnFilterStream: aFilterStream.
+]
+
+{ #category : #accessing }
+GtSpotterSubstringsFilter >> defaultConfiguration [
+	^ GtSpotterSubstringsFilterConfiguration new 
 ]
 
 { #category : #initialization }
@@ -83,8 +73,7 @@ GtSpotterSubstringsFilter >> initialize [
 	super initialize.
 	
 	itemStringComputation := [ :anObject | anObject printString ].
-	querySplitter := self class defaultQuerySplitter.
-	caseComparison := self class defaultCaseComparison.
+	filterConfiguration := self defaultConfiguration.
 ]
 
 { #category : #accessing }
@@ -100,28 +89,27 @@ GtSpotterSubstringsFilter >> itemStringComputation [
 
 { #category : #accessing }
 GtSpotterSubstringsFilter >> querySplitter [
-	^ querySplitter
+	^ filterConfiguration querySplitter
 ]
 
 { #category : #accessing }
 GtSpotterSubstringsFilter >> querySplitter: aQuerySplitter [
-	querySplitter := aQuerySplitter
+	filterConfiguration querySplitter: aQuerySplitter
 ]
 
 { #category : #configuration }
 GtSpotterSubstringsFilter >> withCapitalizationSplitter [
-	querySplitter := GtSpotterByCapitalizationQuerySplitter new.
+	filterConfiguration withCapitalizationSplitter
 ]
 
 { #category : #configuration }
 GtSpotterSubstringsFilter >> withCharacterSplitter [
-	querySplitter := GtSpotterByCharacterQuerySplitter new.
+	filterConfiguration withCharacterSplitter
 ]
 
 { #category : #configuration }
 GtSpotterSubstringsFilter >> withCharacterSplitterBy: aCollectionOfCharacters [
-	querySplitter := GtSpotterByCharacterQuerySplitter new
-		wordSeparators: aCollectionOfCharacters.
+	filterConfiguration withCharacterSplitterBy: aCollectionOfCharacters
 ]
 
 { #category : #utils }

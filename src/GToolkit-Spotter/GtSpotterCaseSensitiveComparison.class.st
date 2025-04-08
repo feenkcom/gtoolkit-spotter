@@ -8,3 +8,8 @@ Class {
 GtSpotterCaseSensitiveComparison >> applyOnFilterStream: aFilterStream [
 	aFilterStream beCaseSensitive
 ]
+
+{ #category : #printing }
+GtSpotterCaseSensitiveComparison >> description [ 
+	^ 'Case Sensitive'
+]

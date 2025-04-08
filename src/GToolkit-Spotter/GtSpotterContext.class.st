@@ -7,6 +7,11 @@ Class {
 	#category : #'GToolkit-Spotter-Model'
 }
 
+{ #category : #accessing }
+GtSpotterContext >> filtersConfiguration [
+	^ GtSpotterFiltersConfiguration default
+]
+
 { #category : #initialization }
 GtSpotterContext >> initialize [
 	super initialize.

@@ -42,24 +42,18 @@ GtSpotterListSearch >> filterBySubstring: aBlock [
 
 { #category : #accessing }
 GtSpotterListSearch >> filterBySubstrings [
-	self filterBySubstringsWith: [:aFilter| "Use default configuration"]
+	self filterBySubstringsWith: [:aFilter| aFilter ]
 ]
 
 { #category : #accessing }
 GtSpotterListSearch >> filterBySubstringsWith: aBlock [
-	| substringsFilter |
-	substringsFilter := GtSpotterSubstringsFilter new
-		itemString: [ :anObject | (self itemNameFor: anObject) asString ].
-	aBlock value: substringsFilter.
-	self filter: substringsFilter
-]
 
-{ #category : #accessing }
-GtSpotterListSearch >> filterBySubstringsWithClassSearchSettings [
-	self filterBySubstringsWith: [ :aSearchFilter |
-		aSearchFilter 
-			withCapitalizationSplitter;
-			beCaseSensitiveByCapitalization ]
+	self filter: [ :aSpotterContext |
+		| substringsFilter |
+		substringsFilter := GtSpotterSubstringsFilter new
+			itemString: [ :anObject | (self itemNameFor: anObject) asString ].
+		aBlock cull: substringsFilter cull: aSpotterContext.
+		substringsFilter ]
 ]
 
 { #category : #initialization }

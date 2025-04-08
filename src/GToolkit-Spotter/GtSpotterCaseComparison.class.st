@@ -8,3 +8,8 @@ Class {
 GtSpotterCaseComparison >> applyOnFilterStream: aFilterStream [
 	self subclassResponsibility
 ]
+
+{ #category : #printing }
+GtSpotterCaseComparison >> description [ 
+	^ self class name
+]

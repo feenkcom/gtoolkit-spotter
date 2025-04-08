@@ -4,7 +4,12 @@ Class {
 	#category : #'GToolkit-Spotter-Model'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #printing }
+GtSpotterByCapitalizationQuerySplitter >> description [
+	^ 'Split by capitalization'
+]
+
+{ #category : #api }
 GtSpotterByCapitalizationQuerySplitter >> splitQueryString: aString [
 	| myWords |
 	

@@ -4,7 +4,12 @@ Class {
 	#category : #'GToolkit-Spotter-Model'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #api }
 GtSpotterCaseSensitiveByCapitalizationComparison >> applyOnFilterStream: aFilterStream [
 	aFilterStream beCaseSensitiveByCapitalization
+]
+
+{ #category : #printing }
+GtSpotterCaseSensitiveByCapitalizationComparison >> description [ 
+	^ 'Case Sensitive by Capitalization'
 ]

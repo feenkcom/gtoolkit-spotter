@@ -33,6 +33,22 @@ GtSpotterQuerySplitterExamples >> splitEmptyQuery [
 ]
 
 { #category : #examples }
+GtSpotterQuerySplitterExamples >> splitQueryWithCapitalizedWords [
+	<gtExample>
+	self 
+		assertSplitOf: 'Word'
+		equals: #(Word).
+]
+
+{ #category : #examples }
+GtSpotterQuerySplitterExamples >> splitQueryWithConsecutiveUpperCaseLettersOnly [
+	<gtExample>
+	^ self 
+		assertSplitOf: 'ABCD'
+		equals: #(ABCD).
+]
+
+{ #category : #examples }
 GtSpotterQuerySplitterExamples >> splitQueryWithMultipleWords [
 	<gtExample>
 	self 

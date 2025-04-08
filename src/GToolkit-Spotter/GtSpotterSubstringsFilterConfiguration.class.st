@@ -43,6 +43,11 @@ GtSpotterSubstringsFilterConfiguration >> applyOnFilter: aSearchFilter [
 ]
 
 { #category : #configuration }
+GtSpotterSubstringsFilterConfiguration >> beCaseInsensitive [
+	caseComparison := GtSpotterCaseInsensitiveComparison new
+]
+
+{ #category : #configuration }
 GtSpotterSubstringsFilterConfiguration >> beCaseSensitive [
 	caseComparison := GtSpotterCaseSensitiveComparison new
 ]

@@ -40,6 +40,22 @@ GtSpotterListSearch >> filterBySubstring: aBlock [
 	self filter: (GtSpotterSubstringFilter new itemString: aBlock)
 ]
 
+{ #category : #accessing }
+GtSpotterListSearch >> filterBySubstrings [
+	self filterBySubstringsWith: [:aFilter| aFilter ]
+]
+
+{ #category : #accessing }
+GtSpotterListSearch >> filterBySubstringsWith: aBlock [
+
+	self filter: [ :aSpotterContext |
+		| substringsFilter |
+		substringsFilter := GtSpotterSubstringsFilter new
+			itemString: [ :anObject | (self itemNameFor: anObject) asString ].
+		aBlock cull: substringsFilter cull: aSpotterContext.
+		substringsFilter ]
+]
+
 { #category : #initialization }
 GtSpotterListSearch >> initialize [
 	super initialize.

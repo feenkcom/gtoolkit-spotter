@@ -89,9 +89,29 @@ GtSpotterStart >> gtSearchForClassesFor: aSearch [
 	^ aSearch explicit
 		priority: 10;
 		title: 'Classes';
-		search: [ :aContext | GtPharoIndex current asyncClassesForWord: aContext searchQuery ];
+		search: [ :aContext | 
+			GtPharoIndex current asyncClassesForWord: aContext searchQuery ];
 		"itemIcon: #systemIcon;"
 		"keyBinding: $b meta;"
+		yourself
+]
+
+{ #category : #searches }
+GtSpotterStart >> gtSearchForClassesV2For: aSearch [
+	"<gtSearch>"
+	
+	^ aSearch list
+		priority: 10;
+		title: 'Classes (v2)';
+		items: [ SystemNavigation default allClassesAndTraits ];
+		itemName: [ :aClass | aClass name ];
+		filterBySubstringsWith: [ :aSearchFilter :aSpotterContext |
+			aSearchFilter 
+				withCapitalizationSplitter;
+				beCaseSensitiveByCapitalization;
+				applyConfigurationWithId: #classSearch 
+					inContext: aSpotterContext ];
+		wantsToDisplayOnEmptyQuery: false;
 		yourself
 ]
 

@@ -13,7 +13,8 @@ Class {
 		'objectActOn',
 		'categoryActOn',
 		'sizeSelector',
-		'aptitudeComputation'
+		'aptitudeComputation',
+		'escapeActOn'
 	],
 	#category : #'GToolkit-Spotter-UI-Stencils'
 }
@@ -211,6 +212,14 @@ GtSpotterDropdownButtonStencil >> createOld [
 ]
 
 { #category : #'api - accessing' }
+GtSpotterDropdownButtonStencil >> escapeActOn: aBlock [
+	"Set a block that is executed when a user press escape and a hide wish is dispatched.
+	The escape block receives an anchor button."
+
+	escapeActOn := aBlock
+]
+
+{ #category : #'api - accessing' }
 GtSpotterDropdownButtonStencil >> extent [
 	<return: #Point>
 
@@ -388,7 +397,10 @@ GtSpotterDropdownButtonStencil >> spotterElementFor: anAnchorButton [
 	(aSpotterElement addShortcut: (BlShortcutWithAction new
 		overrideChildren: true;
 		combination: BlKeyCombination escape;
-		action: [ anAnchorButton dispatchEvent: (BrDropdownHideWish new anchor: anAnchorButton) ])).
+		action: [ 
+			anAnchorButton dispatchEvent: (BrDropdownHideWish new 
+				anchor: anAnchorButton).
+			escapeActOn ifNotNil: [ :aBlock | aBlock cull: anAnchorButton ] ])).
 
 	aHandler := GtSpotterDropdownButtonActOnHandler new 
 		spotterModel: aSpotterModel;

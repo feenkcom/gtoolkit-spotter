@@ -130,3 +130,33 @@ GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatc
 		in: #('StringOne' 'AnotherTwo' ) 
 		equals: #()
 ]
+
+{ #category : #examples }
+GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatchWithDigit_queryOneDigitOneLetterInTwoWords [
+	<gtExample>
+	
+	self 
+		assertQuerySearches: #('1o' '1O')
+		in: #('String21One' 'Ano1therTwo' ) 
+		equals: #('String21One').
+		
+	self 
+		assertQuerySearch: '1O'
+		in: #('Ano1therO' 'String21One' 'NoMatch') 
+		equals: #('Ano1therO' 'String21One').
+		
+	self 
+		assertQuerySearch: '1o'
+		in: #('Ano1therO' 'String21One' 'NoMatch') 
+		equals: #('String21One')
+]
+
+{ #category : #examples }
+GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatchWithDigit_queryOnlyOneDigit [
+	<gtExample>
+	
+	self 
+		assertQuerySearches: #('1' '2')
+		in: #('String21One' 'AnotherTwo' ) 
+		equals: #('String21One')
+]

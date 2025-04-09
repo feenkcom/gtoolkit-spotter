@@ -88,7 +88,7 @@ GtSpotterStart >> gtSearchForClassesFor: aSearch [
 	
 	^ aSearch list
 		priority: 10;
-		title: 'Classes (v2)';
+		title: 'Classes';
 		items: [ SystemNavigation default allClassesAndTraits ];
 		itemName: [ :aClass | aClass name ];
 		filterBySubstringsWith: [ :aSearchFilter :aSpotterContext |

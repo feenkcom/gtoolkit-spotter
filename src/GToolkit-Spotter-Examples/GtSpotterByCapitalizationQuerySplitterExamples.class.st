@@ -20,17 +20,20 @@ GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithConsecutiveUpper
 { #category : #examples }
 GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithConsecutiveUpperCaseLettersAndOneLowercaseInTheMiddle [
 	<gtExample>
-	^ self 
+	self 
 		assertSplitOf: 'ABcDE'
 		equals: #(ABc DE).
+	self 
+		assertSplitOf: 'ABcDEfGh'
+		equals: #(ABc DEf Gh).
 ]
 
 { #category : #examples }
-GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithConsecutiveUpperCaseLettersOnly [
+GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithInitialLowercaseAndFollowingUppercase [
 	<gtExample>
 	^ self 
-		assertSplitOf: 'ABCD'
-		equals: #(ABCD).
+		assertSplitOf: 'oneTwo'
+		equals: #(one Two).
 ]
 
 { #category : #examples }
@@ -55,7 +58,11 @@ GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithMultipleCapitali
 { #category : #examples }
 GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithTwoCapitalizedWordsWithNumbers [
 	<gtExample>
-	^ self 
+	self 
 		assertSplitOf: 'One111Two22'
 		equals: #(One111 Two22).
+		
+	self 
+		assertSplitOf: 'one111Two22'
+		equals: #(one111 Two22).
 ]

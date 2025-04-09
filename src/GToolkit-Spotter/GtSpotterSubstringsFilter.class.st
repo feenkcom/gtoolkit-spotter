@@ -31,6 +31,11 @@ GtSpotterSubstringsFilter >> applyInScope: aStream context: aSpotterContext [
 ]
 
 { #category : #configuration }
+GtSpotterSubstringsFilter >> beCaseInsensitive [
+	filterConfiguration beCaseInsensitive
+]
+
+{ #category : #configuration }
 GtSpotterSubstringsFilter >> beCaseSensitive [
 	filterConfiguration beCaseSensitive
 ]

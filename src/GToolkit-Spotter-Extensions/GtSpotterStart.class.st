@@ -93,7 +93,7 @@ GtSpotterStart >> gtSearchForClassesFor: aSearch [
 		itemName: [ :aClass | aClass name ];
 		filterBySubstringsWith: [ :aSearchFilter :aSpotterContext |
 			aSearchFilter 
-				withCapitalizationSplitter;
+				withWordsSplitter;
 				beCaseSensitiveByCapitalization;
 				applyConfigurationWithId: #classSearch 
 					inContext: aSpotterContext ];

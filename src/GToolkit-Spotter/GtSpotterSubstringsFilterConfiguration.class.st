@@ -99,11 +99,6 @@ GtSpotterSubstringsFilterConfiguration >> querySplitter: anObject [
 ]
 
 { #category : #configuration }
-GtSpotterSubstringsFilterConfiguration >> withCapitalizationSplitter [
-	querySplitter := GtSpotterByCapitalizationQuerySplitter new.
-]
-
-{ #category : #configuration }
 GtSpotterSubstringsFilterConfiguration >> withCharacterSplitter [
 	querySplitter := GtSpotterByCharacterQuerySplitter new.
 ]
@@ -112,4 +107,9 @@ GtSpotterSubstringsFilterConfiguration >> withCharacterSplitter [
 GtSpotterSubstringsFilterConfiguration >> withCharacterSplitterBy: aCollectionOfCharacters [
 	querySplitter := GtSpotterByCharacterQuerySplitter new
 		wordSeparators: aCollectionOfCharacters.
+]
+
+{ #category : #configuration }
+GtSpotterSubstringsFilterConfiguration >> withWordsSplitter [
+	querySplitter := GtSpotterByWordsQuerySplitter new.
 ]

@@ -1,18 +1,18 @@
 Class {
-	#name : #GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples,
+	#name : #GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples,
 	#superclass : #GtSpotterCustomSubstringsFilterStreamExamples,
 	#category : #'GToolkit-Spotter-Examples-Examples'
 }
 
 { #category : #utils }
-GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> configureSpotterFilter: aSpotterFilter [
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> configureSpotterFilter: aSpotterFilter [
 	aSpotterFilter
-		withCapitalizationSplitter;
+		withWordsSplitter;
 		beCaseSensitiveByCapitalization.
 ]
 
 { #category : #examples }
-GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatchBeginningOfWord_capitalizedQuery [
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchBeginningOfWord_capitalizedQuery [
 	<gtExample>
 	
 	self 
@@ -22,7 +22,7 @@ GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatc
 ]
 
 { #category : #examples }
-GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatchBeginningOfWord_lowercaseQuery [
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchBeginningOfWord_lowercaseQuery [
 	<gtExample>
 	
 	self 
@@ -32,7 +32,7 @@ GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatc
 ]
 
 { #category : #examples }
-GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatchBeginningOfWord_upperCaseQuery [
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchBeginningOfWord_upperCaseQuery [
 	<gtExample>
 	
 	self 
@@ -42,7 +42,7 @@ GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatc
 ]
 
 { #category : #examples }
-GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatchBetweenTwoWords_queryWithOneMiddleUppercaseCharacter [
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchBetweenTwoWords_queryWithOneMiddleUppercaseCharacter [
 	<gtExample>
 	
 	self 
@@ -52,7 +52,7 @@ GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatc
 ]
 
 { #category : #examples }
-GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatchBetweenTwoWords_queryWithOnlyLowercaseCharacters [
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchBetweenTwoWords_queryWithOnlyLowercaseCharacters [
 	<gtExample>
 	
 	self 
@@ -62,7 +62,7 @@ GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatc
 ]
 
 { #category : #examples }
-GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatchBetweenTwoWords_queryWithTwoLowercaseWords [
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchBetweenTwoWords_queryWithTwoLowercaseWords [
 	<gtExample>
 	
 	self 
@@ -72,7 +72,7 @@ GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatc
 ]
 
 { #category : #examples }
-GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatchBetweenTwoWords_queryWithTwoUppercaseCharacters [
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchBetweenTwoWords_queryWithTwoUppercaseCharacters [
 	<gtExample>
 	
 	self 
@@ -82,7 +82,7 @@ GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatc
 ]
 
 { #category : #examples }
-GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatchEndOfWord_capitalizedQuery [
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchEndOfWord_capitalizedQuery [
 	<gtExample>
 	
 	self 
@@ -92,7 +92,7 @@ GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatc
 ]
 
 { #category : #examples }
-GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatchEndOfWord_lowercaseQuery [
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchEndOfWord_lowercaseQuery [
 	<gtExample>
 	
 	self 
@@ -102,7 +102,7 @@ GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatc
 ]
 
 { #category : #examples }
-GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatchInsideWord_capitalizedQuery [
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchInsideWord_capitalizedQuery [
 	<gtExample>
 	
 	self 
@@ -112,7 +112,7 @@ GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatc
 ]
 
 { #category : #examples }
-GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatchInsideWord_lowercaseQuery [
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchInsideWord_lowercaseQuery [
 	<gtExample>
 	
 	self 
@@ -122,7 +122,7 @@ GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatc
 ]
 
 { #category : #examples }
-GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatchInsideWord_uppercaseQuery [
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchInsideWord_uppercaseQuery [
 	<gtExample>
 	
 	self 
@@ -132,7 +132,7 @@ GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatc
 ]
 
 { #category : #examples }
-GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatchWithDigit_queryOneDigitOneLetterInTwoWords [
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchWithDigit_queryOneDigitOneLetterInTwoWords [
 	<gtExample>
 	
 	self 
@@ -152,7 +152,7 @@ GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatc
 ]
 
 { #category : #examples }
-GtSpotterSubstringsCaseCapitalizationAndSplitterFilterStreamExamples >> testMatchWithDigit_queryOnlyOneDigit [
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchWithDigit_queryOnlyOneDigit [
 	<gtExample>
 	
 	self 

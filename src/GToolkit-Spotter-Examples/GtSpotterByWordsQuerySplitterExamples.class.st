@@ -1,16 +1,16 @@
 Class {
-	#name : #GtSpotterByCapitalizationQuerySplitterExamples,
+	#name : #GtSpotterByWordsQuerySplitterExamples,
 	#superclass : #GtSpotterQuerySplitterExamples,
 	#category : #'GToolkit-Spotter-Examples-Examples'
 }
 
 { #category : #utils }
-GtSpotterByCapitalizationQuerySplitterExamples >> createQuerySplitter [
-	^ GtSpotterByCapitalizationQuerySplitter new
+GtSpotterByWordsQuerySplitterExamples >> createQuerySplitter [
+	^ GtSpotterByWordsQuerySplitter new
 ]
 
 { #category : #examples }
-GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithConsecutiveUpperCaseLettersAndOneLowercaseAtEnd [
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithConsecutiveUpperCaseLettersAndOneLowercaseAtEnd [
 	<gtExample>
 	^ self 
 		assertSplitOf: 'ABCDe'
@@ -18,7 +18,7 @@ GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithConsecutiveUpper
 ]
 
 { #category : #examples }
-GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithConsecutiveUpperCaseLettersAndOneLowercaseInTheMiddle [
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithConsecutiveUpperCaseLettersAndOneLowercaseInTheMiddle [
 	<gtExample>
 	self 
 		assertSplitOf: 'ABcDE'
@@ -29,7 +29,7 @@ GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithConsecutiveUpper
 ]
 
 { #category : #examples }
-GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithInitialLowercaseAndFollowingUppercase [
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithInitialLowercaseAndFollowingUppercase [
 	<gtExample>
 	^ self 
 		assertSplitOf: 'oneTwo'
@@ -37,7 +37,7 @@ GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithInitialLowercase
 ]
 
 { #category : #examples }
-GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithMixedCapitalizationAndMultipleWords [
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithMixedCapitalizationAndMultipleWords [
 	<gtExample>
 	^ self 
 		assertSplitOf: 'one111 Two22Three AB'
@@ -45,7 +45,7 @@ GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithMixedCapitalizat
 ]
 
 { #category : #examples }
-GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithMultipleCapitalizedWords [
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithMultipleCapitalizedWords [
 	<gtExample>
 	self 
 		assertSplitOf: 'OneTwo'
@@ -56,7 +56,7 @@ GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithMultipleCapitali
 ]
 
 { #category : #examples }
-GtSpotterByCapitalizationQuerySplitterExamples >> splitQueryWithTwoCapitalizedWordsWithNumbers [
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithTwoCapitalizedWordsWithNumbers [
 	<gtExample>
 	self 
 		assertSplitOf: 'One111Two22'

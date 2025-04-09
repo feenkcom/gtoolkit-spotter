@@ -8,3 +8,11 @@ Class {
 GtSpotterByCharacterQuerySplitterExamples >> createQuerySplitter [
 	^ GtSpotterByCharacterQuerySplitter new
 ]
+
+{ #category : #examples }
+GtSpotterByCharacterQuerySplitterExamples >> splitQueryWithNonDigitCharacters [
+	<gtExample>
+	self 
+		assertSplitOf: 'One***Two---Three!@$Four'
+		equals: #('One***Two---Three!@$Four').
+]

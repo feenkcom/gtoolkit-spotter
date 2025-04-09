@@ -170,3 +170,13 @@ GtSpotterSubstringsCaseInsensitiveByCharacterSplitterFilterStreamExamples >> tes
 		in: #('String21One' 'AnotherTwo' ) 
 		equals: #('String21One')
 ]
+
+{ #category : #examples }
+GtSpotterSubstringsCaseInsensitiveByCharacterSplitterFilterStreamExamples >> testMatch_queryNonLetterCharacters [
+	<gtExample>
+	
+	self 
+		assertQuerySearches: #('Str!@#$One')
+		in: #('String21One' 'AnotherTwo' ) 
+		equals: #()
+]

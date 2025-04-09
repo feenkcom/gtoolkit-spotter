@@ -14,7 +14,7 @@ GtSpotterByWordsQuerySplitterExamples >> splitQueryWithConsecutiveUpperCaseLette
 	<gtExample>
 	^ self 
 		assertSplitOf: 'ABCDe'
-		equals: #(ABCDe).
+		equals: #('ABCDe').
 ]
 
 { #category : #examples }
@@ -22,10 +22,10 @@ GtSpotterByWordsQuerySplitterExamples >> splitQueryWithConsecutiveUpperCaseLette
 	<gtExample>
 	self 
 		assertSplitOf: 'ABcDE'
-		equals: #(ABc DE).
+		equals: #('ABc' 'DE').
 	self 
 		assertSplitOf: 'ABcDEfGh'
-		equals: #(ABc DEf Gh).
+		equals: #('ABc' 'DEf' 'Gh').
 ]
 
 { #category : #examples }
@@ -33,7 +33,7 @@ GtSpotterByWordsQuerySplitterExamples >> splitQueryWithInitialLowercaseAndFollow
 	<gtExample>
 	^ self 
 		assertSplitOf: 'oneTwo'
-		equals: #(one Two).
+		equals: #('one' 'Two').
 ]
 
 { #category : #examples }
@@ -41,7 +41,7 @@ GtSpotterByWordsQuerySplitterExamples >> splitQueryWithMixedCapitalizationAndMul
 	<gtExample>
 	^ self 
 		assertSplitOf: 'one111 Two22Three AB'
-		equals: #(one111 Two22 Three AB).
+		equals: #('one111' 'Two22' 'Three' 'AB').
 ]
 
 { #category : #examples }
@@ -49,10 +49,18 @@ GtSpotterByWordsQuerySplitterExamples >> splitQueryWithMultipleCapitalizedWords 
 	<gtExample>
 	self 
 		assertSplitOf: 'OneTwo'
-		equals: #(One Two).
+		equals: #('One' 'Two').
 	self 
 		assertSplitOf: 'OneTwoThree'
-		equals: #(One Two Three).
+		equals: #('One' 'Two' 'Three').
+]
+
+{ #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithNonDigitCharacters [
+	<gtExample>
+	self 
+		assertSplitOf: 'One***Two---Three!@$Four'
+		equals: #('One' 'Two' 'Three' 'Four').
 ]
 
 { #category : #examples }
@@ -60,9 +68,9 @@ GtSpotterByWordsQuerySplitterExamples >> splitQueryWithTwoCapitalizedWordsWithNu
 	<gtExample>
 	self 
 		assertSplitOf: 'One111Two22'
-		equals: #(One111 Two22).
+		equals: #('One111' 'Two22').
 		
 	self 
 		assertSplitOf: 'one111Two22'
-		equals: #(one111 Two22).
+		equals: #('one111' 'Two22').
 ]

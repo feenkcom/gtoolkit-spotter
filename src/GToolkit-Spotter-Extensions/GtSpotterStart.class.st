@@ -86,20 +86,6 @@ GtSpotterStart >> gtSearchConcreteMethodFor: aSearch [
 GtSpotterStart >> gtSearchForClassesFor: aSearch [
 	<gtSearch>
 	
-	^ aSearch explicit
-		priority: 10;
-		title: 'Classes';
-		search: [ :aContext | 
-			GtPharoIndex current asyncClassesForWord: aContext searchQuery ];
-		"itemIcon: #systemIcon;"
-		"keyBinding: $b meta;"
-		yourself
-]
-
-{ #category : #searches }
-GtSpotterStart >> gtSearchForClassesV2For: aSearch [
-	"<gtSearch>"
-	
 	^ aSearch list
 		priority: 10;
 		title: 'Classes (v2)';

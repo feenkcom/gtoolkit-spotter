@@ -31,6 +31,11 @@ GtSpotterSubstringsFilter >> applyInScope: aStream context: aSpotterContext [
 ]
 
 { #category : #configuration }
+GtSpotterSubstringsFilter >> beCaseInsensitive [
+	filterConfiguration beCaseInsensitive
+]
+
+{ #category : #configuration }
 GtSpotterSubstringsFilter >> beCaseSensitive [
 	filterConfiguration beCaseSensitive
 ]
@@ -98,11 +103,6 @@ GtSpotterSubstringsFilter >> querySplitter: aQuerySplitter [
 ]
 
 { #category : #configuration }
-GtSpotterSubstringsFilter >> withCapitalizationSplitter [
-	filterConfiguration withCapitalizationSplitter
-]
-
-{ #category : #configuration }
 GtSpotterSubstringsFilter >> withCharacterSplitter [
 	filterConfiguration withCharacterSplitter
 ]
@@ -110,6 +110,11 @@ GtSpotterSubstringsFilter >> withCharacterSplitter [
 { #category : #configuration }
 GtSpotterSubstringsFilter >> withCharacterSplitterBy: aCollectionOfCharacters [
 	filterConfiguration withCharacterSplitterBy: aCollectionOfCharacters
+]
+
+{ #category : #configuration }
+GtSpotterSubstringsFilter >> withWordsSplitter [
+	filterConfiguration withWordsSplitter
 ]
 
 { #category : #utils }

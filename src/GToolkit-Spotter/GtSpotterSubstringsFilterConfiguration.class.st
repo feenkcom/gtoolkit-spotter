@@ -14,7 +14,7 @@ Class {
 
 { #category : #conf }
 GtSpotterSubstringsFilterConfiguration class >> defaultCaseComparison [
-	DEFAULT_CASE_COMPARISON ifNil: [
+	^ DEFAULT_CASE_COMPARISON ifNil: [
 		DEFAULT_CASE_COMPARISON := GtSpotterCaseInsensitiveComparison new]
 ]
 
@@ -25,7 +25,7 @@ GtSpotterSubstringsFilterConfiguration class >> defaultCaseComparison: aCaseComp
 
 { #category : #conf }
 GtSpotterSubstringsFilterConfiguration class >> defaultQuerySplitter [
-	DEFAULT_QUERY_SPLITTER ifNil: [
+	^ DEFAULT_QUERY_SPLITTER ifNil: [
 		DEFAULT_QUERY_SPLITTER := GtSpotterByCharacterQuerySplitter new]
 ]
 
@@ -99,11 +99,6 @@ GtSpotterSubstringsFilterConfiguration >> querySplitter: anObject [
 ]
 
 { #category : #configuration }
-GtSpotterSubstringsFilterConfiguration >> withCapitalizationSplitter [
-	querySplitter := GtSpotterByCapitalizationQuerySplitter new.
-]
-
-{ #category : #configuration }
 GtSpotterSubstringsFilterConfiguration >> withCharacterSplitter [
 	querySplitter := GtSpotterByCharacterQuerySplitter new.
 ]
@@ -112,4 +107,9 @@ GtSpotterSubstringsFilterConfiguration >> withCharacterSplitter [
 GtSpotterSubstringsFilterConfiguration >> withCharacterSplitterBy: aCollectionOfCharacters [
 	querySplitter := GtSpotterByCharacterQuerySplitter new
 		wordSeparators: aCollectionOfCharacters.
+]
+
+{ #category : #configuration }
+GtSpotterSubstringsFilterConfiguration >> withWordsSplitter [
+	querySplitter := GtSpotterByWordsQuerySplitter new.
 ]

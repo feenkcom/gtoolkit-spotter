@@ -37,7 +37,7 @@ GtSpotterQuerySplitterExamples >> splitQueryWithCapitalizedWords [
 	<gtExample>
 	self 
 		assertSplitOf: 'Word'
-		equals: #(Word).
+		equals: #('Word').
 ]
 
 { #category : #examples }
@@ -45,7 +45,7 @@ GtSpotterQuerySplitterExamples >> splitQueryWithConsecutiveUpperCaseLettersOnly 
 	<gtExample>
 	^ self 
 		assertSplitOf: 'ABCD'
-		equals: #(ABCD).
+		equals: #('ABCD').
 ]
 
 { #category : #examples }
@@ -53,10 +53,10 @@ GtSpotterQuerySplitterExamples >> splitQueryWithMultipleWords [
 	<gtExample>
 	self 
 		assertSplitOf: 'word1 word2'
-		equals: #(word1 word2).
+		equals: #('word1' 'word2').
 	self 
 		assertSplitOf: 'word1 word2 word3'
-		equals: #(word1 word2 word3).
+		equals: #('word1' 'word2' 'word3').
 ]
 
 { #category : #examples }
@@ -64,10 +64,10 @@ GtSpotterQuerySplitterExamples >> splitQueryWithMultipleWordsSeparatedBySpaces [
 	<gtExample>
 	self 
 		assertSplitOf: 'one two'
-		equals: #(one two).
+		equals: #('one' 'two').
 	self 
 		assertSplitOf: 'one two three'
-		equals: #(one two three).
+		equals: #('one' 'two' 'three').
 ]
 
 { #category : #examples }
@@ -75,7 +75,7 @@ GtSpotterQuerySplitterExamples >> splitQueryWithOneWord [
 	<gtExample>
 	^ self 
 		assertSplitOf: 'word'
-		equals: #(word)
+		equals: #('word')
 ]
 
 { #category : #examples }
@@ -83,7 +83,7 @@ GtSpotterQuerySplitterExamples >> splitQueryWithOneWordWithNumber [
 	<gtExample>
 	^ self 
 		assertSplitOf: 'word123'
-		equals: #(word123)
+		equals: #('word123')
 ]
 
 { #category : #examples }
@@ -91,11 +91,11 @@ GtSpotterQuerySplitterExamples >> splitQueryWithPrefixSuffixSpaces [
 	<gtExample>
 	self 
 		assertSplitOf: ' word'
-		equals: #(word).
+		equals: #('word').
 	self 
 		assertSplitOf: 'word '
-		equals: #(word).
+		equals: #('word').
 	self 
 		assertSplitOf: '  word   '
-		equals: #(word)
+		equals: #('word')
 ]

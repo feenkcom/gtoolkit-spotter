@@ -1,16 +1,16 @@
 Class {
-	#name : #GtSpotterByCapitalizationQuerySplitter,
+	#name : #GtSpotterByWordsQuerySplitter,
 	#superclass : #GtSpotterQuerySplitter,
 	#category : #'GToolkit-Spotter-Model'
 }
 
 { #category : #printing }
-GtSpotterByCapitalizationQuerySplitter >> description [
+GtSpotterByWordsQuerySplitter >> description [
 	^ 'Split by capitalization'
 ]
 
 { #category : #api }
-GtSpotterByCapitalizationQuerySplitter >> splitQueryString: aString [
+GtSpotterByWordsQuerySplitter >> splitQueryString: aString [
 	| myWords |
 	
 	myWords := OrderedCollection new.
@@ -24,7 +24,7 @@ GtSpotterByCapitalizationQuerySplitter >> splitQueryString: aString [
 ]
 
 { #category : #utils }
-GtSpotterByCapitalizationQuerySplitter >> wordsIn: aSymbol do: aBlock minSize: anInteger includeSubStrings: aBoolean [
+GtSpotterByWordsQuerySplitter >> wordsIn: aSymbol do: aBlock minSize: anInteger includeSubStrings: aBoolean [
 	| start end char size  |
 	size := aSymbol size.
 	start := 1.

@@ -85,15 +85,8 @@ GtSpotterStart >> gtSearchConcreteMethodFor: aSearch [
 { #category : #searches }
 GtSpotterStart >> gtSearchForClassesFor: aSearch [
 	<gtSearch>
-	
-	^ aSearch explicit
-		priority: 10;
-		title: 'Classes';
-		search: [ :aContext | 
-			GtPharoIndex current asyncClassesForWord: aContext searchQuery ];
-		yourself
 		
-	"^ aSearch list
+	^ aSearch list
 		priority: 10;
 		title: 'Classes';
 		items: [ SystemNavigation default allClassesAndTraits ];
@@ -105,7 +98,7 @@ GtSpotterStart >> gtSearchForClassesFor: aSearch [
 				applyConfigurationWithId: #classSearch 
 					inContext: aSpotterContext ];
 		wantsToDisplayOnEmptyQuery: false;
-		yourself"
+		yourself
 ]
 
 { #category : #searches }

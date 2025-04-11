@@ -52,10 +52,11 @@ GtStreamingSpotterStepElement >> createGroup: eachSearchAndResults [
 
 	aSearch isBroken ifFalse: [
 		aPreloadIndex := 0.
-		aStreamItemsProvider
+		
+		self enqueueTask: (BlPromiseTask new promise: (aStreamItemsProvider
 			preloadUntilFoundSuchThat: [ :each | 
 				aPreloadIndex := aPreloadIndex + 1.
-				aPreloadIndex = aSearch itemsLimit ] ].
+				aPreloadIndex = aSearch itemsLimit ])) ].
 
 	^ aGroup
 ]
@@ -244,9 +245,10 @@ GtStreamingSpotterStepElement >> tryToPreloadTheRest [
 						
 						aGroup := anItemsProviderToFinish userData at: #group.
 
-						(anItemsProviderToFinish preloadUntilFoundSuchThat: [ :each | false ])
+						self enqueueTask: (BlPromiseTask new promise: ((anItemsProviderToFinish preloadUntilFoundSuchThat: [ :each | false ])
 							then: [ loadingItemsProviders lock: [ :aSet | aSet remove: anItemsProviderToFinish ifAbsent: [  ] ] ]
-							otherwise: [ loadingItemsProviders lock: [ :aSet | aSet remove: anItemsProviderToFinish ifAbsent: [  ] ] ] ] ] ] ] ] ].
+							otherwise: [ loadingItemsProviders lock: [ :aSet | aSet remove: anItemsProviderToFinish ifAbsent: [  ] ] ]))
+					] ] ] ] ] ].
 ]
 
 { #category : #'api - spotter step' }

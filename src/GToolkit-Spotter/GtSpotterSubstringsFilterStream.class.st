@@ -76,6 +76,32 @@ GtSpotterSubstringsFilterStream >> initialize [
 	itemStringBlock := [ :anObject | anObject printString ]
 ]
 
+{ #category : #'private - filter' }
+GtSpotterSubstringsFilterStream >> isString: aString exactMatchForIndexes: resultIndexes [ 
+	"A heuristic to determine if the match is an exact one"
+	
+	"The first match should be at the beginning of the word.
+	If it is not we do not have an exact match"
+	| currentPosition |
+	resultIndexes first = 1 ifFalse: [ ^ false ].
+
+	"We handle the case when we have only one query word that matches precisely"
+	(searchWords size = 1 and: [ 
+		aString size = searchWords first size ]) 
+			ifTrue: [ ^ true ].
+			
+	currentPosition := 1.
+	resultIndexes withIndexDo: [ :aResultMatchIndex :anArrayIndex |
+	 	(aResultMatchIndex = currentPosition) 
+	 		ifTrue: [
+	 			currentPosition := currentPosition 
+	 				+ (searchWords at: anArrayIndex) size ] 
+	 		ifFalse: [ 
+	 			^ false] ].
+	 
+	^ currentPosition = (aString size + 1)
+]
+
 { #category : #'api - configuration' }
 GtSpotterSubstringsFilterStream >> itemString: aBlock [
 	itemStringBlock := aBlock
@@ -194,9 +220,7 @@ GtSpotterSubstringsFilterStream >> searchSubstringIn: aString [
 				caseSensitiveByCapitalization and: [
 					aQueryWord first isUppercase ] ]) ].
 		
-	(searchWords size = 1 and: [ 
-		resultIndexes first = 1 and: [ 
-			aString size = searchWords first size ] ])
+	(self isString: aString exactMatchForIndexes: resultIndexes )
 		ifTrue: [ 
 			^ GtSpotterSubstringFilterExactMatch new index: resultIndexes first ].
 		

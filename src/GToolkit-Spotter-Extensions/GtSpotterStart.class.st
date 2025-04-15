@@ -123,7 +123,7 @@ GtSpotterStart >> gtSearchForIcebergRepositoriesFor: aSearch [
 		title: 'Iceberg Repositories';
 		items: [ IceRepository registry ];
 		itemName: [ :aRepository | aRepository name ];
-		filterBySubstring;
+		filterBySubstrings;
 		wantsToDisplayOnEmptyQuery: false
 ]
 

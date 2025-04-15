@@ -170,3 +170,38 @@ GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> test
 		in: #('String21One' 'AnotherTwo' ) 
 		equals: #('String21One')
 ]
+
+{ #category : #examples }
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testPositionOfMatch_oneQueryWord [
+	<gtExample>
+	| filterStream |
+	
+	filterStream := self 
+		createFilterWithQuerySearch: 'stringone' 
+		in: #('stringone' 'stringonetwo' 'twostringone' )  asAsyncStream .
+		
+	self assert: (filterStream searchSubstringIn: 'stringone') isExact.
+	self assert: (filterStream searchSubstringIn: 'stringonet') isPrefix.
+	self assert: (filterStream searchSubstringIn: 'twostringone') isMiddle.
+	self 
+		assert: (filterStream searchSubstringIn: 'three') class 
+		equals: GtSpotterSubstringFilterNoMatch.
+]
+
+{ #category : #examples }
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testPositionOfMatch_twoQueryWord [
+	<gtExample>
+	| filterStream |
+	
+	filterStream := self 
+		createFilterWithQuerySearch: 'StringOne' 
+		in: #('StringOne' 'StringSomethingOne' 'StringOneTwo' 'TwoStringOne' )  asAsyncStream .
+		
+	self assert: (filterStream searchSubstringIn: 'StringOne') isExact.
+	self assert: (filterStream searchSubstringIn: 'StringSomethingOne') isPrefix.
+	self assert: (filterStream searchSubstringIn: 'StringOneTw') isPrefix.
+	self assert: (filterStream searchSubstringIn: 'TwoStringOne') isMiddle.
+	self 
+		assert: (filterStream searchSubstringIn: 'StringTwo') class 
+		equals: GtSpotterSubstringFilterNoMatch.
+]

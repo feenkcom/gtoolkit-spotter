@@ -176,7 +176,7 @@ GtSpotterDropdownButtonStencil >> createNew [
 		addAptitude: (BrGlamorousWithExplicitDropdownAptitude
 				handle: [ self createHandleButton ]
 				content: [ (self spotterElementFor: aButton)
-						addAptitude: (BrGlamorousMenuResizableAptitude new
+						addAptitude: (BrGlamorousPopoverResizableAptitude new
 								whenResizedDo: [ :anEvent | 
 									anEvent resizeTarget
 										ifNotNil: [ :anElement | 

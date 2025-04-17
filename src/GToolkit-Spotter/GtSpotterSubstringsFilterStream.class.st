@@ -83,6 +83,7 @@ GtSpotterSubstringsFilterStream >> isString: aString exactMatchForIndexes: resul
 	"The first match should be at the beginning of the word.
 	If it is not we do not have an exact match"
 	| currentPosition |
+	resultIndexes ifEmpty: [ ^ false ].
 	resultIndexes first = 1 ifFalse: [ ^ false ].
 
 	"We handle the case when we have only one query word that matches precisely"

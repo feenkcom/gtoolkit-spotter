@@ -30,14 +30,14 @@ GtSpotterByScripterExamples >> elementOnStartWithExceptionsInSearch [
 { #category : #accessing }
 GtSpotterByScripterExamples >> scripter [
 	<gtExample>
-	
+	<return: #BlScripter>
 	^ BlScripter new
 ]
 
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStart [
 	<gtExample>
-
+	<return: #BlScripter>
 	^ self spotterElementOnStart: GtWorldSpotterSearchStart new
 ]
 
@@ -57,13 +57,14 @@ GtSpotterByScripterExamples >> spotterElementOnStart: aStartObject [
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartSample [
 	<gtExample>
-
+	<return: #BlScripter>
 	^ self spotterElementOnStart: GtSpotterStartSample new
 ]
 
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCandidate [
 	<gtExample>
+	<return: #BlScripter>
 	| scripter actOnEvents actOn actOnHandler |
 	scripter := self spotterElementOnStartSample.
 
@@ -76,10 +77,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCandidate [
 		send: #onActed:
 		to: actOnHandler.
 
-	scripter
-		mouseMoveOverStep: [ :s | 
-			s
-				id: GtSpotterCandidateElementId index: 1 ].
+	scripter mouseMoveOverStep: [ :s | s id: GtSpotterCandidateElementId index: 1 ].
 
 	scripter
 		mouseMoveOverStep: [ :s | 
@@ -123,6 +121,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCandidate [
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCategory [
 	<gtExample>
+	<return: #BlScripter>
 	| scripter actOnEvents actOn actOnHandler |
 	scripter := self spotterElementOnStartSample.
 
@@ -135,10 +134,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCategory [
 		send: #onActed:
 		to: actOnHandler.
 
-	scripter
-		mouseMoveOverStep: [ :s | 
-			s
-				id: GtSpotterCategoryElementId index: 1 ].
+	scripter mouseMoveOverStep: [ :s | s id: GtSpotterCategoryElementId index: 1 ].
 
 	scripter
 		mouseMoveOverStep: [ :s | 
@@ -184,6 +180,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnFirstCategory [
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCandidateWithDefaultObjectActOn [
 	<gtExample>
+	<return: #BlScripter>
 	| scripter actOnEvents actOn actOnHandler |
 	scripter := self spotterElementOnStartSample.
 
@@ -196,10 +193,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCandidateWi
 		send: #onActed:
 		to: actOnHandler.
 
-	scripter
-		mouseMoveOverStep: [ :s | 
-			s
-				id: GtSpotterCandidateElementId index: 2 ].
+	scripter mouseMoveOverStep: [ :s | s id: GtSpotterCandidateElementId index: 2 ].
 
 	scripter
 		mouseMoveOverStep: [ :s | 
@@ -231,6 +225,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCandidateWi
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCategoryWithDefaultCategoryActOn [
 	<gtExample>
+	<return: #BlScripter>
 	| scripter actOnEvents actOn actOnHandler |
 	scripter := self spotterElementOnStartSample.
 
@@ -243,10 +238,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCategoryWit
 		send: #onActed:
 		to: actOnHandler.
 
-	scripter
-		mouseMoveOverStep: [ :s | 
-			s
-				id: GtSpotterCategoryElementId index: 2 ].
+	scripter mouseMoveOverStep: [ :s | s id: GtSpotterCategoryElementId index: 2 ].
 
 	scripter
 		mouseMoveOverStep: [ :s | 
@@ -278,6 +270,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleActOnSecondCategoryWit
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckCandidates [
 	<gtExample>
+	<return: #BlScripter>
 	| scripter |
 	scripter := self spotterElementOnStartSample.
 
@@ -301,6 +294,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckCandidates [
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckCategories [
 	<gtExample>
+	<return: #BlScripter>
 	| scripter |
 	scripter := self spotterElementOnStartSample.
 
@@ -331,6 +325,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckCategories [
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckSelection [
 	<gtExample>
+	<return: #BlScripter>
 	| scripter |
 	scripter := self spotterElementOnStartSample.
 
@@ -366,6 +361,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckSelection [
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartWithAPIHasPreview [
 	<gtExample>
+	<return: #BlScripter>
 	| scripter |
 	scripter := self spotterElementOnStart: GtSpotterStartWithAPI new.
 
@@ -394,6 +390,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartWithAPIHasPreview [
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionInItemName [
 	<gtExample>
+	<return: #BlScripter>
 	| scripter |
 	scripter := self
 			spotterElementOnStart: GtSpotterStartWithExceptionInItemName new.
@@ -412,6 +409,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionInItemName [
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionsInSearch [
 	<gtExample>
+	<return: #BlScripter>
 	| scripter |
 	scripter := self spotterElementOnStart: GtSpotterStartWithExceptionInSearch new.
 
@@ -468,6 +466,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionsInSearch [
 { #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStartWithNilItems [
 	<gtExample>
+	<return: #BlScripter>
 	| scripter |
 	scripter := self spotterElementOnStart: GtSpotterStartWithNilItems new.
 

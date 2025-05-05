@@ -49,64 +49,64 @@ GtSpotterCustomSubstringsFilterStreamExamples >> createFilterWithQuerySearch: aQ
 { #category : #examples }
 GtSpotterCustomSubstringsFilterStreamExamples >> testExactFullMatch [
 	<gtExample>
-	
-	self 
-		assertQuerySearch: 'StringOne' 
-		in: #('StringOne' 'StringTwo' 'StringThree') 
+	<return: #GtSpotterCustomSubstringsFilterStreamExamples>
+	self
+		assertQuerySearch: 'StringOne'
+		in: #('StringOne' 'StringTwo' 'StringThree')
 		equals: #('StringOne').
-		
-	self 
-		assertQuerySearch: 'StringTwo' 
-		in: #('StringOne' 'StringTwo' 'StringThree') 
+
+	self
+		assertQuerySearch: 'StringTwo'
+		in: #('StringOne' 'StringTwo' 'StringThree')
 		equals: #('StringTwo')
 ]
 
 { #category : #examples }
 GtSpotterCustomSubstringsFilterStreamExamples >> testPrefixMatch_exactMatch [
 	<gtExample>
-	
-	self 
-		assertQuerySearch: 'One' 
-		in: #('OneString' 'TwoString' 'ThreeString') 
+	<return: #GtSpotterCustomSubstringsFilterStreamExamples>
+	self
+		assertQuerySearch: 'One'
+		in: #('OneString' 'TwoString' 'ThreeString')
 		equals: #('OneString').
-		
-	self 
-		assertQuerySearch: 'Two' 
-		in: #('OneString' 'TwoString' 'ThreeString') 
-		equals: #('TwoString').
+
+	self
+		assertQuerySearch: 'Two'
+		in: #('OneString' 'TwoString' 'ThreeString')
+		equals: #('TwoString')
 ]
 
 { #category : #examples }
 GtSpotterCustomSubstringsFilterStreamExamples >> testPrefixMatch_multipleMatches [
 	<gtExample>
-	
-	self 
-		assertQuerySearch: 'String' 
-		in: #('StringOne' 'StringTwo' 'StringThree') 
+	<return: #GtSpotterCustomSubstringsFilterStreamExamples>
+	self
+		assertQuerySearch: 'String'
+		in: #('StringOne' 'StringTwo' 'StringThree')
 		equals: #('StringOne' 'StringTwo' 'StringThree')
 ]
 
 { #category : #examples }
 GtSpotterCustomSubstringsFilterStreamExamples >> testSuffixMatch_exactMatch [
 	<gtExample>
-	
-	self 
-		assertQuerySearch: 'One' 
-		in: #('StringOne' 'StringTwo' 'StringThree') 
+	<return: #GtSpotterCustomSubstringsFilterStreamExamples>
+	self
+		assertQuerySearch: 'One'
+		in: #('StringOne' 'StringTwo' 'StringThree')
 		equals: #('StringOne').
-		
-	self 
-		assertQuerySearch: 'Two' 
-		in: #('StringOne' 'StringTwo' 'StringThree') 
+
+	self
+		assertQuerySearch: 'Two'
+		in: #('StringOne' 'StringTwo' 'StringThree')
 		equals: #('StringTwo')
 ]
 
 { #category : #examples }
 GtSpotterCustomSubstringsFilterStreamExamples >> testSuffixMatch_multipleMatches [
 	<gtExample>
-	
-	self 
-		assertQuerySearch: 'String' 
-		in: #('OneString' 'TwoString' 'ThreeString') 
+	<return: #GtSpotterCustomSubstringsFilterStreamExamples>
+	self
+		assertQuerySearch: 'String'
+		in: #('OneString' 'TwoString' 'ThreeString')
 		equals: #('OneString' 'TwoString' 'ThreeString')
 ]

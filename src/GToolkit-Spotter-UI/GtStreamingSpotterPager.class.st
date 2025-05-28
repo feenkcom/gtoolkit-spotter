@@ -12,7 +12,7 @@ GtStreamingSpotterPager >> initialize [
 
 	self
 		matchParent;
-		background: self theme default contentBackgroundColor;
+		background: self theme default contentBackground;
 		layout: BlLinearLayout vertical;
 		aptitude: BrScrollablePagerAptitude new
 ]

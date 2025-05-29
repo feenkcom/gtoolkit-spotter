@@ -92,7 +92,7 @@ GtStreamingSpotterElement >> initialize [
 	
 	self matchParent.
 	
-	self background: Color white.
+	self background: self theme default contentBackground.
 	self geometry: (BlRoundedRectangleGeometry cornerRadius: 5).
 	self beInSeparateCompositionLayer.
 	

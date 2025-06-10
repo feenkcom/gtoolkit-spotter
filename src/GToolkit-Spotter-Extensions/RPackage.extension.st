@@ -50,10 +50,10 @@ RPackage >> gtSpotterMonticelloWorkingCopyFor: aSearch [
 { #category : #'*GToolkit-Spotter-Extensions' }
 RPackage >> gtSpotterTagsFor: aSearch [
 	<gtSearch>
-	self classTags size <= 1 ifTrue: [ ^ aSearch empty ].
+	self tags size <= 1 ifTrue: [ ^ aSearch empty ].
 	^ aSearch list
 		priority: 20;
-		items: [ self classTags sorted: [ :a :b | a name < b name ] ];
+		items: [ self tags sorted: [ :a :b | a name < b name ] ];
 		title: 'Tags';
 		itemName: [ :item | item name ];
 		filterBySubstring

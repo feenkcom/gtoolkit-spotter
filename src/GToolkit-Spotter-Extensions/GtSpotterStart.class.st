@@ -133,7 +133,7 @@ GtSpotterStart >> gtSearchForPackagesFor: aSearch [
 	^ aSearch list
 		title: 'Packages';
 		priority: 20;
-		items: [ RPackageOrganizer default packages ];
+		items: [ self packageOrganizer packages ];
 		itemName: [ :aPackage | aPackage name ];
 		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: false	"itemIcon: [ Smalltalk ui icons iconNamed: #packageIcon ];"

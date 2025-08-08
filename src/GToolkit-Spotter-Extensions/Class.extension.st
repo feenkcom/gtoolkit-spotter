@@ -12,7 +12,7 @@ Class >> gtSpotterClassMethodSourceCodesFor: aSearch [
 		priority: 51;
 		title: 'Class method source codes';
 		search: [ :aContext | 
-			(self classSide methods asAsyncStream
+			(self classSide metaMethods asAsyncStream
 				filter: [ :aCompiledMethod | 
 					aCompiledMethod isSourceSearchable ])
 				filter: [ :aCompiledMethod | 
@@ -24,14 +24,21 @@ Class >> gtSpotterClassMethodSourceCodesFor: aSearch [
 { #category : #'*GToolkit-Spotter-Extensions' }
 Class >> gtSpotterClassMethodsFor: aSearch [
 	<gtSearch>
-	^ aSearch explicit
+	^ aSearch list
 		priority: 15;
 		title: 'Class methods';
-		search: [ :aContext | 
+		items: [ 
+			self classSide metaMethods  ];
+		itemName: [ :method | method selector ];
+		filterBySubstringsWith: [ :aSearchFilter :aSpotterContext |
+			aSearchFilter 
+				withWordsSplitter;
+				beCaseSensitiveByCapitalization ]
+		"search: [ :aContext | 
 			GtPharoIndex current
 				asyncImplementersForWord: aContext searchQuery
 				convertUsing: [ :each | self classSide compiledMethodAt: each ifAbsent: [  ] ] ];
-		itemName: [ :method | method selector ]
+		itemName: [ :method | method selector ]"
 ]
 
 { #category : #'*GToolkit-Spotter-Extensions' }
@@ -53,14 +60,21 @@ Class >> gtSpotterMethodSourceCodesFor: aSearch [
 { #category : #'*GToolkit-Spotter-Extensions' }
 Class >> gtSpotterMethodsFor: aSearch [
 	<gtSearch>
-	^ aSearch explicit
+	^ aSearch list
 		priority: 10;
 		title: 'Instance methods';
-		search: [ :aContext | 
+		items: [
+			self methods ];
+		itemName: [ :method | method selector ];
+		filterBySubstringsWith: [ :aSearchFilter :aSpotterContext |
+			aSearchFilter 
+				withWordsSplitter;
+				beCaseSensitiveByCapitalization ]
+		"search: [ :aContext | 
 			GtPharoIndex current
 				asyncImplementersForWord: aContext searchQuery
 				convertUsing: [ :each | self compiledMethodAt: each ifAbsent: [  ] ] ];
-		itemName: [ :method | method selector ]
+		itemName: [ :method | method selector ]"
 ]
 
 { #category : #'*GToolkit-Spotter-Extensions' }
@@ -83,10 +97,12 @@ Class >> gtSpotterSuperClassMethodSourceCodesFor: aSearch [
 		search: [ :aContext | 
 			self superclass 
 				ifNotNil: [ :aClass |
-					(aClass classSide allMethods asAsyncStream
+					((AsyncBehaviorClassInheritedMethodsStream 
+							forBehavior: aClass)
 						filter: [ :aCompiledMethod | 
 							aCompiledMethod isSourceSearchable and: [ 
-								aCompiledMethod methodClass isClassSide ] ])
+								aCompiledMethod methodClass isClassSide and: [
+									aCompiledMethod  gtIsAddedByTraitedClass not ] ] ])
 						filter: [ :aCompiledMethod | 
 							(GtSubstringFilter substring: aContext searchQuery)
 								includesMethod: aCompiledMethod ] ]
@@ -99,7 +115,21 @@ Class >> gtSpotterSuperClassMethodsFor: aSearch [
 	^ aSearch explicit
 		priority: 16;
 		title: 'Super class methods';
-		search: [ :aContext | 
+		search: [ :aSpotterContext | 
+			self superclass 
+				ifNotNil: [ :aSuperclass |
+					GtSpotterSubstringsFilter new
+						withWordsSplitter;
+						beCaseSensitiveByCapitalization; 
+						itemString: [ :anObject | anObject selector asString ];
+						applyInScope: ((AsyncBehaviorClassInheritedMethodsStream
+							forBehavior: aSuperclass) 
+								filter: [ :aCompiledMethod |  
+									(aCompiledMethod methodClass isClassSide) and: [
+										aCompiledMethod  gtIsAddedByTraitedClass not ] ]) 
+							context: aSpotterContext ]
+				ifNil: [ AsyncEmptyStream new ] ]
+		"search: [ :aContext | 
 			GtPharoIndex current
 				asyncImplementersForWord: aContext searchQuery
 				convertUsing: [ :each | 
@@ -111,7 +141,7 @@ Class >> gtSpotterSuperClassMethodsFor: aSearch [
 											aMethod methodClass isClassSide
 												ifTrue: [ aMethod ]
 												ifFalse: [ nil ] ] ]
-									ifFalse: [ nil ] ] ] ]
+									ifFalse: [ nil ] ] ] ]"
 ]
 
 { #category : #'*GToolkit-Spotter-Extensions' }
@@ -138,11 +168,21 @@ Class >> gtSpotterSuperMethodsFor: aSearch [
 	^ aSearch explicit
 		priority: 11;
 		title: 'Super instance methods';
-		search: [ :aContext | 
+		search: [ :aSpotterContext | 
+			self superclass 
+				ifNotNil: [ :aSuperclass |
+					GtSpotterSubstringsFilter new
+						withWordsSplitter;
+						beCaseSensitiveByCapitalization;
+						itemString: [ :anObject | anObject selector asString ];
+						applyInScope: (aSuperclass allMethods asAsyncStream) 
+							context: aSpotterContext ]
+				ifNil: [ AsyncEmptyStream new ] ]
+		"search: [ :aContext | 
 			GtPharoIndex current
 				asyncImplementersForWord: aContext searchQuery
 				convertUsing: [ :each | 
 						self superclass
 							ifNotNil: [ :aClass | aClass lookupSelector: each ]
-							ifNil: [ nil ] ] ]
+							ifNil: [ nil ] ] ]"
 ]

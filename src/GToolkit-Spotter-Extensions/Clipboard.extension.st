@@ -3,8 +3,8 @@ Extension { #name : #Clipboard }
 { #category : #'*GToolkit-Spotter-Extensions' }
 Clipboard >> currentClippings [
 	^ self 
-		forPharo12: [self recentClippings] 
-		forPharo11AndPharo10: [ recent ]
+		forPharo12AndNewer: [self recentClippings] 
+		forPharo11: [ recent ]
 ]
 
 { #category : #'*GToolkit-Spotter-Extensions' }

@@ -266,19 +266,6 @@ GtSpotterStart >> gtSpotterForMetacelloBaselinesFor: aStep [
 ]
 
 { #category : #spotter }
-GtSpotterStart >> gtSpotterForPixelIconFor: aStep [
-	"<gtSearch>"
-	^ aStep listProcessor
-		title: 'Icon - Pixeled';
-		priority: 101;
-		allCandidates: [ GtSpotterPixelIconPreview 
-			library: BrGlamorousIcons allForms: BrGlamorousIcons allIcons ];
-		itemName: #iconSelector;
-		filterBySubstring;
-		wantsToDisplayOnEmptyQuery: false
-]
-
-{ #category : #spotter }
 GtSpotterStart >> gtSpotterForReferencesFor: aStep [
 	"<gtSearch>"
 	
@@ -338,19 +325,6 @@ GtSpotterStart >> gtSpotterForSendersFor: aStep [
 					ifTrue: [ (GtPharoIndex current sendersOf: search) do: filter ]
 					ifFalse: [ SystemNavigation default allReferencesTo: search do: filter ] ];
 		keyBinding: $n meta;
-		wantsToDisplayOnEmptyQuery: false
-]
-
-{ #category : #spotter }
-GtSpotterStart >> gtSpotterForVectorIconFor: aStep [
-	"<gtSearch>"
-	^ aStep listProcessor
-		title: 'Icons - Vectorized';
-		priority: 100;
-		allCandidates: [ GtSpotterVectorIconPreview 
-			library: BrGlamorousVectorIcons allIcons: BrGlamorousVectorIcons allIcons ];
-		itemName: #iconSelector;
-		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: false
 ]
 

@@ -17,6 +17,7 @@ SettingNode >> spotterLabel [
 	<gtPharoPatch: #Pharo>
 	
 	| label |
-	label := self settingDeclaration label.
+	label := self settingDeclaration label asString.
+	self settingDeclaration hasValue ifTrue: [ label := label, ': ', self realValue gtDisplayString ].
 	^ self parentNode ifNil: [ label ] ifNotNil: [ self parentNode spotterLabel , '/' , label ]
 ]

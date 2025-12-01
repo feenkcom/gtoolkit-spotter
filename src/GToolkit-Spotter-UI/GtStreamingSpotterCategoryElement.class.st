@@ -115,6 +115,7 @@ GtStreamingSpotterCategoryElement >> newCategoryLabel [
 { #category : #'private - instance creation' }
 GtStreamingSpotterCategoryElement >> newDiveInButton [
 	^ BrButton new
+		id: GtSpotterCategoryDiveInButtonId;
 		aptitude: BrGlamorousButtonWithIconAptitude;
 		icon: BrGlamorousVectorIcons right;
 		label: 'Dive-In to search through category';

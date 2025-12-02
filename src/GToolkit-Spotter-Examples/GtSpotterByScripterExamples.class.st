@@ -35,6 +35,265 @@ GtSpotterByScripterExamples >> scripter [
 ]
 
 { #category : #accessing }
+GtSpotterByScripterExamples >> spotterElementOnCategorySample [
+	<gtExample>
+	<return: #BlScripter>
+	^ self spotterElementOnStart: GtSpotterStartCategorySample new
+]
+
+{ #category : #accessing }
+GtSpotterByScripterExamples >> spotterElementOnCategorySampleActOnFirstCategory [
+	<gtExample>
+	<return: #BlScripter>
+	| scripter actOnEvents actOn actOnHandler |
+	scripter := self spotterElementOnCategorySample.
+
+	actOnEvents := OrderedCollection new.
+	actOnHandler := GtSpotterByScripterExamplesActOnHandler new
+			actOnEvents: actOnEvents.
+
+	scripter element spotter announcer weak
+		when: GtSpotterCategoryActOn
+		send: #onActed:
+		to: actOnHandler.
+
+	scripter mouseMoveOverStep: [ :s | s id: GtSpotterCategoryElementId index: 1 ].
+
+	scripter
+		mouseMoveOverStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 1;
+				id: GtSpotterCategoryActOnButtonId ].
+
+	scripter
+		clickStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 1;
+				id: GtSpotterCategoryActOnButtonId ].
+
+	self assert: actOnEvents size equals: 1.
+
+	actOn := actOnEvents first.
+
+	self assert: actOn isActedUpon equals: true.
+	self assert: actOn spotterSearch title equals: 'Send category items'.
+	self assert: actOn spotterStep equals: scripter element spotter steps first.
+
+	self assert: actOn rawCategory searchQuery equals: ''.
+
+	self
+		assert: actOn objectToSend class
+		equals: GtSpotterStartCategorySample.
+	self
+		assert: actOn objectToSend items toArray wait
+		equals: (0 to: 100).
+
+	self assert: actOn toolToSend class equals: GtInspectorTool.
+	self assert: actOn toolToSend object class equals: GtSpotterStartCategorySample.
+
+	^ scripter
+]
+
+{ #category : #accessing }
+GtSpotterByScripterExamples >> spotterElementOnCategorySampleActOnSecondCategory [
+	<gtExample>
+	<return: #BlScripter>
+	| scripter actOnEvents actOn actOnHandler |
+	scripter := self spotterElementOnCategorySample.
+
+	actOnEvents := OrderedCollection new.
+	actOnHandler := GtSpotterByScripterExamplesActOnHandler new
+			actOnEvents: actOnEvents.
+
+	scripter element spotter announcer weak
+		when: GtSpotterCategoryActOn
+		send: #onActed:
+		to: actOnHandler.
+
+	scripter mouseMoveOverStep: [ :s | s id: GtSpotterCategoryElementId index: 2 ].
+
+	scripter
+		mouseMoveOverStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 2;
+				id: GtSpotterCategoryActOnButtonId ].
+
+	scripter
+		clickStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 2;
+				id: GtSpotterCategoryActOnButtonId ].
+
+	self assert: actOnEvents size equals: 1.
+
+	actOn := actOnEvents first.
+
+	self assert: actOn isActedUpon equals: true.
+	self assert: actOn spotterSearch title equals: 'Send category tool items'.
+	self assert: actOn spotterStep equals: scripter element spotter steps first.
+
+	self assert: actOn rawCategory searchQuery equals: ''.
+
+	self
+		assert: actOn objectToSend class
+		equals: GtSpotterCategory.
+	self
+		assert: actOn objectToSend items toArray wait
+		equals: (0 to: 100).
+
+	self assert: actOn toolToSend class equals: GtInspectorTool.
+	self assert: actOn toolToSend object class equals: GtSpotterStartCategorySample.
+
+	^ scripter
+]
+
+{ #category : #accessing }
+GtSpotterByScripterExamples >> spotterElementOnCategorySampleDiveInFirstCategory [
+	<gtExample>
+	<return: #BlScripter>
+	| scripter actOnEvents actOn actOnHandler |
+	scripter := self spotterElementOnCategorySample.
+
+	actOnEvents := OrderedCollection new.
+	actOnHandler := GtSpotterByScripterExamplesActOnHandler new
+			actOnEvents: actOnEvents.
+
+	scripter element spotter announcer weak
+		when: GtSpotterCategoryActOn
+		send: #onActed:
+		to: actOnHandler.
+
+	scripter typeStep: [ :s | s text: '5' ].
+
+	scripter mouseMoveOverStep: [ :s | s id: GtSpotterCategoryElementId index: 1 ].
+
+	scripter
+		mouseMoveOverStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 1;
+				id: GtSpotterCategoryDiveInButtonId ].
+
+	scripter
+		clickStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 1;
+				id: GtSpotterCategoryDiveInButtonId ].
+
+	scripter typeStep: [ :s | s text: '7' ].
+
+	scripter
+		mouseMoveOverStep: [ :s | 
+			s
+				id: GtStreamingSpotterStepElementId index: 2;
+				id: GtSpotterCategoryElementId index: 1 ].
+
+	scripter
+		mouseMoveOverStep: [ :s | 
+			s
+				id: GtStreamingSpotterStepElementId index: 2;
+				id: GtSpotterCategoryElementId index: 1;
+				id: GtSpotterCategoryActOnButtonId ].
+
+	scripter
+		clickStep: [ :s | 
+			s
+				id: GtStreamingSpotterStepElementId index: 2;
+				id: GtSpotterCategoryElementId index: 1;
+				id: GtSpotterCategoryActOnButtonId ].
+
+	self assert: actOnEvents size equals: 1.
+
+	actOn := actOnEvents first.
+
+	self assert: actOn isActedUpon equals: true.
+	self assert: actOn spotterSearch title equals: 'Send category items'.
+	self assert: actOn spotterStep equals: scripter element spotter steps second.
+
+	self assert: actOn rawCategory searchQuery equals: '7'.
+
+	self assert: actOn objectToSend class equals: GtSpotterStartCategorySample.
+	self assert: actOn objectToSend items toArray wait equals: #(57 75).
+
+	self assert: actOn toolToSend class equals: GtInspectorTool.
+	self assert: actOn toolToSend object class equals: GtSpotterStartCategorySample.
+
+	^ scripter
+]
+
+{ #category : #accessing }
+GtSpotterByScripterExamples >> spotterElementOnCategorySampleDiveInSecondCategory [
+	<gtExample>
+	<return: #BlScripter>
+	| scripter actOnEvents actOn actOnHandler |
+	scripter := self spotterElementOnCategorySample.
+
+	actOnEvents := OrderedCollection new.
+	actOnHandler := GtSpotterByScripterExamplesActOnHandler new
+			actOnEvents: actOnEvents.
+
+	scripter element spotter announcer weak
+		when: GtSpotterCategoryActOn
+		send: #onActed:
+		to: actOnHandler.
+
+	scripter typeStep: [ :s | s text: '5' ].
+
+	scripter mouseMoveOverStep: [ :s | s id: GtSpotterCategoryElementId index: 2 ].
+
+	scripter
+		mouseMoveOverStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 2;
+				id: GtSpotterCategoryDiveInButtonId ].
+
+	scripter
+		clickStep: [ :s | 
+			s
+				id: GtSpotterCategoryElementId index: 2;
+				id: GtSpotterCategoryDiveInButtonId ].
+
+	scripter typeStep: [ :s | s text: '7' ].
+
+	scripter
+		mouseMoveOverStep: [ :s | 
+			s
+				id: GtStreamingSpotterStepElementId index: 2;
+				id: GtSpotterCategoryElementId index: 1 ].
+
+	scripter
+		mouseMoveOverStep: [ :s | 
+			s
+				id: GtStreamingSpotterStepElementId index: 2;
+				id: GtSpotterCategoryElementId index: 1;
+				id: GtSpotterCategoryActOnButtonId ].
+
+	scripter
+		clickStep: [ :s | 
+			s
+				id: GtStreamingSpotterStepElementId index: 2;
+				id: GtSpotterCategoryElementId index: 1;
+				id: GtSpotterCategoryActOnButtonId ].
+
+	self assert: actOnEvents size equals: 1.
+
+	actOn := actOnEvents first.
+
+	self assert: actOn isActedUpon equals: true.
+	self assert: actOn spotterSearch title equals: 'Send category tool items'.
+	self assert: actOn spotterStep equals: scripter element spotter steps second.
+
+	self assert: actOn rawCategory searchQuery equals: '7'.
+
+	self assert: actOn objectToSend class equals: GtSpotterCategory.
+	self assert: actOn objectToSend items toArray wait equals: #(57 75).
+
+	self assert: actOn toolToSend class equals: GtInspectorTool.
+	self assert: actOn toolToSend object class equals: GtSpotterStartCategorySample.
+
+	^ scripter
+]
+
+{ #category : #accessing }
 GtSpotterByScripterExamples >> spotterElementOnStart [
 	<gtExample>
 	<return: #BlScripter>

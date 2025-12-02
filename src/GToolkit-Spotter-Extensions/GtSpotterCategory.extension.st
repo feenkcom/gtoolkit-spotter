@@ -8,6 +8,10 @@ GtSpotterCategory >> gtSearchItemsFor: aSearch [
 		priority: 1;
 		items: [ candidates asyncSimilarCopy ];
 		itemName: [ :eachCandidate | search itemNameFor: eachCandidate ];
+		sendCategory: [ :aCategory :aStep :thisSearch | 
+			search categoryToActOn: aCategory from: aStep ];
+		sendCategoryTool: [ :aCategory :aRawCategory :aStep :thisSearch |
+			search categoryToolToActOn: aCategory rawCategory: aRawCategory from: thisSearch ];
 		previewElement: [ :eachCandidate | search previewElementFor: eachCandidate ];
 		filterBySubstring;
 		wantsToDisplayOnEmptyQuery: true;

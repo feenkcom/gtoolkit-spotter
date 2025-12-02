@@ -1,7 +1,7 @@
 Class {
 	#name : #GtCurrentSpotterExceptionHandler,
 	#superclass : #Notification,
-	#category : 'GToolkit-Spotter-Exceptions'
+	#category : #'GToolkit-Spotter-Exceptions'
 }
 
 { #category : #accessing }

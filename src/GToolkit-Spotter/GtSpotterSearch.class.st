@@ -90,7 +90,7 @@ GtSpotterSearch >> initialize [
 	objectTransformation := [ :anObject :aStep :aSearch | anObject ].
 	objectToolTransformation := [ :anObjectToSend :aRawObject :aStep :aSearch |
 		anObjectToSend gtDefaultInspectorTool ].
-	categoryTransformation  := [ :anObject :aStep | anObject ].
+	categoryTransformation  := [ :anObject :aStep :aSearch | anObject ].
 	categoryToolTransformation := [ :aCategoryToSend :aRawCategory :aStep :aSearch | 
 		aCategoryToSend gtDefaultInspectorTool ].
 

@@ -35,7 +35,10 @@ GtSpotterStart >> concreteMethodInContext: aContext [
 	(class := Smalltalk classNamed: classAndSelectorStrings first)
 		ifNil: [ ^ AsyncOptionalValue none ].
 
-	^ [ AsyncOptionalValue some: (class compiledMethodAt: selector) ]
+	" let's find the selector anywhere in the class hierarchy - useful for Jenkins example reports"
+	^ [ (class lookupSelector: selector) 
+				ifNotNil: [ :method | AsyncOptionalValue some: method ]
+				ifNil: [ AsyncOptionalValue none ] ]
 		on: Error
 		do: [ AsyncOptionalValue none ].
 ]

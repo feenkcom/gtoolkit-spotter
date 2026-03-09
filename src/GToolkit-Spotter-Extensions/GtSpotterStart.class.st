@@ -35,10 +35,24 @@ GtSpotterStart >> concreteMethodInContext: aContext [
 	(class := Smalltalk classNamed: classAndSelectorStrings first)
 		ifNil: [ ^ AsyncOptionalValue none ].
 
+	
+	^ [ 
 	" let's find the selector anywhere in the class hierarchy - useful for Jenkins example reports"
-	^ [ (class lookupSelector: selector) 
-				ifNotNil: [ :method | AsyncOptionalValue some: method ]
-				ifNil: [ AsyncOptionalValue none ] ]
+	(class lookupSelector: selector) 
+			ifNotNil: [ :method | AsyncOptionalValue some: method ]
+			ifNil: [
+				| similarMethods |
+				similarMethods := Array
+					streamContents: [ :aStream | 
+						class
+							withAllSuperclassesDo: [ :aClass | 
+								aClass methodDict
+									keysAndValuesDo: [ :aSelector :aMethod | 
+										(aSelector beginsWith: selector caseSensitive: false)
+											ifTrue: [ aStream nextPut: aMethod ] ] ] ].
+				similarMethods 
+					ifNotEmpty: [ AsyncOptionalValue some: similarMethods first ]
+					ifEmpty: [ AsyncOptionalValue none ] ] ]
 		on: Error
 		do: [ AsyncOptionalValue none ].
 ]

@@ -42,6 +42,18 @@ Class >> gtSpotterClassMethodsFor: aSearch [
 ]
 
 { #category : #'*GToolkit-Spotter-Extensions' }
+Class >> gtSpotterClassVariablesFor: aSearch [
+	<gtSearch>
+	self isTrait ifTrue: [ ^ aSearch empty ].
+	^ aSearch list
+		priority: 20;
+		title: 'Class variables';
+		items: [ self classVariables ];
+		itemName: [ :each | each name asString ];
+		filterBySubstring
+]
+
+{ #category : #'*GToolkit-Spotter-Extensions' }
 Class >> gtSpotterMethodSourceCodesFor: aSearch [
 	<gtSearch>
 	^ aSearch explicit

@@ -21,7 +21,7 @@ GlobalVariable >> gtSpotterForReferencesFor: aSearch [
 	^ aSearch list
 		priority: 130;
 		title: 'References';
-		items: [ (SystemNavigation default allReferencesTo: self) collect: #compiledMethod ];
+		items: [ SystemNavigation default allReferencesTo: self ];
 		itemName: [ :method | method gtDisplayString ];
 		filterBySubstring
 ]

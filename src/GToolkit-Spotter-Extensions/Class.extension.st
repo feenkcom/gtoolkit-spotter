@@ -81,7 +81,13 @@ Class >> gtSpotterMethodsFor: aSearch [
 		filterBySubstringsWith: [ :aSearchFilter :aSpotterContext |
 			aSearchFilter 
 				withWordsSplitter;
-				beCaseSensitiveByCapitalization ]
+				beCaseSensitiveByCapitalization ];
+		sendCategory: [ :aCategory :aStep :thisSearch | 
+			(GtSearchCustomScopedMethodsFilter new
+				filterLabel: self class instanceSide name 
+					, ' instance methods & '
+					, aStep searchQuery printString, ' implementors';
+				defaultFilterScope: aCategory items  asyncSimilarCopy) ]
 		"search: [ :aContext | 
 			GtPharoIndex current
 				asyncImplementersForWord: aContext searchQuery

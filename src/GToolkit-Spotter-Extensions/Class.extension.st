@@ -18,7 +18,13 @@ Class >> gtSpotterClassMethodSourceCodesFor: aSearch [
 				filter: [ :aCompiledMethod | 
 					(GtSubstringFilter substring: aContext searchQuery)
 						includesMethod: aCompiledMethod ] ];
-		itemName: [ :method | method selector ]
+		itemName: [ :method | method selector ];
+		sendCategory: [ :aCategory :aStep :thisSearch | 
+			(GtSearchCustomScopedMethodsFilter new
+				filterLabel: self class instanceSide name 
+					, ' class methods & '
+					, aStep searchQuery printString, ' source code';
+				defaultFilterScope: aCategory items  asyncSimilarCopy) ]
 ]
 
 { #category : #'*GToolkit-Spotter-Extensions' }
@@ -33,7 +39,13 @@ Class >> gtSpotterClassMethodsFor: aSearch [
 		filterBySubstringsWith: [ :aSearchFilter :aSpotterContext |
 			aSearchFilter 
 				withWordsSplitter;
-				beCaseSensitiveByCapitalization ]
+				beCaseSensitiveByCapitalization ];
+		sendCategory: [ :aCategory :aStep :thisSearch | 
+			(GtSearchCustomScopedMethodsFilter new
+				filterLabel: self class instanceSide name 
+					, ' class methods & '
+					, aStep searchQuery printString, ' implementors';
+				defaultFilterScope: aCategory items  asyncSimilarCopy) ]
 		"search: [ :aContext | 
 			GtPharoIndex current
 				asyncImplementersForWord: aContext searchQuery
@@ -66,7 +78,13 @@ Class >> gtSpotterMethodSourceCodesFor: aSearch [
 				filter: [ :aCompiledMethod | 
 					(GtSubstringFilter substring: aContext searchQuery)
 						includesMethod: aCompiledMethod ] ];
-		itemName: [ :method | method selector ]
+		itemName: [ :method | method selector ];
+		sendCategory: [ :aCategory :aStep :thisSearch | 
+			(GtSearchCustomScopedMethodsFilter new
+				filterLabel: self class instanceSide name 
+					, ' instance methods & '
+					, aStep searchQuery printString, ' source code';
+				defaultFilterScope: aCategory items  asyncSimilarCopy) ]
 ]
 
 { #category : #'*GToolkit-Spotter-Extensions' }
@@ -124,7 +142,13 @@ Class >> gtSpotterSuperClassMethodSourceCodesFor: aSearch [
 						filter: [ :aCompiledMethod | 
 							(GtSubstringFilter substring: aContext searchQuery)
 								includesMethod: aCompiledMethod ] ]
-				ifNil: [ AsyncEmptyStream new ] ]
+				ifNil: [ AsyncEmptyStream new ] ];
+		sendCategory: [ :aCategory :aStep :thisSearch | 
+			(GtSearchCustomScopedMethodsFilter new
+				filterLabel: self class instanceSide name 
+					, ' super class methods & '
+					, aStep searchQuery printString, ' source code';
+				defaultFilterScope: aCategory items  asyncSimilarCopy) ]
 ]
 
 { #category : #'*GToolkit-Spotter-Extensions' }
@@ -146,7 +170,13 @@ Class >> gtSpotterSuperClassMethodsFor: aSearch [
 									(aCompiledMethod methodClass isClassSide) and: [
 										aCompiledMethod  gtIsAddedByTraitedClass not ] ]) 
 							context: aSpotterContext ]
-				ifNil: [ AsyncEmptyStream new ] ]
+				ifNil: [ AsyncEmptyStream new ] ];
+		sendCategory: [ :aCategory :aStep :thisSearch | 
+			(GtSearchCustomScopedMethodsFilter new
+				filterLabel: self class instanceSide name 
+					, ' super class methods & '
+					, aStep searchQuery printString, ' implementors';
+				defaultFilterScope: aCategory items  asyncSimilarCopy) ]
 		"search: [ :aContext | 
 			GtPharoIndex current
 				asyncImplementersForWord: aContext searchQuery
@@ -177,7 +207,13 @@ Class >> gtSpotterSuperMethodSourceCodesFor: aSearch [
 						filter: [ :aCompiledMethod | 
 							(GtSubstringFilter substring: aContext searchQuery)
 								includesMethod: aCompiledMethod ] ]
-				ifNil: [ AsyncEmptyStream new ] ]
+				ifNil: [ AsyncEmptyStream new ] ];
+		sendCategory: [ :aCategory :aStep :thisSearch | 
+			(GtSearchCustomScopedMethodsFilter new
+				filterLabel: self class instanceSide name 
+					, ' super instance methods & '
+					, aStep searchQuery printString, ' source code';
+				defaultFilterScope: aCategory items  asyncSimilarCopy) ]
 ]
 
 { #category : #'*GToolkit-Spotter-Extensions' }
@@ -195,7 +231,13 @@ Class >> gtSpotterSuperMethodsFor: aSearch [
 						itemString: [ :anObject | anObject selector asString ];
 						applyInScope: (aSuperclass allMethods asAsyncStream) 
 							context: aSpotterContext ]
-				ifNil: [ AsyncEmptyStream new ] ]
+				ifNil: [ AsyncEmptyStream new ] ];
+		sendCategory: [ :aCategory :aStep :thisSearch | 
+			(GtSearchCustomScopedMethodsFilter new
+				filterLabel: self class instanceSide name 
+					, ' super instance methods & '
+					, aStep searchQuery printString, ' implementors';
+				defaultFilterScope: aCategory items  asyncSimilarCopy) ]
 		"search: [ :aContext | 
 			GtPharoIndex current
 				asyncImplementersForWord: aContext searchQuery

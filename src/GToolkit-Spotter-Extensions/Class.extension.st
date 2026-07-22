@@ -121,7 +121,13 @@ Class >> gtSpotterReferenceFor: aSearch [
 		title: 'References';
 		items: [ GtPharoIndex current globalVariableReferencesTo: self binding ];
 		itemName: [ :method | method gtDisplayString ];
-		filterBySubstring
+		filterBySubstring;
+		sendCategory: [ :aCategory :aStep :thisSearch | 
+			(GtSearchCustomScopedMethodsFilter new
+				filterLabel: self class instanceSide name 
+					, ' gtReferences & '
+					, aStep searchQuery printString, ' matches';
+				defaultFilterScope: aCategory items  asyncSimilarCopy) ]
 ]
 
 { #category : #'*GToolkit-Spotter-Extensions' }

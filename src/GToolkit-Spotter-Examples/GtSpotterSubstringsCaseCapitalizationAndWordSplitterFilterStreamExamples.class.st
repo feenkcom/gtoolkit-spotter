@@ -12,6 +12,16 @@ GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> conf
 ]
 
 { #category : #examples }
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchAcronymKeywordAndCamelCase [
+	<gtExample>
+
+	self
+		assertQuerySearch: 'URL:fromString:'
+		in: #('URL:fromString:' 'URL:fromString:ifAbsent:' 'url:fromString:' 'URL:from:' 'URLFromString:')
+		equals: #('URL:fromString:' 'URL:fromString:ifAbsent:' 'URLFromString:')
+]
+
+{ #category : #examples }
 GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchBeginningOfWord_oneWordContainingMultipleColons_multipleCapitalizations [
 	<gtExample>
 	
@@ -52,6 +62,16 @@ GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> test
 ]
 
 { #category : #examples }
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchCompleteKeywordSelector [
+	<gtExample>
+
+	self
+		assertQuerySearch: 'link:toAST:'
+		in: #('link:toAST:' 'link:toAst:' 'linkToAST:' 'link:toAST:in:' 'link:to:' 'link:fromAST:')
+		equals: #('link:toAST:' 'linkToAST:' 'link:toAST:in:')
+]
+
+{ #category : #examples }
 GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchGtSpotterMethodsForSelector [
 	<gtExample>
 
@@ -69,6 +89,26 @@ GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> test
 		assertQuerySearch: 'at:put:'
 		in: #('atput:' 'at:put:' 'at:put:ifAbsent:' 'at:putAll:' 'at:')
 		equals: #('atput:' 'at:put:' 'at:put:ifAbsent:' 'at:putAll:')
+]
+
+{ #category : #examples }
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchMultiKeywordSelector [
+	<gtExample>
+
+	self
+		assertQuerySearch: 'at:putAll:'
+		in: #('atputAll:' 'at:putAll:' 'at:putAll:ifAbsent:' 'at:put:ifAbsent:' 'at:putAll')
+		equals: #('atputAll:' 'at:putAll:' 'at:putAll:ifAbsent:' 'at:putAll')
+]
+
+{ #category : #examples }
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamExamples >> testMatchPartialKeywordSelector [
+	<gtExample>
+
+	self
+		assertQuerySearch: 'link:to'
+		in: #('link:toAST:' 'link:toAst:' 'linkToAST:' 'link:toAST:in:' 'link:to:' 'link:fromAST:')
+		equals: #('link:toAST:' 'link:toAst:' 'linkToAST:' 'link:toAST:in:' 'link:to:')
 ]
 
 { #category : #examples }

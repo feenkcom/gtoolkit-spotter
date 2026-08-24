@@ -17,10 +17,24 @@ GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryForGtSpotterMethodsFo
 ]
 
 { #category : #examples }
+GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithAcronymKeywordAndCamelCase [
+	<gtExample>
+
+	self assertSplitOf: 'URL:fromString:' equals: #('URL:' 'from' 'String:')
+]
+
+{ #category : #examples }
 GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithAllBinarySelectorCharacters [
 	<gtExample>
 
 	self assertSplitOf: '+-/\*~<>=@,%|&?!·÷±×' equals: #('+-/\*~<>=@,%|&?!·÷±×')
+]
+
+{ #category : #examples }
+GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithBinaryCharactersInKeyword [
+	<gtExample>
+
+	self assertSplitOf: 'foo->bar:' equals: #('foo->bar:')
 ]
 
 { #category : #examples }
@@ -72,6 +86,15 @@ GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithColonCharacter_st
 ]
 
 { #category : #examples }
+GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithDigitsAtKeywordBoundary [
+	<gtExample>
+
+	self
+		assertSplitOf: 'foo:2bar:' equals: #('foo:' '2bar:');
+		assertSplitOf: 'foo:2Bar:' equals: #('foo:' '2' 'Bar:')
+]
+
+{ #category : #examples }
 GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithKeywordSelectorsSeparatedByCapitalization [
 	<gtExample>
 
@@ -87,12 +110,35 @@ GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithKeywordsSeparated
 ]
 
 { #category : #examples }
+GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithMultiKeywordSelector [
+	<gtExample>
+
+	self assertSplitOf: 'at:putAll:ifAbsent:' equals: #('at:' 'put' 'All:' 'if' 'Absent:')
+]
+
+{ #category : #examples }
 GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithNonDigitCharacters [
 	<gtExample>
 	
 	self
 		assertSplitOf: 'One***Two---Three!@Four'
 		equals: #('One***' 'Two---' 'Three!@' 'Four')
+]
+
+{ #category : #examples }
+GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithRepeatedColons [
+	<gtExample>
+
+	self
+		assertSplitOf: 'foo::bar:' equals: #('foo:' 'bar:');
+		assertSplitOf: 'foo:::bar:' equals: #('foo:' 'bar:')
+]
+
+{ #category : #examples }
+GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithUnderscoreAndColonInKeyword [
+	<gtExample>
+
+	self assertSplitOf: 'foo_:bar:' equals: #('foo_:' 'bar:')
 ]
 
 { #category : #examples }

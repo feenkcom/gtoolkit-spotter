@@ -12,6 +12,16 @@ GtSpotterSubstringsCaseCapitalizationAndSelectorWordSplitterFilterStreamExamples
 ]
 
 { #category : #examples }
+GtSpotterSubstringsCaseCapitalizationAndSelectorWordSplitterFilterStreamExamples >> testMatchAcronymKeywordAndCamelCase [
+	<gtExample>
+
+	self
+		assertQuerySearch: 'URL:fromString:'
+		in: #('URL:fromString:' 'URL:fromString:ifAbsent:' 'url:fromString:' 'URL:from:' 'URLFromString:')
+		equals: #('URL:fromString:' 'URL:fromString:ifAbsent:')
+]
+
+{ #category : #examples }
 GtSpotterSubstringsCaseCapitalizationAndSelectorWordSplitterFilterStreamExamples >> testMatchBeginningOfWord_oneWordContainingMultipleColons_multipleCapitalizations [
 	<gtExample>
 	
@@ -52,6 +62,16 @@ GtSpotterSubstringsCaseCapitalizationAndSelectorWordSplitterFilterStreamExamples
 ]
 
 { #category : #examples }
+GtSpotterSubstringsCaseCapitalizationAndSelectorWordSplitterFilterStreamExamples >> testMatchCompleteKeywordSelector [
+	<gtExample>
+
+	self
+		assertQuerySearch: 'link:toAST:'
+		in: #('link:toAST:' 'link:toAst:' 'linkToAST:' 'link:toAST:in:' 'link:to:' 'link:fromAST:')
+		equals: #('link:toAST:' 'link:toAST:in:')
+]
+
+{ #category : #examples }
 GtSpotterSubstringsCaseCapitalizationAndSelectorWordSplitterFilterStreamExamples >> testMatchGtSpotterMethodsForSelector [
 	<gtExample>
 
@@ -69,6 +89,26 @@ GtSpotterSubstringsCaseCapitalizationAndSelectorWordSplitterFilterStreamExamples
 		assertQuerySearch: 'at:put:'
 		in: #('atput:' 'at:put:' 'at:put:ifAbsent:' 'at:putAll:' 'at:')
 		equals: #('at:put:' 'at:put:ifAbsent:')
+]
+
+{ #category : #examples }
+GtSpotterSubstringsCaseCapitalizationAndSelectorWordSplitterFilterStreamExamples >> testMatchMultiKeywordSelector [
+	<gtExample>
+
+	self
+		assertQuerySearch: 'at:putAll:'
+		in: #('atputAll:' 'at:putAll:' 'at:putAll:ifAbsent:' 'at:put:ifAbsent:' 'at:putAll')
+		equals: #('at:putAll:' 'at:putAll:ifAbsent:')
+]
+
+{ #category : #examples }
+GtSpotterSubstringsCaseCapitalizationAndSelectorWordSplitterFilterStreamExamples >> testMatchPartialKeywordSelector [
+	<gtExample>
+
+	self
+		assertQuerySearch: 'link:to'
+		in: #('link:toAST:' 'link:toAst:' 'linkToAST:' 'link:toAST:in:' 'link:to:' 'link:fromAST:')
+		equals: #('link:toAST:' 'link:toAst:' 'link:toAST:in:' 'link:to:')
 ]
 
 { #category : #examples }

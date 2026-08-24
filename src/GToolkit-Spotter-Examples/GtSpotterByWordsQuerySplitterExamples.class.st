@@ -17,10 +17,24 @@ GtSpotterByWordsQuerySplitterExamples >> splitQueryForGtSpotterMethodsFor [
 ]
 
 { #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithAcronymKeywordAndCamelCase [
+	<gtExample>
+
+	self assertSplitOf: 'URL:fromString:' equals: #('URL' 'from' 'String')
+]
+
+{ #category : #examples }
 GtSpotterByWordsQuerySplitterExamples >> splitQueryWithAllBinarySelectorCharacters [
 	<gtExample>
 
 	self assertSplitOf: '+-/\*~<>=@,%|&?!·÷±×' equals: #()
+]
+
+{ #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithBinaryCharactersInKeyword [
+	<gtExample>
+
+	self assertSplitOf: 'foo->bar:' equals: #('foo' 'bar')
 ]
 
 { #category : #examples }
@@ -72,6 +86,15 @@ GtSpotterByWordsQuerySplitterExamples >> splitQueryWithColonCharacter_startWithC
 ]
 
 { #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithDigitsAtKeywordBoundary [
+	<gtExample>
+
+	self
+		assertSplitOf: 'foo:2bar:' equals: #('foo' '2bar');
+		assertSplitOf: 'foo:2Bar:' equals: #('foo' '2' 'Bar')
+]
+
+{ #category : #examples }
 GtSpotterByWordsQuerySplitterExamples >> splitQueryWithKeywordSelectorsSeparatedByCapitalization [
 	<gtExample>
 
@@ -87,12 +110,26 @@ GtSpotterByWordsQuerySplitterExamples >> splitQueryWithKeywordsSeparatedByCapita
 ]
 
 { #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithMultiKeywordSelector [
+	<gtExample>
+
+	self assertSplitOf: 'at:putAll:ifAbsent:' equals: #('at' 'put' 'All' 'if' 'Absent')
+]
+
+{ #category : #examples }
 GtSpotterByWordsQuerySplitterExamples >> splitQueryWithNonDigitCharacters [
 	<gtExample>
 	
 	self
 		assertSplitOf: 'One***Two---Three!@Four'
 		equals: #('One' 'Two' 'Three' 'Four')
+]
+
+{ #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithUnderscoreAndColonInKeyword [
+	<gtExample>
+
+	self assertSplitOf: 'foo_:bar:' equals: #('foo' 'bar')
 ]
 
 { #category : #examples }

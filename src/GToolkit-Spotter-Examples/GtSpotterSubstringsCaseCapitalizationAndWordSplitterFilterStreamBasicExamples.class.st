@@ -4,6 +4,11 @@ Class {
 	#category : #'GToolkit-Spotter-Examples-Examples'
 }
 
+{ #category : #testing }
+GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamBasicExamples class >> isAbstract [
+	^ self name = #GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamBasicExamples
+]
+
 { #category : #examples }
 GtSpotterSubstringsCaseCapitalizationAndWordSplitterFilterStreamBasicExamples >> testMatchBeginningOfWord_capitalizedQuery [
 	<gtExample>

@@ -113,6 +113,11 @@ GtSpotterSubstringsFilter >> withCharacterSplitterBy: aCollectionOfCharacters [
 ]
 
 { #category : #configuration }
+GtSpotterSubstringsFilter >> withSelectorWordsSplitter [
+	filterConfiguration withSelectorWordsSplitter
+]
+
+{ #category : #configuration }
 GtSpotterSubstringsFilter >> withWordsSplitter [
 	filterConfiguration withWordsSplitter
 ]

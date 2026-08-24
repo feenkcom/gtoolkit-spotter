@@ -34,21 +34,22 @@ GtSpotterQuerySplitterExamples >> splitEmptyQuery [
 { #category : #examples }
 GtSpotterQuerySplitterExamples >> splitQueryWithCapitalizedWords [
 	<gtExample>
-	<return: #SubclassResponsibility>
+
 	self assertSplitOf: 'Word' equals: #('Word')
 ]
 
 { #category : #examples }
 GtSpotterQuerySplitterExamples >> splitQueryWithConsecutiveUpperCaseLettersOnly [
 	<gtExample>
-	<return: #SubclassResponsibility>
-	^ self assertSplitOf: 'ABCD' equals: #('ABCD')
+
+	self assertSplitOf: 'ABCD' equals: #('ABCD').
+	self assertSplitOf: 'ABCD12' equals: #('ABCD12').
 ]
 
 { #category : #examples }
 GtSpotterQuerySplitterExamples >> splitQueryWithMultipleWords [
 	<gtExample>
-	<return: #SubclassResponsibility>
+	
 	self assertSplitOf: 'word1 word2' equals: #('word1' 'word2').
 	self assertSplitOf: 'word1 word2 word3' equals: #('word1' 'word2' 'word3')
 ]
@@ -56,15 +57,15 @@ GtSpotterQuerySplitterExamples >> splitQueryWithMultipleWords [
 { #category : #examples }
 GtSpotterQuerySplitterExamples >> splitQueryWithMultipleWordsSeparatedBySpaces [
 	<gtExample>
-	<return: #SubclassResponsibility>
+	
 	self assertSplitOf: 'one two' equals: #('one' 'two').
 	self assertSplitOf: 'one two three' equals: #('one' 'two' 'three')
 ]
 
 { #category : #examples }
-GtSpotterQuerySplitterExamples >> splitQueryWithOneWord [
+GtSpotterQuerySplitterExamples >> splitQueryWithOneWordLowercase [
 	<gtExample>
-	<return: #SubclassResponsibility>
+	
 	^ self assertSplitOf: 'word' equals: #('word')
 ]
 
@@ -72,13 +73,14 @@ GtSpotterQuerySplitterExamples >> splitQueryWithOneWord [
 GtSpotterQuerySplitterExamples >> splitQueryWithOneWordWithNumber [
 	<gtExample>
 	<return: #SubclassResponsibility>
+	
 	^ self assertSplitOf: 'word123' equals: #('word123')
 ]
 
 { #category : #examples }
 GtSpotterQuerySplitterExamples >> splitQueryWithPrefixSuffixSpaces [
 	<gtExample>
-	<return: #SubclassResponsibility>
+	
 	self assertSplitOf: ' word' equals: #('word').
 	self assertSplitOf: 'word ' equals: #('word').
 	self assertSplitOf: '  word   ' equals: #('word')

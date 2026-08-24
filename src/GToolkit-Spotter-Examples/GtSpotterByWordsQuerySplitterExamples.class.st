@@ -1,6 +1,6 @@
 Class {
 	#name : #GtSpotterByWordsQuerySplitterExamples,
-	#superclass : #GtSpotterQuerySplitterExamples,
+	#superclass : #GtSpotterByWordsQuerySplitterBasicExamples,
 	#category : #'GToolkit-Spotter-Examples-Examples'
 }
 
@@ -10,58 +10,138 @@ GtSpotterByWordsQuerySplitterExamples >> createQuerySplitter [
 ]
 
 { #category : #examples }
-GtSpotterByWordsQuerySplitterExamples >> splitQueryWithConsecutiveUpperCaseLettersAndOneLowercaseAtEnd [
+GtSpotterByWordsQuerySplitterExamples >> splitQueryForGtSpotterMethodsFor [
 	<gtExample>
-	<return: #OrderedCollection>
-	^ self assertSplitOf: 'ABCDe' equals: #('ABCDe')
+
+	self assertSplitOf: 'gtSpotterMethodsFor:' equals: #('gt' 'Spotter' 'Methods' 'For')
 ]
 
 { #category : #examples }
-GtSpotterByWordsQuerySplitterExamples >> splitQueryWithConsecutiveUpperCaseLettersAndOneLowercaseInTheMiddle [
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithAcronymKeywordAndCamelCase [
 	<gtExample>
-	<return: #GtSpotterByWordsQuerySplitterExamples>
-	self assertSplitOf: 'ABcDE' equals: #('ABc' 'DE').
-	self assertSplitOf: 'ABcDEfGh' equals: #('ABc' 'DEf' 'Gh')
+
+	self assertSplitOf: 'URL:fromString:' equals: #('URL' 'from' 'String')
 ]
 
 { #category : #examples }
-GtSpotterByWordsQuerySplitterExamples >> splitQueryWithInitialLowercaseAndFollowingUppercase [
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithAllBinarySelectorCharacters [
 	<gtExample>
-	<return: #OrderedCollection>
-	^ self assertSplitOf: 'oneTwo' equals: #('one' 'Two')
+
+	self assertSplitOf: '+-/\*~<>=@,%|&?!·÷±×' equals: #()
 ]
 
 { #category : #examples }
-GtSpotterByWordsQuerySplitterExamples >> splitQueryWithMixedCapitalizationAndMultipleWords [
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithBinaryCharactersInKeyword [
 	<gtExample>
-	<return: #OrderedCollection>
-	^ self
-		assertSplitOf: 'one111 Two22Three AB'
-		equals: #('one111' 'Two22' 'Three' 'AB')
+
+	self assertSplitOf: 'foo->bar:' equals: #('foo' 'bar')
 ]
 
 { #category : #examples }
-GtSpotterByWordsQuerySplitterExamples >> splitQueryWithMultipleCapitalizedWords [
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithColonCharacter_multipleWithNoSpace [
 	<gtExample>
-	<return: #GtSpotterByWordsQuerySplitterExamples>
-	self assertSplitOf: 'OneTwo' equals: #('One' 'Two').
-	self assertSplitOf: 'OneTwoThree' equals: #('One' 'Two' 'Three')
+	
+	self assertSplitOf: 'print:on:' equals: #('print' 'on').
+	self assertSplitOf: 'print:on:for:' equals: #('print' 'on' 'for')
+]
+
+{ #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithColonCharacter_multipleWithSpaces [
+	<gtExample>
+	
+	self assertSplitOf: 'print: on:' equals: #('print' 'on').
+	self assertSplitOf: 'Print: On:' equals: #('Print' 'On').
+	self assertSplitOf: 'print: On:' equals: #('print' 'On')
+]
+
+{ #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithColonCharacter_singleAtEnd [
+	<gtExample>
+	
+	self assertSplitOf: 'printOn:' equals: #('print' 'On').
+	self assertSplitOf: 'printon:' equals: #('printon')
+]
+
+{ #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithColonCharacter_startWithColon_onlyLowercase [
+	<gtExample>
+	
+	self assertSplitOf: ':a' equals: #('a').
+	self assertSplitOf: '::a' equals: #('a').
+	self assertSplitOf: ':a ::b :::c' equals: #('a' 'b' 'c').
+	self assertSplitOf: ':a::b:::c' equals: #('a' 'b' 'c').
+]
+
+{ #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithColonCharacter_startWithColon_withUppercase [
+	<gtExample>
+	
+	self assertSplitOf: ':A' equals: #('A').
+	self assertSplitOf: '::A' equals: #('A').
+	self assertSplitOf: ':A ::B :::C' equals: #('A' 'B' 'C').
+	self assertSplitOf: ':A::B:::C' equals: #('A' 'B' 'C').
+	
+	self assertSplitOf: ':A ::b :::C' equals: #('A' 'b' 'C').
+	self assertSplitOf: ':A::b:::C' equals: #('A' 'b' 'C').
+]
+
+{ #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithDigitsAtKeywordBoundary [
+	<gtExample>
+
+	self
+		assertSplitOf: 'foo:2bar:' equals: #('foo' '2bar');
+		assertSplitOf: 'foo:2Bar:' equals: #('foo' '2' 'Bar')
+]
+
+{ #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithKeywordSelectorsSeparatedByCapitalization [
+	<gtExample>
+
+	self assertSplitOf: 'link:toAST:' equals: #('link' 'to' 'AST').
+	self assertSplitOf: 'copyFrom:to:' equals: #('copy' 'From' 'to')
+]
+
+{ #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithKeywordsSeparatedByCapitalization [
+	<gtExample>
+
+	self assertSplitOf: 'at:Put:ifAbsent:' equals: #('at' 'Put' 'if' 'Absent')
+]
+
+{ #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithMultiKeywordSelector [
+	<gtExample>
+
+	self assertSplitOf: 'at:putAll:ifAbsent:' equals: #('at' 'put' 'All' 'if' 'Absent')
 ]
 
 { #category : #examples }
 GtSpotterByWordsQuerySplitterExamples >> splitQueryWithNonDigitCharacters [
 	<gtExample>
-	<return: #GtSpotterByWordsQuerySplitterExamples>
+	
 	self
-		assertSplitOf: 'One***Two---Three!@$Four'
+		assertSplitOf: 'One***Two---Three!@Four'
 		equals: #('One' 'Two' 'Three' 'Four')
 ]
 
 { #category : #examples }
-GtSpotterByWordsQuerySplitterExamples >> splitQueryWithTwoCapitalizedWordsWithNumbers [
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithUnderscoreAndColonInKeyword [
 	<gtExample>
-	<return: #GtSpotterByWordsQuerySplitterExamples>
-	self assertSplitOf: 'One111Two22' equals: #('One111' 'Two22').
 
-	self assertSplitOf: 'one111Two22' equals: #('one111' 'Two22')
+	self assertSplitOf: 'foo_:bar:' equals: #('foo' 'bar')
+]
+
+{ #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithUnderscoreAndKeywordSeparators [
+	<gtExample>
+
+	self assertSplitOf: 'copy_to:From:' equals: #('copy' 'to' 'From')
+]
+
+{ #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithUnderscoreSeparator [
+	<gtExample>
+
+	self assertSplitOf: 'one_two' equals: #('one' 'two')
 ]

@@ -10,6 +10,13 @@ GtSpotterBySelectorWordsQuerySplitterExamples >> createQuerySplitter [
 ]
 
 { #category : #examples }
+GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryForGtSpotterMethodsFor [
+	<gtExample>
+
+	self assertSplitOf: 'gtSpotterMethodsFor:' equals: #('gt' 'Spotter' 'Methods' 'For:')
+]
+
+{ #category : #examples }
 GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithAllBinarySelectorCharacters [
 	<gtExample>
 
@@ -65,12 +72,26 @@ GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithColonCharacter_st
 ]
 
 { #category : #examples }
+GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithKeywordsSeparatedByCapitalization [
+	<gtExample>
+
+	self assertSplitOf: 'at:Put:ifAbsent:' equals: #('at:' 'Put:if' 'Absent:')
+]
+
+{ #category : #examples }
 GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithNonDigitCharacters [
 	<gtExample>
 	
 	self
 		assertSplitOf: 'One***Two---Three!@Four'
 		equals: #('One***' 'Two---' 'Three!@' 'Four')
+]
+
+{ #category : #examples }
+GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithUnderscoreAndKeywordSeparators [
+	<gtExample>
+
+	self assertSplitOf: 'copy_to:From:' equals: #('copy_to:' 'From:')
 ]
 
 { #category : #examples }

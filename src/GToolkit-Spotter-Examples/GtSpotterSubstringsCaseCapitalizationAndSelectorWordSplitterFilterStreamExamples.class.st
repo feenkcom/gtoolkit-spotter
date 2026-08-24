@@ -52,6 +52,36 @@ GtSpotterSubstringsCaseCapitalizationAndSelectorWordSplitterFilterStreamExamples
 ]
 
 { #category : #examples }
+GtSpotterSubstringsCaseCapitalizationAndSelectorWordSplitterFilterStreamExamples >> testMatchGtSpotterMethodsForSelector [
+	<gtExample>
+
+	self
+		assertQuerySearch: 'gtSpotterMethodsFor:'
+		in: #('gtSpotterMethodsFor' 'gtSpotterMethodsFor:' 'gtSpotterMethodsFor:in:' 'gtSpotterMethods' 'gtSpotterMethodFor:')
+		equals: #('gtSpotterMethodsFor:' 'gtSpotterMethodsFor:in:')
+]
+
+{ #category : #examples }
+GtSpotterSubstringsCaseCapitalizationAndSelectorWordSplitterFilterStreamExamples >> testMatchKeywordSelectorStructure [
+	<gtExample>
+
+	self
+		assertQuerySearch: 'at:put:'
+		in: #('atput:' 'at:put:' 'at:put:ifAbsent:' 'at:putAll:' 'at:')
+		equals: #('at:put:' 'at:put:ifAbsent:')
+]
+
+{ #category : #examples }
+GtSpotterSubstringsCaseCapitalizationAndSelectorWordSplitterFilterStreamExamples >> testMatchUnderscoreBearingSelector [
+	<gtExample>
+
+	self
+		assertQuerySearch: 'copy_to:'
+		in: #('copyto:' 'copy_to' 'copy_to:' 'copy_to:from:' 'copy:to:')
+		equals: #('copy_to:' 'copy_to:from:')
+]
+
+{ #category : #examples }
 GtSpotterSubstringsCaseCapitalizationAndSelectorWordSplitterFilterStreamExamples >> testMatch_queryNonLetterCharacters [
 	<gtExample>
 

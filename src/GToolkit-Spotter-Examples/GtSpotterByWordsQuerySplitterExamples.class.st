@@ -72,6 +72,14 @@ GtSpotterByWordsQuerySplitterExamples >> splitQueryWithColonCharacter_startWithC
 ]
 
 { #category : #examples }
+GtSpotterByWordsQuerySplitterExamples >> splitQueryWithKeywordSelectorsSeparatedByCapitalization [
+	<gtExample>
+
+	self assertSplitOf: 'link:toAST:' equals: #('link' 'to' 'AST').
+	self assertSplitOf: 'copyFrom:to:' equals: #('copy' 'From' 'to')
+]
+
+{ #category : #examples }
 GtSpotterByWordsQuerySplitterExamples >> splitQueryWithKeywordsSeparatedByCapitalization [
 	<gtExample>
 

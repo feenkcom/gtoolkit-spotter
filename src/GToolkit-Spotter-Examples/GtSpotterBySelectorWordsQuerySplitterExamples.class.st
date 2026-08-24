@@ -27,8 +27,8 @@ GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithAllBinarySelector
 GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithColonCharacter_multipleWithNoSpace [
 	<gtExample>
 	
-	self assertSplitOf: 'print:on:' equals: #('print:on:').
-	self assertSplitOf: 'print:on:for:' equals: #('print:on:for:')
+	self assertSplitOf: 'print:on:' equals: #('print:' 'on:').
+	self assertSplitOf: 'print:on:for:' equals: #('print:' 'on:' 'for:')
 ]
 
 { #category : #examples }
@@ -52,30 +52,38 @@ GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithColonCharacter_si
 GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithColonCharacter_startWithColon_onlyLowercase [
 	<gtExample>
 	
-	self assertSplitOf: ':a' equals: #(':a').
-	self assertSplitOf: '::a' equals: #('::a').
-	self assertSplitOf: ':a ::b :::c' equals: #(':a' '::b' ':::c').
-	self assertSplitOf: ':a::b:::c' equals: #(':a::b:::c').
+	self assertSplitOf: ':a' equals: #('a').
+	self assertSplitOf: '::a' equals: #('a').
+	self assertSplitOf: ':a ::b :::c' equals: #('a' 'b' 'c').
+	self assertSplitOf: ':a::b:::c' equals: #('a:' 'b:' 'c').
 ]
 
 { #category : #examples }
 GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithColonCharacter_startWithColon_withUppercase [
 	<gtExample>
 	
-	self assertSplitOf: ':A' equals: #(':' 'A').
-	self assertSplitOf: '::A' equals: #('::' 'A').
-	self assertSplitOf: ':A ::B :::C' equals: #(':' 'A' '::' 'B' ':::' 'C').
-	self assertSplitOf: ':A::B:::C' equals: #(':' 'A::' 'B:::' 'C').
+	self assertSplitOf: ':A' equals: #('A').
+	self assertSplitOf: '::A' equals: #('A').
+	self assertSplitOf: ':A ::B :::C' equals: #('A' 'B' 'C').
+	self assertSplitOf: ':A::B:::C' equals: #('A:' 'B:' 'C').
 	
-	self assertSplitOf: ':A ::b :::C' equals: #(':' 'A' '::b' ':::' 'C').
-	self assertSplitOf: ':A::B:::C' equals: #(':' 'A::' 'B:::' 'C').
+	self assertSplitOf: ':A ::b :::C' equals: #('A' 'b' 'C').
+	self assertSplitOf: ':A::B:::C' equals: #('A:' 'B:' 'C').
+]
+
+{ #category : #examples }
+GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithKeywordSelectorsSeparatedByCapitalization [
+	<gtExample>
+
+	self assertSplitOf: 'link:toAST:' equals: #('link:' 'to' 'AST:').
+	self assertSplitOf: 'copyFrom:to:' equals: #('copy' 'From:' 'to:')
 ]
 
 { #category : #examples }
 GtSpotterBySelectorWordsQuerySplitterExamples >> splitQueryWithKeywordsSeparatedByCapitalization [
 	<gtExample>
 
-	self assertSplitOf: 'at:Put:ifAbsent:' equals: #('at:' 'Put:if' 'Absent:')
+	self assertSplitOf: 'at:Put:ifAbsent:' equals: #('at:' 'Put:' 'if' 'Absent:')
 ]
 
 { #category : #examples }

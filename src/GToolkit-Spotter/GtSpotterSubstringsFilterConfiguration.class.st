@@ -110,6 +110,11 @@ GtSpotterSubstringsFilterConfiguration >> withCharacterSplitterBy: aCollectionOf
 ]
 
 { #category : #configuration }
+GtSpotterSubstringsFilterConfiguration >> withSelectorWordsSplitter [
+	querySplitter := GtSpotterBySelectorWordsQuerySplitter new.
+]
+
+{ #category : #configuration }
 GtSpotterSubstringsFilterConfiguration >> withWordsSplitter [
 	querySplitter := GtSpotterByWordsQuerySplitter new.
 ]

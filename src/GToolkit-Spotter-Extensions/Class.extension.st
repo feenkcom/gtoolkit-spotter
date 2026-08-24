@@ -38,8 +38,9 @@ Class >> gtSpotterClassMethodsFor: aSearch [
 		itemName: [ :method | method selector ];
 		filterBySubstringsWith: [ :aSearchFilter :aSpotterContext |
 			aSearchFilter 
-				withWordsSplitter;
-				beCaseSensitiveByCapitalization ];
+				withSelectorWordsSplitter;
+				beCaseSensitiveByCapitalization;
+				applyConfigurationWithId: #methodSelectorSearch inContext: aSpotterContext ];
 		sendCategory: [ :aCategory :aStep :thisSearch | 
 			(GtSearchCustomScopedMethodsFilter new
 				filterLabel: self class instanceSide name 
@@ -98,8 +99,9 @@ Class >> gtSpotterMethodsFor: aSearch [
 		itemName: [ :method | method selector ];
 		filterBySubstringsWith: [ :aSearchFilter :aSpotterContext |
 			aSearchFilter 
-				withWordsSplitter;
-				beCaseSensitiveByCapitalization ];
+				withSelectorWordsSplitter;
+				beCaseSensitiveByCapitalization;
+				applyConfigurationWithId: #methodSelectorSearch inContext: aSpotterContext ];
 		sendCategory: [ :aCategory :aStep :thisSearch | 
 			(GtSearchCustomScopedMethodsFilter new
 				filterLabel: self class instanceSide name 
@@ -167,8 +169,9 @@ Class >> gtSpotterSuperClassMethodsFor: aSearch [
 			self superclass 
 				ifNotNil: [ :aSuperclass |
 					GtSpotterSubstringsFilter new
-						withWordsSplitter;
+						withSelectorWordsSplitter;
 						beCaseSensitiveByCapitalization; 
+						applyConfigurationWithId: #methodSelectorSearch inContext: aSpotterContext;
 						itemString: [ :anObject | anObject selector asString ];
 						applyInScope: ((AsyncBehaviorClassInheritedMethodsStream
 							forBehavior: aSuperclass) 
@@ -232,8 +235,9 @@ Class >> gtSpotterSuperMethodsFor: aSearch [
 			self superclass 
 				ifNotNil: [ :aSuperclass |
 					GtSpotterSubstringsFilter new
-						withWordsSplitter;
+						withSelectorWordsSplitter;
 						beCaseSensitiveByCapitalization;
+						applyConfigurationWithId: #methodSelectorSearch inContext: aSpotterContext;
 						itemString: [ :anObject | anObject selector asString ];
 						applyInScope: (aSuperclass allMethods asAsyncStream) 
 							context: aSpotterContext ]

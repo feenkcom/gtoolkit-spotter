@@ -1,16 +1,9 @@
 Extension { #name : #Clipboard }
 
 { #category : #'*GToolkit-Spotter-Extensions' }
-Clipboard >> currentClippings [
-	^ self 
-		forPharo12AndNewer: [self recentClippings] 
-		forPharo11: [ recent ]
-]
-
-{ #category : #'*GToolkit-Spotter-Extensions' }
 Clipboard >> recentItems [
 	| currentClippings |
-	currentClippings := self currentClippings.
+	currentClippings := self recentClippings.
 	
 	currentClippings isEmptyOrNil ifTrue: [ ^ #() ].
 	^ currentClippings allButFirst reject: [ :each | 

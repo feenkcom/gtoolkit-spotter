@@ -2,7 +2,7 @@ Extension { #name : #GlobalVariable }
 
 { #category : #'*GToolkit-Spotter-Extensions' }
 GlobalVariable >> gtSpotterActDefaultFrom: aSpotterElement [
-	GtInspector openOn: self value from: aSpotterElement
+	^ BlSpace showTool: [ self value gtDefaultInspectorTool ] from: aSpotterElement
 ]
 
 { #category : #'*GToolkit-Spotter-Extensions' }

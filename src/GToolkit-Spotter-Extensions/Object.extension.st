@@ -18,5 +18,5 @@ Object >> gtActionSearchFor: anAction [
 
 { #category : #'*GToolkit-Spotter-Extensions' }
 Object >> gtSpotterActDefaultFrom: aSpotterElement [
-	^ GtInspector openOn: self from: aSpotterElement
+	^ BlSpace showTool: [ self gtDefaultInspectorTool ] from: aSpotterElement
 ]

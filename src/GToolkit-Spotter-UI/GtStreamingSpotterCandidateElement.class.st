@@ -22,6 +22,11 @@ GtStreamingSpotterCandidateElement >> actDueTo: anEventType [
 		from: self
 ]
 
+{ #category : #accessing }
+GtStreamingSpotterCandidateElement >> candidate [
+	^ candidate
+]
+
 { #category : #initialization }
 GtStreamingSpotterCandidateElement >> candidate: aStreamingSpotterCandidate search: aSpotterSearch [
 	candidate := aStreamingSpotterCandidate.

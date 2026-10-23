@@ -20,9 +20,7 @@ GtSpotterCategory >> gtSearchItemsFor: aSearch [
 
 { #category : #'*GToolkit-Spotter-Extensions' }
 GtSpotterCategory >> gtSpotterActDefaultFrom: aSpotterElement [
-	^ GtInspector
-		openOn: self items
-		from: aSpotterElement
+	^ BlSpace showTool: [ self items gtDefaultInspectorTool ] from: aSpotterElement
 ]
 
 { #category : #'*GToolkit-Spotter-Extensions' }

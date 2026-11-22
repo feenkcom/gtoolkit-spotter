@@ -685,7 +685,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionsInSearch [
 				id: GtSpotterBrokenSearchElementId index: 1;
 				// BrLabel;
 				value: [ :aLabel | aLabel text asString ]
-					equals: [ AssertionFailure name , ': ' , GtSpotterStartWithExceptionInSearch name ] ].
+					equals: [ AssertionFailure name asString , ': ' , GtSpotterStartWithExceptionInSearch name ] ].
 
 	scripter
 		assertStep: [ :s | 
@@ -701,7 +701,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionsInSearch [
 				id: GtSpotterBrokenSearchElementId index: 2;
 				// BrLabel;
 				value: [ :aLabel | aLabel text asString ]
-					equals: [ AssertionFailure name , ': ' , GtSpotterStartWithExceptionInSearch name ] ].
+					equals: [ AssertionFailure name asString , ': ' , GtSpotterStartWithExceptionInSearch name ] ].
 
 	scripter
 		assertStep: [ :s | 
@@ -717,7 +717,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartWithExceptionsInSearch [
 				id: GtSpotterBrokenSearchElementId index: 3;
 				// BrLabel;
 				value: [ :aLabel | aLabel text asString ]
-					equals: [ GtSpotterSearchWrongReturnError name ] ].
+					equals: [ GtSpotterSearchWrongReturnError name asString ] ].
 
 	^ scripter
 ]

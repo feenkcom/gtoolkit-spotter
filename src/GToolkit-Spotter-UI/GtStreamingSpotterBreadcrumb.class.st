@@ -9,36 +9,44 @@ Class {
 { #category : #private }
 GtStreamingSpotterBreadcrumb >> addStep: aNewStep [
 	| aText |
-
 	aText := aNewStep origin gtDisplayText.
 
-	self addItem: (BrButton new
-		aptitude: (BrGlamorousButtonRectangularAptitude + (BrGlamorousButtonLabelAptitude new selectedColor: Color black));
-		action: [ spotter currentStep: aNewStep ];
-		alignCenterLeft;
-		label: aText)
+	self
+		addItem: (BrButton new
+				aptitude: BrGlamorousButtonRectangularAptitude
+						+ (BrGlamorousButtonLabelAptitude new
+								selectedColor: self theme button defaultTextForeground);
+				action: [ spotter currentStep: aNewStep ];
+				alignCenterLeft;
+				label: aText)
 ]
 
 { #category : #initialization }
 GtStreamingSpotterBreadcrumb >> initialize [
 	super initialize.
-	
+
 	self viewModel add: (selectionModel := BrSelectionModel new).
 
-	self aptitude: (BrBreadcrumbLinearAptitude new separator: [
-		BrLabel new
-			aptitude: (BrGlamorousLabelAptitude new thin foreground: Color gray);
-			text: '>';
-			margin: (BlInsets left: 5 right: 5) ]).
+	self
+		aptitude: (BrBreadcrumbLinearAptitude new
+				separator: [ BrLabel new
+						aptitude: (BrGlamorousLabelAptitude new thin
+								foreground: self theme label metadataTextForeground);
+						text: '>';
+						margin: (BlInsets left: 5 right: 5) ]).
 
 	self
 		hMatchParent;
 		vExact: 40;
 		alignCenterLeft.
 
-	self when: BrSelectionChanged do: [ :anEvent |
-		anEvent withIndexDo: [ :anIndex :isSelected |
-			 (self itemAt: anIndex) dispatchEvent: (BlElementSelectedStateWish selected: isSelected) ] ]
+	self
+		when: BrSelectionChanged
+		do: [ :anEvent | 
+			anEvent
+				withIndexDo: [ :anIndex :isSelected | 
+					(self itemAt: anIndex)
+						dispatchEvent: (BlElementSelectedStateWish selected: isSelected) ] ]
 ]
 
 { #category : #'api - selection' }

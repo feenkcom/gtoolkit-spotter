@@ -184,7 +184,7 @@ GtSpotterDropdownButtonStencil >> createNew [
 												fireEvent: (GtSpotterResizedEvent new
 														extent: anEvent extent;
 														resizeTarget: anElement) ] ]) ]
-				containerDo: [ :anElement | anElement background: BrGlamorousColors secondaryHeaderBackgroundColor ]).
+				containerDo: [ :anElement | anElement background: anElement theme header secondaryBackgroundColor ]).
 	^ aButton
 ]
 

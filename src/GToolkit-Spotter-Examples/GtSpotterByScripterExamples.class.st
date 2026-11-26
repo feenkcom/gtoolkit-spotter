@@ -599,7 +599,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckSelection [
 			s
 				id: GtSpotterCandidateElementId index: 1;
 				value: [ :aCandidate | aCandidate background ]
-					equals: ((Color fromHexString: #'69ABFD') alpha: 86 / 255.0) asBlBackground ].
+					equals: [ :aCandidate | aCandidate theme item selectedColor asBlBackground ] ].
 
 	scripter
 		assertStep: [ :s | 
@@ -612,7 +612,7 @@ GtSpotterByScripterExamples >> spotterElementOnStartSampleCheckSelection [
 			s
 				id: GtSpotterCandidateElementId index: 2;
 				value: [ :aCandidate | aCandidate background ]
-					equals: Color transparent asBlBackground ].
+					equals: [ :aCandidate | aCandidate theme item deselectedColor asBlBackground ] ].
 
 	^ scripter
 ]

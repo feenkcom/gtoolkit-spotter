@@ -48,39 +48,45 @@ GtStreamingSpotterPreviewElement >> initialize [
 	super initialize.
 
 	self id: GtSpotterPreviewElementId.
-	
+
 	self matchParent.
 	self padding: (BlInsets all: 10).
 
-	self when: GtPhlowObjectToSelect do: [ :anEvent | anEvent consumed: anEvent sourceElement == self ].
+	self
+		when: GtPhlowObjectToSelect
+		do: [ :anEvent | anEvent consumed: anEvent sourceElement == self ].
 
 	labelElement := BrLabel new
-		text: '';
-		aptitude: (BrGlamorousLabelAptitude new foreground: Color gray);
-		alignCenter;
-		hMatchParent;
-		vFitContent;
-		margin: (BlInsets top: 5).
+			text: '';
+			aptitude: (BrGlamorousLabelAptitude new foreground: self theme label summaryTextForeground);
+			alignCenter;
+			hMatchParent;
+			vFitContent;
+			margin: (BlInsets top: 5).
 
 	previewContainer := BrFrame new
-		margin: (BlInsets all: 5);
-		matchParent.
+			margin: (BlInsets all: 5);
+			matchParent.
 
-	self addChildren: { labelElement. previewContainer }.
+	self
+		addChildren: {labelElement.
+				previewContainer}.
 
-	self withAsyncFutureDo: [ :anAsyncElementFuture |
-		anAsyncElementFuture
-			executionConfiguration: (AsyncFutureExecutionConfiguration new customGroup: #Spotter; lowPriority);
-			whenPending: [
-				labelElement text: 'Rendering...'.
-				previewContainer removeChildren ];
-			whenSuccess: [ :aPreviewElement :aPreviewAssociation |
-				previewContainer removeChildren.
-				labelElement text: aPreviewAssociation key.
-				previewContainer addChild: aPreviewAssociation value ];
-			whenError: [ :aPreviewElement :anError |
-				previewContainer removeChildren.
-				previewContainer addChild: anError asDebuggableElement ] ]
+	self
+		withAsyncFutureDo: [ :anAsyncElementFuture | 
+			anAsyncElementFuture
+				executionConfiguration: (AsyncFutureExecutionConfiguration new
+						customGroup: #Spotter;
+						lowPriority);
+				whenPending: [ labelElement text: 'Rendering...'.
+					previewContainer removeChildren ];
+				whenSuccess: [ :aPreviewElement :aPreviewAssociation | 
+					previewContainer removeChildren.
+					labelElement text: aPreviewAssociation key.
+					previewContainer addChild: aPreviewAssociation value ];
+				whenError: [ :aPreviewElement :anError | 
+					previewContainer removeChildren.
+					previewContainer addChild: anError asDebuggableElement ] ]
 ]
 
 { #category : #'private - event handling' }

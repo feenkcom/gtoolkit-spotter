@@ -106,7 +106,8 @@ GtStreamingSpotterCategoryElement >> newActOnButton [
 { #category : #'private - instance creation' }
 GtStreamingSpotterCategoryElement >> newCategoryLabel [
 	^ BrLabel new
-		aptitude: (BrGlamorousLabelAptitude new foreground: Color gray);
+		aptitude: (BrGlamorousLabelAptitude new
+				foreground: self theme label metadataTextForeground);
 		hMatchParent;
 		vFitContent;
 		alignCenterLeft
